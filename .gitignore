@@ -1,0 +1,6 @@
+.env.local
+node_modules
+.next
+tsconfig.tsbuildinfo
+supabase/.temp/project-ref
+.DS_Store

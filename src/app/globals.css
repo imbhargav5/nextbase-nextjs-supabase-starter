@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  scroll-behavior:smooth;
+
+}
+
+[data-nextjs-scroll-focus-boundary] {
+  height: 100%;
+  width: 100%;
+}
+
+@tailwind utilities;
+
+.swiper {
+  width: 640px;
+  height: 480px;
+}
+
+.swiper-slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: bold;
+
+}
