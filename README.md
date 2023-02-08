@@ -2,6 +2,23 @@
 
 This is a starter project for NextBase. It includes a basic Next.js 13 app with Supabase and Tailwind CSS.
 
+## Features
+
+- 🚀 Next.js 13 with async components
+- 💻 Data fetching examples in React server and client components. Suspenseful data fetching with minimal loading screens.
+- ⚛️ React query setup configured
+- 🔥 React Hot Toast component
+- 💻 Fully typed with Typescript. Includes automatic type generation for Supabase tables
+- 🎨 Tailwindcss
+- 🧪 Unit testing and integration testing setups built-in
+- 💚 Eslint, typescript, prettier, postcss configured for dev and test environments
+- 📈 Automatic sitemap generation
+- 🔍 SEO metadata, JSON-LD and Open Graph tags with NEXT SEO
+- ✍️ Semantic release with Automatic changelog generation
+- 🎨 Prettier Code formatter
+- 💎 Minimal styling
+- 📖 Codebase which is easy to read and modify
+
 ### Development
 
 1. Clone the repo
@@ -31,10 +48,11 @@ Contributions are welcome. Please open an issue or a PR.
 
 MIT
 
+### Github Actions
+
+1. `GH_TOKEN` - Needs to have write access. Generate a personal access token else RELEASE action will fail. 
+
+
 ## Checkout NextBase Premium Boilerplates
 
 [NextBase Boilerplate](https://usenextbase.com)
-
-### Github Actions
-
-1. `GH_TOKEN` - Needs to have write access
