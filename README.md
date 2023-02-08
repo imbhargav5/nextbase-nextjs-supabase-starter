@@ -1,6 +1,6 @@
 # NextBase Starter
 
-This is a starter project for NextBase. It includes a basic Next.js 13 app with Supabase and Tailwind CSS.
+This is a starter project for NextBase. It includes a basic Next.js 13 app with Supabase and Tailwind CSS. It includes the all new `app` folder, `layout` components, React server components and more!
 
 ## Features
 
@@ -50,8 +50,7 @@ MIT
 
 ### Github Actions
 
-1. `GH_TOKEN` - Needs to have write access. Generate a personal access token else RELEASE action will fail. 
-
+1. `GH_TOKEN` - Needs to have write access. Generate a personal access token else RELEASE action will fail.
 
 ## Checkout NextBase Premium Boilerplates
 
