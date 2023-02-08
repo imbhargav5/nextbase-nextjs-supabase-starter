@@ -34,5 +34,5 @@ jobs:
         uses: ./.github/actions/ci-setup
       - name: Release
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: npx semantic-release
