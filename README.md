@@ -48,9 +48,9 @@ Contributions are welcome. Please open an issue or a PR.
 
 MIT
 
-### Github Actions
+### Troubleshooting
 
-1. `GH_TOKEN` - Needs to have write access. Generate a personal access token else RELEASE action will fail.
+Checkout the [TROUBLESHOOTING.md](./TROUBLESHOOTING.md) file for common issues.
 
 ## Checkout NextBase Premium Boilerplates
 
