@@ -13,19 +13,24 @@ jobs:
 
     name: Update all dependencies
     runs-on: ubuntu-latest
-
+    if: ${{ github.repository == 'imbhargav5/nextbase-starter'}}
     steps:
-      - uses: actions/checkout@v3
+      - name: 'Check if user has write access'
+        uses: 'lannonbr/repo-permission-check-action@2.0.0'
+        with:
+          permission: 'write'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'npm'
-      - run: npm ci
 
-      - run: npx npm-check-updates -u # Update dependencies
-      - run: rm -Rf node_modules package-lock.json
-      - run: npm install
+      - run: yarn npm-check-updates -u # Update dependencies
+      - run: rm -Rf node_modules yarn.json
+      - run: yarn
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
         with:
