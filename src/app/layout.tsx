@@ -1,4 +1,7 @@
-export default function RootLayout({
+import { ClientLayout } from './ClientLayout';
+import './output.css';
+
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -6,7 +9,9 @@ export default function RootLayout({
   return (
     <html>
       <head />
-      <body>{children}</body>
+      <body>
+        <ClientLayout>{children}</ClientLayout>
+      </body>
     </html>
   );
 }
