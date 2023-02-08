@@ -9,7 +9,7 @@
     "dev": "concurrently \"next dev \" \"tailwindcss-cli --input ./src/app/globals.css --output ./src/app/output.css --watch\"",
     "start": "next start",
     "generate:types:local": "export $(cat .env.local | xargs) &&  supabase gen types typescript --project-id ${SUPABASE_PROJECT_REF} --schema public > src/lib/database.types.ts",
-    "build": "tailwindcss-cli ./src/app/globals.css --output ./src/app/output.css && next build",
+    "build": "tailwindcss -i ./src/app/globals.css --output ./src/app/output.css && next build",
     "test:e2e": "playwright test",
     "test": "vitest --root src --run",
     "test:watch": "vitest --root src",
