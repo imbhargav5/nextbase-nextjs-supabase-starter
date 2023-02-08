@@ -1,6 +1,20 @@
 .env.local
 node_modules
-.next
 tsconfig.tsbuildinfo
 supabase/.temp/project-ref
 .DS_Store
+
+# next.js
+/.next
+/out
+
+# next-sitemap
+public/robots.txt
+public/sitemap.xml
+public/sitemap-*.xml
+
+# debug
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
