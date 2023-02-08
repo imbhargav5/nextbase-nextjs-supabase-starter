@@ -13,7 +13,7 @@ jobs:
 
     name: Update all dependencies
     runs-on: ubuntu-latest
-    if: ${{ github.repository == 'imbhargav5/nextbase-nextj13-supabase-starter'}}
+    if: ${{ github.repository == 'imbhargav5/nextbase-nextjs13-supabase-starter'}}
     steps:
       - name: 'Check if user has write access'
         uses: 'lannonbr/repo-permission-check-action@2.0.0'
