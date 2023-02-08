@@ -43,7 +43,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-      - run: npm ci
+      - run: yarn run ci
 
       - if: github.event_name == 'pull_request'
         name: Validate all commits from PR
@@ -59,6 +59,6 @@ jobs:
         run: yarn run test
 
       - name: Run e2e tests
-        run: npx percy exec -- yarn run e2e:headless
+        run: npx percy exec -- yarn run test:e2e
         env:
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
