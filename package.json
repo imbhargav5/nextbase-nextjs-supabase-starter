@@ -18,6 +18,7 @@
     "lint": "yarn lint:eslint && yarn lint:prettier",
     "tsc": "tsc",
     "commit": "cz",
+    "prepare": "husky install",
     "postbuild": "next-sitemap --config next-sitemap.config.cjs"
   },
   "dependencies": {
