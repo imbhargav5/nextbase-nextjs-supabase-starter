@@ -2,6 +2,10 @@
 
 This is a starter project for NextBase. It includes a basic Next.js 13 app with Supabase and Tailwind CSS. It includes the all new `app` folder, `layout` components, React `server components` and more!
 
+## Premium NextBase Boilerplate
+
+[NextBase Boilerplate](<![Image](../blob/master/.github/myimage.png?raw=true)>)
+
 ## Features
 
 - 🚀 Next.js 13 with async components
