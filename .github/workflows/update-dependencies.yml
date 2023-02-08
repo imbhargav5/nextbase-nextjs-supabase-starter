@@ -27,7 +27,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-
+      - name: ⎔ CI Setup
+        uses: ./.github/actions/ci-setup
       - run: yarn npm-check-updates -u # Update dependencies
       - run: rm -Rf node_modules yarn.json
       - run: yarn

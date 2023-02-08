@@ -29,6 +29,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
+      - name: ⎔ CI Setup
+        uses: ./.github/actions/ci-setup
       - run: yarn run build
 
   test:
@@ -52,6 +54,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
+      - name: ⎔ CI Setup
+        uses: ./.github/actions/ci-setup
       - if: github.event_name == 'pull_request'
         name: Validate all commits from PR
         run: npx commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} --verbose
