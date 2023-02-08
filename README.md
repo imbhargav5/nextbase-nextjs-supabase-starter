@@ -1,6 +1,6 @@
 # NextBase Starter
 
-This is a starter project for NextBase. It includes a basic Next.js 13 app with Supabase and Tailwind CSS. It includes the all new `app` folder, `layout` components, React server components and more!
+This is a starter project for NextBase. It includes a basic Next.js 13 app with Supabase and Tailwind CSS. It includes the all new `app` folder, `layout` components, React `server components` and more!
 
 ## Features
 
