@@ -68,6 +68,8 @@ jobs:
 
       - name: Run unit tests
         run: yarn run test
+      - name: Install playwright browsers
+        run: yarn playwright install --with-deps
 
       - name: Run e2e tests
         run: yarn run test:e2e
