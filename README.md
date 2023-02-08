@@ -4,7 +4,7 @@ This is a starter project for NextBase. It includes a basic Next.js 13 app with 
 
 ## Premium NextBase Boilerplate
 
-[NextBase Boilerplate](<![Image](../blob/master/.github/myimage.png?raw=true)>)
+![NextBase Boilerplate](../blob/master/.github/myimage.png?raw=true)
 
 ## Features
 
