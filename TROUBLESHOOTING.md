@@ -7,6 +7,6 @@ chmod ug+x .husky/*
 chmod ug+x .git/hooks/*
 ```
 
-## Github Actions (Semantic Release)
+## Github Actions
 
 `GH_TOKEN` - Needs to have write access for semantic release action. Generate a personal access token else RELEASE action will fail.
