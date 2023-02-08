@@ -30,7 +30,6 @@ module.exports = {
       extends: [
         'eslint:recommended',
         'plugin:@typescript-eslint/recommended',
-        'plugin:@next/next/recommended',
         'prettier',
       ],
       parser: '@typescript-eslint/parser',
@@ -46,6 +45,11 @@ module.exports = {
         'prettier/prettier': 'error',
       },
       files: ['e2e/**/*.spec.ts'],
+    },
+    {
+      extends: ['eslint:recommended', 'prettier', 'esnext'],
+      files: '*.mjs',
+      rules: ruleOverrides,
     },
     {
       extends: ['prettier'],
