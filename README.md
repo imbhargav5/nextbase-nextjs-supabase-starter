@@ -34,3 +34,7 @@ MIT
 ## Checkout NextBase Premium Boilerplates
 
 [NextBase Boilerplate](https://usenextbase.com)
+
+### Github Actions
+
+1. `GH_TOKEN` - Needs to have write access
