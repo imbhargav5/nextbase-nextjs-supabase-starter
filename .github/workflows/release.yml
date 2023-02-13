@@ -18,22 +18,10 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.repository == 'imbhargav5/nextbase-nextjs13-supabase-starter'}}
     steps:
-      - name: 'Check if user has write access'
-        uses: 'lannonbr/repo-permission-check-action@2.0.0'
-        with:
-          permission: 'write'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: ⬇️ Checkout repo
-        uses: actions/checkout@v3
-        with:
-          persist-credentials: false
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-      - name: ⎔ CI Setup
+      - name: 🚂 CI Setup
         uses: ./.github/actions/ci-setup
+      - name: ⚛️ Install packages
+        uses: ./.github/actions/install-packages
       - name: Semantic release
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
