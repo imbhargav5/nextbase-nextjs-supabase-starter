@@ -67,9 +67,7 @@ jobs:
       - name: 🚂 CI Setup
         uses: ./.github/actions/ci-setup
       - if: github.event_name == 'pull_request'
-        name: Validate all commits from PR
-        run: npx commitlint --from ${{ github.event.pull_request.base.ref  }} --to ${{ github.event.pull_request.head.ref }} --verbose
-
+        uses: wagoid/commitlint-github-action@v5
       - name: Linter
         run: yarn run lint
 
