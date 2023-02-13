@@ -23,6 +23,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: ⬇️ Checkout repo
         uses: actions/checkout@v3
+        with:
+          persist-credentials: false
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
@@ -34,6 +36,8 @@ jobs:
       - run: yarn
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         with:
           commit-message: 'build: update dependencies to the latest version'
           title: Update dependencies to the latest version
