@@ -23,7 +23,13 @@ jobs:
           permission: 'write'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: ⬇️ Checkout repo
+      - if: github.event_name == 'pull_request'
+        name: ⬇️ Checkout repo
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - if: github.event_name == 'push'
+        name: ⬇️ Checkout repo
         uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
