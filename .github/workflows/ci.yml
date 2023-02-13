@@ -17,10 +17,25 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.repository == 'imbhargav5/nextbase-nextjs13-supabase-starter'}}
     steps:
+      - name: 'Check if user has write access'
+        uses: 'lannonbr/repo-permission-check-action@2.0.0'
+        with:
+          permission: 'write'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - if: github.event_name == 'pull_request'
+        name: ⬇️ Checkout repo
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - if: github.event_name != 'pull_request'
+        name: ⬇️ Checkout repo
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false
       - name: 🚂 CI Setup
         uses: ./.github/actions/ci-setup
-      - name: ⚛️ Install packages
-        uses: ./.github/actions/install-packages
       - name: ⚛️ Install packages
         uses: ./.github/actions/ci-setup
       - run: yarn run build
@@ -34,10 +49,25 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.repository == 'imbhargav5/nextbase-nextjs13-supabase-starter'}}
     steps:
+      - name: 'Check if user has write access'
+        uses: 'lannonbr/repo-permission-check-action@2.0.0'
+        with:
+          permission: 'write'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - if: github.event_name == 'pull_request'
+        name: ⬇️ Checkout repo
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - if: github.event_name != 'pull_request'
+        name: ⬇️ Checkout repo
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false
       - name: 🚂 CI Setup
         uses: ./.github/actions/ci-setup
-      - name: ⚛️ Install packages
-        uses: ./.github/actions/install-packages
       - if: github.event_name == 'pull_request'
         name: Validate all commits from PR
         run: npx commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} --verbose
