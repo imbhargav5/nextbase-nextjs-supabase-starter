@@ -57,6 +57,7 @@ jobs:
         name: ⬇️ Checkout repo
         uses: actions/checkout@v3
         with:
+          fetch-depth: 0
           ref: ${{ github.event.pull_request.head.ref }}
           persist-credentials: false
       - if: github.event_name != 'pull_request'
