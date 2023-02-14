@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/imbhargav5/nextbase-nextjs13-supabase-starter/compare/v1.0.1...v1.0.2) (2023-02-14)
+
+
+### Bug Fixes
+
+* **tailwindcss:** production build ([5872cf3](https://github.com/imbhargav5/nextbase-nextjs13-supabase-starter/commit/5872cf38a4d704ecf319d0d12c4ca211e2dc17b4))
+
 ## [1.0.1](https://github.com/imbhargav5/nextbase-nextjs13-supabase-starter/compare/v1.0.0...v1.0.1) (2023-02-08)
 
 
