@@ -1,5 +1,5 @@
 import { ClientLayout } from './ClientLayout';
-import './output.css';
+import './globals.css';
 // do not cache this layout
 export const revalidate = 0;
 
