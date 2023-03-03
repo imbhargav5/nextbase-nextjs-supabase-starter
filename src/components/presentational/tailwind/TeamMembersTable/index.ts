@@ -1,0 +1,1 @@
+export { TeamMembersTable } from './TeamMembersTable';
