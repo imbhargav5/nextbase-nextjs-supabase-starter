@@ -14,6 +14,6 @@ async function logoutHandler(
     return res.status(401).json({ error: 'Unauthorized' });
   }
   await supabaseClient.auth.signOut();
-  res.status(200).redirect('/login');
+  res.status(200).redirect('/');
 }
 export default withSupabase(logoutHandler);

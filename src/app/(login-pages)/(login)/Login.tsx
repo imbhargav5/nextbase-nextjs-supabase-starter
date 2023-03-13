@@ -1,9 +1,15 @@
 'use client';
 import { RenderProviders } from '@/components/presentational/tailwind/Auth/RenderProviders';
 import { useSignInWithProvider } from '@/utils/react-query-hooks';
+import { useDidMount } from 'rooks';
 
 export function Login() {
   const providerMutation = useSignInWithProvider();
+  useDidMount(() => {
+    providerMutation.mutate({
+      provider: 'google',
+    });
+  });
   return (
     <div className="container h-full grid items-center text-left max-w-lg mx-auto overflow-auto">
       <div className="space-y-8 ">

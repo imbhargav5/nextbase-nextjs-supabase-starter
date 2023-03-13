@@ -3,7 +3,6 @@ import MD5 from 'crypto-js/md5';
 
 import md5 from 'md5';
 import { NextApiRequest } from 'next';
-import confetti from 'canvas-confetti';
 import { z } from 'zod';
 
 export const getURL = () => {
@@ -69,6 +68,26 @@ export const msToTimestamp = (ms: number): string => {
   }
 
   return hours + ':' + minutes + ':' + seconds + '.' + milliseconds;
+};
+
+export const msToSRTTimestamp = (ms: number): string => {
+  let milliseconds: number | string = Math.floor(ms % 1000);
+
+  let seconds: number | string = Math.floor((ms / 1000) % 60),
+    minutes: number | string = Math.floor((ms / (1000 * 60)) % 60),
+    hours: number | string = Math.floor((ms / (1000 * 60 * 60)) % 24);
+
+  hours = hours < 10 ? '0' + hours : hours;
+  minutes = minutes < 10 ? '0' + minutes : minutes;
+  seconds = seconds < 10 ? '0' + seconds : seconds;
+
+  if (milliseconds < 10) {
+    milliseconds = '00' + milliseconds;
+  } else if (milliseconds < 100) {
+    milliseconds = '0' + milliseconds;
+  }
+
+  return hours + ':' + minutes + ':' + seconds + ',' + milliseconds;
 };
 
 export const extractDomainFromEmail = (email: string): string | null => {
@@ -268,46 +287,11 @@ export const isValidTimestamp = (timestamp: string): boolean => {
   return false;
 };
 
-export const realisticConfetti = () => {
-  const count = 100;
-  const defaults = {
-    origin: { y: 0.7 },
-  };
-
-  function fire(particleRatio: any, opts: any) {
-    confetti(
-      Object.assign({}, defaults, opts, {
-        particleCount: Math.floor(count * particleRatio),
-      })
-    );
-  }
-
-  fire(0.25, {
-    spread: 26,
-    startVelocity: 55,
-  });
-  fire(0.2, {
-    spread: 60,
-  });
-  fire(0.35, {
-    spread: 100,
-    decay: 0.91,
-    scalar: 0.8,
-  });
-  fire(0.1, {
-    spread: 120,
-    startVelocity: 25,
-    decay: 0.92,
-    scalar: 1.2,
-  });
-  fire(0.1, {
-    spread: 120,
-    startVelocity: 45,
-  });
-};
-
 export const normalizeS3FileName = (fileName: string): string =>
   fileName.replace(fileName.split('-')[0] + '-', '');
+
+export const removeExtensionFromFileName = (fileName: string): string =>
+  fileName.substring(0, fileName.lastIndexOf('.')) || fileName;
 
 export const isFulfilled = <T>(
   p: PromiseSettledResult<T>

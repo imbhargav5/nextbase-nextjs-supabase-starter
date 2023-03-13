@@ -22,17 +22,16 @@ async function syncRunsHandler(
     const pendingRuns = await getPendingRuns(supabaseClient, organizationId);
 
     const setSuccessPromises = pendingRuns.map(async (run) => {
-      if (
-        await checkIfS3FileExists(
-          getFilenameWithoutExtension(run.file_key) + '.json',
-          AWS_BUCKET_OUTPUT_SUBTITLES
-        )
-        // && (await checkIfS3FileExists(r.fileKey, AWS_BUCKET_OUTPUT_VIDEOS))
-      ) {
+      const doesFileExist = await checkIfS3FileExists(
+        getFilenameWithoutExtension(run.file_key) + '.json',
+        AWS_BUCKET_OUTPUT_SUBTITLES
+      );
+      if (doesFileExist) {
         await supabaseClient.rpc('set_run_success', {
           arg_uuid: run.uuid,
         });
       } else {
+        console.log(`file doesn't exist`);
         const endDate = new Date();
         const startDate = new Date(endDate);
         const eighteenHoursAgo = startDate.setHours(startDate.getHours() - 18);
@@ -47,7 +46,7 @@ async function syncRunsHandler(
     });
 
     await Promise.allSettled(setSuccessPromises);
-    return res.json({
+    return res.setHeader('Cache-Control', 'no-store').status(200).json({
       ok: true,
     });
   } catch (error) {

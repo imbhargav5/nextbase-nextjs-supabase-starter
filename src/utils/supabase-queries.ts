@@ -1,6 +1,11 @@
-import { DropzoneFile } from '@/app/(authenticated-pages)/(user-pages)/organization/[organizationId]/UploadMediaBox';
 import { BASE_URL, MAX_VIDEO_LENGTH_SEC } from '@/constants';
-import { AppSupabaseClient, AuthProvider, Table } from '@/types';
+import {
+  AppSupabaseClient,
+  AuthProvider,
+  CommentWithUser,
+  DropzoneFile,
+  Table,
+} from '@/types';
 import { User } from '@supabase/supabase-js';
 import axios from 'axios';
 import urlJoin from 'url-join';
@@ -399,6 +404,22 @@ export const getRuns = async (
   return data;
 };
 
+export const getRunByUUID = async (
+  supabase: AppSupabaseClient,
+  uuid: string
+) => {
+  const { data, error } = await supabase
+    .from('runs')
+    .select('*')
+    .eq('uuid', uuid)
+    .single();
+  if (error) {
+    errors.add(error.message);
+    throw error;
+  }
+  return data;
+};
+
 export const getPendingRuns = async (
   supabase: AppSupabaseClient,
   organizationId: string
@@ -516,4 +537,64 @@ export const uploadFile = async (
     file,
     videoDurationInSeconds,
   };
+};
+
+// ====================
+// SUBTITLE COMMENTS
+// ====================
+
+export const addRunComment = async (
+  supabase: AppSupabaseClient,
+  runUUID: string,
+  text: string,
+  userId: string
+) => {
+  const { error } = await supabase
+    .from('run_comments')
+    .insert({ run_uuid: runUUID, text, user_id: userId })
+    .select('*')
+    .single();
+  if (error) {
+    errors.add(error.message);
+    throw error;
+  }
+
+  return true;
+};
+
+function normalizeComment(
+  comments: Table<'run_comments'> & {
+    user_profiles:
+    | Table<'user_profiles'>
+    | Array<Table<'user_profiles'>>
+    | null;
+  }
+): CommentWithUser {
+  const user_profiles = Array.isArray(comments.user_profiles)
+    ? comments.user_profiles[0]
+    : comments.user_profiles;
+  if (!user_profiles) {
+    throw new Error('No user profile found for comment');
+  }
+
+  return {
+    ...comments,
+    user_profile: user_profiles,
+  };
+}
+
+export const getRunComments = async (
+  supabase: AppSupabaseClient,
+  runUUID: string
+): Promise<Array<CommentWithUser>> => {
+  const { data, error } = await supabase
+    .from('run_comments')
+    .select('*, user_profiles(*)')
+    .eq('run_uuid', runUUID);
+  if (error) {
+    errors.add(error.message);
+    throw error;
+  }
+
+  return data.map(normalizeComment);
 };

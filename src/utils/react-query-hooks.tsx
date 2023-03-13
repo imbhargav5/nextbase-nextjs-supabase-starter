@@ -22,9 +22,18 @@ import {
   getSubtitles,
   uploadFile,
   getPendingRuns,
+  getRunByUUID,
+  getRunComments,
+  addRunComment,
 } from './supabase-queries';
 import supabaseClient from './supabase-browser';
-import { AuthProvider, Enum, Table, UnwrapPromise } from '@/types';
+import {
+  AuthProvider,
+  CommentWithUser,
+  Enum,
+  Table,
+  UnwrapPromise,
+} from '@/types';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
@@ -59,7 +68,7 @@ export const useUpdateOrganizationTitleMutation = ({
       onSuccess: () => {
         queryClient.invalidateQueries(['organization', organizationId]);
         toast.success('Organization title updated', {
-          id: toastRef.current,
+          id: toastRef.current ?? undefined,
         });
         toastRef.current = null;
         onSuccess?.();
@@ -67,7 +76,7 @@ export const useUpdateOrganizationTitleMutation = ({
       onError: (error) => {
         onError?.(error);
         toast.error('Failed to update organization title', {
-          id: toastRef.current,
+          id: toastRef.current ?? undefined,
         });
         toastRef.current = null;
       },
@@ -117,14 +126,14 @@ export const useUpdateUserFullnameAndAvatarMutation = ({
       },
       onSuccess: () => {
         toast.success('Profile updated', {
-          id: toastRef.current,
+          id: toastRef.current ?? undefined,
         });
         queryClient.invalidateQueries(['user-profile', user.id]);
         onSuccess?.();
       },
       onError: (error) => {
         toast.error('Failed to update profile', {
-          id: toastRef.current,
+          id: toastRef.current ?? undefined,
         });
         onError?.(error);
       },
@@ -153,13 +162,13 @@ export const useUploadUserAvatarMutation = ({
       onSuccess: (avatarUrl: string) => {
         onSuccess?.(avatarUrl);
         toast.success('Avatar uploaded', {
-          id: toastRef.current,
+          id: toastRef.current ?? undefined,
         });
       },
       onError: (error) => {
         onError?.(error);
         toast.error('Failed to upload avatar', {
-          id: toastRef.current,
+          id: toastRef.current ?? undefined,
         });
       },
     }
@@ -214,7 +223,7 @@ export const useCreateOrganizationMutation = ({
         queryClient.invalidateQueries(['organization-list', user?.id]);
         onSuccess?.(data);
         toast.success(`Organization ${data.title} created!`, {
-          id: toastRef.current,
+          id: toastRef.current ?? undefined,
         });
         toastRef.current = undefined;
       },
@@ -224,7 +233,7 @@ export const useCreateOrganizationMutation = ({
           error instanceof Error ? error : new Error(String(error));
         onError?.(customError);
         toast.error(`Error creating organization: ${customError.message}`, {
-          id: toastRef.current,
+          id: toastRef.current ?? undefined,
         });
         toastRef.current = undefined;
       },
@@ -451,7 +460,7 @@ export function useUpdateUserEmailMutation() {
       },
       onSuccess: () => {
         toast.success('Email updated!', {
-          id: toastRef.current,
+          id: toastRef.current ?? undefined,
         });
         toastRef.current = null;
         queryClient.invalidateQueries(['user']);
@@ -459,7 +468,7 @@ export function useUpdateUserEmailMutation() {
       },
       onError: (error) => {
         toast.error(String(error), {
-          id: toastRef.current,
+          id: toastRef.current ?? undefined,
         });
         toastRef.current = null;
       },
@@ -505,7 +514,7 @@ export const useSignInWithMagicLink = ({
       },
       onSuccess: () => {
         toast.success('Check your email for the magic link!', {
-          id: toastRef.current,
+          id: toastRef.current ?? undefined,
         });
 
         toastRef.current = null;
@@ -513,7 +522,7 @@ export const useSignInWithMagicLink = ({
       },
       onError: (error) => {
         toast.error(String(error), {
-          id: toastRef.current,
+          id: toastRef.current ?? undefined,
         });
         toastRef.current = null;
         onError?.(error);
@@ -543,7 +552,7 @@ export const useSignInWithPassword = ({
       },
       onSuccess: () => {
         toast.success('Signed in!', {
-          id: toastRef.current,
+          id: toastRef.current ?? undefined,
         });
 
         toastRef.current = null;
@@ -551,7 +560,7 @@ export const useSignInWithPassword = ({
       },
       onError: (error) => {
         toast.error(String(error), {
-          id: toastRef.current,
+          id: toastRef.current ?? undefined,
         });
         toastRef.current = null;
         onError?.(error);
@@ -581,7 +590,7 @@ export const useResetPassword = ({
       },
       onSuccess: () => {
         toast.success('Check your email for the password reset link!', {
-          id: toastRef.current,
+          id: toastRef.current ?? undefined,
         });
 
         toastRef.current = null;
@@ -589,7 +598,7 @@ export const useResetPassword = ({
       },
       onError: (error) => {
         toast.error(String(error), {
-          id: toastRef.current,
+          id: toastRef.current ?? undefined,
         });
         toastRef.current = null;
         onError?.(error);
@@ -619,7 +628,7 @@ export const useUpdatePassword = ({
       },
       onSuccess: () => {
         toast.success('Password updated!', {
-          id: toastRef.current,
+          id: toastRef.current ?? undefined,
         });
 
         toastRef.current = null;
@@ -627,7 +636,7 @@ export const useUpdatePassword = ({
       },
       onError: (error) => {
         toast.error(String(error), {
-          id: toastRef.current,
+          id: toastRef.current ?? undefined,
         });
         toastRef.current = null;
         onError?.(error);
@@ -671,7 +680,7 @@ export const useSignUp = ({
       },
       onSuccess: () => {
         toast.success('Signed up!', {
-          id: toastRef.current,
+          id: toastRef.current ?? undefined,
         });
 
         toastRef.current = null;
@@ -679,7 +688,7 @@ export const useSignUp = ({
       },
       onError: (error) => {
         toast.error(String(error), {
-          id: toastRef.current,
+          id: toastRef.current ?? undefined,
         });
         toastRef.current = null;
         onError?.(error);
@@ -708,6 +717,18 @@ export const useGetRuns = (
   );
 };
 
+export const useGetRun = (runUUID: string, initialData?: Table<'runs'>) => {
+  return useQuery<Table<'runs'>>(
+    ['getRun', runUUID],
+    async () => {
+      return getRunByUUID(supabaseClient, runUUID);
+    },
+    {
+      initialData,
+    }
+  );
+};
+
 export const useSyncRuns = (organizationId: string) => {
   return useQuery<Table<'runs'>[]>(
     ['syncRuns', organizationId],
@@ -719,6 +740,7 @@ export const useSyncRuns = (organizationId: string) => {
       return pendingRuns;
     },
     {
+      cacheTime: 0,
       refetchOnWindowFocus: true,
       refetchInterval(data) {
         // if there is any PENDING run
@@ -774,12 +796,62 @@ export const useUploadFile = () => {
           className: 'max-w-md w-full',
         });
         queryClient.invalidateQueries(['getRuns', organizationId]);
+        queryClient.invalidateQueries(['syncRuns', organizationId]);
       },
       onError: (error, { file }, context) => {
         toast.error(`File ${file.name} upload failed. ${String(error)}`, {
           className: 'max-w-md w-full',
           id: context?.toastId,
         });
+      },
+    }
+  );
+};
+
+// ==================== //
+// RUN COMMENTS
+// ==================== //
+
+export const useGetRunComments = (runUUID: string) => {
+  return useQuery<Array<CommentWithUser>>(
+    ['getRunComments', runUUID],
+    async () => {
+      return getRunComments(supabaseClient, runUUID);
+    }
+  );
+};
+
+export const useCreateRunComment = () => {
+  const queryClient = useQueryClient();
+  const user = useLoggedInUser();
+  const toastRef = useRef<string | null>(null);
+  return useMutation<
+    UnwrapPromise<ReturnType<typeof addRunComment>>,
+    unknown,
+    {
+      runUUID: string;
+      text: string;
+    }
+  >(
+    async ({ runUUID: runUUID, text }) => {
+      return addRunComment(supabaseClient, runUUID, text, user.id);
+    },
+    {
+      onMutate: ({ runUUID }) => {
+        toastRef.current = toast.loading('Adding comment...');
+        queryClient.cancelQueries(['getRunComments', runUUID]);
+      },
+      onSuccess: (_result, { runUUID: runUUID }) => {
+        toast.success('Comment added!', {
+          id: toastRef.current ?? undefined,
+        });
+        queryClient.invalidateQueries(['getRunComments', runUUID]);
+      },
+      onError: (error, { runUUID: runUUID }) => {
+        toast.error(String(error), {
+          id: toastRef.current ?? undefined,
+        });
+        queryClient.invalidateQueries(['getRunComments', runUUID]);
       },
     }
   );

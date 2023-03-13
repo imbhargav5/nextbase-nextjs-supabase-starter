@@ -171,7 +171,7 @@ export const LandingPage = () => (
           </a>
           <div className="flex items-center lg:order-2">
             <Anchor
-              href="/login"
+              href="/"
               className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
             >
               Log in
@@ -217,7 +217,7 @@ export const LandingPage = () => (
             <ul className="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
               <li>
                 <a
-                  href="/login"
+                  href="/"
                   className="block py-2 pr-4 pl-3 text-white rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0 dark:text-white"
                   aria-current="page"
                 >
@@ -226,7 +226,7 @@ export const LandingPage = () => (
               </li>
               <li>
                 <a
-                  href="/login"
+                  href="/"
                   className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
                 >
                   Company
@@ -234,7 +234,7 @@ export const LandingPage = () => (
               </li>
               <li>
                 <a
-                  href="/login"
+                  href="/"
                   className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
                 >
                   Features
@@ -242,7 +242,7 @@ export const LandingPage = () => (
               </li>
               <li>
                 <a
-                  href="/login"
+                  href="/"
                   className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
                 >
                   Team
@@ -250,7 +250,7 @@ export const LandingPage = () => (
               </li>
               <li>
                 <a
-                  href="/login"
+                  href="/"
                   className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
                 >
                   Contact
@@ -273,7 +273,7 @@ export const LandingPage = () => (
             product in a week!
           </p>
           <Anchor
-            href="/login"
+            href="/"
             className="inline-flex bg-blue-500 justify-center items-center py-3 px-5 mr-3 text-base font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900"
           >
             Get started
@@ -302,7 +302,7 @@ export const LandingPage = () => (
           You’ll be in good company
         </h2>
         <div className="grid grid-cols-2 gap-8 text-gray-500 sm:gap-12 md:grid-cols-3 lg:grid-cols-6 dark:text-gray-400">
-          <a href="/login" className="flex justify-center items-center">
+          <a href="/" className="flex justify-center items-center">
             <svg
               className="h-9 hover:text-gray-900 dark:hover:text-white"
               viewBox="0 0 125 35"
@@ -317,7 +317,7 @@ export const LandingPage = () => (
               />
             </svg>
           </a>
-          <a href="/login" className="flex justify-center items-center">
+          <a href="/" className="flex justify-center items-center">
             <svg
               className="h-9 hover:text-gray-900 dark:hover:text-white"
               viewBox="0 0 86 29"
@@ -332,7 +332,7 @@ export const LandingPage = () => (
               />
             </svg>
           </a>
-          <a href="/login" className="flex justify-center items-center">
+          <a href="/" className="flex justify-center items-center">
             <svg
               className="h-8 hover:text-gray-900 dark:hover:text-white"
               viewBox="0 0 151 34"
@@ -357,7 +357,7 @@ export const LandingPage = () => (
               </defs>
             </svg>
           </a>
-          <a href="/login" className="flex justify-center items-center">
+          <a href="/" className="flex justify-center items-center">
             <svg
               className="h-9 hover:text-gray-900 dark:hover:text-white"
               viewBox="0 0 124 38"
@@ -370,7 +370,7 @@ export const LandingPage = () => (
               />
             </svg>
           </a>
-          <a href="/login" className="flex justify-center items-center">
+          <a href="/" className="flex justify-center items-center">
             <svg
               className="h-9 hover:text-gray-900 dark:hover:text-white"
               viewBox="0 0 137 37"
@@ -451,7 +451,7 @@ export const LandingPage = () => (
               />
             </svg>
           </a>
-          <a href="/login" className="flex justify-center items-center">
+          <a href="/" className="flex justify-center items-center">
             <svg
               className="h-6 hover:text-gray-900 dark:hover:text-white"
               viewBox="0 0 124 21"
@@ -640,12 +640,12 @@ export const LandingPage = () => (
               </h2>
               <ul className="text-gray-600 dark:text-gray-400">
                 <li className="mb-4">
-                  <a href="/login" className="hover:underline">
+                  <a href="/" className="hover:underline">
                     Privacy Policy
                   </a>
                 </li>
                 <li>
-                  <a href="/login" className="hover:underline">
+                  <a href="/" className="hover:underline">
                     Terms &amp; Conditions
                   </a>
                 </li>
@@ -664,7 +664,7 @@ export const LandingPage = () => (
           </span>
           <div className="flex mt-4 space-x-6 sm:justify-center sm:mt-0">
             <a
-              href="/login"
+              href="/"
               className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
             >
               <svg
@@ -681,7 +681,7 @@ export const LandingPage = () => (
               </svg>
             </a>
             <a
-              href="/login"
+              href="/"
               className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
             >
               <svg
@@ -698,7 +698,7 @@ export const LandingPage = () => (
               </svg>
             </a>
             <a
-              href="/login"
+              href="/"
               className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
             >
               <svg
@@ -711,7 +711,7 @@ export const LandingPage = () => (
               </svg>
             </a>
             <a
-              href="/login"
+              href="/"
               className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
             >
               <svg
@@ -728,7 +728,7 @@ export const LandingPage = () => (
               </svg>
             </a>
             <a
-              href="/login"
+              href="/"
               className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
             >
               <svg

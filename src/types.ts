@@ -50,3 +50,15 @@ export type AuthProvider =
   | 'twitch'
   | 'twitter'
   | 'workos';
+
+export type DropzoneFile = File & {
+  path: string;
+};
+
+export type DropzoneFileWithDuration = DropzoneFile & {
+  duration: number;
+};
+
+export type CommentWithUser = Table<'run_comments'> & {
+  user_profile: Table<'user_profiles'>;
+};

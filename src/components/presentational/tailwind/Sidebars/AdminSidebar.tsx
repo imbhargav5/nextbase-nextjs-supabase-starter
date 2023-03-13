@@ -35,7 +35,7 @@ function Links() {
         </>
       ) : (
         <Anchor
-          href="/login"
+          href="/"
           className="flex py-1 text-gray-700 text-sm hover:text-gray-900"
         >
           Login

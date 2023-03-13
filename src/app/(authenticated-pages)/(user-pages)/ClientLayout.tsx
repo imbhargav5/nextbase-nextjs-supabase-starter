@@ -11,7 +11,6 @@ import { useWindowSize } from 'rooks';
 import Confetti from 'react-confetti';
 import { useUserProfile } from '@/utils/react-query-hooks';
 import { PRODUCT_NAME } from '@/constants';
-import { SidebarBottom } from '@/components/presentational/tailwind/Sidebars/SidebarBottom';
 import { UserSidebarMenuNew } from '@/components/presentational/tailwind/UserSidebarMenu';
 
 export function ClientLayout({
@@ -46,7 +45,12 @@ export function ClientLayout({
   }
 
   return (
-    <div className="h-full">
+    <div
+      className="h-screen grid overflow-hidden"
+      style={{
+        gridTemplateRows: 'auto 1fr',
+      }}
+    >
       <div
         className="bg-gray-100 space-x-2 items-center grid grid-cols-4 px-2 py-1"
         style={{
@@ -72,11 +76,7 @@ export function ClientLayout({
           userFullname={userProfile.full_name}
         /> */}
       </div>
-      <div className="py-6 flex-1 h-auto overflow-auto">
-        <div className="max-w-7xl px-4 py-4 sm:px-6 md:px-8 bg-white">
-          {children}
-        </div>
-      </div>
+      <div className="overflow-auto bg-white  h-full">{children}</div>
       <ReactNoSSR>
         {showConfetti ? (
           <Confetti

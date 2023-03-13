@@ -13,7 +13,7 @@ import { getStripe } from '@/utils/stripe-client';
 import { useMemo, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { FiCheck, FiExternalLink, FiX } from 'react-icons/fi';
-import { useOrganizationIdLayoutContext } from '../../../OrganizationIdLayoutContext';
+import { useOrganizationIdLayoutContext } from '../../../../OrganizationIdLayoutContext';
 
 function ChoosePricingTable({
   isOrganizationAdmin,

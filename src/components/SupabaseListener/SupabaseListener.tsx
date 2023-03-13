@@ -16,7 +16,7 @@ export function SupabaseListener({ accessToken }: { accessToken?: string }) {
     const { data: authListener } = supabase.auth.onAuthStateChange(
       (event, session) => {
         if (accessToken && !session?.access_token) {
-          router.push('/login');
+          router.push('/');
         } else if (session?.access_token && !accessToken) {
           router.push('/dashboard');
         } else if (session?.access_token !== accessToken) {

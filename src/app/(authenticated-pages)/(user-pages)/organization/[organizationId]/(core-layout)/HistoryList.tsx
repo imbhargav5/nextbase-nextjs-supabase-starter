@@ -9,7 +9,7 @@ import {
 } from '@/utils/helpers';
 import { useGetRuns, useSyncRuns } from '@/utils/react-query-hooks';
 import { cva } from 'class-variance-authority';
-import { useOrganizationIdLayoutContext } from '../OrganizationIdLayoutContext';
+import { useOrganizationIdLayoutContext } from '../../OrganizationIdLayoutContext';
 
 const statusLabelVariants = cva('whitespace-nowrap p-1 rounded-lg', {
   variants: {

@@ -446,6 +446,72 @@ export interface Database {
           name?: string | null
         }
       }
+      project_team_members: {
+        Row: {
+          created_at: string | null
+          id: number
+          role: Database["public"]["Enums"]["project_team_member_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: number
+          role?: Database["public"]["Enums"]["project_team_member_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: number
+          role?: Database["public"]["Enums"]["project_team_member_role"]
+          user_id?: string
+        }
+      }
+      project_teams: {
+        Row: {
+          created_at: string | null
+          id: number
+          name: string
+          organization_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: number
+          name: string
+          organization_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: number
+          name?: string
+          organization_id?: string
+        }
+      }
+      run_comments: {
+        Row: {
+          created_at: string | null
+          id: number
+          in_reply_to: number | null
+          run_uuid: string
+          text: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: number
+          in_reply_to?: number | null
+          run_uuid: string
+          text: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: number
+          in_reply_to?: number | null
+          run_uuid?: string
+          text?: string
+          user_id?: string
+        }
+      }
       runs: {
         Row: {
           created_at: string
@@ -834,6 +900,7 @@ export interface Database {
       maintenance_status: "inactive" | "active" | "scheduled"
       pricing_plan_interval: "day" | "week" | "month" | "year"
       pricing_type: "one_time" | "recurring"
+      project_team_member_role: "admin" | "member" | "readonly"
       RUN_STATUS: "PENDING" | "SUCCESS" | "ERROR"
       subscription_status:
         | "trialing"

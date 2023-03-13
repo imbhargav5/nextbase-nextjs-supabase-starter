@@ -13,3 +13,21 @@ body {
 }
 
 @tailwind utilities;
+
+/* remove user select on elements except p, input, h1-h6, textarea */
+
+* {
+  user-select: none;
+}
+
+p,
+input,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+textarea {
+  user-select: text;
+}

@@ -1,16 +1,9 @@
 'use client';
 import { T } from '@/components/ui/Typography';
+import { DropzoneFile } from '@/types';
 import React, { useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { toast } from 'react-hot-toast';
-
-export type DropzoneFile = File & {
-  path: string;
-};
-
-export type DropzoneFileWithDuration = DropzoneFile & {
-  duration: number;
-};
 
 type UploadMediaBoxProps = {
   onUpload: (files: DropzoneFile[]) => void;

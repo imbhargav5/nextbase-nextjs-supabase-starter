@@ -3,7 +3,7 @@
 import { TabsNavigation } from '@/components/presentational/tailwind/TabsNavigation';
 import { useMemo } from 'react';
 import { FiUsers, FiDollarSign, FiEdit } from 'react-icons/fi';
-import { useOrganizationIdLayoutContext } from '../../OrganizationIdLayoutContext';
+import { useOrganizationIdLayoutContext } from '../../../OrganizationIdLayoutContext';
 
 export default function OrganizationSettingsLayout({
   children,

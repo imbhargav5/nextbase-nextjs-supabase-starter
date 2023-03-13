@@ -2,6 +2,7 @@ import { getOrganizationById } from '@/utils/supabase-queries';
 import createClient from '@/utils/supabase-server';
 import { ReactNode } from 'react';
 import { OrganizationClientLayout } from './OrganizationClientLayout';
+import { notFound } from 'next/navigation';
 
 export default async function Layout({
   children,
@@ -11,16 +12,15 @@ export default async function Layout({
     organizationId: string;
   };
 }) {
-  const supabase = createClient();
-  const organizationByIdData = await getOrganizationById(
-    supabase,
-    params.organizationId
-  );
-  return (
-    <OrganizationClientLayout
-      initialOrganizationByIdData={organizationByIdData}
-    >
-      {children}
-    </OrganizationClientLayout>
-  );
+  try {
+    const supabase = createClient();
+    const organizationByIdData = await getOrganizationById(
+      supabase,
+      params.organizationId
+    );
+
+    return <OrganizationClientLayout>{children}</OrganizationClientLayout>;
+  } catch (error) {
+    return notFound();
+  }
 }

@@ -1,6 +1,6 @@
 import { KEY_LOCAL_STORAGE_MODIFIED_SUBTITLES } from '@/constants';
 import { z } from 'zod';
-import { msToTimestamp } from './helpers';
+import { msToSRTTimestamp, msToTimestamp } from './helpers';
 
 const textContentSchema = z.object({
   word: z.string(),
@@ -10,7 +10,7 @@ const textContentSchema = z.object({
   speaker: z.number(),
 });
 
-const parsedSubtitleTextSchema = z.array(
+export const parsedSubtitleTextSchema = z.array(
   z.object({
     word: z.string(),
     start: z.number(),
@@ -21,10 +21,25 @@ const parsedSubtitleTextSchema = z.array(
   })
 );
 
+export const parsedSubtitleTextSchemaWithId = z.array(
+  z.object({
+    id: z.string(),
+    word: z.string(),
+    start: z.number(),
+    end: z.number(),
+    confidence: z.number(),
+    speaker: z.number(),
+    textcontents: z.array(textContentSchema),
+  })
+);
+
 export type ParsedSubtitleText = z.infer<typeof parsedSubtitleTextSchema>;
+export type ParsedSubtitleTextWithId = z.infer<
+  typeof parsedSubtitleTextSchemaWithId
+>;
 
 export const convertSubtitleArrayToVTT = (
-  parsedSubtitles: ParsedSubtitleText
+  parsedSubtitles: ParsedSubtitleTextWithId
 ): string => {
   let subtitleText = 'WEBVTT' + '\n\n';
   // console.log(parsedSubtitles);
@@ -35,6 +50,30 @@ export const convertSubtitleArrayToVTT = (
       ' --> ' +
       msToTimestamp(s.end * 1000) +
       '\n' +
+      s.speaker +
+      ': ' +
+      s.word +
+      '\n\n';
+  });
+
+  return subtitleText;
+};
+
+export const convertSubtitleArrayToSRT = (
+  parsedSubtitles: ParsedSubtitleTextWithId
+): string => {
+  let subtitleText = '';
+  parsedSubtitles.forEach((s, i) => {
+    subtitleText =
+      subtitleText +
+      (i + 1) +
+      '\n' +
+      msToSRTTimestamp(s.start * 1000) +
+      ' --> ' +
+      msToSRTTimestamp(s.end * 1000) +
+      '\n' +
+      s.speaker +
+      ': ' +
       s.word +
       '\n\n';
   });
