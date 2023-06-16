@@ -30,7 +30,7 @@ Nextbase Lite is a simple Next.js 13 + Supabase boilerplate. It includes a Next.
 5. Link Supabase to your project using `yarn supabase link --project-ref <project-ref>`. You can get your project ref from the Supabase Project dashboard (Project Settings -> API)
 6. Duplicate `.env.local.example` and rename it to `.env.local` and add the Project ref, Supabase URL and anon key.
 7. Push the database schema to your Supabase project using `yarn supabase db push`.
-8. Generate types for your Supabase tables using `yarn generate:types:local`.
+8. Generate types for your Supabase tables using `yarn generate:types:local` (if in Microsoft, run with WSL).
 9. Run `yarn dev` to start the development server.
 
 ### Testing
