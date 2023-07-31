@@ -1,3 +1,15 @@
+# [2.0.0](https://github.com/imbhargav5/nextbase-nextjs13-supabase-starter/compare/v1.0.3...v2.0.0) (2023-07-31)
+
+
+### Features
+
+* **core:** server actions ([4bc69f6](https://github.com/imbhargav5/nextbase-nextjs13-supabase-starter/commit/4bc69f6c90a61e097635f4871520e4cde55736fc))
+
+
+### BREAKING CHANGES
+
+* **core:** implicit auth -> pkce
+
 ## [1.0.3](https://github.com/imbhargav5/nextbase-nextjs13-supabase-starter/compare/v1.0.2...v1.0.3) (2023-02-26)
 
 
