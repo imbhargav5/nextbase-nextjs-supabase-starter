@@ -2,6 +2,9 @@ import { ClientLayout } from './ClientLayout';
 import { Inter, Roboto_Mono } from 'next/font/google';
 import './globals.css';
 
+export const revalidate = 0;
+export const dynamic = 'force-dynamic';
+
 const inter = Inter({
   subsets: ['latin'],
   display: 'swap',

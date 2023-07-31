@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getItem } from '@/utils/supabase-queries';
-import { createSupabaseServerComponentClient } from '@/supabase-clients/createSupabaseServerComponentClient';
 import { ConfirmDeleteItemDialog } from './ConfirmDeleteItemDialog';
 import { deleteItemAction } from '@/app/actions';
 import { T } from '@/components/ui/Typography';
 import ArrowLeft from 'lucide-react/dist/esm/icons/arrow-left';
+import { createSupabaseServerComponentClient } from '@/supabase-clients/createSupabaseServerComponentClient';
 
 export default async function Item({
   params,
@@ -14,10 +14,11 @@ export default async function Item({
     itemId: string;
   };
 }) {
-  const supabase = createSupabaseServerComponentClient();
+  const supabaseClient = createSupabaseServerComponentClient();
+
   const { itemId } = params;
   try {
-    const item = await getItem(supabase, itemId);
+    const item = await getItem(supabaseClient, itemId);
     return (
       <div className="space-y-2">
         <div className="space-y-4">

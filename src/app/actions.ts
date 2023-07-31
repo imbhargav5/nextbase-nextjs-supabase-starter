@@ -44,5 +44,6 @@ export async function updateItemAction(payload: {
 export const deleteItemAction = async (id: string) => {
   const supabaseClient = createSupabaseServerActionClient();
   await deleteItem(supabaseClient, id);
+
   revalidatePath('/');
 };
