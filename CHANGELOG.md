@@ -1,3 +1,10 @@
+## [2.0.1](https://github.com/imbhargav5/nextbase-nextjs13-supabase-starter/compare/v2.0.0...v2.0.1) (2023-07-31)
+
+
+### Bug Fixes
+
+* **build:** build fixes ([7bdeaeb](https://github.com/imbhargav5/nextbase-nextjs13-supabase-starter/commit/7bdeaeb4cc8581a7027919ac04b957a6f941c6d0))
+
 # [2.0.0](https://github.com/imbhargav5/nextbase-nextjs13-supabase-starter/compare/v1.0.3...v2.0.0) (2023-07-31)
 
 
