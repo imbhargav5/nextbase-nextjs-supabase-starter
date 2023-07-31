@@ -17,14 +17,9 @@ module.exports = {
       },
       plugins: ['@typescript-eslint', 'prettier'],
       rules: {
-        'prettier/prettier': 'error',
+        'prettier/prettier': 1,
       },
-      files: [
-        'src/**/*.ts',
-        'src/**/*.tsx',
-        'emails/**/*.ts',
-        'emails/**/*.tsx',
-      ],
+      files: ['src/**/*.ts', 'src/**/*.tsx'],
     },
     {
       extends: [
@@ -38,8 +33,8 @@ module.exports = {
       },
       plugins: [
         '@typescript-eslint',
-        'prettier',
         'plugin:playwright/playwright-test',
+        'prettier',
       ],
       rules: {
         'prettier/prettier': 'error',
@@ -51,10 +46,25 @@ module.exports = {
       files: '*.mjs',
       rules: ruleOverrides,
     },
+    // make nextconfig.mjs node environment
+    {
+      extends: ['eslint:recommended', 'prettier', 'node'],
+      files: 'next.config.mjs',
+      rules: ruleOverrides,
+    },
     {
       extends: ['prettier'],
       files: '*.js',
       rules: ruleOverrides,
+    },
+    {
+      extends: ['prettier'],
+      files: '*.cjs',
+      rules: ruleOverrides,
+      parserOptions: {
+        ecmaVersion: 2020,
+        sourceType: 'module',
+      },
     },
   ],
   root: true,

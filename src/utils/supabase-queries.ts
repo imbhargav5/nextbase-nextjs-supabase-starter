@@ -6,7 +6,6 @@ export const getAllItems = async (
   const { data, error } = await supabase.from('items').select('*');
 
   if (error) {
-    console.log(error);
     throw error;
   }
 

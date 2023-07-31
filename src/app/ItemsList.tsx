@@ -1,14 +1,8 @@
 'use client';
 import { Table } from '@/types';
 import Link from 'next/link';
-import { useItems } from './utils/react-query-hooks';
 
-export const ItemsList = ({
-  initialItems,
-}: {
-  initialItems: Table<'items'>[];
-}) => {
-  const { data: items } = useItems(initialItems);
+export const ItemsList = ({ items }: { items: Table<'items'>[] }) => {
   return (
     <div className="space-y-8">
       <div className="flex justify-between items-baseline">
