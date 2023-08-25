@@ -1,6 +1,7 @@
 import { ClientLayout } from './ClientLayout';
 import { Inter, Roboto_Mono } from 'next/font/google';
 import './globals.css';
+import Banner from './Banner';
 
 export const revalidate = 0;
 export const dynamic = 'force-dynamic';
@@ -26,6 +27,7 @@ export default async function RootLayout({
     <html lang="en" className={`${inter.variable} ${roboto_mono.variable}`}>
       <head />
       <body>
+        <Banner />
         <ClientLayout>{children}</ClientLayout>
       </body>
     </html>

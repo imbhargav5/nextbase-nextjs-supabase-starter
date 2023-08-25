@@ -6,9 +6,14 @@ export const ItemsList = ({ items }: { items: Table<'items'>[] }) => {
   return (
     <div className="space-y-8">
       <div className="flex justify-between items-baseline">
-        <h1 className="mt-1 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl lg:text-5xl">
-          Items
-        </h1>
+        <div className="space-y-2">
+          <h1 className="mt-1 text-2xl font-bold tracking-tight text-gray-900 sm:text-4xl lg:text-5xl">
+            Items
+          </h1>
+          <p className="text-gray-600 text-sm italic">
+            This is an open database. Please be respectful of others.
+          </p>
+        </div>
         <div>
           <Link
             className="text-white bg-blue-600 rounded px-3 py-2"
