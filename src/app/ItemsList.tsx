@@ -13,6 +13,9 @@ export const ItemsList = ({ items }: { items: Table<'items'>[] }) => {
           <p className="text-gray-600 text-sm italic">
             This is an open database. Please be respectful of others.
           </p>
+          <p className="text-gray-300 text-xs italic">
+            Items are automatically cleared every 24 hours via a cron job.
+          </p>
         </div>
         <div>
           <Link
