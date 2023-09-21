@@ -2,9 +2,7 @@ import { ClientLayout } from './ClientLayout';
 import { Inter, Roboto_Mono } from 'next/font/google';
 import './globals.css';
 import Banner from './Banner';
-
-export const revalidate = 0;
-export const dynamic = 'force-dynamic';
+import { Navbar } from './Navbar';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -18,6 +16,11 @@ const roboto_mono = Roboto_Mono({
   variable: '--font-roboto-mono',
 });
 
+export const metadata = {
+  title: 'Nextbase Open source starter',
+  description: 'Built with Next.js, Supabase, and Tailwind CSS',
+};
+
 export default async function RootLayout({
   children,
 }: {
@@ -28,7 +31,10 @@ export default async function RootLayout({
       <head />
       <body>
         <Banner />
-        <ClientLayout>{children}</ClientLayout>
+        <div className="space-y-4">
+          <Navbar />
+          <ClientLayout>{children}</ClientLayout>
+        </div>
       </body>
     </html>
   );

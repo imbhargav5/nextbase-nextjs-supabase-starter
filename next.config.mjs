@@ -1,6 +1,5 @@
 export default {
   experimental: {
-    appDir: true,
     serverActions: true,
   },
   images: {

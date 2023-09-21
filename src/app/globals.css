@@ -1,13 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 html,
 body {
   height: 100%;
   width: 100%;
-  scroll-behavior:smooth;
-
+  font-family: sans-serif;
 }
 
 [data-nextjs-scroll-focus-boundary] {
@@ -15,23 +13,19 @@ body {
   width: 100%;
 }
 
-
-.swiper {
-  width: 640px;
-  height: 480px;
-}
-
-.swiper-slide {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-  font-weight: bold;
-
+.dotted-bg {
+  background-image: radial-gradient(
+    circle,
+    var(--dot-color) 1px,
+    transparent 1px
+  );
+  background-size: 24px 24px;
 }
 
 @layer base {
   :root {
+    --dot-color: #c1c1c1;
+
     --background: 0 0% 100%;
     --foreground: 222.2 47.4% 11.2%;
 
@@ -41,11 +35,11 @@ body {
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 47.4% 11.2%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-
     --card: 0 0% 100%;
     --card-foreground: 222.2 47.4% 11.2%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
 
     --primary: 222.2 47.4% 11.2%;
     --primary-foreground: 210 40% 98%;
@@ -62,26 +56,48 @@ body {
     --ring: 215 20.2% 65.1%;
 
     --radius: 0.5rem;
+
+    --novel-black: rgb(0 0 0);
+    --novel-white: rgb(255 255 255);
+    --novel-stone-50: rgb(250 250 249);
+    --novel-stone-100: rgb(245 245 244);
+    --novel-stone-200: rgb(231 229 228);
+    --novel-stone-300: rgb(214 211 209);
+    --novel-stone-400: rgb(168 162 158);
+    --novel-stone-500: rgb(120 113 108);
+    --novel-stone-600: rgb(87 83 78);
+    --novel-stone-700: rgb(68 64 60);
+    --novel-stone-800: rgb(41 37 36);
+    --novel-stone-900: rgb(28 25 23);
+
+    --novel-highlight-default: #ffffff;
+    --novel-highlight-purple: #f6f3f8;
+    --novel-highlight-red: #fdebeb;
+    --novel-highlight-yellow: #fbf4a2;
+    --novel-highlight-blue: #c1ecf9;
+    --novel-highlight-green: #acf79f;
+    --novel-highlight-orange: #faebdd;
+    --novel-highlight-pink: #faf1f5;
+    --novel-highlight-gray: #f1f1ef;
   }
 
   .dark {
-    --background: 224 71% 4%;
+    --dot-color: #374151;
+
+    --background: 0 0% 0%;
     --foreground: 213 31% 91%;
 
     --muted: 223 47% 11%;
     --muted-foreground: 215.4 16.3% 56.9%;
 
-    --accent: 216 34% 17%;
-    --accent-foreground: 210 40% 98%;
-
     --popover: 224 71% 4%;
     --popover-foreground: 215 20.2% 65.1%;
 
-    --border: 216 34% 17%;
-    --input: 216 34% 17%;
-
     --card: 224 71% 4%;
     --card-foreground: 213 31% 91%;
+
+    --border: 216 34% 17%;
+    --input: 216 34% 17%;
 
     --primary: 210 40% 98%;
     --primary-foreground: 222.2 47.4% 1.2%;
@@ -89,12 +105,38 @@ body {
     --secondary: 222.2 47.4% 11.2%;
     --secondary-foreground: 210 40% 98%;
 
+    --accent: 216 34% 17%;
+    --accent-foreground: 210 40% 98%;
+
     --destructive: 0 63% 31%;
     --destructive-foreground: 210 40% 98%;
 
     --ring: 216 34% 17%;
 
     --radius: 0.5rem;
+
+    --novel-black: rgb(255 255 255);
+    --novel-white: rgb(25 25 25);
+    --novel-stone-50: rgb(35 35 34);
+    --novel-stone-100: rgb(41 37 36);
+    --novel-stone-200: rgb(66 69 71);
+    --novel-stone-300: rgb(112 118 123);
+    --novel-stone-400: rgb(160 167 173);
+    --novel-stone-500: rgb(193 199 204);
+    --novel-stone-600: rgb(212 217 221);
+    --novel-stone-700: rgb(229 232 235);
+    --novel-stone-800: rgb(232 234 235);
+    --novel-stone-900: rgb(240, 240, 241);
+
+    --novel-highlight-default: #000000;
+    --novel-highlight-purple: #3f2c4b;
+    --novel-highlight-red: #5c1a1a;
+    --novel-highlight-yellow: #5c4b1a;
+    --novel-highlight-blue: #1a3d5c;
+    --novel-highlight-green: #1a5c20;
+    --novel-highlight-orange: #5c3a1a;
+    --novel-highlight-pink: #5c1a3a;
+    --novel-highlight-gray: #3a3a3a;
   }
 }
 
@@ -104,6 +146,11 @@ body {
   }
   body {
     @apply bg-background text-foreground;
-    font-feature-settings: "rlig" 1, "calt" 1;
+    font-feature-settings: 'rlig' 1, 'calt' 1;
+
   }
 }
+
+
+
+@tailwind variants;
