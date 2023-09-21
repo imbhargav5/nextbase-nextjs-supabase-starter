@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/imbhargav5/nextbase-nextjs13-supabase-starter/compare/v2.0.1...v2.1.0) (2023-09-21)
+
+
+### Features
+
+* **auth:** login added ([6ca6940](https://github.com/imbhargav5/nextbase-nextjs13-supabase-starter/commit/6ca6940aa2a22e75daf807573afd8057db000808))
+
 ## [2.0.1](https://github.com/imbhargav5/nextbase-nextjs13-supabase-starter/compare/v2.0.0...v2.0.1) (2023-07-31)
 
 
