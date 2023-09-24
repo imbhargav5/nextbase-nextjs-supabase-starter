@@ -31,8 +31,9 @@ export default async function RootLayout({
     <html
       lang="en"
       className={'light' + `${inter.variable} ${roboto_mono.variable}`}
-      style={{ colorScheme: 'light' }}
-    >
+      style={{ colorScheme: 'light' }
+      }
+      suppressHydrationWarning>
       <head />
       <body>
         <Providers>
