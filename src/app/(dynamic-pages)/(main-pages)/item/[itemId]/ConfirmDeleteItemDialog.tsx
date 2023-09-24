@@ -54,11 +54,11 @@ export const ConfirmDeleteItemDialog = ({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">
+        <Button variant="outline" className="bg-black text-white">
           <Trash className="mr-1" /> Delete Item
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className=" sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Delete Item</DialogTitle>
           <DialogDescription>

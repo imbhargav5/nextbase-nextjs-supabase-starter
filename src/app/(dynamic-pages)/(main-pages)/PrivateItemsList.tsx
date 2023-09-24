@@ -11,7 +11,7 @@ export const PrivateItemsList = ({
     <div className="space-y-8">
       <div className="flex justify-between items-baseline">
         <div className="space-y-2">
-          <h1 className="mt-1 text-2xl font-bold tracking-tight text-gray-900 sm:text-4xl lg:text-5xl">
+          <h1 className="mt-1 text-2xl font-bold tracking-tight  sm:text-4xl lg:text-5xl">
             Private Items
           </h1>
           <p className="text-gray-600 text-sm italic">
@@ -25,7 +25,7 @@ export const PrivateItemsList = ({
         </div>
       </div>
       {privateItems.length ? (
-        <div className="list-none space-y-2 m-0 pb-3 divide-y divide-gray-200 bg-white shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+        <div className="list-none space-y-2 m-0 pb-3 divide-y  border shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
           {privateItems.map((privateItem) => (
             <Link
               href={`/private-item/${privateItem.id}`}

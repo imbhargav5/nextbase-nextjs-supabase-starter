@@ -3,6 +3,7 @@ import { Inter, Roboto_Mono } from 'next/font/google';
 import './globals.css';
 import Banner from './Banner';
 import { Navbar } from './Navbar';
+import Providers from './providers';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -27,14 +28,20 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${roboto_mono.variable}`}>
+    <html
+      lang="en"
+      className={'light' + `${inter.variable} ${roboto_mono.variable}`}
+      style={{ colorScheme: 'light' }}
+    >
       <head />
       <body>
-        <Banner />
-        <div className="space-y-4">
-          <Navbar />
-          <ClientLayout>{children}</ClientLayout>
-        </div>
+        <Providers>
+          <Banner />
+          <div className="space-y-4">
+            <Navbar />
+            <ClientLayout>{children}</ClientLayout>
+          </div>
+        </Providers>
       </body>
     </html>
   );

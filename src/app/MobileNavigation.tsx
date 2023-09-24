@@ -1,7 +1,17 @@
 'use client';
-import { ComponentProps, useState } from 'react';
+import { ComponentProps, useState, Suspense } from 'react';
 import Link from 'next/link';
 import { Dialog } from '@headlessui/react';
+import { NavLink } from './NavLink';
+import dynamic from 'next/dynamic';
+import ThemeButton from '@/components/ThemeButton';
+
+const DynamicLoginNavLink = dynamic(
+  () => import('./LoginNavLink').then((module) => module.LoginNavLink),
+  {
+    ssr: false,
+  }
+);
 
 function MenuIcon(props: ComponentProps<'svg'>) {
   return (
@@ -84,6 +94,17 @@ export function MobileNavigation() {
                 alt="Nextbase Logo"
               />
             </Link>
+          </div>
+          <div className="flex flex-col gap-8 mt-3  items-center">
+            <NavLink href="/" aria-label="Items">
+              Items
+            </NavLink>
+            <Suspense fallback={<div> Loading ... </div>}>
+              <DynamicLoginNavLink />
+            </Suspense>
+            <div>
+              <ThemeButton />
+            </div>
           </div>
         </Dialog.Panel>
       </Dialog>

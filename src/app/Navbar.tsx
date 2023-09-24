@@ -6,6 +6,7 @@ import { MobileNavigation } from './MobileNavigation';
 import { NavLink } from './NavLink';
 // next dynamic
 import dynamic from 'next/dynamic';
+import ThemeButton from '@/components/ThemeButton';
 
 const DynamicLoginNavLink = dynamic(
   () => import('./LoginNavLink').then((module) => module.LoginNavLink),
@@ -50,7 +51,11 @@ export function Navbar() {
         </div>
       </div>
 
-      <div className={cn(' mx-auto w-full max-w-8xl flex justify-center ')}>
+      <div
+        className={cn(
+          ' mx-auto w-full max-w-8xl flex justify-center items-center '
+        )}
+      >
         <div
           className={cn(
             'hidden lg:flex items-center gap-8 mx-auto ',
@@ -70,6 +75,9 @@ export function Navbar() {
           <Suspense fallback={<div> Loading ... </div>}>
             <DynamicLoginNavLink />
           </Suspense>
+          <div>
+            <ThemeButton />
+          </div>
         </div>
         <div className="-my-5 mr-6 sm:mr-8 md:mr-0"></div>
         <div className="relative flex basis-0 justify-end gap-6 sm:gap-8 md:flex-grow"></div>

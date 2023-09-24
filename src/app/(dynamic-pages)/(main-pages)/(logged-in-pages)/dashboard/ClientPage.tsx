@@ -56,10 +56,10 @@ export const ClientPage = ({
       }}
     >
       <div>
-        <h1 className="mt-1 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl lg:text-5xl">
+        <h1 className="mt-1 text-3xl font-bold tracking-tight  sm:text-4xl lg:text-5xl">
           Create Private Item
         </h1>
-        <p>
+        <p className="text-gray-600">
           This item will be private and only you logged in will be able to
           create it.
         </p>
@@ -79,7 +79,7 @@ export const ClientPage = ({
           id="name"
           name="name"
           type="text"
-          className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-green-500 focus:outline-none focus:ring-green-500 sm:text-sm"
+          className="block w-full appearance-none rounded-md border  px-3 py-2 placeholder-gray-400 shadow-sm focus:border-green-500 focus:outline-none focus:ring-green-500 sm:text-sm"
         />
       </div>
       <div className="space-y-2">
@@ -97,10 +97,14 @@ export const ClientPage = ({
           id="description"
           name="description"
           rows={4}
-          className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-green-500 focus:outline-none focus:ring-green-500 sm:text-sm"
+          className="block w-full appearance-none rounded-md border  px-3 py-2 placeholder-gray-400 shadow-sm focus:border-green-500 focus:outline-none focus:ring-green-500 sm:text-sm"
         />
       </div>
-      <Button variant="default" type="submit">
+      <Button
+        variant="default"
+        type="submit"
+        className="bg-black hover:bg-gray-900"
+      >
         Create Item
       </Button>
     </form>
