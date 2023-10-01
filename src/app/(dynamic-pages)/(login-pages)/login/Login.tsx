@@ -32,7 +32,7 @@ export function Login() {
     <div className="container h-full  grid items-center text-left max-w-lg mx-auto overflow-auto">
       <div className="space-y-8 ">
         {/* <Auth providers={['twitter']} supabaseClient={supabase} /> */}
-        <div className="flex mt-0 md:mt-8  flex-col items-start gap-0 w-[320px]">
+        <div className="flex  md:mt-8  flex-col items-start gap-0 w-[320px]">
           <T.H4 className="leading-7">Login to Nextbase</T.H4>
           <T.P className="text-base text-left text-muted-foreground">
             Login with the account you used to signup.
