@@ -1,3 +1,15 @@
+# [2.2.0](https://github.com/imbhargav5/nextbase-nextjs13-supabase-starter/compare/v2.1.0...v2.2.0) (2023-11-25)
+
+
+### Bug Fixes
+
+* **build:** fixes ([d50ee82](https://github.com/imbhargav5/nextbase-nextjs13-supabase-starter/commit/d50ee82a3d766b584a2fc66ea1a4b9409f83e8fc))
+
+
+### Features
+
+* **upgrade:** next.js 14 + improved data fetching ([074f464](https://github.com/imbhargav5/nextbase-nextjs13-supabase-starter/commit/074f464b00778918c2e2cd14f470272067e0d2d3))
+
 # [2.1.0](https://github.com/imbhargav5/nextbase-nextjs13-supabase-starter/compare/v2.0.1...v2.1.0) (2023-09-21)
 
 
