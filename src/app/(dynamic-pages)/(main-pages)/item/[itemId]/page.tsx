@@ -1,43 +1,45 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { getItem } from '@/utils/supabase-queries';
 import { ConfirmDeleteItemDialog } from './ConfirmDeleteItemDialog';
 import { T } from '@/components/ui/Typography';
 import ArrowLeft from 'lucide-react/dist/esm/icons/arrow-left';
-import { createSupabaseServerComponentClient } from '@/supabase-clients/createSupabaseServerComponentClient';
-import { deleteItemAction } from '../../actions';
+import { getItem } from '@/data/anon/items';
+import { Suspense } from 'react';
 
-export default async function Item({
+async function Item({ itemId }: { itemId: string }) {
+  const item = await getItem(itemId);
+  return (
+    <div className="space-y-2">
+      <div className="space-y-4">
+        <Link
+          href="/"
+          className="text-sm text-blue-600 text-underline flex items-center space-x-2"
+        >
+          <ArrowLeft /> <span>Back to dashboard</span>
+        </Link>
+        <T.H1>{item.name}</T.H1>
+        <T.Subtle>Description: {item.description}</T.Subtle>
+      </div>
+      <div className="flex">
+        <ConfirmDeleteItemDialog itemId={itemId} />
+      </div>
+    </div>
+  );
+}
+
+export default async function ItemPage({
   params,
 }: {
   params: {
     itemId: string;
   };
 }) {
-  const supabaseClient = createSupabaseServerComponentClient();
-
   const { itemId } = params;
   try {
-    const item = await getItem(supabaseClient, itemId);
     return (
-      <div className="space-y-2">
-        <div className="space-y-4">
-          <Link
-            href="/"
-            className="text-sm text-blue-600 text-underline flex items-center space-x-2"
-          >
-            <ArrowLeft /> <span>Back to dashboard</span>
-          </Link>
-          <T.H1>{item.name}</T.H1>
-          <T.Subtle>Description: {item.description}</T.Subtle>
-        </div>
-        <div className="flex">
-          <ConfirmDeleteItemDialog
-            deleteItemAction={deleteItemAction}
-            itemId={itemId}
-          />
-        </div>
-      </div>
+      <Suspense fallback={<T.Subtle>Loading item...</T.Subtle>}>
+        <Item itemId={itemId} />
+      </Suspense>
     );
   } catch (error) {
     return notFound();

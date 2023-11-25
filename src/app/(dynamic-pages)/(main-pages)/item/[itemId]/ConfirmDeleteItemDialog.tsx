@@ -14,43 +14,35 @@ import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import Trash from 'lucide-react/dist/esm/icons/trash';
+import { deleteItemAction } from '@/data/anon/items';
 
 type Props = {
   itemId: string;
-  deleteItemAction: (itemId: string) => Promise<void>;
 };
 
-export const ConfirmDeleteItemDialog = ({
-  itemId,
-  deleteItemAction,
-}: Props) => {
+export const ConfirmDeleteItemDialog = ({ itemId }: Props) => {
   const [open, setOpen] = useState(false);
   const toastRef = useRef<string | null>(null);
   const router = useRouter();
-  const { mutate, isLoading } = useMutation(
-    async (id: string) => {
-      return deleteItemAction(id);
+  const { mutate, isLoading } = useMutation(deleteItemAction, {
+    onMutate: () => {
+      const toastId = toast.loading('Deleting item');
+      toastRef.current = toastId;
     },
-    {
-      onMutate: () => {
-        const toastId = toast.loading('Deleting item');
-        toastRef.current = toastId;
-      },
-      onSuccess: () => {
-        toast.success('Item deleted', { id: toastRef.current });
-        toastRef.current = null;
-        router.refresh();
-        router.push('/');
-      },
-      onError: () => {
-        toast.error('Failed to delete item', { id: toastRef.current });
-        toastRef.current = null;
-      },
-      onSettled: () => {
-        setOpen(false);
-      },
-    }
-  );
+    onSuccess: () => {
+      toast.success('Item deleted', { id: toastRef.current });
+      toastRef.current = null;
+      router.refresh();
+      router.push('/');
+    },
+    onError: () => {
+      toast.error('Failed to delete item', { id: toastRef.current });
+      toastRef.current = null;
+    },
+    onSettled: () => {
+      setOpen(false);
+    },
+  });
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>

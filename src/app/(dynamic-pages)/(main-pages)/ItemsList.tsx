@@ -1,4 +1,3 @@
-'use client';
 import { Button } from '@/components/ui/button';
 import { Table } from '@/types';
 import Link from 'next/link';

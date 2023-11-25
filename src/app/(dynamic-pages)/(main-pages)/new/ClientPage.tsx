@@ -1,19 +1,13 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
+import { insertItemAction } from '@/data/anon/items';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
 import { toast } from 'react-hot-toast';
 
-export const ClientPage = ({
-  insertItemAction,
-}: {
-  insertItemAction: (item: {
-    name: string;
-    description: string;
-  }) => Promise<string>;
-}) => {
+export const ClientPage = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
   const toastRef = useRef<string | null>(null);

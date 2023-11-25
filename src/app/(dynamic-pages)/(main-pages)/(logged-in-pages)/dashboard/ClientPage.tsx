@@ -1,46 +1,35 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
+import { insertPrivateItemAction } from '@/data/user/privateItems';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
 import { toast } from 'react-hot-toast';
 
-export const ClientPage = ({
-  insertPrivateItemAction,
-}: {
-  insertPrivateItemAction: (item: {
-    name: string;
-    description: string;
-  }) => Promise<string>;
-}) => {
+export const ClientPage = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
   const toastRef = useRef<string | null>(null);
 
-  const { mutate } = useMutation(
-    async (item: { name: string; description: string }) => {
-      return insertPrivateItemAction(item);
+  const { mutate } = useMutation(insertPrivateItemAction, {
+    onMutate: () => {
+      const toastId = toast.loading('Creating item');
+      toastRef.current = toastId;
     },
-    {
-      onMutate: () => {
-        const toastId = toast.loading('Creating item');
-        toastRef.current = toastId;
-      },
 
-      onSuccess: (newItemId) => {
-        toast.success('Item created', { id: toastRef.current });
-        toastRef.current = null;
-        router.refresh();
-        queryClient.invalidateQueries(['items']);
-        router.push(`/item/${newItemId}`);
-      },
-      onError: () => {
-        toast.error('Failed to create item', { id: toastRef.current });
-        toastRef.current = null;
-      },
-    }
-  );
+    onSuccess: (newItemId) => {
+      toast.success('Item created', { id: toastRef.current });
+      toastRef.current = null;
+      router.refresh();
+      queryClient.invalidateQueries(['items']);
+      router.push(`/private-item/${newItemId}`);
+    },
+    onError: () => {
+      toast.error('Failed to create item', { id: toastRef.current });
+      toastRef.current = null;
+    },
+  });
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   return (

@@ -1,28 +1,29 @@
-import { AppSupabaseClient } from '@/types';
 import { ItemsList } from './ItemsList';
-import { getAllItems, getAllPrivateItems } from '@/utils/supabase-queries';
-import { createSupabaseServerComponentClient } from '@/supabase-clients/createSupabaseServerComponentClient';
 import { PrivateItemsList } from './PrivateItemsList';
+import { getAllItems } from '@/data/anon/items';
+import { Suspense } from 'react';
+import { T } from '@/components/ui/Typography';
+import { getAllPrivateItems } from '@/data/anon/privateItems';
 
-async function fetchData(supabaseClient: AppSupabaseClient) {
-  const [items, privateItems] = await Promise.all([
-    getAllItems(supabaseClient),
-    getAllPrivateItems(supabaseClient),
-  ]);
-  return {
-    items: items,
-    privateItems: privateItems,
-  };
+async function Items() {
+  const items = await getAllItems();
+  return <ItemsList items={items} />;
+}
+
+async function PrivateItems() {
+  const privateItems = await getAllPrivateItems();
+  return <PrivateItemsList privateItems={privateItems} />;
 }
 
 export default async function HomePage() {
-  const supabase = createSupabaseServerComponentClient();
-  const { items: initialItems, privateItems: initialPrivateItems } =
-    await fetchData(supabase);
   return (
     <div className="space-y-2">
-      <ItemsList items={initialItems} />
-      <PrivateItemsList privateItems={initialPrivateItems} />
+      <Suspense fallback={<T.Subtle>Loading items...</T.Subtle>}>
+        <Items />
+      </Suspense>
+      <Suspense fallback={<T.Subtle>Loading private items...</T.Subtle>}>
+        <PrivateItems />
+      </Suspense>
     </div>
   );
 }
