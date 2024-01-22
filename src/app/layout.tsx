@@ -2,7 +2,7 @@ import { ClientLayout } from './ClientLayout';
 import { Inter, Roboto_Mono } from 'next/font/google';
 import './globals.css';
 import Banner from './Banner';
-import { Navbar } from './Navbar';
+import { ExternalNavigation } from './Navbar';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -32,7 +32,7 @@ export default async function RootLayout({
       <body>
         <Banner />
         <div className="space-y-4">
-          <Navbar />
+          <ExternalNavigation />
           <ClientLayout>{children}</ClientLayout>
         </div>
       </body>
