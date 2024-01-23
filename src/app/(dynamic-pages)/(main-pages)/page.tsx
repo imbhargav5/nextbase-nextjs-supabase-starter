@@ -4,6 +4,7 @@ import { getAllItems } from '@/data/anon/items';
 import { Suspense } from 'react';
 import { T } from '@/components/ui/Typography';
 import { getAllPrivateItems } from '@/data/anon/privateItems';
+import Footer from '@/components/tailwind/Footer';
 
 async function Items() {
   const items = await getAllItems();
@@ -24,6 +25,7 @@ export default async function HomePage() {
       <Suspense fallback={<T.Subtle>Loading private items...</T.Subtle>}>
         <PrivateItems />
       </Suspense>
+      <Footer />
     </div>
   );
 }
