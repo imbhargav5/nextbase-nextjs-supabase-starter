@@ -1,6 +1,7 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
+import { T } from '@/components/ui/Typography';
+import { Button } from '@/components/ui/Button';
 import { insertPrivateItemAction } from '@/data/user/privateItems';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
@@ -34,7 +35,7 @@ export const ClientPage = () => {
   const [description, setDescription] = useState('');
   return (
     <form
-      className="flex flex-col space-y-4"
+      className="flex flex-col space-y-4 pt-8"
       onSubmit={(event) => {
         event.preventDefault();
         const formData = new FormData(event.target as HTMLFormElement);
@@ -45,13 +46,11 @@ export const ClientPage = () => {
       }}
     >
       <div>
-        <h1 className="mt-1 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl lg:text-5xl">
-          Create Private Item
-        </h1>
-        <p>
+        <T.H1>Create Private Item</T.H1>
+        <T.Subtle>
           This item will be private and only you logged in will be able to
           create it.
-        </p>
+        </T.Subtle>
       </div>
       <div className="space-y-2">
         <label

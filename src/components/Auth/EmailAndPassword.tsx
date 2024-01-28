@@ -1,6 +1,6 @@
 import { classNames } from '@/utils/classNames';
 import { useState } from 'react';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/Button';
 import { Label } from '@/components/ui/label';
 import Link from 'next/link';
 

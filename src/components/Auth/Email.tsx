@@ -1,7 +1,7 @@
 import { classNames } from '@/utils/classNames';
 import { useMemo } from 'react';
 import { useState } from 'react';
-import { Button } from '../ui/button';
+import { Button } from '../ui/Button';
 import { Label } from '@/components/ui/label';
 import { T } from '@/components/ui/Typography';
 import Link from 'next/link';

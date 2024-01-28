@@ -11,7 +11,7 @@ async function PrivateItem({ privateItemId }: { privateItemId: string }) {
     <div className="space-y-2">
       <div className="space-y-4">
         <Link
-          href="/"
+          href="/dashboard"
           className="text-sm text-blue-600 text-underline flex items-center space-x-2"
         >
           <ArrowLeft /> <span>Back to dashboard</span>
