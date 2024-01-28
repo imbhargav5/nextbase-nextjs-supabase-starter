@@ -1,8 +1,8 @@
 import { ClientLayout } from './ClientLayout';
 import { Inter, Roboto_Mono } from 'next/font/google';
 import './globals.css';
-import Banner from './Banner';
 import { ExternalNavigation } from './Navbar';
+import Footer from '@/components/tailwind/Footer';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -30,10 +30,10 @@ export default async function RootLayout({
     <html lang="en" className={`${inter.variable} ${roboto_mono.variable}`}>
       <head />
       <body>
-        <Banner />
-        <div className="space-y-4">
+        <div className="flex pt-2 flex-col min-h-screen bg-white dark:bg-gray-900">
           <ExternalNavigation />
           <ClientLayout>{children}</ClientLayout>
+          <Footer />
         </div>
       </body>
     </html>
