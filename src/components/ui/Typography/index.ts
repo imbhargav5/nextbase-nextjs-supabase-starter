@@ -1,13 +1,13 @@
+import { Blockquote } from './Blockquote';
 import { H1 } from './H1';
 import { H2 } from './H2';
 import { H3 } from './H3';
 import { H4 } from './H4';
-import { Blockquote } from './Blockquote';
-import { P } from './P';
 import { Large } from './Large';
+import { List } from './List';
+import { P } from './P';
 import { Small } from './Small';
 import { Subtle } from './Subtle';
-import { List } from './List';
 
 const Typography = {
   H1,
@@ -21,6 +21,6 @@ const Typography = {
   Subtle,
   List,
 };
+export { Blockquote, H1, H2, H3, H4, Large, List, P, Small, Subtle };
 
-export { Typography };
-export { Typography as T };
+export { Typography as T, Typography };

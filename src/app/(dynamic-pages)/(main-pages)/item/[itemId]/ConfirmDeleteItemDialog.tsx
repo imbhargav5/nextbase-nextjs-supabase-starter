@@ -1,5 +1,12 @@
 'use client';
-import { Button } from '@/components/ui/Button';
+
+import { useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useAction } from 'next-safe-action/hooks';
+import { toast } from 'sonner';
+import { Trash } from 'lucide-react';
+
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -8,41 +15,44 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/Dialog';
-import { useMutation } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
-import { useRef, useState } from 'react';
-import { toast } from 'react-hot-toast';
-import Trash from 'lucide-react/dist/esm/icons/trash';
+} from '@/components/ui/dialog';
 import { deleteItemAction } from '@/data/anon/items';
 
-type Props = {
+type ConfirmDeleteItemDialogProps = {
   itemId: string;
 };
 
-export const ConfirmDeleteItemDialog = ({ itemId }: Props) => {
-  const [open, setOpen] = useState(false);
-  const toastRef = useRef<string | null>(null);
+export const ConfirmDeleteItemDialog = ({
+  itemId,
+}: ConfirmDeleteItemDialogProps): JSX.Element => {
+  const [open, setOpen] = useState<boolean>(false);
   const router = useRouter();
-  const { mutate, isLoading } = useMutation(deleteItemAction, {
-    onMutate: () => {
-      const toastId = toast.loading('Deleting item');
-      toastRef.current = toastId;
+  const toastRef = useRef<string | number | undefined>(undefined);
+
+  const { execute, status } = useAction(deleteItemAction, {
+    onExecute: () => {
+      toastRef.current = toast.loading('Deleting item');
     },
     onSuccess: () => {
       toast.success('Item deleted', { id: toastRef.current });
-      toastRef.current = null;
+      toastRef.current = undefined;
       router.refresh();
       router.push('/');
+      setOpen(false);
     },
-    onError: () => {
-      toast.error('Failed to delete item', { id: toastRef.current });
-      toastRef.current = null;
-    },
-    onSettled: () => {
+    onError: ({ error }) => {
+      const errorMessage =
+        error.serverError ?? error.fetchError ?? 'Failed to delete item';
+      toast.error(errorMessage, { id: toastRef.current });
+      toastRef.current = undefined;
       setOpen(false);
     },
   });
+
+  const handleDelete = () => {
+    execute({ id: itemId });
+  };
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
@@ -61,20 +71,16 @@ export const ConfirmDeleteItemDialog = ({ itemId }: Props) => {
           <Button
             type="button"
             variant="destructive"
-            disabled={isLoading}
-            onClick={() => {
-              mutate(itemId);
-            }}
+            disabled={status === 'executing'}
+            onClick={handleDelete}
           >
-            {isLoading ? `Deleting item...` : `Yes, delete`}
+            {status === 'executing' ? 'Deleting item...' : 'Yes, delete'}
           </Button>
           <Button
-            disabled={isLoading}
+            disabled={status === 'executing'}
             type="button"
             variant="outline"
-            onClick={() => {
-              setOpen(false);
-            }}
+            onClick={() => setOpen(false)}
           >
             Cancel
           </Button>

@@ -1,4 +1,5 @@
 .env.local
+.env.*.local
 node_modules
 tsconfig.tsbuildinfo
 supabase/.temp/project-ref

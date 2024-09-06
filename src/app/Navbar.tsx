@@ -1,5 +1,5 @@
 'use client';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import { ExternalLinkIcon } from 'lucide-react';
 // const DynamicLoginNavLink = dynamic(
 //   () => import('./LoginNavLink').then((module) => module.LoginNavLink),

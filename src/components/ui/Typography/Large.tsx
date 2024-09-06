@@ -1,10 +1,7 @@
-import { cn } from '@/utils/cn';
+import { cn } from '@/lib/utils';
 import { ComponentProps } from 'react';
 
 export function Large({ className, ...rest }: ComponentProps<'div'>) {
-  const classNames = cn(
-    'text-lg font-semibold text-slate-900 dark:text-slate-50',
-    className
-  );
+  const classNames = cn('text-lg font-semibold text-foreground', className);
   return <div className={classNames} {...rest}></div>;
 }

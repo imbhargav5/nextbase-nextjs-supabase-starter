@@ -1,10 +1,17 @@
 var fontFamily = require('tailwindcss/defaultTheme').fontFamily;
 
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   darkMode: ['class'],
-  content: ['src/app/**/*.{ts,tsx}', 'src/components/**/*.{ts,tsx}'],
+  content: [
+    './node_modules/fumadocs-ui/dist/**/*.js',
+    './src/**/*.{js,ts,jsx,tsx,mdx}',
+    './content/**/*.mdx',
+  ],
+  prefix: '',
   theme: {
+    transparent: 'transparent',
+    current: 'currentColor',
     container: {
       center: true,
       padding: '2rem',
@@ -57,23 +64,43 @@ module.exports = {
         sans: ['var(--font-sans)'].concat(fontFamily.sans),
       },
       keyframes: {
-        'accordion-down': {
+        accordionDown: {
           from: { height: 0 },
           to: { height: 'var(--radix-accordion-content-height)' },
         },
-        'accordion-up': {
+        accordionUp: {
           from: { height: 'var(--radix-accordion-content-height)' },
           to: { height: 0 },
         },
+        marquee: {
+          from: { transform: 'translateX(0)' },
+          to: { transform: 'translateX(calc(-100% - 1rem))' },
+        },
+        orbit: {
+          '0%': {
+            transform:
+              'rotate(0deg) translateY(calc(var(--radius) * 1px)) rotate(0deg)',
+          },
+          '100%': {
+            transform:
+              'rotate(360deg) translateY(calc(var(--radius) * 1px)) rotate(-360deg)',
+          },
+        },
       },
       animation: {
-        'accordion-down': 'accordion-down 0.2s ease-out',
-        'accordion-up': 'accordion-up 0.2s ease-out',
+        accordionDown: 'accordion-down 0.2s ease-out',
+        accordionUp: 'accordion-up 0.2s ease-out',
+        marquee: 'marquee 30s linear infinite',
+        orbit: 'orbit calc(var(--duration)*1s) linear infinite',
+      },
+      maxWidth: {
+        '8xl': '88rem',
       },
     },
   },
+
   plugins: [
-  require('tailwindcss-animate'),
-  require('tailwindcss/defaultTheme'),
-],
+    require('tailwindcss-animate'),
+    require('tailwindcss/defaultTheme'),
+  ],
 };

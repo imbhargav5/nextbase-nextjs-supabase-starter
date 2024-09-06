@@ -1,8 +1,9 @@
-import { useState } from 'react';
-import { Button } from '../ui/button';
+'use client';
+import { Button } from '@/components/Button';
+import { T } from '@/components/ui/Typography';
 import { Label } from '@/components/ui/label';
 import { classNames } from '@/utils/classNames';
-import { T } from '@/components/ui/Typography';
+import { CSSProperties, useState } from 'react';
 
 export const Password = ({
   onSubmit,
@@ -10,12 +11,16 @@ export const Password = ({
   successMessage,
   label = 'Password',
   buttonLabel = 'Update',
+  className,
+  style,
 }: {
   onSubmit: (password: string) => void;
   isLoading: boolean;
   successMessage?: string;
   label?: string;
   buttonLabel?: string;
+  className?: string;
+  style?: CSSProperties;
 }) => {
   const [password, setPassword] = useState<string>('');
 
@@ -25,6 +30,8 @@ export const Password = ({
         event.preventDefault();
         onSubmit(password);
       }}
+      className={className}
+      style={style}
     >
       <div className="space-y-4">
         <div className="space-y-2">

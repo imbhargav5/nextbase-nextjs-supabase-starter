@@ -1,11 +1,12 @@
 'use server';
-import { createSupabaseServerActionClient } from '@/supabase-clients/createSupabaseServerActionClient';
-import { createSupabaseServerComponentClient } from '@/supabase-clients/createSupabaseServerComponentClient';
+import { authActionClient } from '@/lib/safe-action';
+import { createSupabaseClient } from '@/supabase-clients/server';
 import { Table } from '@/types';
 import { revalidatePath } from 'next/cache';
+import { z } from 'zod';
 
 export const getAllItems = async (): Promise<Array<Table<'items'>>> => {
-  const supabase = createSupabaseServerComponentClient();
+  const supabase = createSupabaseClient();
   const { data, error } = await supabase.from('items').select('*');
 
   if (error) {
@@ -16,7 +17,7 @@ export const getAllItems = async (): Promise<Array<Table<'items'>>> => {
 };
 
 export const getItem = async (id: string): Promise<Table<'items'>> => {
-  const supabase = createSupabaseServerComponentClient();
+  const supabase = createSupabaseClient();
 
   const { data, error } = await supabase
     .from('items')
@@ -31,32 +32,42 @@ export const getItem = async (id: string): Promise<Table<'items'>> => {
   return data;
 };
 
-export const deleteItemAction = async (id: string) => {
-  const supabaseClient = createSupabaseServerActionClient();
-  const { error } = await supabaseClient.from('items').delete().match({ id });
+const deleteItemSchema = z.object({
+  id: z.string().uuid(),
+});
 
-  if (error) {
-    throw error;
-  }
+export const deleteItemAction = authActionClient
+  .schema(deleteItemSchema)
+  .action(async ({ parsedInput: { id } }) => {
+    const supabaseClient = createSupabaseClient();
+    const { error } = await supabaseClient.from('items').delete().match({ id });
 
-  revalidatePath('/');
-};
+    if (error) {
+      throw new Error(error.message);
+    }
 
-export async function insertItemAction(payload: {
-  name: string;
-  description: string;
-}) {
-  const supabaseClient = createSupabaseServerActionClient();
-  const { data, error } = await supabaseClient
-    .from('items')
-    .insert(payload)
-    .select('*')
-    .single();
+    revalidatePath('/');
+  });
 
-  if (error) {
-    throw error;
-  }
+const insertItemSchema = z.object({
+  name: z.string(),
+  description: z.string(),
+});
 
-  revalidatePath('/');
-  return data.id;
-}
+export const insertItemAction = authActionClient
+  .schema(insertItemSchema)
+  .action(async ({ parsedInput }) => {
+    const supabaseClient = createSupabaseClient();
+    const { data, error } = await supabaseClient
+      .from('items')
+      .insert(parsedInput)
+      .select('*')
+      .single();
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    revalidatePath('/');
+    return data.id;
+  });

@@ -1,13 +1,15 @@
 'use client';
-import React from 'react';
-import {
-  SessionContextProvider,
-  SessionContextProviderProps,
-} from '@supabase/auth-helpers-react';
-import { Toaster as HotToaster } from 'react-hot-toast';
-import ReactNoSSR from 'react-no-ssr';
-import { supabaseUserClientComponentClient } from '@/supabase-clients/supabaseUserClientComponentClient';
+import React, { Suspense } from 'react';
+
 import { Toaster as SonnerToaster } from 'sonner';
+import { ThemeProvider, useTheme } from 'next-themes';
+import { AppProgressBar as ProgressBar } from 'next-nprogress-bar';
+
+function CustomerToaster() {
+  const theme = useTheme();
+  const currentTheme = theme.theme === 'light' ? 'light' : 'dark';
+  return <SonnerToaster richColors theme={currentTheme} />;
+}
 
 /**
  * This is a wrapper for the app that provides the supabase client, the router event wrapper
@@ -19,26 +21,21 @@ export function DynamicLayoutProviders({
   // Layouts must accept a children prop.
   // This will be populated with nested layouts or pages
   children,
-  initialSession,
 }: {
   children: React.ReactNode;
-  initialSession: Pick<
-    SessionContextProviderProps,
-    'initialSession'
-  >['initialSession'];
 }) {
   return (
-    <>
-      <SessionContextProvider
-        supabaseClient={supabaseUserClientComponentClient}
-        initialSession={initialSession}
-      >
-        {children}
-        <ReactNoSSR>
-          <SonnerToaster theme={'light'} />
-          <HotToaster />
-        </ReactNoSSR>
-      </SessionContextProvider>
-    </>
+    <ThemeProvider enableSystem themes={['light', 'dark']} defaultTheme="light">
+      {children}
+      <Suspense>
+        <ProgressBar
+          height="4px"
+          color="#0047ab"
+          options={{ showSpinner: false }}
+          shallowRouting
+        />
+        <CustomerToaster />
+      </Suspense>
+    </ThemeProvider>
   );
 }

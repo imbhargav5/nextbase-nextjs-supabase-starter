@@ -1,10 +1,10 @@
-import { classNames } from '@/utils/classNames';
-import { useMemo } from 'react';
-import { useState } from 'react';
-import { Button } from '../ui/Button';
-import { Label } from '@/components/ui/label';
+'use client';
+import { Button } from '@/components/Button';
 import { T } from '@/components/ui/Typography';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import Link from 'next/link';
+import { useMemo, useState } from 'react';
 
 export const Email = ({
   onSubmit,
@@ -13,6 +13,8 @@ export const Email = ({
   successMessage,
   label = 'Email address',
   defaultValue,
+  className,
+  style,
 }: {
   onSubmit: (email: string) => void;
   view: 'sign-in' | 'sign-up' | 'update-email' | 'forgot-password';
@@ -20,6 +22,8 @@ export const Email = ({
   successMessage?: string | null | undefined;
   label?: string;
   defaultValue?: string;
+  className?: string;
+  style?: React.CSSProperties;
 }) => {
   const [email, setEmail] = useState<string>(defaultValue ?? '');
 
@@ -28,7 +32,7 @@ export const Email = ({
       case 'sign-in':
         return 'Login with Magic Link';
       case 'sign-up':
-        return 'Sign up';
+        return 'Sign up with Magic Link';
       case 'update-email':
         return 'Update Email';
       case 'forgot-password':
@@ -42,6 +46,9 @@ export const Email = ({
         event.preventDefault();
         onSubmit(email);
       }}
+      data-testid="magic-link-form"
+      className={className}
+      style={style}
     >
       <div className="space-y-2">
         <div className="space-y-2">
@@ -49,7 +56,7 @@ export const Email = ({
             {label}
           </Label>
           <div>
-            <input
+            <Input
               id={`${view}-email`}
               name="email"
               type="email"
@@ -59,7 +66,6 @@ export const Email = ({
               autoComplete={'email'}
               placeholder="placeholder@email.com"
               required
-              className="block w-full appearance-none rounded-md border bg-gray-50/10 dark:bg-gray-800/20 h-10 px-3 py-3 placeholder-muted-foreground shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
             />
           </div>
         </div>
@@ -76,15 +82,7 @@ export const Email = ({
           ) : null}
         </div>
         <div>
-          <Button
-            type="submit"
-            className={classNames(
-              'flex w-full justify-center rounded-lg border border-transparent py-2 text-white dark:text-black px-4 text-sm font-medium  shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2',
-              isLoading
-                ? 'bg-yellow-300 dark:bg-yellow-700 '
-                : 'bg-black dark:bg-white hover:bg-gray-900 dark:hover:bg-gray-100  '
-            )}
-          >
+          <Button className="w-full" type="submit">
             {buttonLabelText}
           </Button>
         </div>

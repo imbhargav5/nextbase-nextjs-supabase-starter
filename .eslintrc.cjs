@@ -18,6 +18,7 @@ module.exports = {
       plugins: ['@typescript-eslint', 'prettier'],
       rules: {
         'prettier/prettier': 1,
+        '@typescript-eslint/no-unused-vars': 1,
       },
       files: ['src/**/*.ts', 'src/**/*.tsx'],
     },
@@ -41,31 +42,7 @@ module.exports = {
       },
       files: ['e2e/**/*.spec.ts'],
     },
-    {
-      extends: ['eslint:recommended', 'prettier', 'esnext'],
-      files: '*.mjs',
-      rules: ruleOverrides,
-    },
-    // make nextconfig.mjs node environment
-    {
-      extends: ['eslint:recommended', 'prettier', 'node'],
-      files: 'next.config.mjs',
-      rules: ruleOverrides,
-    },
-    {
-      extends: ['prettier'],
-      files: '*.js',
-      rules: ruleOverrides,
-    },
-    {
-      extends: ['prettier'],
-      files: '*.cjs',
-      rules: ruleOverrides,
-      parserOptions: {
-        ecmaVersion: 2020,
-        sourceType: 'module',
-      },
-    },
   ],
   root: true,
+  ignorePatterns: ['*.js', '*.mjs', '*.cjs', '*.json'],
 };

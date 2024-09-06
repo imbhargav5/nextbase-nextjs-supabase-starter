@@ -1,8 +1,8 @@
-import { ClientLayout } from './ClientLayout';
+import Footer from '@/components/Footer';
 import { Inter, Roboto_Mono } from 'next/font/google';
+import { ClientLayout } from './ClientLayout';
 import './globals.css';
 import { ExternalNavigation } from './Navbar';
-import Footer from '@/components/tailwind/Footer';
 
 const inter = Inter({
   subsets: ['latin'],

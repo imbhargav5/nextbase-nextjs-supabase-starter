@@ -1,7 +1,4 @@
 export default {
-  experimental: {
-    serverActions: true,
-  },
   images: {
     remotePatterns: [
       {
