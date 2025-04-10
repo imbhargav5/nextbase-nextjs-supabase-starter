@@ -23,13 +23,12 @@ async function PrivateItem({ privateItemId }: { privateItemId: string }) {
   );
 }
 
-export default async function PrivateItemPage({
-  params,
-}: {
-  params: {
+export default async function PrivateItemPage(props: {
+  params: Promise<{
     privateItemId: string;
-  };
+  }>;
 }) {
+  const params = await props.params;
   const { privateItemId } = params;
   try {
     return (

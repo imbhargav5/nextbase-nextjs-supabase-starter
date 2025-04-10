@@ -3,7 +3,7 @@
 import { Trash } from 'lucide-react';
 import { useAction } from 'next-safe-action/hooks';
 import { useRouter } from 'next/navigation';
-import { useRef, useState } from 'react';
+import { useRef, useState, type JSX } from 'react';
 import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/button';

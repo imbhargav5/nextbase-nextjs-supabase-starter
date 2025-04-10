@@ -5,7 +5,7 @@
   "author": "Bhargav Ponnapalli <imbhargav5@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbopack",
     "start": "next start",
     "generate:types:local": "export $(cat .env.local | xargs) &&  supabase gen types typescript --project-id ${SUPABASE_PROJECT_REF} --schema public > src/lib/database.types.ts",
     "build": "next build",
@@ -16,7 +16,6 @@
     "lint:prettier": "prettier --write src",
     "lint": "pnpm lint:eslint && pnpm lint:prettier",
     "tsc": "tsc",
-    "prepare": "husky install",
     "postbuild": "next-sitemap --config next-sitemap.config.cjs"
   },
   "dependencies": {
@@ -65,16 +64,16 @@
     "framer-motion": "^11.5.4",
     "input-otp": "^1.2.4",
     "lucide-react": "^0.279.0",
-    "next": "^14.2.8",
+    "next": "15.3.0",
     "next-nprogress-bar": "^2.3.13",
     "next-safe-action": "^7.9.0",
     "next-seo": "^5.15.0",
     "next-sitemap": "^3.1.55",
     "next-themes": "^0.2.1",
     "path-to-regexp": "^8.0.0",
-    "react": "^18.3.1",
+    "react": "19.1.0",
     "react-day-picker": "8.10.1",
-    "react-dom": "^18.3.1",
+    "react-dom": "19.1.0",
     "react-hook-form": "^7.53.0",
     "react-hot-toast": "^2.4.1",
     "react-no-ssr": "^1.1.0",
@@ -88,18 +87,16 @@
     "tailwindcss-animate": "^1.0.7",
     "url-join": "^5.0.0",
     "vaul": "^0.9.2",
-    "zod": "^3.23.8"
-  },
-  "devDependencies": {
-    "@next/eslint-plugin-next": "^13.5.6",
+    "zod": "^3.23.8",
+    "@next/eslint-plugin-next": "15.3.0",
     "@playwright/test": "^1.47.0",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
     "@testing-library/react": "^14.3.1",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/nprogress": "^0.2.3",
-    "@types/react": "^18.3.5",
-    "@types/react-dom": "^18.3.0",
+    "@types/react": "19.1.0",
+    "@types/react-dom": "19.1.2",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
     "@vitejs/plugin-react": "^3.1.0",
@@ -112,9 +109,7 @@
     "eslint-plugin-import": "^2.30.0",
     "eslint-plugin-playwright": "^0.12.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "husky": "^8.0.3",
     "jsdom": "^21.1.2",
-    "lint-staged": "^13.3.0",
     "npm-check-updates": "^16.14.20",
     "postcss": "^8.4.45",
     "prettier": "^2.8.8",
@@ -143,5 +138,11 @@
       "@semantic-release/github"
     ]
   },
-  "packageManager": "pnpm@9.0.6+sha512.f6d863130973207cb7a336d6b439a242a26ac8068077df530d6a86069419853dc1ffe64029ec594a9c505a3a410d19643c870aba6776330f5cfddcf10a9c1617"
+  "packageManager": "pnpm@9.0.6+sha512.f6d863130973207cb7a336d6b439a242a26ac8068077df530d6a86069419853dc1ffe64029ec594a9c505a3a410d19643c870aba6776330f5cfddcf10a9c1617",
+  "pnpm": {
+    "overrides": {
+      "@types/react": "19.1.0",
+      "@types/react-dom": "19.1.2"
+    }
+  }
 }

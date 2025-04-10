@@ -1,7 +1,7 @@
 'use client';
 
 import { useAction } from 'next-safe-action/hooks';
-import { useRef, useState } from 'react';
+import { useRef, useState, type JSX } from 'react';
 import { toast } from 'sonner';
 
 import { Email } from '@/components/Auth/Email';

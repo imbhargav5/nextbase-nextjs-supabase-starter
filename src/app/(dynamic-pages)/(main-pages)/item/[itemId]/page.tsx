@@ -27,13 +27,12 @@ async function Item({ itemId }: { itemId: string }) {
   );
 }
 
-export default async function ItemPage({
-  params,
-}: {
-  params: {
+export default async function ItemPage(props: {
+  params: Promise<{
     itemId: string;
-  };
+  }>;
 }) {
+  const params = await props.params;
   const { itemId } = params;
   try {
     return (
