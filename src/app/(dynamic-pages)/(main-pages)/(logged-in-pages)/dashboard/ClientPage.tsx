@@ -1,27 +1,35 @@
 'use client';
 
-import { useRef } from 'react';
-import { useRouter } from 'next/navigation';
-import { useAction } from 'next-safe-action/hooks';
-import { toast } from 'sonner';
-import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
 import { motion } from 'framer-motion';
+import { useAction } from 'next-safe-action/hooks';
+import { useRouter } from 'next/navigation';
+import { useRef } from 'react';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import { z } from 'zod';
 
 import { T } from '@/components/ui/Typography';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
 import {
   Card,
+  CardContent,
+  CardDescription,
   CardHeader,
   CardTitle,
-  CardDescription,
-  CardContent,
 } from '@/components/ui/card';
-import { Label } from '@/components/ui/label';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import { insertPrivateItemAction } from '@/data/user/privateItems';
+import { Shield } from 'lucide-react';
 
 const formSchema = z.object({
   name: z.string().min(1, 'Name is required'),
@@ -35,22 +43,17 @@ const formVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
 };
 
-const inputVariants = {
-  hidden: { opacity: 0, x: -50 },
-  visible: { opacity: 1, x: 0, transition: { duration: 0.3 } },
-};
-
-export const ClientPage: React.FC = () => {
+export const CreatePrivateItemForm: React.FC = () => {
   const router = useRouter();
   const toastRef = useRef<string | number | undefined>(undefined);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isValid },
-  } = useForm<FormData>({
+  const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     mode: 'onChange',
+    defaultValues: {
+      name: '',
+      description: '',
+    },
   });
 
   const { execute, status } = useAction(insertPrivateItemAction, {
@@ -66,8 +69,7 @@ export const ClientPage: React.FC = () => {
       }
     },
     onError: ({ error }) => {
-      const errorMessage =
-        error.serverError ?? error.fetchError ?? 'Failed to create item';
+      const errorMessage = error.serverError ?? 'Failed to create item';
       toast.error(errorMessage, { id: toastRef.current });
       toastRef.current = undefined;
     },
@@ -82,64 +84,64 @@ export const ClientPage: React.FC = () => {
       initial="hidden"
       animate="visible"
       variants={formVariants}
-      className="container mx-auto p-4"
+      className="container max-w-2xl mx-auto py-6"
     >
-      <Card className="w-full max-w-md mx-auto">
+      <Card className="shadow-lg border-t-4 border-t-primary">
         <CardHeader>
-          <CardTitle>
-            <T.H2>Create Private Item</T.H2>
-          </CardTitle>
+          <div className="flex items-center gap-2">
+            <Shield className="h-5 w-5 text-primary" />
+            <CardTitle>
+              <T.H2>Create Private Item</T.H2>
+            </CardTitle>
+          </div>
           <CardDescription>
-            <T.Subtle>
-              This item will be private and only you logged in will be able to
-              create it.
-            </T.Subtle>
+            This item will be private and only visible to you when logged in
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-            <motion.div variants={inputVariants} className="space-y-2">
-              <Label htmlFor="name">Name</Label>
-              <Input
-                {...register('name')}
-                id="name"
-                placeholder="Enter item name"
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter item name" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-              {errors.name && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.name.message}
-                </p>
-              )}
-            </motion.div>
-            <motion.div variants={inputVariants} className="space-y-2">
-              <Label htmlFor="description">Description</Label>
-              <Textarea
-                {...register('description')}
-                id="description"
-                placeholder="Enter item description"
-                rows={4}
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Description</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder="Enter item description"
+                        rows={4}
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-              {errors.description && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.description.message}
-                </p>
-              )}
-            </motion.div>
-            <motion.div
-              variants={inputVariants}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
               <Button
                 className="w-full"
-                variant="default"
                 type="submit"
-                disabled={status === 'executing' || !isValid}
+                disabled={status === 'executing' || !form.formState.isValid}
               >
-                {status === 'executing' ? 'Creating Item...' : 'Create Item'}
+                {status === 'executing'
+                  ? 'Creating Item...'
+                  : 'Create Private Item'}
               </Button>
-            </motion.div>
-          </form>
+            </form>
+          </Form>
         </CardContent>
       </Card>
     </motion.div>

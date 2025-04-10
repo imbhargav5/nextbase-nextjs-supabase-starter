@@ -1,50 +1,119 @@
+import { T } from '@/components/ui/Typography';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Table } from '@/types';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import { Table as TableType } from '@/types';
+import { Clock, ExternalLink, Lock, PlusCircle } from 'lucide-react';
 import Link from 'next/link';
+
+interface PrivateItemsListProps {
+  privateItems: TableType<'private_items'>[];
+  showActions?: boolean;
+}
 
 export const PrivateItemsList = ({
   privateItems,
-}: {
-  privateItems: Table<'private_items'>[];
-}) => {
+  showActions = true,
+}: PrivateItemsListProps) => {
   return (
-    <div className="space-y-8 py-8">
-      <div className="flex justify-between items-baseline">
-        <div className="space-y-2">
-          <h1 className="mt-1 text-2xl font-thin tracking-tight text-gray-900 sm:text-4xl lg:text-5xl">
-            Private Items
-          </h1>
-          <p className="text-gray-600 text-sm">
-            These items can only be created by logged in users.
-          </p>
-        </div>
-        <div>
-          <Link href="/dashboard">
-            <Button>New Private Item</Button>
+    <div className="space-y-8">
+      {showActions && (
+        <div className="flex justify-between items-center">
+          <div className="space-y-1">
+            <div className="flex items-center gap-2">
+              <T.H2>Private Items</T.H2>
+              <Badge variant="outline" className="h-6 flex items-center gap-1">
+                <Lock className="h-3 w-3" /> Secure
+              </Badge>
+            </div>
+            <T.Subtle>These items are only visible to logged in users</T.Subtle>
+          </div>
+          <Link href="/dashboard/new">
+            <Button className="flex items-center gap-2">
+              <PlusCircle className="h-4 w-4" /> New Private Item
+            </Button>
           </Link>
         </div>
-      </div>
+      )}
+
       {privateItems.length ? (
-        <div className="list-none m-0 divide-y divide-gray-200 bg-white shadow-sm ring-1 ring-black ring-opacity-5">
-          {privateItems.map((privateItem) => (
-            <Link
-              href={`/private-item/${privateItem.id}`}
-              className="px-3 block cursor-pointer pt-4 pb-3 text-left text-sm font-semibold text-gray-900 group hover:bg-blue-600 transition-all duration-200"
-              key={privateItem.id}
-            >
-              <div className="space-y-2">
-                <p className="text-blue-600 font-normal text-lg group-hover:text-white">
-                  {privateItem.name}
-                </p>
-                <p className="text-gray-600 font-medium text-sm group-hover:text-white">
-                  {privateItem.description}
-                </p>
-              </div>
-            </Link>
-          ))}
-        </div>
+        <Card className="shadow-sm border-muted/40">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-[300px]">Name</TableHead>
+                <TableHead className="hidden md:table-cell">
+                  Description
+                </TableHead>
+                <TableHead className="text-right">Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {privateItems.map((item) => (
+                <TableRow key={item.id}>
+                  <TableCell className="font-medium">
+                    {item.name}
+                    {item.created_at && (
+                      <div className="flex items-center gap-1 mt-1 text-muted-foreground text-xs">
+                        <Clock className="h-3 w-3" />
+                        <span>
+                          {new Date(item.created_at).toLocaleDateString()}
+                        </span>
+                      </div>
+                    )}
+                  </TableCell>
+                  <TableCell className="hidden md:table-cell text-muted-foreground">
+                    {item.description.length > 100
+                      ? `${item.description.slice(0, 100)}...`
+                      : item.description}
+                  </TableCell>
+                  <TableCell className="text-right">
+                    <Link href={`/private-item/${item.id}`}>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="flex items-center gap-1"
+                      >
+                        <ExternalLink className="h-3.5 w-3.5" /> View
+                      </Button>
+                    </Link>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Card>
       ) : (
-        <p>No Private Items</p>
+        <Card className="border-dashed">
+          <CardHeader>
+            <CardTitle>No Private Items Available</CardTitle>
+            <CardDescription>
+              You haven't created any private items yet. Create your first one!
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Link href="/dashboard/new">
+              <Button className="flex items-center gap-2">
+                <PlusCircle className="h-4 w-4" /> Create Your First Private
+                Item
+              </Button>
+            </Link>
+          </CardContent>
+        </Card>
       )}
     </div>
   );

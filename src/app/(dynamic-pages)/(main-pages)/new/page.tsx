@@ -1,5 +1,9 @@
 import { ClientPage } from './ClientPage';
 
 export default function NewItem() {
-  return <ClientPage />;
+  return (
+    <div className="container mx-auto py-8">
+      <ClientPage />
+    </div>
+  );
 }

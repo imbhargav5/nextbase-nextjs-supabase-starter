@@ -27,9 +27,7 @@ export function ForgotPassword(): JSX.Element {
     },
     onError: ({ error }) => {
       const errorMessage =
-        error.serverError ??
-        error.fetchError ??
-        'Failed to send password reset link';
+        error.serverError ?? 'Failed to send password reset link';
       toast.error(errorMessage, {
         id: toastRef.current,
       });

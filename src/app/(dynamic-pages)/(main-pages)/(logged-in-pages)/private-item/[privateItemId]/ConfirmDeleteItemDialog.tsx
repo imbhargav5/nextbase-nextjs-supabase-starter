@@ -6,17 +6,19 @@ import { useRouter } from 'next/navigation';
 import { useRef, useState, type JSX } from 'react';
 import { toast } from 'sonner';
 
-import { Button } from '@/components/ui/button';
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
+import { Button } from '@/components/ui/button';
 import { deletePrivateItemAction } from '@/data/user/privateItems';
+import { AlertTriangle } from 'lucide-react';
 
 type Props = {
   itemId: string;
@@ -24,6 +26,7 @@ type Props = {
 
 export const ConfirmDeleteItemDialog = ({ itemId }: Props): JSX.Element => {
   const [open, setOpen] = useState<boolean>(false);
+  const [showAlert, setShowAlert] = useState<boolean>(false);
   const toastRef = useRef<string | number | undefined>(undefined);
   const router = useRouter();
 
@@ -39,8 +42,7 @@ export const ConfirmDeleteItemDialog = ({ itemId }: Props): JSX.Element => {
       setOpen(false);
     },
     onError: ({ error }) => {
-      const errorMessage =
-        error.serverError ?? error.fetchError ?? 'Failed to delete item';
+      const errorMessage = error.serverError ?? 'Failed to delete item';
       toast.error(errorMessage, { id: toastRef.current });
       toastRef.current = undefined;
     },
@@ -51,38 +53,42 @@ export const ConfirmDeleteItemDialog = ({ itemId }: Props): JSX.Element => {
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button variant="outline">
-          <Trash className="mr-1" /> Delete Item
-        </Button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Delete Item</DialogTitle>
-          <DialogDescription>
-            Are you sure you want to delete this item?
-          </DialogDescription>
-        </DialogHeader>
-        <DialogFooter>
-          <Button
-            type="button"
-            variant="destructive"
-            disabled={status === 'executing'}
-            onClick={handleDelete}
-          >
-            {status === 'executing' ? 'Deleting item...' : 'Yes, delete'}
-          </Button>
-          <Button
-            disabled={status === 'executing'}
-            type="button"
-            variant="outline"
-            onClick={() => setOpen(false)}
-          >
-            Cancel
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+    <>
+      <Button
+        variant="destructive"
+        size="sm"
+        className="flex items-center gap-2"
+        onClick={() => setShowAlert(true)}
+      >
+        <Trash className="h-4 w-4" /> Delete Item
+      </Button>
+
+      <AlertDialog open={showAlert} onOpenChange={setShowAlert}>
+        <AlertDialogContent className="sm:max-w-[425px]">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="flex items-center gap-2">
+              <AlertTriangle className="h-5 w-5 text-destructive" />
+              Confirm Deletion
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. This will permanently delete the
+              item and remove it from our servers.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={status === 'executing'}>
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleDelete}
+              disabled={status === 'executing'}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              {status === 'executing' ? 'Deleting...' : 'Delete'}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
   );
 };

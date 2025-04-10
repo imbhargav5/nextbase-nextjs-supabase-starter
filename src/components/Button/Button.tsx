@@ -1,14 +1,12 @@
 'use client';
-import {
-  Button as TailwindButton,
-  ButtonProps as TailwindButtonProps,
-} from '@/components/ui/button';
+import { Button as TailwindButton } from '@/components/ui/button';
+import { ComponentPropsWithRef } from 'react';
 
 export function Button({
   className: classNameProp,
   disabled: disabledProp,
   ...props
-}: TailwindButtonProps) {
+}: ComponentPropsWithRef<typeof TailwindButton>) {
   const disabled = disabledProp;
   const className = classNameProp;
 

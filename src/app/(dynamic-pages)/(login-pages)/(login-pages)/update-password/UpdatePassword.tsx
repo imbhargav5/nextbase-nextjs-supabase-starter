@@ -31,8 +31,7 @@ export function UpdatePassword() {
       router.push('/auth/callback');
     },
     onError: ({ error }) => {
-      const errorMessage =
-        error.serverError ?? error.fetchError ?? 'Failed to update password';
+      const errorMessage = error.serverError ?? 'Failed to update password';
       toast.error(errorMessage, {
         id: toastRef.current,
       });

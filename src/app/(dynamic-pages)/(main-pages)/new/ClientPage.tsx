@@ -1,17 +1,34 @@
 'use client';
 
-import { useRef } from 'react';
-import { useRouter } from 'next/navigation';
-import { useAction } from 'next-safe-action/hooks';
-import { toast } from 'sonner';
-import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useAction } from 'next-safe-action/hooks';
+import { useRouter } from 'next/navigation';
+import { useRef } from 'react';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import { z } from 'zod';
 
+import { T } from '@/components/ui/Typography';
 import { Button } from '@/components/ui/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { insertItemAction } from '@/data/anon/items';
+import { motion } from 'framer-motion';
 
 const formSchema = z.object({
   name: z.string().min(1, 'Name is required'),
@@ -20,17 +37,22 @@ const formSchema = z.object({
 
 type FormData = z.infer<typeof formSchema>;
 
+const fadeIn = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
+};
+
 export const ClientPage: React.FC = () => {
   const router = useRouter();
   const toastRef = useRef<string | number | undefined>(undefined);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isValid },
-  } = useForm<FormData>({
+  const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     mode: 'onChange',
+    defaultValues: {
+      name: '',
+      description: '',
+    },
   });
 
   const { execute, status } = useAction(insertItemAction, {
@@ -46,8 +68,7 @@ export const ClientPage: React.FC = () => {
       }
     },
     onError: ({ error }) => {
-      const errorMessage =
-        error.serverError ?? error.fetchError ?? 'Failed to create item';
+      const errorMessage = error.serverError ?? 'Failed to create item';
       toast.error(errorMessage, { id: toastRef.current });
       toastRef.current = undefined;
     },
@@ -58,55 +79,65 @@ export const ClientPage: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col space-y-4">
-      <div>
-        <h1 className="mt-1 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl lg:text-5xl">
-          Create Item
-        </h1>
-      </div>
-      <div className="space-y-2">
-        <label
-          className="block text-sm font-medium text-gray-700"
-          htmlFor="name"
-        >
-          Name
-        </label>
-        <Input
-          {...register('name')}
-          id="name"
-          type="text"
-          className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-xs focus:border-green-500 focus:outline-hidden focus:ring-green-500 sm:text-sm"
-        />
-        {errors.name && (
-          <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
-        )}
-      </div>
-      <div className="space-y-2">
-        <label
-          className="block text-sm font-medium text-gray-700"
-          htmlFor="description"
-        >
-          Description
-        </label>
-        <Textarea
-          {...register('description')}
-          id="description"
-          rows={4}
-          className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-xs focus:border-green-500 focus:outline-hidden focus:ring-green-500 sm:text-sm"
-        />
-        {errors.description && (
-          <p className="text-red-500 text-sm mt-1">
-            {errors.description.message}
-          </p>
-        )}
-      </div>
-      <Button
-        variant="default"
-        type="submit"
-        disabled={status === 'executing' || !isValid}
-      >
-        {status === 'executing' ? 'Creating Item...' : 'Create Item'}
-      </Button>
-    </form>
+    <motion.div
+      initial="hidden"
+      animate="visible"
+      variants={fadeIn}
+      className="container max-w-2xl mx-auto py-8"
+    >
+      <Card className="shadow-lg">
+        <CardHeader>
+          <CardTitle>
+            <T.H2>Create New Item</T.H2>
+          </CardTitle>
+          <CardDescription>
+            Add a new item to the public database
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter item name" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Description</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder="Enter item description"
+                        rows={4}
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button
+                className="w-full"
+                type="submit"
+                disabled={status === 'executing' || !form.formState.isValid}
+              >
+                {status === 'executing' ? 'Creating Item...' : 'Create Item'}
+              </Button>
+            </form>
+          </Form>
+        </CardContent>
+      </Card>
+    </motion.div>
   );
 };
