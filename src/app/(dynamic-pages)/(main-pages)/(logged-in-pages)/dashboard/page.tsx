@@ -15,12 +15,12 @@ export const dynamic = 'force-dynamic';
 
 async function ItemsListContainer() {
   const items = await getAllItems();
-  return <ItemsList items={items} />;
+  return <ItemsList items={items} showActions={false} />;
 }
 
 async function PrivateItemsListContainer() {
   const privateItems = await getAllPrivateItems();
-  return <PrivateItemsList privateItems={privateItems} />;
+  return <PrivateItemsList privateItems={privateItems} showActions={false} />;
 }
 
 function ListSkeleton() {
