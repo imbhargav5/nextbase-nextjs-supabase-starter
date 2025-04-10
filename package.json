@@ -16,12 +16,10 @@
     "lint:prettier": "prettier --write src",
     "lint": "pnpm lint:eslint && pnpm lint:prettier",
     "tsc": "tsc",
-    "commit": "cz",
     "prepare": "husky install",
     "postbuild": "next-sitemap --config next-sitemap.config.cjs"
   },
   "dependencies": {
-    "@commitlint/config-conventional": "^17.8.1",
     "@headlessui/react": "^1.7.19",
     "@heroicons/react": "^2.1.5",
     "@hookform/resolvers": "^3.9.0",
@@ -93,8 +91,6 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@commitlint/cli": "^17.8.1",
-    "@commitlint/cz-commitlint": "^17.8.1",
     "@next/eslint-plugin-next": "^13.5.6",
     "@playwright/test": "^1.47.0",
     "@semantic-release/changelog": "^6.0.3",
@@ -107,7 +103,6 @@
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
     "@vitejs/plugin-react": "^3.1.0",
-    "commitizen": "^4.3.0",
     "concurrently": "^7.6.0",
     "env-cmd": "^10.1.0",
     "eslint": "^8.57.0",
@@ -129,11 +124,6 @@
     "tsc-files": "^1.1.4",
     "typescript": "^5.5.4",
     "vitest": "^0.28.5"
-  },
-  "config": {
-    "commitizen": {
-      "path": "@commitlint/cz-commitlint"
-    }
   },
   "release": {
     "branches": [
