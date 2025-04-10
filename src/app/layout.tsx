@@ -1,7 +1,7 @@
 import Footer from '@/components/Footer';
+import '@/styles/globals.css';
 import { Inter, Roboto_Mono } from 'next/font/google';
 import { ClientLayout } from './ClientLayout';
-import './globals.css';
 import { ExternalNavigation } from './Navbar';
 
 const inter = Inter({

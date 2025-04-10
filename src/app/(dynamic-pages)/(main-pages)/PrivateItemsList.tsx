@@ -25,7 +25,7 @@ export const PrivateItemsList = ({
         </div>
       </div>
       {privateItems.length ? (
-        <div className="list-none m-0 divide-y divide-gray-200 bg-white shadow ring-1 ring-black ring-opacity-5">
+        <div className="list-none m-0 divide-y divide-gray-200 bg-white shadow-sm ring-1 ring-black ring-opacity-5">
           {privateItems.map((privateItem) => (
             <Link
               href={`/private-item/${privateItem.id}`}

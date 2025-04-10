@@ -100,7 +100,7 @@ export function SignUp({ next }: SignUpProps) {
   return (
     <div
       data-success={successMessage}
-      className="container data-[success]:flex items-center data-[success]:justify-center text-left max-w-lg mx-auto overflow-auto data-[success]:h-full min-h-[470px]"
+      className="container data-success:flex items-center data-success:justify-center text-left max-w-lg mx-auto overflow-auto data-success:h-full min-h-[470px]"
     >
       {successMessage ? (
         <EmailConfirmationPendingCard
@@ -110,7 +110,7 @@ export function SignUp({ next }: SignUpProps) {
           resetSuccessMessage={setSuccessMessage}
         />
       ) : (
-        <div className="space-y-8 bg-background p-6 rounded-lg shadow dark:border">
+        <div className="space-y-8 bg-background p-6 rounded-lg shadow-sm dark:border">
           <Tabs defaultValue="password" className="md:min-w-[400px]">
             <TabsList className="grid w-full grid-cols-3">
               <TabsTrigger value="password">Password</TabsTrigger>

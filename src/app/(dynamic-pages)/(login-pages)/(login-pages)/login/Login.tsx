@@ -123,7 +123,7 @@ export function Login({
   return (
     <div
       data-success={emailSentSuccessMessage}
-      className="container data-[success]:flex items-center data-[success]:justify-center text-left max-w-lg mx-auto overflow-auto data-[success]:h-full min-h-[470px]"
+      className="container data-success:flex items-center data-success:justify-center text-left max-w-lg mx-auto overflow-auto data-success:h-full min-h-[470px]"
     >
       {emailSentSuccessMessage ? (
         <EmailConfirmationPendingCard
@@ -138,7 +138,7 @@ export function Login({
           heading="Redirecting to Dashboard"
         />
       ) : (
-        <div className="space-y-8 bg-background p-6 rounded-lg shadow dark:border">
+        <div className="space-y-8 bg-background p-6 rounded-lg shadow-sm dark:border">
           <Tabs defaultValue="password" className="md:min-w-[400px]">
             <TabsList className="grid w-full grid-cols-3">
               <TabsTrigger value="password">Password</TabsTrigger>

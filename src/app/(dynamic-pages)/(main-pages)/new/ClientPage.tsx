@@ -75,7 +75,7 @@ export const ClientPage: React.FC = () => {
           {...register('name')}
           id="name"
           type="text"
-          className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-green-500 focus:outline-none focus:ring-green-500 sm:text-sm"
+          className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-xs focus:border-green-500 focus:outline-hidden focus:ring-green-500 sm:text-sm"
         />
         {errors.name && (
           <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
@@ -92,7 +92,7 @@ export const ClientPage: React.FC = () => {
           {...register('description')}
           id="description"
           rows={4}
-          className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-green-500 focus:outline-none focus:ring-green-500 sm:text-sm"
+          className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-xs focus:border-green-500 focus:outline-hidden focus:ring-green-500 sm:text-sm"
         />
         {errors.description && (
           <p className="text-red-500 text-sm mt-1">

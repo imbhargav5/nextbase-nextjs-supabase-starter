@@ -24,7 +24,7 @@ export const ItemsList = ({ items }: { items: Table<'items'>[] }) => {
         </div>
       </div>
       {items.length ? (
-        <div className="list-none m-0 divide-y divide-gray-200 bg-white shadow ring-1 ring-black ring-opacity-5">
+        <div className="list-none m-0 divide-y divide-gray-200 bg-white shadow-sm ring-1 ring-black ring-opacity-5">
           {items.map((item) => (
             <Link
               href={`/item/${item.id}`}

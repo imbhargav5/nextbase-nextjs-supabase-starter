@@ -1,0 +1,45 @@
+{
+  "version": "2.0.0",
+
+  "tasks": [
+    {
+      "label": "Start Supabase",
+      "type": "shell",
+      "command": "pnpm supabase start",
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "silent",
+        "focus": false,
+        "panel": "dedicated",
+        "showReuseMessage": true,
+        "clear": false
+      }
+    },
+    {
+      "label": "Run Server",
+      "type": "shell",
+      "command": "pnpm dev",
+      "problemMatcher": [],
+
+      "presentation": {
+        "echo": true,
+        "reveal": "silent",
+        "focus": false,
+        "panel": "dedicated",
+        "showReuseMessage": true,
+        "clear": false
+      }
+    },
+    {
+      "label": "Development",
+      "detail": "Start all tools for development",
+      "dependsOn": ["Start Supabase", "Run Server"],
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    }
+  ]
+}

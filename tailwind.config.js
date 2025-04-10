@@ -1,5 +1,3 @@
-var fontFamily = require('tailwindcss/defaultTheme').fontFamily;
-
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode: ['class'],
@@ -60,9 +58,7 @@ export default {
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
       },
-      fontFamily: {
-        sans: ['var(--font-sans)'].concat(fontFamily.sans),
-      },
+
       keyframes: {
         accordionDown: {
           from: { height: 0 },
@@ -98,9 +94,4 @@ export default {
       },
     },
   },
-
-  plugins: [
-    require('tailwindcss-animate'),
-    require('tailwindcss/defaultTheme'),
-  ],
 };

@@ -27,7 +27,7 @@ import { ExternalLinkIcon } from 'lucide-react';
 //       className={cn(
 //         'sticky top-0 z-50 flex flex-wrap items-center justify-between bg-white px-4 py-5 shadow-md shadow-slate-900/5 transition duration-500 dark:shadow-none sm:px-6 lg:px-8',
 //         isScrolled
-//           ? 'dark:bg-slate-900/95 dark:backdrop-blur dark:[@supports(backdrop-filter:blur(0))]:bg-slate-900/75'
+//           ? 'dark:bg-slate-900/95 dark:backdrop-blur-sm dark:[@supports(backdrop-filter:blur(0))]:bg-slate-900/75'
 //           : 'dark:bg-transparent'
 //       )}
 //     >
@@ -66,7 +66,7 @@ import { ExternalLinkIcon } from 'lucide-react';
 //           </Suspense>
 //         </div>
 //         <div className="-my-5 mr-6 sm:mr-8 md:mr-0"></div>
-//         <div className="relative flex basis-0 justify-end gap-6 sm:gap-8 md:flex-grow"></div>
+//         <div className="relative flex basis-0 justify-end gap-6 sm:gap-8 md:grow"></div>
 //       </div>
 //     </header>
 //   );
@@ -111,7 +111,7 @@ export const ExternalNavigation = () => {
           href="https://usenextbase.com"
           target="_blank"
         >
-          <Button className="inline-flex items-center gap-2 justify-center rounded-md bg-gradient-to-r from-blue-500 to-purple-500 px-6 py-2 text-sm font-medium text-white shadow-lg transition-colors hover:from-blue-600 hover:to-purple-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+          <Button className="inline-flex items-center gap-2 justify-center rounded-md bg-linear-to-r from-blue-500 to-purple-500 px-6 py-2 text-sm font-medium text-white shadow-lg transition-colors hover:from-blue-600 hover:to-purple-600 focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
             Premium Nextbase Starter Kits <ExternalLinkIcon />
           </Button>
         </Link>

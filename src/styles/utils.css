@@ -1,0 +1,80 @@
+.hide-dialog-close > .absolute.right-4.top-4 {
+  /* Adjust selector based on actual rendered classes of DialogClose */
+  display: none; /* This assumes you know the classes applied to DialogClose, adjust selector accordingly */
+}
+
+/* onboarding page */
+.light .onboarding-page {
+  background: radial-gradient(
+      circle at 50% 100%,
+      #eef2f680 5%,
+      #eef2f6 5% 10%,
+      #eef2f680 10% 15%,
+      #eef2f6 15% 20%,
+      #eef2f680 20% 25%,
+      #eef2f6 25% 30%,
+      #eef2f680 30% 35%,
+      #eef2f6 35% 40%,
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at 100% 50%,
+      #eef2f680 5%,
+      #eef2f6 5% 10%,
+      #eef2f680 10% 15%,
+      #eef2f6 15% 20%,
+      #eef2f680 20% 25%,
+      #eef2f6 25% 30%,
+      #eef2f680 30% 35%,
+      #eef2f6 35% 40%,
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at 50% 0%,
+      #eef2f680 5%,
+      #eef2f6 5% 10%,
+      #eef2f680 10% 15%,
+      #eef2f6 15% 20%,
+      #eef2f680 20% 25%,
+      #eef2f6 25% 30%,
+      #eef2f680 30% 35%,
+      #eef2f6 35% 40%,
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at 0 50%,
+      #eef2f680 5%,
+      #eef2f6 5% 10%,
+      #eef2f680 10% 15%,
+      #eef2f6 15% 20%,
+      #eef2f680 20% 25%,
+      #eef2f6 25% 30%,
+      #eef2f680 30% 35%,
+      #eef2f6 35% 40%,
+      transparent 40%
+    );
+  background-size: 2em 2em;
+  background-color: #ffffff;
+  opacity: 1;
+}
+
+.prose {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    a.peer {
+      text-decoration: none;
+    }
+  }
+}
+
+.border-grid {
+  border-style: dashed;
+  border-color: var(--color-border) / 0.5;
+  &:is(.dark *) {
+    border-color: var(--color-border);
+  }
+}
