@@ -6,7 +6,7 @@ Nextbase Lite is a simple Next.js 13 + Supabase boilerplate. It includes a Next.
 
 ## Features
 
-- 🚀 Next.js 13 with async components
+- 🚀 Next.js 15
 - 💻 Data fetching examples in React server and client components. Suspenseful data fetching with minimal loading screens.
 - ⚛️ React query setup configured
 - 🔥 React Hot Toast component
