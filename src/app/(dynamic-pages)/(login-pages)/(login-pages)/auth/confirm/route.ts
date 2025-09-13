@@ -1,5 +1,4 @@
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
+import { createSupabaseClient } from '@/supabase-clients/server';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(req: NextRequest) {
@@ -7,7 +6,7 @@ export async function GET(req: NextRequest) {
   const token_hash = searchParams.get('token_hash');
   const next = searchParams.get('next') ?? '/dashboard';
   if (token_hash) {
-    const supabase = createRouteHandlerClient({ cookies });
+    const supabase = createSupabaseClient();
     const { error } = await supabase.auth.verifyOtp({
       type: 'magiclink',
       token_hash,
