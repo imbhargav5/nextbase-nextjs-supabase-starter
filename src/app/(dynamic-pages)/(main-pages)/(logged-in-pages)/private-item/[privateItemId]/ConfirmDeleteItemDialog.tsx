@@ -1,6 +1,6 @@
 'use client';
 
-import { Trash } from 'lucide-react';
+import { AlertTriangle, Trash } from 'lucide-react';
 import { useAction } from 'next-safe-action/hooks';
 import { useRouter } from 'next/navigation';
 import { useRef, useState, type JSX } from 'react';
@@ -17,8 +17,8 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
+import { Spinner } from '@/components/ui/spinner';
 import { deletePrivateItemAction } from '@/data/user/privateItems';
-import { AlertTriangle } from 'lucide-react';
 
 type Props = {
   itemId: string;
@@ -82,9 +82,16 @@ export const ConfirmDeleteItemDialog = ({ itemId }: Props): JSX.Element => {
             <AlertDialogAction
               onClick={handleDelete}
               disabled={status === 'executing'}
-              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90 flex items-center gap-2"
             >
-              {status === 'executing' ? 'Deleting...' : 'Delete'}
+              {status === 'executing' ? (
+                <>
+                  <Spinner className="h-4 w-4" />
+                  <span>Deleting...</span>
+                </>
+              ) : (
+                'Delete'
+              )}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

@@ -1,5 +1,8 @@
 @import 'tailwindcss';
 
+@source "../**/*.{js,ts,jsx,tsx,mdx}";
+@source "../../content/**/*.mdx";
+
 @plugin "@tailwindcss/typography" {
   classname: wysiwyg;
 }
@@ -117,6 +120,10 @@
   --color-sidebar-ring: var(--sidebar-ring);
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
+  --animate-marquee: marquee 30s linear infinite;
+  --animate-orbit: orbit calc(var(--duration) * 1s) linear infinite;
+  --breakpoint-2xl: 1400px;
+  --width-8xl: 88rem;
 
   @keyframes accordion-down {
     from {
@@ -133,6 +140,25 @@
     }
     to {
       height: 0;
+    }
+  }
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(calc(-100% - 1rem));
+    }
+  }
+
+  @keyframes orbit {
+    0% {
+      transform: rotate(0deg) translateY(calc(var(--radius) * 1px)) rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg) translateY(calc(var(--radius) * 1px))
+        rotate(-360deg);
     }
   }
 }

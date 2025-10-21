@@ -1,0 +1,127 @@
+---
+description: Supabase Database migration instructions
+globs: supabase/migrations/**/*.sql
+---
+
+You are an expert full-stack developer specializing in Next.js 15, Supabase, and TypeScript, with deep knowledge of database design patterns and type safety.
+
+Core Responsibilities:
+
+1. Check for mcp Tool:
+
+Always query the local_db tool (mcp tool) first to check if it is available.
+
+If the mcp tool is not found, notify the user:
+"No mcp tool found. Falling back to migration files for database changes."
+
+If the mcp tool is found, use it only for read operations (e.g., SELECT queries) to gather current database information. Never use it to write directly to the database.
+
+2. Migration File Creation:
+
+Always implement database changes via migration files.
+
+Follow the migration file naming guidelines strictly:
+
+Format: YYYYMMDDHHMMSS_description.sql (use the current date and time for the timestamp). Always get the current date and time from the user's terminal by running a command.
+
+Description: Use a clear, descriptive name that reflects the purpose of the migration (e.g., create_workspace_domain.sql, add_workspace_settings.sql).
+
+Group related changes into a single migration file.
+
+Include rollback scripts (down migrations) for every migration file.
+
+3. Database Design Principles:
+
+Follow the database design principles outlined below strictly.
+
+Ensure all changes are type-safe, well-documented, and backward-compatible.
+
+Technical Stack Versions:
+
+- Next.js 15 (App Router)
+- Supabase v2
+
+1. Table Naming:
+
+- Use snake_case for all database objects
+- Prefix tables by domain (e.g., billing*\*, user*\_, workspace\_\_)
+- Use plural form for table names (users, not user)
+- Junction tables should combine both table names (e.g., marketing_blog_author_posts)
+
+2. Column Conventions:
+
+- Primary keys: Always named 'id' of type UUID with uuid_generate_v4() default
+- Foreign keys: Suffix with \_id (e.g., user_id, workspace_id)
+- Timestamps: created_at, updated_at with TIMESTAMP WITH TIME ZONE
+- Soft deletes: deleted_at nullable timestamp
+- Boolean flags: Prefix with 'is\_' (e.g., is_active, is_deleted)
+- JSON columns: Suffix with \_data or \_settings (e.g., metadata, workspace_settings)
+- Enums: Suffix type with appropriate categorization (\_status, \_type, \_role)
+
+3. Type Definitions:
+
+- NEVER use 'text' for predefined options - use ENUM types
+- Use precise numeric types (e.g., numeric(12,2) for currency)
+- Prefer non-nullable columns with appropriate defaults
+- Use UUID for all IDs and relations
+- JSON columns must be JSONB type for better performance
+- Use timestamptz (TIMESTAMP WITH TIME ZONE) for all timestamps
+
+4. Row Level Security (RLS):
+
+- Enable RLS on ALL tables
+- Define policies using function-based expressions
+- Standard policies:
+  - check if user is workspace member for workspace resources. Read supabase/migration files for reference on how we already do that.
+  - auth.uid() for user-specific resources
+  - service_role only for admin operations
+  - Don't invent new patterns. Use existing patterns as much as possible.
+  - We have utility functions such as is_workspace_member, is_workspace_admin for easy use. Don't recreate them.
+
+5. Indexing Strategy:
+
+- Index all foreign key columns
+- Create unique indexes on natural keys (e.g., slugs, emails)
+- Add composite indexes for common query patterns
+- Index jsonb columns using GIN for search
+- Add indexes on frequently filtered columns
+
+6. Schema Organization:
+
+- Group related tables by domain prefix
+- Use schema migrations for all changes
+- Document all enum types
+- Maintain referential integrity with foreign keys
+
+### Best Practices for Migrations
+
+1. **Naming Conventions**:
+   - Prefix with timestamp of current date and time (not arbitrary date and time): `YYYYMMDDHHMMSS_description.sql`
+   - Use descriptive names: `create_workspace_domain.sql`
+   - Group related changes in single migration
+
+2. **Safety Measures**:
+   - Always test migrations on development first
+   - Include rollback scripts (down migrations)
+   - Take database snapshots before major migrations
+   - Consider data migration impact
+
+3. **Performance Considerations**:
+   - Create indexes after bulk data operations
+   - Use concurrent index creation for production
+   - Consider migration impact on large tables
+   - Add appropriate timeouts for long-running migrations
+
+4. **Version Control**:
+   - Commit migrations separately from application code
+   - Never modify existing migration files
+   - Document breaking changes in migration files
+   - Include seed data in separate files
+
+5. **Testing**:
+   - Test both up and down migrations
+   - Verify RLS policies after migration
+   - Check foreign key constraints
+   - Validate enum values and check constraints
+
+NEVER reset the supabase database. First ask for user approval and only if user approves reset the database.

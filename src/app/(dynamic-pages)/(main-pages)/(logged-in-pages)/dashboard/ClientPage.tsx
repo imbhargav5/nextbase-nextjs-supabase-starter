@@ -27,6 +27,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { Spinner } from '@/components/ui/spinner';
 import { Textarea } from '@/components/ui/textarea';
 import { insertPrivateItemAction } from '@/data/user/privateItems';
 import { Shield } from 'lucide-react';
@@ -132,13 +133,18 @@ export const CreatePrivateItemForm: React.FC = () => {
                 )}
               />
               <Button
-                className="w-full"
+                className="w-full flex items-center justify-center gap-2"
                 type="submit"
                 disabled={status === 'executing' || !form.formState.isValid}
               >
-                {status === 'executing'
-                  ? 'Creating Item...'
-                  : 'Create Private Item'}
+                {status === 'executing' ? (
+                  <>
+                    <Spinner className="h-4 w-4" />
+                    <span>Creating Item...</span>
+                  </>
+                ) : (
+                  'Create Private Item'
+                )}
               </Button>
             </form>
           </Form>

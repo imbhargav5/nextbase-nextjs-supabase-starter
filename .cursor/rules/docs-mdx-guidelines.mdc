@@ -1,0 +1,117 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# MDX Documentation Guidelines for Nextbase
+
+## Scope
+- All new documentation must be placed in `src/content/docs/v3/` unless otherwise specified.
+- If the prompt starts with `feature:`, place the documentation in `src/content/features/` (e.g., `features@payments.mdx`).
+
+## File and Folder Structure
+- Use lowercase, dash-separated names for files and folders (e.g., `admin-panel/make-user-app-admin.mdx`).
+- Organize docs by feature or topic within `v3/`.
+- For features, use a single MDX file per feature in `src/content/features/`.
+
+## Frontmatter
+- Every MDX file must start with a frontmatter block:
+
+  ```markdown
+  ---
+  title: 'Descriptive Title'
+  description: 'Short, clear summary of the doc's purpose.'
+  ---
+  ```
+- For features, use `summary` instead of `description` if preferred (see [payments.mdx](mdc:src/content/features/payments.mdx)).
+
+## Writing Style
+- Be concise, technical, and user-focused.
+- Use clear, direct language.
+- Prefer short paragraphs, bullet points, and code examples.
+- Use headings (`##`) to break up sections.
+- Use `<br />` for intentional spacing.
+- Use bold or `<strong>` for emphasis.
+
+## Special Components
+The following components are available in MDX, as configured in [page.tsx](mdc:src/app/docs/[...slug]/page.tsx):
+
+### Callout
+- Use for important notes, warnings, or tips.
+- Props: `title` (optional string)
+- Example:
+
+  ```markdown
+  <Callout title="Nextbase Pro and Ultimate Only">
+    The Admin Panel is only available in Pro and Ultimate starter kits.
+  </Callout>
+  ```
+- See [make-user-app-admin.mdx](mdc:src/content/docs/v3/admin-panel/make-user-app-admin.mdx).
+
+### ImageZoom
+- Use for images that benefit from zooming.
+- Props: `src` (required), `alt` (required), `withWrapper` (optional, default `false`)
+- Example:
+
+  ```markdown
+  <ImageZoom
+    src="/images/docs/admin-panel/make-admin.jpg"
+    alt="Admin Panel"
+    withWrapper={false}
+  />
+  ```
+
+### Accordion / Accordions
+- Use for collapsible Q&A or explanations.
+- Wrap multiple `<Accordion>` in `<Accordions>`.
+- Example:
+
+  ```markdown
+  <Accordions>
+    <Accordion title="How is it different from making a user a workspace admin?">
+      Workspace admins can manage data of their workspace.
+    </Accordion>
+    <Accordion title="Can a user maliciously make themselves an application admin?">
+      No. Application admins are assigned only via the Supabase dashboard.
+    </Accordion>
+  </Accordions>
+  ```
+- See [make-user-app-admin.mdx](mdc:src/content/docs/v3/admin-panel/make-user-app-admin.mdx).
+
+### Tabs / Tab
+- Use for tabbed content.
+- Example:
+
+  ```markdown
+  <Tabs>
+    <Tab title="JavaScript">
+      // JS example
+    </Tab>
+    <Tab title="TypeScript">
+      // TS example
+    </Tab>
+  </Tabs>
+  ```
+
+### Code Blocks
+- Use triple backticks and specify the language for syntax highlighting.
+- For inline code, use single backticks.
+
+## Linking and Images
+- Use relative paths for images and docs links.
+- Images should be placed in `/public/images/docs/` or `/public/images/features/` as appropriate.
+- Use `ImageZoom` for images that benefit from zooming.
+
+## Example Files
+- [make-user-app-admin.mdx](mdc:src/content/docs/v3/admin-panel/make-user-app-admin.mdx)
+- [payments.mdx](mdc:src/content/features/payments.mdx)
+- [page.tsx](mdc:src/app/docs/[...slug]/page.tsx)
+
+## Feature Documentation
+- If the prompt starts with `feature:`, create or update the corresponding file in `src/content/features/` (e.g., `payments.mdx`).
+- Use the same writing style and component conventions as regular docs.
+- See [payments.mdx](mdc:src/content/features/payments.mdx) for structure and frontmatter.
+
+---
+
+Follow these guidelines to ensure consistency and quality across all documentation in the Nextbase project.

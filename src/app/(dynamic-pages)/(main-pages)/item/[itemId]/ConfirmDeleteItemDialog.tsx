@@ -17,6 +17,7 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
+import { Spinner } from '@/components/ui/spinner';
 import { deleteItemAction } from '@/data/anon/items';
 
 type ConfirmDeleteItemDialogProps = {
@@ -83,9 +84,16 @@ export const ConfirmDeleteItemDialog = ({
             <AlertDialogAction
               onClick={handleDelete}
               disabled={status === 'executing'}
-              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90 flex items-center gap-2"
             >
-              {status === 'executing' ? 'Deleting...' : 'Delete'}
+              {status === 'executing' ? (
+                <>
+                  <Spinner className="h-4 w-4" />
+                  <span>Deleting...</span>
+                </>
+              ) : (
+                'Delete'
+              )}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

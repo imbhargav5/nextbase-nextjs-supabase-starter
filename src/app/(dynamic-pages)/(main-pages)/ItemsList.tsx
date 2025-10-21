@@ -1,12 +1,16 @@
 import { T } from '@/components/ui/Typography';
 import { Button } from '@/components/ui/button';
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
+  Card
 } from '@/components/ui/card';
+import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from '@/components/ui/empty';
 import {
   Table,
   TableBody,
@@ -16,7 +20,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Table as TableType } from '@/types';
-import { Clock, ExternalLink, PlusCircle } from 'lucide-react';
+import { Clock, Database, ExternalLink, PlusCircle } from 'lucide-react';
 import Link from 'next/link';
 
 interface ItemsListProps {
@@ -92,21 +96,25 @@ export const ItemsList = ({ items, showActions = true }: ItemsListProps) => {
           </Table>
         </Card>
       ) : (
-        <Card className="border-dashed">
-          <CardHeader>
-            <CardTitle>No Items Available</CardTitle>
-            <CardDescription>
-              There are no items in the database. Create your first item!
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
+        <Empty className="border">
+          <EmptyHeader>
+            <EmptyMedia variant="icon">
+              <Database />
+            </EmptyMedia>
+            <EmptyTitle>No Items Available</EmptyTitle>
+            <EmptyDescription>
+              There are no items in the database. Create your first item to get
+              started!
+            </EmptyDescription>
+          </EmptyHeader>
+          <EmptyContent>
             <Link href="/new">
               <Button className="flex items-center gap-2">
                 <PlusCircle className="h-4 w-4" /> Create Your First Item
               </Button>
             </Link>
-          </CardContent>
-        </Card>
+          </EmptyContent>
+        </Empty>
       )}
     </div>
   );

@@ -2,12 +2,16 @@ import { T } from '@/components/ui/Typography';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
+  Card
 } from '@/components/ui/card';
+import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from '@/components/ui/empty';
 import {
   Table,
   TableBody,
@@ -17,7 +21,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Table as TableType } from '@/types';
-import { Clock, ExternalLink, Lock, PlusCircle } from 'lucide-react';
+import { Clock, ExternalLink, Lock, PlusCircle, ShieldCheck } from 'lucide-react';
 import Link from 'next/link';
 
 interface PrivateItemsListProps {
@@ -98,22 +102,26 @@ export const PrivateItemsList = ({
           </Table>
         </Card>
       ) : (
-        <Card className="border-dashed">
-          <CardHeader>
-            <CardTitle>No Private Items Available</CardTitle>
-            <CardDescription>
-              You haven't created any private items yet. Create your first one!
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
+        <Empty className="border">
+          <EmptyHeader>
+            <EmptyMedia variant="icon">
+              <ShieldCheck />
+            </EmptyMedia>
+            <EmptyTitle>No Private Items Available</EmptyTitle>
+            <EmptyDescription>
+              You haven't created any private items yet. Create your first one
+              to get started!
+            </EmptyDescription>
+          </EmptyHeader>
+          <EmptyContent>
             <Link href="/dashboard/new">
               <Button className="flex items-center gap-2">
                 <PlusCircle className="h-4 w-4" /> Create Your First Private
                 Item
               </Button>
             </Link>
-          </CardContent>
-        </Card>
+          </EmptyContent>
+        </Empty>
       )}
     </div>
   );

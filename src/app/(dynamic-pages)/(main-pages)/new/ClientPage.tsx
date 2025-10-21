@@ -26,6 +26,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { Spinner } from '@/components/ui/spinner';
 import { Textarea } from '@/components/ui/textarea';
 import { insertItemAction } from '@/data/anon/items';
 import { motion } from 'framer-motion';
@@ -128,11 +129,18 @@ export const ClientPage: React.FC = () => {
                 )}
               />
               <Button
-                className="w-full"
+                className="w-full flex items-center justify-center gap-2"
                 type="submit"
                 disabled={status === 'executing' || !form.formState.isValid}
               >
-                {status === 'executing' ? 'Creating Item...' : 'Create Item'}
+                {status === 'executing' ? (
+                  <>
+                    <Spinner className="h-4 w-4" />
+                    <span>Creating Item...</span>
+                  </>
+                ) : (
+                  'Create Item'
+                )}
               </Button>
             </form>
           </Form>
