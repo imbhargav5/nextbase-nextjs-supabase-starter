@@ -1,7 +1,7 @@
 {
-  "name": "nextbase-nextjs13-supabase-starter",
+  "name": "nextbase-nextjs-supabase-starter",
   "version": "2.2.0",
-  "repository": "git@github.com:imbhargav5/nextbase-nextjs13-supabase-starter.git",
+  "repository": "git@github.com:imbhargav5/nextbase-nextjs-supabase-starter.git",
   "author": "Bhargav Ponnapalli <imbhargav5@gmail.com>",
   "license": "MIT",
   "scripts": {
