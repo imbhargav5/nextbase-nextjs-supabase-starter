@@ -1,6 +1,8 @@
 'use server';
 import { authActionClient } from '@/lib/safe-action';
 import { createSupabaseClient } from '@/supabase-clients/server';
+import { runEffectInAction } from '@/utils/effect-bridge';
+import { insertPrivateItemEffect } from '@/utils/effect-supabase-queries';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 
@@ -13,15 +15,11 @@ export const insertPrivateItemAction = authActionClient
   .schema(insertPrivateItemSchema)
   .action(async ({ parsedInput }) => {
     const supabaseClient = await createSupabaseClient();
-    const { data, error } = await supabaseClient
-      .from('private_items')
-      .insert(parsedInput)
-      .select('*')
-      .single();
 
-    if (error) {
-      throw new Error(error.message);
-    }
+    // Use Effect utility with typed error handling
+    const data = await runEffectInAction(
+      insertPrivateItemEffect(supabaseClient, parsedInput)
+    );
 
     revalidatePath('/');
     return data.id;

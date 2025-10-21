@@ -19,6 +19,8 @@
     "postbuild": "next-sitemap --config next-sitemap.config.cjs"
   },
   "dependencies": {
+    "@effect/platform": "^0.92.1",
+    "@effect/platform-node": "^0.98.4",
     "@headlessui/react": "^1.7.19",
     "@heroicons/react": "^2.2.0",
     "@hookform/resolvers": "^3.10.0",
@@ -72,6 +74,7 @@
     "cmdk": "1.0.0",
     "concurrently": "^7.6.0",
     "date-fns": "^3.6.0",
+    "effect": "^3.18.4",
     "embla-carousel-react": "^8.6.0",
     "env-cmd": "^10.1.0",
     "eslint": "^8.57.1",
