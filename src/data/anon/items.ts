@@ -6,7 +6,7 @@ import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 
 export const getAllItems = async (): Promise<Array<Table<'items'>>> => {
-  const supabase = createSupabaseClient();
+  const supabase = await createSupabaseClient();
   const { data, error } = await supabase.from('items').select('*');
 
   if (error) {
@@ -17,7 +17,7 @@ export const getAllItems = async (): Promise<Array<Table<'items'>>> => {
 };
 
 export const getItem = async (id: string): Promise<Table<'items'>> => {
-  const supabase = createSupabaseClient();
+  const supabase = await createSupabaseClient();
 
   const { data, error } = await supabase
     .from('items')
@@ -39,7 +39,7 @@ const deleteItemSchema = z.object({
 export const deleteItemAction = authActionClient
   .schema(deleteItemSchema)
   .action(async ({ parsedInput: { id } }) => {
-    const supabaseClient = createSupabaseClient();
+    const supabaseClient = await createSupabaseClient();
     const { error } = await supabaseClient.from('items').delete().match({ id });
 
     if (error) {
@@ -57,7 +57,7 @@ const insertItemSchema = z.object({
 export const insertItemAction = authActionClient
   .schema(insertItemSchema)
   .action(async ({ parsedInput }) => {
-    const supabaseClient = createSupabaseClient();
+    const supabaseClient = await createSupabaseClient();
     const { data, error } = await supabaseClient
       .from('items')
       .insert(parsedInput)

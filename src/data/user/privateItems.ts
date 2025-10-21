@@ -12,7 +12,7 @@ const insertPrivateItemSchema = z.object({
 export const insertPrivateItemAction = authActionClient
   .schema(insertPrivateItemSchema)
   .action(async ({ parsedInput }) => {
-    const supabaseClient = createSupabaseClient();
+    const supabaseClient = await createSupabaseClient();
     const { data, error } = await supabaseClient
       .from('private_items')
       .insert(parsedInput)
@@ -34,7 +34,7 @@ const deletePrivateItemSchema = z.object({
 export const deletePrivateItemAction = authActionClient
   .schema(deletePrivateItemSchema)
   .action(async ({ parsedInput }) => {
-    const supabaseClient = createSupabaseClient();
+    const supabaseClient = await createSupabaseClient();
     const { error } = await supabaseClient
       .from('private_items')
       .delete()

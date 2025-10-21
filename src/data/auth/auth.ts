@@ -20,7 +20,7 @@ const signUpSchema = z.object({
 export const signUpAction = actionClient
   .schema(signUpSchema)
   .action(async ({ parsedInput: { email, password } }) => {
-    const supabase = createSupabaseClient();
+    const supabase = await createSupabaseClient();
 
     const { data, error } = await supabase.auth.signUp({
       email,
@@ -52,7 +52,7 @@ const signInSchema = z.object({
 export const signInWithPasswordAction = actionClient
   .schema(signInSchema)
   .action(async ({ parsedInput: { email, password } }) => {
-    const supabase = createSupabaseClient();
+    const supabase = await createSupabaseClient();
 
     const { error } = await supabase.auth.signInWithPassword({
       email,
@@ -81,7 +81,7 @@ const signInWithMagicLinkSchema = z.object({
 export const signInWithMagicLinkAction = actionClient
   .schema(signInWithMagicLinkSchema)
   .action(async ({ parsedInput: { email, next } }) => {
-    const supabase = createSupabaseClient();
+    const supabase = await createSupabaseClient();
     const redirectUrl = new URL(toSiteURL('/auth/callback'));
     if (next) {
       redirectUrl.searchParams.set('next', next);
@@ -116,7 +116,7 @@ const signInWithProviderSchema = z.object({
 export const signInWithProviderAction = actionClient
   .schema(signInWithProviderSchema)
   .action(async ({ parsedInput: { provider, next } }) => {
-    const supabase = createSupabaseClient();
+    const supabase = await createSupabaseClient();
     const redirectToURL = new URL(toSiteURL('/auth/callback'));
     if (next) {
       redirectToURL.searchParams.set('next', next);
@@ -148,7 +148,7 @@ const resetPasswordSchema = z.object({
 export const resetPasswordAction = actionClient
   .schema(resetPasswordSchema)
   .action(async ({ parsedInput: { email } }) => {
-    const supabase = createSupabaseClient();
+    const supabase = await createSupabaseClient();
     const redirectToURL = new URL(toSiteURL('/auth/callback'));
     redirectToURL.searchParams.set('next', '/update-password');
 

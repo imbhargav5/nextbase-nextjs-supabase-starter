@@ -4,7 +4,7 @@ import { Table } from '@/types';
 export const getAllPrivateItems = async (): Promise<
   Array<Table<'private_items'>>
 > => {
-  const supabase = createSupabaseClient();
+  const supabase = await createSupabaseClient();
   const { data, error } = await supabase.from('private_items').select('*');
 
   if (error) {
@@ -17,7 +17,7 @@ export const getAllPrivateItems = async (): Promise<
 export const getPrivateItem = async (
   id: string
 ): Promise<Table<'private_items'>> => {
-  const supabase = createSupabaseClient();
+  const supabase = await createSupabaseClient();
   const { data, error } = await supabase
     .from('private_items')
     .select('*')

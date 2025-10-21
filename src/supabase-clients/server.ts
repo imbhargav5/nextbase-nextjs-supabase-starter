@@ -1,9 +1,9 @@
 import { Database } from '@/lib/database.types';
 import { createServerClient } from '@supabase/ssr';
-import { cookies, type UnsafeUnwrappedCookies } from 'next/headers';
+import { cookies } from 'next/headers';
 
-export const createSupabaseClient = () => {
-  const cookieStore = cookies() as unknown as UnsafeUnwrappedCookies;
+export const createSupabaseClient = async () => {
+  const cookieStore = await cookies();
 
   return createServerClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL,

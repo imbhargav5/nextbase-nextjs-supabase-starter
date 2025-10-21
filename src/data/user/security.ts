@@ -10,7 +10,7 @@ const updatePasswordSchema = z.object({
 export const updatePasswordAction = authActionClient
   .schema(updatePasswordSchema)
   .action(async ({ parsedInput: { password } }) => {
-    const supabaseClient = createSupabaseClient();
+    const supabaseClient = await createSupabaseClient();
     const { error } = await supabaseClient.auth.updateUser({
       password,
     });
