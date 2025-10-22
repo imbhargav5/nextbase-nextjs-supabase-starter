@@ -139,7 +139,7 @@ export default async function PrivateItemPage(props: {
 
   try {
     return (
-      <div className="container mx-auto max-w-2xl py-8">
+      <div className="flex flex-1 flex-col gap-4 p-4 md:p-6 max-w-2xl mx-auto w-full">
         <Suspense fallback={<PrivateItemSkeleton />}>
           <PrivateItem privateItemId={privateItemId} />
         </Suspense>

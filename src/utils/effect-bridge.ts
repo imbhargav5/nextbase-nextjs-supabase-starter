@@ -29,17 +29,20 @@ export async function runEffectInAction<A, E extends AppError>(
   const exit = await Effect.runPromiseExit(effect);
 
   if (Exit.isFailure(exit)) {
-    const error = exit.cause;
     // Extract the error from the Cause
-    const appError = Exit.isFailure(exit)
-      ? (exit.cause as any)._tag === 'Fail'
-        ? (exit.cause as any).error
-        : new Error('Unknown error')
-      : new Error('Unknown error');
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const failure = exit.cause as any;
+    const appError =
+      failure._tag === 'Fail'
+        ? (failure.error as E)
+        : new Error('Unknown error');
 
     // Throw a standard Error for next-safe-action to catch
     throw new Error(
-      appError.message || 'An error occurred while processing the request'
+      typeof appError === 'object' && appError !== null && 'message' in appError
+        ? (appError.message as string) ||
+        'An error occurred while processing the request'
+        : 'An error occurred while processing the request'
     );
   }
 

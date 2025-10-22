@@ -34,7 +34,13 @@ export async function updateSession(request: NextRequest) {
   // supabase.auth.getUser(). A simple mistake could make it very hard to debug
   // issues with users being randomly logged out.
 
-  const protectedPages = ['/dashboard', '/private-item'];
+  const protectedPages = [
+    '/dashboard',
+    '/private-item',
+    '/private-items',
+    '/items',
+    '/item',
+  ];
 
   const {
     data: { user },

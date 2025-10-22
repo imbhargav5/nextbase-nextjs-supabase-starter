@@ -3,18 +3,19 @@ import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { T } from '@/components/ui/Typography';
 import Link from 'next/link';
 
 export function NewLoginPage() {
   return (
     <div className="flex min-h-screen">
-      <div className="flex items-center justify-center w-1/2 bg-gray-100">
+      <div className="flex items-center justify-center w-1/2 bg-muted">
         <Card className="w-full max-w-md p-4">
           <div className="mb-4 text-center">
-            <h2 className="text-2xl font-bold">Welcome Back</h2>
-            <p className="text-muted-foreground">
+            <T.H2>Welcome Back</T.H2>
+            <T.P className="text-muted-foreground">
               Please log in to your account
-            </p>
+            </T.P>
           </div>
           <Tabs defaultValue="magic-link" className="w-full">
             <TabsList className="grid w-full grid-cols-2">
@@ -165,26 +166,6 @@ function TwitterIcon(props) {
       strokeLinejoin="round"
     >
       <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
-    </svg>
-  );
-}
-
-function XIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M18 6 6 18" />
-      <path d="m6 6 12 12" />
     </svg>
   );
 }

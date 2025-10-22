@@ -1,9 +1,7 @@
 import { T } from '@/components/ui/Typography';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import {
-  Card
-} from '@/components/ui/card';
+import { Card } from '@/components/ui/card';
 import {
   Empty,
   EmptyContent,
@@ -21,7 +19,13 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Table as TableType } from '@/types';
-import { Clock, ExternalLink, Lock, PlusCircle, ShieldCheck } from 'lucide-react';
+import {
+  Clock,
+  ExternalLink,
+  Lock,
+  PlusCircle,
+  ShieldCheck,
+} from 'lucide-react';
 import Link from 'next/link';
 
 interface PrivateItemsListProps {

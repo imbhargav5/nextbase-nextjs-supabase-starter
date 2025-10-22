@@ -1,178 +1,191 @@
-/**
- * v0 by Vercel.
- * @see https://v0.dev/t/uVG77qDcbLd
- * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
- */
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { T } from '@/components/ui/Typography';
 import { ArrowRight, Github, Star } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 
 export default function LandingPage() {
   return (
     <>
+      {/* Hero Section */}
       <section className="relative w-full py-12 md:py-24 lg:py-32 overflow-hidden">
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-50 via-transparent to-transparent dark:from-blue-900/20 dark:via-transparent dark:to-transparent"></div>
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/5 via-transparent to-transparent dark:from-primary/10 dark:via-transparent dark:to-transparent"></div>
         <div className="container px-4 md:px-6 mx-auto">
-          <div className="flex flex-col items-center space-y-4 text-center">
-            <div className="space-y-2">
-              <div className="inline-flex items-center rounded-full border border-gray-200 px-3 py-1 text-sm font-medium dark:border-gray-800">
-                <span className="text-blue-600 dark:text-blue-400">
-                  Nextbase
-                </span>
-                <span className="mx-1 text-gray-400 dark:text-gray-600">•</span>
+          <div className="flex flex-col items-center gap-8 text-center">
+            <div className="flex flex-col items-center gap-4">
+              <Badge variant="outline" className="inline-flex items-center">
+                <span className="text-primary">Nextbase</span>
+                <span className="mx-1.5 text-muted-foreground">•</span>
                 <span>Open Source Starter Kit</span>
-              </div>
-              <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
+              </Badge>
+              <T.H1 className="text-4xl font-bold leading-tight tracking-tight sm:text-5xl md:text-6xl lg:text-7xl text-balance">
                 Build faster with
-                <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-primary to-primary bg-clip-text text-transparent">
                   {' '}
                   Nextbase
                 </span>
-              </h1>
-              <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl lg:text-xl dark:text-gray-400">
+              </T.H1>
+              <T.P className="mx-auto max-w-[700px] text-lg text-muted-foreground md:text-xl">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. This
                 open source starter kit by the Nextbase team provides everything
                 you need to launch your next project.
-              </p>
+              </T.P>
             </div>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Link
-                href="/login"
-                className="inline-flex h-12 items-center justify-center rounded-md bg-gray-900 px-6 text-sm font-medium text-white shadow transition-colors hover:bg-gray-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 focus-visible:ring-offset-2 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-200"
-              >
-                Get Started <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-              <Link
-                href="https://github.com/imbhargav5/nextbase-nextjs-supabase-starter"
-                className="inline-flex h-12 items-center justify-center rounded-md border border-gray-200 bg-white px-6 text-sm font-medium shadow-sm transition-colors hover:bg-gray-100 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 focus-visible:ring-offset-2 dark:border-gray-800 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50"
-              >
-                <Github className="mr-2 h-4 w-4" /> Star on GitHub
-              </Link>
+            <div className="flex flex-wrap items-center justify-center gap-4">
+              <Button size="lg" asChild>
+                <Link href="/login">
+                  Get Started <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+              <Button size="lg" variant="outline" asChild>
+                <Link href="https://github.com/imbhargav5/nextbase-nextjs-supabase-starter">
+                  <Github className="mr-2 h-4 w-4" /> Star on GitHub
+                </Link>
+              </Button>
             </div>
           </div>
 
-          <div className="mt-16 grid place-items-center">
-            <div className="relative w-full max-w-4xl overflow-hidden rounded-xl border border-gray-200 bg-white shadow-xl dark:border-gray-800 dark:bg-gray-950">
-              <div className="absolute inset-0 bg-gradient-to-t from-gray-900/50 to-gray-900/0 dark:from-gray-900/80"></div>
-              <img
-                src="https://images.unsplash.com/photo-1618477388954-7852f32655ec?q=80&w=1600&auto=format&fit=crop"
-                alt="Dashboard preview"
-                className="w-full h-auto object-cover aspect-video"
-                width="1600"
-                height="900"
-              />
+          <div className="mt-16 md:mt-24 flex justify-center">
+            <div className="relative w-full max-w-5xl">
+              <div className="absolute -inset-1 bg-gradient-to-r from-primary to-primary rounded-xl blur opacity-25"></div>
+              <div className="relative overflow-hidden rounded-xl border bg-background shadow-2xl">
+                <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent"></div>
+                <Image
+                  src="https://images.unsplash.com/photo-1618477388954-7852f32655ec?q=80&w=1600&auto=format&fit=crop"
+                  alt="Dashboard preview"
+                  className="w-full h-auto"
+                  width={1600}
+                  height={900}
+                  priority
+                />
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-50 dark:bg-gray-900/50">
+      {/* Features Section */}
+      <section className="w-full py-16 md:py-24 lg:py-32 bg-muted/50">
         <div className="container px-4 md:px-6 mx-auto">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center">
-            <div className="space-y-2 max-w-[850px]">
-              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
+          <div className="flex flex-col items-center space-y-8 text-center">
+            <div className="space-y-4 max-w-[850px]">
+              <T.H2 className="text-3xl font-bold leading-tight tracking-tight sm:text-4xl md:text-5xl text-balance">
                 Feature-rich, Developer-first
-              </h2>
-              <p className="text-gray-500 dark:text-gray-400 md:text-xl">
+              </T.H2>
+              <T.P className="text-lg text-muted-foreground md:text-xl">
                 Lorem ipsum dolor sit amet, an open source starter kit built by
                 the Nextbase team, consectetur adipiscing elit. Sed euismod,
                 diam sit amet dictum ultrices.
-              </p>
+              </T.P>
             </div>
 
-            <div className="mx-auto grid max-w-5xl gap-8 pt-12 sm:grid-cols-2 md:grid-cols-3 lg:gap-12">
+            <div className="w-full grid max-w-6xl gap-6 pt-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
               {features.map((feature, index) => (
-                <div
+                <Card
                   key={index}
-                  className="flex flex-col items-center space-y-2 rounded-lg border border-gray-200 bg-white p-6 shadow-sm transition-all hover:shadow-md dark:border-gray-800 dark:bg-gray-950"
+                  className="h-full flex flex-col transition-shadow hover:shadow-lg"
                 >
-                  <div className="rounded-full bg-gray-100 p-3 dark:bg-gray-800">
-                    {feature.icon}
-                  </div>
-                  <h3 className="text-xl font-bold">{feature.title}</h3>
-                  <p className="text-center text-gray-500 dark:text-gray-400">
-                    {feature.description}
-                  </p>
-                </div>
+                  <CardHeader className="flex-none">
+                    <div className="flex justify-center mb-4">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
+                        {feature.icon}
+                      </div>
+                    </div>
+                    <CardTitle className="text-center text-xl">
+                      {feature.title}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="flex-1 flex items-start">
+                    <CardDescription className="text-center text-base">
+                      {feature.description}
+                    </CardDescription>
+                  </CardContent>
+                </Card>
               ))}
             </div>
           </div>
         </div>
       </section>
 
-      <section className="w-full py-12 md:py-24 lg:py-32">
+      {/* Developer Section */}
+      <section className="w-full py-16 md:py-24 lg:py-32">
         <div className="container px-4 md:px-6 mx-auto">
-          <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
-            <div className="space-y-6">
-              <div className="inline-flex items-center rounded-full border border-gray-200 px-3 py-1 text-sm font-medium dark:border-gray-800">
-                <Star className="mr-1 h-3.5 w-3.5 text-yellow-500" />
-                <span className="text-gray-900 dark:text-gray-50">
-                  Why developers love Nextbase
-                </span>
-              </div>
-              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
+          <div className="grid gap-8 lg:grid-cols-2 lg:gap-16 items-center">
+            <div className="flex flex-col gap-6">
+              <Badge variant="outline" className="w-fit">
+                <Star className="mr-1.5 h-3.5 w-3.5 text-chart-1 fill-chart-1" />
+                <span>Why developers love Nextbase</span>
+              </Badge>
+              <T.H2 className="text-3xl font-bold leading-tight tracking-tight sm:text-4xl md:text-5xl text-balance">
                 Built for developers, by developers
-              </h2>
-              <p className="text-gray-500 dark:text-gray-400 text-lg">
+              </T.H2>
+              <T.P className="text-lg text-muted-foreground">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. The
                 Nextbase open source starter kit provides a solid foundation for
                 your next web application. Ut enim ad minim veniam, quis nostrud
                 exercitation ullamco laboris.
-              </p>
-              <div className="flex flex-col gap-2 min-[400px]:flex-row">
-                <Link
-                  href="/login"
-                  className="inline-flex h-10 items-center justify-center rounded-md bg-gray-900 px-8 text-sm font-medium text-gray-50 shadow-sm transition-colors hover:bg-gray-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 focus-visible:ring-offset-2 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-200"
-                >
-                  Get Started
-                </Link>
-                <Link
-                  href="#"
-                  className="inline-flex h-10 items-center justify-center rounded-md border border-gray-200 bg-white px-8 text-sm font-medium shadow-sm transition-colors hover:bg-gray-100 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 focus-visible:ring-offset-2 dark:border-gray-800 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50"
-                >
-                  View Documentation
-                </Link>
+              </T.P>
+              <div className="flex flex-col gap-3 sm:flex-row">
+                <Button size="lg" asChild>
+                  <Link href="/login">Get Started</Link>
+                </Button>
+                <Button size="lg" variant="outline" asChild>
+                  <Link href="#">View Documentation</Link>
+                </Button>
               </div>
             </div>
-            <div className="relative">
-              <div className="absolute -inset-4 -z-10 bg-gradient-to-b from-gray-100 to-white opacity-50 blur-2xl dark:from-gray-900/70 dark:to-black/70"></div>
-              <img
-                src="https://images.unsplash.com/photo-1551650975-87deedd944c3?q=80&w=1600&auto=format&fit=crop"
-                alt="Developer experience"
-                className="w-full rounded-xl border border-gray-200 shadow-lg dark:border-gray-800"
-                width="550"
-                height="400"
-              />
+            <div className="relative order-first lg:order-last">
+              <div className="absolute -inset-4 -z-10 bg-gradient-to-br from-primary/20 via-primary/5 to-transparent opacity-50 blur-3xl"></div>
+              <div className="relative overflow-hidden rounded-xl border bg-background shadow-xl">
+                <Image
+                  src="https://images.unsplash.com/photo-1551650975-87deedd944c3?q=80&w=1600&auto=format&fit=crop"
+                  alt="Developer experience"
+                  className="w-full h-auto"
+                  width={1200}
+                  height={800}
+                />
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-950 text-gray-50">
+      {/* CTA Section */}
+      <section className="w-full py-16 md:py-24 lg:py-32 bg-primary text-primary-foreground">
         <div className="container px-4 md:px-6 mx-auto">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center">
-            <div className="space-y-2">
-              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
+          <div className="flex flex-col items-center space-y-8 text-center">
+            <div className="space-y-4 max-w-[800px]">
+              <T.H2 className="text-3xl font-bold leading-tight tracking-tight sm:text-4xl md:text-5xl text-balance">
                 Ready to get started?
-              </h2>
-              <p className="mx-auto max-w-[700px] text-gray-400 md:text-xl/relaxed">
+              </T.H2>
+              <T.P className="mx-auto max-w-[700px] text-lg text-primary-foreground/90 md:text-xl">
                 Lorem ipsum dolor sit amet, this open source starter kit by
                 Nextbase team is all you need. Consectetur adipiscing elit, sed
                 do eiusmod tempor incididunt.
-              </p>
+              </T.P>
             </div>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Link
-                href="/login"
-                className="inline-flex h-12 items-center justify-center rounded-md bg-white px-6 text-sm font-medium text-gray-900 shadow transition-colors hover:bg-gray-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 focus-visible:ring-offset-2"
+            <div className="flex flex-wrap items-center justify-center gap-4">
+              <Button size="lg" variant="secondary" asChild>
+                <Link href="/login">
+                  Get Started <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                className="border-primary-foreground bg-transparent text-primary-foreground hover:bg-primary-foreground hover:text-primary"
+                asChild
               >
-                Get Started <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-              <Link
-                href="#"
-                className="inline-flex h-12 items-center justify-center rounded-md border border-gray-800 bg-transparent px-6 text-sm font-medium text-gray-50 shadow-sm transition-colors hover:bg-gray-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 focus-visible:ring-offset-2"
-              >
-                Learn More
-              </Link>
+                <Link href="#">Learn More</Link>
+              </Button>
             </div>
           </div>
         </div>
@@ -185,10 +198,10 @@ const features = [
   {
     title: 'Type-Safe',
     description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.',
+      'Full TypeScript support with type-safe database queries and API routes for confidence in your code.',
     icon: (
       <svg
-        className="h-6 w-6 text-blue-600 dark:text-blue-500"
+        className="h-6 w-6 text-primary"
         fill="none"
         height="24"
         stroke="currentColor"
@@ -207,10 +220,10 @@ const features = [
   {
     title: 'Modern Stack',
     description:
-      'The Nextbase starter kit uses the latest technologies to ensure your project is future-proof.',
+      'Built with Next.js 14, TypeScript, Supabase, and Tailwind CSS for a future-proof foundation.',
     icon: (
       <svg
-        className="h-6 w-6 text-blue-600 dark:text-blue-500"
+        className="h-6 w-6 text-primary"
         fill="none"
         height="24"
         stroke="currentColor"
@@ -232,10 +245,10 @@ const features = [
   {
     title: 'UI Components',
     description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.',
+      'Beautiful, accessible components built with Radix UI and customizable with Tailwind CSS.',
     icon: (
       <svg
-        className="h-6 w-6 text-blue-600 dark:text-blue-500"
+        className="h-6 w-6 text-primary"
         fill="none"
         height="24"
         stroke="currentColor"
@@ -257,10 +270,10 @@ const features = [
   {
     title: 'Authentication',
     description:
-      'Built by the Nextbase team with security in mind. Lorem ipsum dolor sit amet, consectetur.',
+      'Complete auth flows including magic links, OAuth providers, and protected routes out of the box.',
     icon: (
       <svg
-        className="h-6 w-6 text-blue-600 dark:text-blue-500"
+        className="h-6 w-6 text-primary"
         fill="none"
         height="24"
         stroke="currentColor"
@@ -279,10 +292,10 @@ const features = [
   {
     title: 'API Integration',
     description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.',
+      'Server actions, API routes, and database queries set up and ready for your application logic.',
     icon: (
       <svg
-        className="h-6 w-6 text-blue-600 dark:text-blue-500"
+        className="h-6 w-6 text-primary"
         fill="none"
         height="24"
         stroke="currentColor"
@@ -302,10 +315,10 @@ const features = [
   {
     title: 'Fast Deployment',
     description:
-      'Lorem ipsum dolor sit amet, open source starter kit by Nextbase team, consectetur adipiscing elit.',
+      'Deploy to Vercel with one click and have your production-ready app live in minutes.',
     icon: (
       <svg
-        className="h-6 w-6 text-blue-600 dark:text-blue-500"
+        className="h-6 w-6 text-primary"
         fill="none"
         height="24"
         stroke="currentColor"

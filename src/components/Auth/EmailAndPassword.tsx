@@ -1,4 +1,4 @@
-import { Button } from '@/components/Button';
+import { Button } from '@/components/ui/button';
 import {
   InputGroup,
   InputGroupAddon,
@@ -6,11 +6,10 @@ import {
 } from '@/components/ui/input-group';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
-import { classNames } from '@/utils/classNames';
-import type { PropsOf } from '@headlessui/react/dist/types';
 import { Lock, Mail } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
+import type { ComponentProps } from 'react';
 
 export const EmailAndPassword = ({
   onSubmit,
@@ -20,7 +19,7 @@ export const EmailAndPassword = ({
   onSubmit: (data: { email: string; password: string }) => void;
   view: 'sign-in' | 'sign-up';
   isLoading: boolean;
-} & PropsOf<typeof Button>) => {
+} & ComponentProps<typeof Button>) => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
@@ -99,19 +98,10 @@ export const EmailAndPassword = ({
           ) : null}
         </div>
         <div className="space-y-2">
-          <Button
-            disabled={isLoading}
-            type="submit"
-            className={classNames(
-              'flex w-full justify-center items-center gap-2 rounded-lg border border-transparent py-3 text-white dark:text-black px-4 text-sm font-medium  shadow-xs focus:outline-hidden focus:ring-2 focus:ring-offset-2',
-              isLoading
-                ? 'bg-yellow-300 dark:bg-yellow-700 '
-                : 'bg-black dark:bg-white hover:bg-gray-900 dark:hover:bg-gray-100  '
-            )}
-          >
+          <Button disabled={isLoading} type="submit" className="w-full">
             {isLoading ? (
               <>
-                <Spinner className="h-4 w-4" />
+                <Spinner className="h-4 w-4 mr-2" />
                 <span>Loading...</span>
               </>
             ) : (

@@ -15,6 +15,7 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from '@/components/ui/empty';
+import { T } from '@/components/ui/Typography';
 import {
   Database,
   Github,
@@ -34,16 +35,16 @@ export default function About() {
         <Badge variant="outline" className="mb-4">
           About Nextbase
         </Badge>
-        <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
+        <T.H1 className="text-4xl sm:text-5xl md:text-6xl">
           Modern Full-Stack{' '}
-          <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-primary to-primary bg-clip-text text-transparent">
             Starter Kit
           </span>
-        </h1>
-        <p className="mx-auto max-w-[700px] text-lg text-muted-foreground">
+        </T.H1>
+        <T.P className="mx-auto max-w-[700px] text-lg text-muted-foreground">
           Built with Next.js, TypeScript, Supabase, and shadcn/ui. Everything
           you need to ship your next SaaS product fast.
-        </p>
+        </T.P>
         <div className="flex flex-wrap justify-center gap-4 pt-4">
           <Button size="lg" asChild>
             <Link href="/login">Get Started</Link>
@@ -63,12 +64,10 @@ export default function About() {
       {/* Features Grid */}
       <div className="space-y-6">
         <div className="text-center space-y-2">
-          <h2 className="text-3xl font-bold tracking-tight">
-            Built for Developers
-          </h2>
-          <p className="text-muted-foreground">
+          <T.H2 className="text-3xl">Built for Developers</T.H2>
+          <T.P className="text-muted-foreground">
             Everything you need to build production-ready applications
-          </p>
+          </T.P>
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -92,8 +91,8 @@ export default function About() {
           <Card>
             <CardHeader>
               <div className="flex items-center gap-3">
-                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-green-500/10">
-                  <Database className="h-6 w-6 text-green-600" />
+                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-chart-2/10">
+                  <Database className="h-6 w-6 text-chart-2" />
                 </div>
                 <CardTitle>Supabase</CardTitle>
               </div>
@@ -109,8 +108,8 @@ export default function About() {
           <Card>
             <CardHeader>
               <div className="flex items-center gap-3">
-                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-500/10">
-                  <Shield className="h-6 w-6 text-blue-600" />
+                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
+                  <Shield className="h-6 w-6 text-primary" />
                 </div>
                 <CardTitle>Type-Safe</CardTitle>
               </div>
@@ -126,8 +125,8 @@ export default function About() {
           <Card>
             <CardHeader>
               <div className="flex items-center gap-3">
-                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-purple-500/10">
-                  <Palette className="h-6 w-6 text-purple-600" />
+                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-chart-4/10">
+                  <Palette className="h-6 w-6 text-chart-4" />
                 </div>
                 <CardTitle>shadcn/ui</CardTitle>
               </div>
@@ -143,8 +142,8 @@ export default function About() {
           <Card>
             <CardHeader>
               <div className="flex items-center gap-3">
-                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-orange-500/10">
-                  <Lock className="h-6 w-6 text-orange-600" />
+                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-chart-1/10">
+                  <Lock className="h-6 w-6 text-chart-1" />
                 </div>
                 <CardTitle>Authentication</CardTitle>
               </div>
@@ -160,8 +159,8 @@ export default function About() {
           <Card>
             <CardHeader>
               <div className="flex items-center gap-3">
-                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-yellow-500/10">
-                  <Zap className="h-6 w-6 text-yellow-600" />
+                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-chart-5/10">
+                  <Zap className="h-6 w-6 text-chart-5" />
                 </div>
                 <CardTitle>Developer UX</CardTitle>
               </div>
