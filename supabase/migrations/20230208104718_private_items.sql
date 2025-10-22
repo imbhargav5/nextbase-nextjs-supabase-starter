@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS public.private_items (
   created_at timestamp WITH time zone NOT NULL DEFAULT NOW(),
-  id uuid NOT NULL DEFAULT uuid_generate_v4(),
+  id uuid NOT NULL DEFAULT extensions.uuid_generate_v4(),
   name character varying NOT NULL,
   description character varying NOT NULL
 );
