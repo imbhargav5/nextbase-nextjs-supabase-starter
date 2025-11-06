@@ -4,7 +4,7 @@ import { updateSession } from './supabase-clients/middleware';
 
 const apiRoutes = ['/api{/*path}'];
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
   // api routes are not handled by middleare for this project.
@@ -26,3 +26,4 @@ export const config = {
     '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)',
   ],
 };
+
