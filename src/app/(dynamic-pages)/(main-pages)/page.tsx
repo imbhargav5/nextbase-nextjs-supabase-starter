@@ -15,6 +15,20 @@ import Link from 'next/link';
 export default function LandingPage() {
   return (
     <>
+      {/* Navbar */}
+      <nav className="w-full border-b bg-background">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="flex h-16 items-center justify-between">
+            <Button variant="ghost" asChild>
+              <Link href="/">Home</Link>
+            </Button>
+            <Button asChild>
+              <Link href="/login">Login</Link>
+            </Button>
+          </div>
+        </div>
+      </nav>
+
       {/* Hero Section */}
       <section className="relative w-full py-12 md:py-24 lg:py-32 overflow-hidden">
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/5 via-transparent to-transparent dark:from-primary/10 dark:via-transparent dark:to-transparent"></div>
