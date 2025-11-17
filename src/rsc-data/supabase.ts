@@ -26,3 +26,27 @@ export const getCachedLoggedInSupabaseUser = cache(async () => {
   }
   return data.session.user;
 });
+
+export const getCachedLoggedInUserClaims = cache(async () => {
+  const supabase = await createSupabaseClient();
+  const { data, error } = await supabase.auth.getClaims();
+  if (error) {
+    throw error;
+  }
+  if (!data?.claims) {
+    throw new Error('No claims found');
+  }
+  return data.claims;
+});
+
+
+export const getCachedIsUserLoggedIn = cache(async () => {
+  const claims = await getCachedLoggedInUserClaims();
+  console.log('claims', claims);
+  return claims.sub !== null;
+});
+
+export const getCachedLoggedInUserId = cache(async () => {
+  const claims = await getCachedLoggedInUserClaims();
+  return claims.sub;
+});

@@ -4,8 +4,18 @@ import {
   SidebarProvider,
   SidebarTrigger
 } from '@/components/ui/sidebar';
-import { ReactNode } from 'react';
+import { getCachedIsUserLoggedIn } from '@/rsc-data/supabase';
+import { redirect } from 'next/navigation';
+import { ReactNode, Suspense } from 'react';
 import { AppSidebar } from './app-sidebar';
+
+async function ChildrenWrapper({ children }: { children: ReactNode }) {
+  const isLoggedIn = await getCachedIsUserLoggedIn();
+  if (!isLoggedIn) {
+    redirect('/login');
+  }
+  return <>{children}</>;
+}
 
 export default async function Layout({
   children,
@@ -23,7 +33,9 @@ export default async function Layout({
           <Separator orientation="vertical" className="mr-2 h-4" />
           {heading}
         </header>
-        {children}
+        <Suspense fallback={null}>
+          <ChildrenWrapper>{children}</ChildrenWrapper>
+        </Suspense>
       </SidebarInset>
     </SidebarProvider>
   );

@@ -1,4 +1,4 @@
-import { createSupabaseClient } from '@/supabase-clients/server';
+import { getLoggedInUserId } from '@/data/user/user';
 import { createSafeActionClient } from 'next-safe-action';
 import 'server-only';
 
@@ -28,22 +28,10 @@ export const actionClient = createSafeActionClient().use(
 );
 
 export const authActionClient = actionClient.use(async ({ next }) => {
-  const supabase = await createSupabaseClient();
-  const {
-    data: { user },
-    error: userError,
-  } = await supabase.auth.getUser();
-  if (userError) {
-    console.log('User error', { cause: userError });
-    throw new Error('User error', { cause: userError });
-  }
-  if (!user) {
-    console.log('User not logged in');
-    throw new Error('User not logged in');
-  }
+  const userId = await getLoggedInUserId();
   return await next({
     ctx: {
-      userId: user.id,
+      userId,
     },
   });
 });

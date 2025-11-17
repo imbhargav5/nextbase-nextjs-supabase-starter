@@ -108,7 +108,7 @@ export function deletePrivateItemEffect(
  */
 export function insertPrivateItemEffect(
   supabase: AppSupabaseClient,
-  item: { name: string; description: string }
+  item: { name: string; description: string; owner_id: string }
 ): Effect.Effect<Table<'private_items'>, DatabaseError | NotFoundError> {
   return Effect.tryPromise({
     try: async () => {
