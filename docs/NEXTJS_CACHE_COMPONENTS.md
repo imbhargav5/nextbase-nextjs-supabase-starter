@@ -232,14 +232,18 @@ async function CachedSidebar() {
 
 **Correct Approach (Sibling Trees)**:
 ```typescript
-// GOOD - Parallel rendering at layout level
+// GOOD - Parallel rendering at layout level with Suspense
+import { Suspense } from 'react';
+
 export default async function Layout({ children }: { children: ReactNode }) {
   return (
     <div className="flex">
       <StaticSidebar />      {/* Cached sub-tree */}
-      <DynamicContent>       {/* Dynamic sub-tree */}
-        {children}
-      </DynamicContent>
+      <Suspense fallback={<MainContentSkeleton />}>
+        <DynamicContent>       {/* Dynamic sub-tree wrapped in Suspense */}
+          {children}
+        </DynamicContent>
+      </Suspense>
     </div>
   );
 }
@@ -255,7 +259,7 @@ async function StaticSidebar() {
   );
 }
 
-// Dynamic branch - renders per request
+// Dynamic branch - renders per request, wrapped in Suspense
 async function DynamicContent({ children }: { children: ReactNode }) {
   const user = await getUser();
   return (
@@ -286,11 +290,13 @@ async function CachedWrapper({ children }: { children: ReactNode }) {
   );
 }
 
-// Usage - children can be dynamic
+// Usage - children can be dynamic, wrapped in Suspense
 export default function Page() {
   return (
     <CachedWrapper>
-      <DynamicUserContent />  {/* This is dynamic, but wrapper is cached */}
+      <Suspense fallback={<UserContentSkeleton />}>
+        <DynamicUserContent />  {/* This is dynamic, but wrapper is cached */}
+      </Suspense>
     </CachedWrapper>
   );
 }
@@ -300,6 +306,7 @@ This pattern allows:
 - The wrapper's JSX structure to be cached
 - Dynamic content to be injected at render time
 - Parts of the page to load instantly while dynamic sections render
+- **Suspense provides loading states** for the dynamic portions
 
 ---
 
@@ -322,6 +329,8 @@ app/
 **Layout Implementation**:
 ```typescript
 // app/layout.tsx
+import { Suspense } from 'react';
+
 export default function Layout({
   children,
   sidebar,
@@ -337,7 +346,9 @@ export default function Layout({
       <div className="flex">
         {sidebar}    {/* Cached - loads instantly */}
         <main>
-          {children} {/* Dynamic - renders per request */}
+          <Suspense fallback={<PageSkeleton />}>
+            {children} {/* Dynamic - wrap in Suspense */}
+          </Suspense>
         </main>
       </div>
     </div>
@@ -390,6 +401,8 @@ export default async function Page() {
 **Implementation**:
 ```typescript
 // Layout with cached and dynamic sections
+import { Suspense } from 'react';
+
 export default async function DashboardLayout({
   children,
 }: {
@@ -400,9 +413,11 @@ export default async function DashboardLayout({
       <CachedHeader />           {/* Instant */}
       <div className="flex">
         <CachedSidebar />        {/* Instant */}
-        <DynamicMainContent>     {/* Per-request */}
-          {children}
-        </DynamicMainContent>
+        <Suspense fallback={<MainSkeleton />}>
+          <DynamicMainContent>     {/* Per-request, wrapped in Suspense */}
+            {children}
+          </DynamicMainContent>
+        </Suspense>
       </div>
     </div>
   );
@@ -448,14 +463,16 @@ async function CachedUserNav() {
   return <nav>User: {claims.sub}</nav>;  // Won't be cached
 }
 
-// RIGHT - Keep user data in dynamic tree
+// RIGHT - Keep user data in dynamic tree, wrapped in Suspense
 export default async function Layout({ children }: { children: ReactNode }) {
   return (
     <div>
       <CachedAppBranding />        {/* No auth - cached */}
-      <DynamicUserSection>         {/* Auth here - dynamic */}
-        {children}
-      </DynamicUserSection>
+      <Suspense fallback={<UserSectionSkeleton />}>
+        <DynamicUserSection>         {/* Auth here - dynamic, wrapped in Suspense */}
+          {children}
+        </DynamicUserSection>
+      </Suspense>
     </div>
   );
 }
@@ -483,7 +500,13 @@ async function DynamicUserSection({ children }: { children: ReactNode }) {
 
 ### Streaming and Suspense Integration
 
-Cached components integrate with React Suspense for progressive loading:
+**Critical Rule: Always wrap dynamic content in Suspense boundaries.**
+
+When mixing cached and dynamic content, Suspense is **required** for:
+- Progressive rendering (users see cached content immediately)
+- Graceful loading states
+- Error boundary isolation
+- Proper streaming behavior
 
 ```typescript
 export default function Page() {
@@ -496,6 +519,61 @@ export default function Page() {
       </Suspense>
 
       <CachedFooter />  {/* Renders immediately */}
+    </div>
+  );
+}
+```
+
+**Why Suspense is Required:**
+
+1. **Without Suspense** - Entire page waits for slowest component
+2. **With Suspense** - Cached parts render immediately, dynamic parts stream in
+
+```typescript
+// BAD - No Suspense, blocks rendering
+export default function Page() {
+  return (
+    <div>
+      <CachedSidebar />      {/* Waits for DynamicMain! */}
+      <DynamicMain />        {/* Slow fetch blocks everything */}
+    </div>
+  );
+}
+
+// GOOD - Suspense enables streaming
+export default function Page() {
+  return (
+    <div>
+      <CachedSidebar />      {/* Renders immediately */}
+      <Suspense fallback={<Skeleton />}>
+        <DynamicMain />      {/* Streams independently */}
+      </Suspense>
+    </div>
+  );
+}
+```
+
+**Nested Suspense for Granular Loading:**
+
+```typescript
+export default function Dashboard() {
+  return (
+    <div>
+      <CachedNavigation />  {/* Instant */}
+
+      <Suspense fallback={<MainSkeleton />}>
+        <AuthenticatedLayout>  {/* Auth check */}
+          <Suspense fallback={<ProfileSkeleton />}>
+            <UserProfile />  {/* User data fetch */}
+          </Suspense>
+
+          <Suspense fallback={<ActivitySkeleton />}>
+            <RecentActivity />  {/* Activity fetch */}
+          </Suspense>
+        </AuthenticatedLayout>
+      </Suspense>
+
+      <CachedFooter />  {/* Instant */}
     </div>
   );
 }
@@ -779,6 +857,17 @@ async function ConfiguredHeader() {
    - No user-specific data inside `"use cache"`
    - Avoid dynamic values that change per request
 
+6. **Always wrap dynamic content in Suspense**
+   - Required for streaming and progressive rendering
+   - Provides loading states for users
+   - Prevents cached content from being blocked by slow dynamic fetches
+   ```typescript
+   <CachedHeader />
+   <Suspense fallback={<Loading />}>
+     <DynamicContent />
+   </Suspense>
+   ```
+
 ### Don'ts
 
 1. **Don't cache user-specific content**
@@ -816,6 +905,31 @@ async function ConfiguredHeader() {
    async function UserDashboard() {
      const user = await getUser();
      return <CachedComponent userId={user.id} />;
+   }
+   ```
+
+5. **Don't mix cached and dynamic content without Suspense**
+   ```typescript
+   // BAD - dynamic content blocks cached content from rendering
+   export default function Page() {
+     return (
+       <div>
+         <CachedSidebar />       {/* Has to wait! */}
+         <DynamicUserContent />  {/* Blocks everything */}
+       </div>
+     );
+   }
+
+   // GOOD - Suspense enables independent rendering
+   export default function Page() {
+     return (
+       <div>
+         <CachedSidebar />       {/* Renders immediately */}
+         <Suspense fallback={<Loading />}>
+           <DynamicUserContent />  {/* Streams independently */}
+         </Suspense>
+       </div>
+     );
    }
    ```
 
