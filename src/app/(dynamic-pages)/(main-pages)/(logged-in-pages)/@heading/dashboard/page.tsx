@@ -9,7 +9,8 @@ import {
 import { Home } from 'lucide-react';
 import Link from 'next/link';
 
-export default function DashboardHeading() {
+export default async function DashboardHeading() {
+  'use cache'
   return (
     <Breadcrumb>
       <BreadcrumbList>

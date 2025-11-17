@@ -9,7 +9,8 @@ import {
 import { Home } from 'lucide-react';
 import Link from 'next/link';
 
-export default function NewItemHeading() {
+export default async function NewItemHeading() {
+  'use cache'
   return (
     <Breadcrumb>
       <BreadcrumbList>

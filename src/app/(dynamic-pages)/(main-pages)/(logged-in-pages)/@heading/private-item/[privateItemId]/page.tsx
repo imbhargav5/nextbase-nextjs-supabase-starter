@@ -6,25 +6,28 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
+import { Skeleton } from '@/components/ui/skeleton';
 import { getPrivateItem } from '@/data/anon/privateItems';
 import { Home } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { Suspense } from 'react';
+
+async function PrivateItemHeadingContent({ params }: { params: Promise<{ privateItemId: string }> }) {
+  try {
+    const { privateItemId } = await params;
+    const item = await getPrivateItem(privateItemId);
+    return <BreadcrumbPage>{item.name}</BreadcrumbPage>;
+  } catch (error) {
+    notFound();
+  }
+}
 
 export default async function PrivateItemHeading({
   params,
 }: {
   params: Promise<{ privateItemId: string }>;
 }) {
-  const { privateItemId } = await params;
-
-  let item;
-  try {
-    item = await getPrivateItem(privateItemId);
-  } catch (error) {
-    notFound();
-  }
-
   return (
     <Breadcrumb>
       <BreadcrumbList>
@@ -44,7 +47,9 @@ export default async function PrivateItemHeading({
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbPage>{item.name}</BreadcrumbPage>
+          <Suspense fallback={<Skeleton className="h-4 w-24" />}>
+            <PrivateItemHeadingContent params={params} />
+          </Suspense>
         </BreadcrumbItem>
       </BreadcrumbList>
     </Breadcrumb>

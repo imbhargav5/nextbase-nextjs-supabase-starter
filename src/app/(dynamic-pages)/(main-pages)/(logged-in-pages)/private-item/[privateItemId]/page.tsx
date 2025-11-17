@@ -1,12 +1,4 @@
 import { T } from '@/components/ui/Typography';
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from '@/components/ui/breadcrumb';
 import { Button } from '@/components/ui/button';
 import { ButtonGroup } from '@/components/ui/button-group';
 import {
@@ -18,48 +10,19 @@ import {
 import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '@/components/ui/skeleton';
 import { getPrivateItem } from '@/data/anon/privateItems';
-import { Calendar, Home, Info, LayoutDashboard } from 'lucide-react';
+import { Calendar, Info } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
 import { ConfirmDeleteItemDialog } from './ConfirmDeleteItemDialog';
 
-async function PrivateItem({ privateItemId }: { privateItemId: string }) {
+async function PrivateItem({ params }: { params: Promise<{ privateItemId: string }> }) {
+  const { privateItemId } = await params;
   const item = await getPrivateItem(privateItemId);
 
   return (
     <div className="space-y-4">
-      <Breadcrumb>
-        <BreadcrumbList>
-          <BreadcrumbItem>
-            <BreadcrumbLink asChild>
-              <Link href="/" className="flex items-center gap-1">
-                <Home className="h-4 w-4" />
-                Home
-              </Link>
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbLink asChild>
-              <Link href="/dashboard" className="flex items-center gap-1">
-                <LayoutDashboard className="h-4 w-4" />
-                Dashboard
-              </Link>
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbLink asChild>
-              <Link href="/private-items">Private Items</Link>
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbPage>{item.name}</BreadcrumbPage>
-          </BreadcrumbItem>
-        </BreadcrumbList>
-      </Breadcrumb>
+
 
       <Card className="shadow-md border-t-4 border-t-primary">
         <CardHeader className="pb-2">
@@ -129,19 +92,20 @@ function PrivateItemSkeleton() {
   );
 }
 
-export default async function PrivateItemPage(props: {
+
+
+export default async function PrivateItemPage({ params }: {
   params: Promise<{
     privateItemId: string;
   }>;
 }) {
-  const params = await props.params;
-  const { privateItemId } = params;
+
 
   try {
     return (
       <div className="flex flex-1 flex-col gap-4 p-4 md:p-6 max-w-2xl mx-auto w-full">
         <Suspense fallback={<PrivateItemSkeleton />}>
-          <PrivateItem privateItemId={privateItemId} />
+          <PrivateItem params={params} />
         </Suspense>
       </div>
     );

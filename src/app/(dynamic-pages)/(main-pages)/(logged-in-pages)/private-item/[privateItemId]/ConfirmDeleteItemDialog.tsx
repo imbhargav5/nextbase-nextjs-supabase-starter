@@ -38,7 +38,7 @@ export const ConfirmDeleteItemDialog = ({ itemId }: Props): JSX.Element => {
       toast.success('Item deleted', { id: toastRef.current });
       toastRef.current = undefined;
       router.refresh();
-      router.push('/');
+      router.push('/private-items');
       setOpen(false);
     },
     onError: ({ error }) => {
@@ -55,7 +55,6 @@ export const ConfirmDeleteItemDialog = ({ itemId }: Props): JSX.Element => {
   return (
     <>
       <Button
-        variant="destructive"
         size="sm"
         className="flex items-center gap-2"
         onClick={() => setShowAlert(true)}
@@ -82,7 +81,6 @@ export const ConfirmDeleteItemDialog = ({ itemId }: Props): JSX.Element => {
             <AlertDialogAction
               onClick={handleDelete}
               disabled={status === 'executing'}
-              className="bg-destructive text-destructive-foreground hover:bg-destructive/90 flex items-center gap-2"
             >
               {status === 'executing' ? (
                 <>
