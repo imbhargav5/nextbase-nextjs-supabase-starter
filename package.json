@@ -21,6 +21,8 @@
   "dependencies": {
     "@effect/platform": "^0.92.1",
     "@effect/platform-node": "^0.98.4",
+    "@fontsource/inter": "^5.2.8",
+    "@fontsource/roboto-mono": "^5.2.8",
     "@headlessui/react": "^1.7.19",
     "@heroicons/react": "^2.2.0",
     "@hookform/resolvers": "^3.10.0",
