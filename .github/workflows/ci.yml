@@ -36,7 +36,7 @@ jobs:
           persist-credentials: false
       - name: 🚂 CI Setup
         uses: ./.github/actions/ci-setup
-      - run: yarn run build
+      - run: pnpm run build
 
   test:
     strategy:
@@ -69,15 +69,15 @@ jobs:
       - if: github.event_name == 'pull_request'
         uses: wagoid/commitlint-github-action@v5
       - name: Linter
-        run: yarn run lint
+        run: pnpm run lint
 
       - name: Type checking
-        run: yarn run tsc
+        run: pnpm run tsc
 
       - name: Run unit tests
-        run: yarn run test
+        run: pnpm run test
       - name: Install playwright browsers
-        run: yarn playwright install --with-deps
+        run: pnpm exec playwright install --with-deps
 
       - name: Run e2e tests
-        run: yarn run test:e2e
+        run: pnpm run test:e2e
