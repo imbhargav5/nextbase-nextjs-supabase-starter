@@ -34,9 +34,9 @@ jobs:
           persist-credentials: false
       - name: 🚂 CI Setup
         uses: ./.github/actions/ci-setup
-      - run: yarn npm-check-updates -u # Update dependencies
-      - run: rm -Rf node_modules yarn.lock
-      - run: yarn
+      - run: pnpm exec npm-check-updates -u # Update dependencies
+      - run: rm -Rf node_modules pnpm-lock.yaml
+      - run: pnpm install
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
         with:
