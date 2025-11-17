@@ -1,5 +1,4 @@
 import { AppSidebar } from '@/components/app-sidebar';
-import { DynamicBreadcrumb } from '@/components/dynamic-breadcrumb';
 import { Separator } from '@/components/ui/separator';
 import {
   Sidebar,
@@ -22,30 +21,31 @@ async function SidebarWrapper() {
         }}
       />
     );
-  }
-  catch (error) {
+  } catch (error) {
     redirect('/login');
   }
 }
 
-async function SidebarTop() {
-  'use cache';
-  return <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
-    <SidebarTrigger className="-ml-1" />
-    <Separator orientation="vertical" className="mr-2 h-4" />
-    <DynamicBreadcrumb />
-  </header>
-}
-
-export default async function Layout({ children }: { children: ReactNode }) {
+export default async function Layout({
+  children,
+  heading,
+}: {
+  children: ReactNode;
+  heading: ReactNode;
+}) {
   return (
     <SidebarProvider>
-      <Suspense fallback={<Sidebar variant="inset" collapsible="icon">
-      </Sidebar>}>
+      <Suspense
+        fallback={<Sidebar variant="inset" collapsible="icon"></Sidebar>}
+      >
         <SidebarWrapper />
       </Suspense>
       <SidebarInset>
-        <SidebarTop />
+        <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
+          <SidebarTrigger className="-ml-1" />
+          <Separator orientation="vertical" className="mr-2 h-4" />
+          {heading}
+        </header>
         {children}
       </SidebarInset>
     </SidebarProvider>
