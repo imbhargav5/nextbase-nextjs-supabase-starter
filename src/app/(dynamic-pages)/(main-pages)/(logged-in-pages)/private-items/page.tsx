@@ -3,13 +3,12 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { T } from '@/components/ui/Typography';
-import { getAllPrivateItems } from '@/data/anon/privateItems';
+import { getUserPrivateItems } from '@/data/anon/privateItems';
 import { Lock, PlusCircle } from 'lucide-react';
 import Link from 'next/link';
 import { Suspense } from 'react';
 import { PrivateItemsList } from '../../PrivateItemsList';
 
-export const dynamic = 'force-dynamic';
 
 function PrivateItemsListSkeleton() {
   return (
@@ -39,7 +38,10 @@ function PrivateItemsListSkeleton() {
 }
 
 async function PrivateItemsListWrapper() {
-  const privateItems = await getAllPrivateItems();
+  // this loads data from supabase and internally
+  // uses cookies() which is a Dynamic API
+  // Hence must be wrapped in a Suspense
+  const privateItems = await getUserPrivateItems();
   return <PrivateItemsList privateItems={privateItems} />;
 }
 

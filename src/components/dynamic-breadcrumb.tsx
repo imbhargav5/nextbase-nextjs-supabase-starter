@@ -14,7 +14,6 @@ import { usePathname } from 'next/navigation';
 
 const routeLabels: Record<string, string> = {
     dashboard: 'Dashboard',
-    items: 'Public Items',
     'private-items': 'Private Items',
     'private-item': 'Private Item',
     item: 'Item',

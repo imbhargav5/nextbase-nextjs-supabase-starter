@@ -26,7 +26,6 @@ import type { AuthProvider } from '@/types';
 
 interface SignUpProps {
   next?: string;
-  nextActionType?: string;
 }
 
 export function SignUp({ next }: SignUpProps) {

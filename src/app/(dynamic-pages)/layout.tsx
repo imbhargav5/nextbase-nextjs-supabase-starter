@@ -1,5 +1,4 @@
-// do not cache this layout
-export const dynamic = 'force-dynamic';
+
 
 export const metadata = {
   icons: {

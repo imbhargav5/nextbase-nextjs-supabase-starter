@@ -2,7 +2,6 @@ import Footer from '@/components/Footer';
 import '@/styles/globals.css';
 import { Inter, Roboto_Mono } from 'next/font/google';
 import { ClientLayout } from './ClientLayout';
-import { ExternalNavigation } from './Navbar';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -31,7 +30,6 @@ export default async function RootLayout({
       <head />
       <body>
         <div className="flex pt-2 flex-col min-h-screen bg-white dark:bg-gray-900">
-          <ExternalNavigation />
           <ClientLayout>{children}</ClientLayout>
           <Footer />
         </div>

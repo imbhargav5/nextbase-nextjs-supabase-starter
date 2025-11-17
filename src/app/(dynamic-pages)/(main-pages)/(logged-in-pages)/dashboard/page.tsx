@@ -3,15 +3,14 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { T } from '@/components/ui/Typography';
-import { getAllPrivateItems } from '@/data/anon/privateItems';
+import { getUserPrivateItems } from '@/data/anon/privateItems';
 import { PlusCircle } from 'lucide-react';
 import Link from 'next/link';
 import { Suspense } from 'react';
 
-export const dynamic = 'force-dynamic';
 
-async function PrivateItemsListContainer() {
-  const privateItems = await getAllPrivateItems();
+async function UserPrivateItemsListContainer() {
+  const privateItems = await getUserPrivateItems();
   return <PrivateItemsList privateItems={privateItems} showActions={false} />;
 }
 
@@ -43,20 +42,26 @@ function ListSkeleton() {
   );
 }
 
+async function Heading() {
+  'use cache';
+  return (
+    <>
+      <T.H1>Dashboard</T.H1>
+      <Link href="/dashboard/new">
+        <Button className="flex items-center gap-2">
+          <PlusCircle className="h-4 w-4" /> New Private Item
+        </Button>
+      </Link>
+    </>
+  );
+};
+
 export default function DashboardPage() {
   return (
     <div className="flex flex-1 flex-col gap-4 p-4 md:p-6">
-      <div className="flex justify-between items-center">
-        <T.H1>Dashboard</T.H1>
-        <Link href="/dashboard/new">
-          <Button className="flex items-center gap-2">
-            <PlusCircle className="h-4 w-4" /> New Private Item
-          </Button>
-        </Link>
-      </div>
-
+      <Heading />
       <Suspense fallback={<ListSkeleton />}>
-        <PrivateItemsListContainer />
+        <UserPrivateItemsListContainer />
       </Suspense>
     </div>
   );

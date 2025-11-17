@@ -26,7 +26,6 @@ import { signOutAction } from '@/data/auth/sign-out';
 import {
   ChevronUp,
   Home,
-  List,
   Lock,
   LogOut,
   PlusCircle,
@@ -41,11 +40,6 @@ const navigationItems = [
     title: 'Dashboard',
     url: '/dashboard',
     icon: Home,
-  },
-  {
-    title: 'Public Items',
-    url: '/items',
-    icon: List,
   },
   {
     title: 'Private Items',
@@ -89,7 +83,7 @@ export function AppSidebar({ user }: AppSidebarProps) {
     .slice(0, 2);
 
   return (
-    <Sidebar variant="inset" collapsible="icon">
+    <Sidebar variant="inset">
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>

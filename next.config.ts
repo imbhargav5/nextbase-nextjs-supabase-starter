@@ -1,4 +1,7 @@
-export default {
+import { NextConfig } from "next";
+
+const config: NextConfig = {
+  cacheComponents: true,
   images: {
     remotePatterns: [
       {
@@ -22,3 +25,6 @@ export default {
     ],
   },
 };
+
+
+export default config;

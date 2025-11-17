@@ -1,6 +1,11 @@
-export const dynamic = 'force-static';
-export const revalidate = 60;
+
+import { ExternalNavigation } from '@/app/Navbar';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  return <div className="max-w-xl">{children}</div>;
+  return (
+    <>
+      <ExternalNavigation />
+      <div className="max-w-xl">{children}</div>
+    </>
+  );
 }

@@ -1,7 +1,7 @@
 'use server';
 import { createSupabaseClient } from '@/supabase-clients/server';
 import { Table } from '@/types';
-export const getAllPrivateItems = async (): Promise<
+export const getUserPrivateItems = async (): Promise<
   Array<Table<'private_items'>>
 > => {
   const supabase = await createSupabaseClient();

@@ -7,7 +7,7 @@ const queryClient = new QueryClient();
 export const ClientLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <main className="flex-1">
-      <div className="container mx-auto">
+      <div className="">
         <QueryClientProvider client={queryClient}>
           {children}
         </QueryClientProvider>

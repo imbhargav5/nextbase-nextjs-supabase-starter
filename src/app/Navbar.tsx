@@ -38,6 +38,12 @@ export const ExternalNavigation = () => {
           >
             About
           </Link>
+          <Link
+            className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+            href="/login"
+          >
+            Login
+          </Link>
           <Button variant="default" asChild>
             <Link
               href="https://usenextbase.com"
