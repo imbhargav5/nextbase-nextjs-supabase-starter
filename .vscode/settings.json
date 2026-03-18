@@ -1,5 +1,7 @@
 {
-  "eslint.workingDirectories": ["./"],
+  "eslint.workingDirectories": [
+    "./"
+  ],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
@@ -7,7 +9,10 @@
     "source.organizeImports": "explicit",
     "source.sortMembers": "explicit"
   },
-  "eslint.codeActionsOnSave.rules": ["!@typescript-eslint/*", "*"],
+  "eslint.codeActionsOnSave.rules": [
+    "!@typescript-eslint/*",
+    "*"
+  ],
   "typescript.tsdk": "node_modules/typescript/lib",
   "eslint.packageManager": "yarn",
   "eslint.validate": [
@@ -28,5 +33,15 @@
   "[typescriptreact]": {
     "editor.defaultFormatter": "vscode.typescript-language-features"
   },
-  "cSpell.words": ["Reflio", "signup"]
+  "cSpell.words": [
+    "Reflio",
+    "signup"
+  ],
+  "markdown.validate.enabled": true,
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "github-actions.workflows.pinned.workflows": [
+    
+  ]
 }

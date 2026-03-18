@@ -2,12 +2,12 @@ import { Database } from '@/lib/database.types';
 import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
 
-export const createSupabaseClient = async () => {
+export const createServerSupabaseClient = async () => {
   const cookieStore = await cookies();
 
   return createServerClient<Database>(
-    process.env.NEXT_PUBLIC_SUPABASE_URL,
-    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY,
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
         getAll() {
@@ -28,3 +28,6 @@ export const createSupabaseClient = async () => {
     }
   );
 };
+
+// Export for backwards compatibility
+export const createSupabaseClient = createServerSupabaseClient;

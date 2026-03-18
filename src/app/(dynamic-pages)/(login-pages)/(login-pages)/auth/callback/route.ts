@@ -32,7 +32,6 @@ export async function GET(request: Request) {
       await supabase.auth.exchangeCodeForSession(code);
     } catch (error) {
       // Handle error
-      console.error('Failed to exchange code for session: ', error);
       // Potentially return an error response here
     }
   }
