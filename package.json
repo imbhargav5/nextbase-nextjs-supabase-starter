@@ -7,7 +7,8 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "start": "next start",
-    "generate:types:local": "export $(cat .env.local | xargs) &&  supabase gen types typescript --project-id ${SUPABASE_PROJECT_REF} --schema public > src/lib/database.types.ts",
+    "generate:types:local": "supabase gen types typescript --project-id ${SUPABASE_PROJECT_REF:-local} --schema public > src/lib/database.types.ts",
+    "generate:types:watch": "supabase gen types typescript --project-id ${SUPABASE_PROJECT_REF:-local} --schema public --watch > src/lib/database.types.ts",
     "build": "next build",
     "test:e2e": "playwright test",
     "test": "vitest --root src --run",
@@ -16,7 +17,18 @@
     "lint:prettier": "prettier --write src",
     "lint": "pnpm lint:eslint && pnpm lint:prettier",
     "tsc": "tsc",
-    "postbuild": "next-sitemap --config next-sitemap.config.cjs"
+    "postbuild": "next-sitemap --config next-sitemap.config.cjs",
+    "db:push": "supabase db push",
+    "db:pull": "supabase db pull",
+    "db:reset": "supabase db reset",
+    "db:seed": "supabase db seed",
+    "db:status": "supabase db status",
+    "db:local:start": "supabase start",
+    "db:local:stop": "supabase stop",
+    "db:types": "pnpm generate:types:local",
+    "db:migrate": "node scripts/migrate.js push",
+    "db:migrate:reset": "node scripts/migrate.js reset",
+    "db:setup": "node scripts/setup-db.js"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
