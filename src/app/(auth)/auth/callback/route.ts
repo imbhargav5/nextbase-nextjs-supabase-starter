@@ -26,32 +26,66 @@ async function generateUniqueUsername(email: string): Promise<string> {
   return `${baseUsername}${Date.now()}`;
 }
 
+// Sanitize user metadata to prevent XSS
+function sanitizeUserMetadata(metadata: any): any {
+  if (!metadata) return {};
+  
+  return {
+    full_name: metadata.full_name ? metadata.full_name.trim().slice(0, 100) : undefined,
+    avatar_url: metadata.avatar_url ? metadata.avatar_url.trim().slice(0, 500) : undefined,
+  };
+}
+
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get('code');
+  const error = searchParams.get('error');
+
+  // Handle OAuth errors
+  if (error) {
+    return NextResponse.redirect(new URL(`/login?error=${encodeURIComponent(error)}`, origin));
+  }
 
   if (code) {
     const supabase = await createServerSupabaseClient();
-    const { data, error } = await supabase.auth.exchangeCodeForSession(code);
+    const { data, error: authError } = await supabase.auth.exchangeCodeForSession(code);
 
-    if (!error && data.user) {
-      // Auto-create profile if first OAuth login
-      const uniqueUsername = await generateUniqueUsername(data.user.email || 'user');
-      
-      await supabase.from('profiles').upsert(
-        {
-          id: data.user.id,
-          display_name: data.user.user_metadata?.full_name || data.user.email?.split('@')[0] || 'User',
-          username: uniqueUsername,
-          avatar_url: data.user.user_metadata?.avatar_url,
-          is_verified: !!data.user.confirmed_at,
-        },
-        { onConflict: 'id', ignoreDuplicates: true }
-      );
+    if (authError) {
+      console.error('OAuth exchange error:', authError);
+      return NextResponse.redirect(new URL('/login?error=oauth_failed', origin));
+    }
 
-      return NextResponse.redirect(new URL('/dashboard', origin));
+    if (data.user) {
+      try {
+        // Sanitize user metadata
+        const sanitizedMetadata = sanitizeUserMetadata(data.user.user_metadata);
+        
+        // Auto-create profile if first OAuth login
+        const uniqueUsername = await generateUniqueUsername(data.user.email || 'user');
+        
+        const { error: profileError } = await supabase.from('profiles').upsert(
+          {
+            id: data.user.id,
+            display_name: sanitizedMetadata.full_name || data.user.email?.split('@')[0] || 'User',
+            username: uniqueUsername,
+            avatar_url: sanitizedMetadata.avatar_url,
+            is_verified: !!data.user.confirmed_at,
+            created_at: data.user.created_at,
+          },
+          { onConflict: 'id', ignoreDuplicates: false }
+        );
+
+        if (profileError) {
+          console.error('Profile creation error:', profileError);
+        }
+
+        return NextResponse.redirect(new URL('/dashboard', origin));
+      } catch (error) {
+        console.error('Callback processing error:', error);
+        return NextResponse.redirect(new URL('/login?error=profile_creation_failed', origin));
+      }
     }
   }
 
-  return NextResponse.redirect(new URL('/login?error=oauth_failed', origin));
+  return NextResponse.redirect(new URL('/login?error=invalid_callback', origin));
 }

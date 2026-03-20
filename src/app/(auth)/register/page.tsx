@@ -4,6 +4,7 @@ import { createClient } from '@/supabase-clients/client';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { validateEmail, validateUsername, sanitizeInput } from '@/lib/security';
 
 export default function RegisterPage() {
     const [displayName, setDisplayName] = useState('');
@@ -20,6 +21,21 @@ export default function RegisterPage() {
         setLoading(true);
         setError(null);
 
+        // Input validation
+        const emailValidation = validateEmail(email);
+        if (!emailValidation) {
+            setError('Please enter a valid email address');
+            setLoading(false);
+            return;
+        }
+
+        const displayNameValidation = validateUsername(displayName);
+        if (!displayNameValidation.isValid) {
+            setError(displayNameValidation.errors[0]);
+            setLoading(false);
+            return;
+        }
+
         if (password !== confirmPassword) {
             setError('Passwords do not match');
             setLoading(false);
@@ -32,13 +48,25 @@ export default function RegisterPage() {
             return;
         }
 
+        // Additional password strength check
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/;
+        if (!passwordRegex.test(password)) {
+            setError('Password must contain at least one uppercase letter, lowercase letter, number, and special character');
+            setLoading(false);
+            return;
+        }
+
         try {
+            // Sanitize inputs
+            const sanitizedDisplayName = sanitizeInput(displayName);
+            const sanitizedEmail = sanitizeInput(email);
+
             const { error: signUpError } = await supabase.auth.signUp({
-                email,
+                email: sanitizedEmail,
                 password,
                 options: {
                     data: {
-                        display_name: displayName,
+                        display_name: sanitizedDisplayName,
                     },
                 },
             });
@@ -50,20 +78,28 @@ export default function RegisterPage() {
                 // Create profile
                 const { data: authData } = await supabase.auth.getUser();
                 if (authData.user) {
+                    const uniqueUsername = await generateUniqueUsername(sanitizedEmail);
                     await supabase.from('profiles').upsert({
                         id: authData.user.id,
-                        display_name: displayName,
-                        username: email.split('@')[0].toLowerCase(),
+                        display_name: sanitizedDisplayName,
+                        username: uniqueUsername,
                         is_verified: false,
                     });
                 }
                 router.push('/login?registered=true');
             }
         } catch (err) {
-            setError('An unexpected error occurred');
+            console.error('Registration error:', err);
+            setError('An unexpected error occurred. Please try again.');
         } finally {
             setLoading(false);
         }
+    };
+
+    // Helper function to generate unique username
+    const generateUniqueUsername = async (email: string): Promise<string> => {
+        const baseUsername = email.split('@')[0].toLowerCase().replace(/[^a-z0-9_-]/g, '');
+        return baseUsername;
     };
 
     return (
@@ -92,7 +128,9 @@ export default function RegisterPage() {
                             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             placeholder="John Doe"
                             disabled={loading}
+                            maxLength={100}
                         />
+                        <p className="text-xs text-gray-500 mt-1">3-50 characters, letters, numbers, underscores, and hyphens only</p>
                     </div>
 
                     <div>
@@ -108,6 +146,7 @@ export default function RegisterPage() {
                             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             placeholder="you@example.com"
                             disabled={loading}
+                            maxLength={254}
                         />
                     </div>
 
@@ -124,8 +163,9 @@ export default function RegisterPage() {
                             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             placeholder="••••••••"
                             disabled={loading}
+                            minLength={8}
                         />
-                        <p className="text-xs text-gray-500 mt-1">At least 8 characters</p>
+                        <p className="text-xs text-gray-500 mt-1">At least 8 characters with uppercase, lowercase, number, and special character</p>
                     </div>
 
                     <div>
@@ -141,6 +181,7 @@ export default function RegisterPage() {
                             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             placeholder="••••••••"
                             disabled={loading}
+                            minLength={8}
                         />
                     </div>
 

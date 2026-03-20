@@ -4,6 +4,7 @@ import { createClient } from '@/supabase-clients/client';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { validateEmail, sanitizeInput } from '@/lib/security';
 
 export default function LoginPage() {
     const [email, setEmail] = useState('');
@@ -18,19 +19,38 @@ export default function LoginPage() {
         setLoading(true);
         setError(null);
 
+        // Input validation
+        const emailValidation = validateEmail(email);
+        if (!emailValidation) {
+            setError('Please enter a valid email address');
+            setLoading(false);
+            return;
+        }
+
+        if (password.length === 0) {
+            setError('Please enter your password');
+            setLoading(false);
+            return;
+        }
+
         try {
+            // Sanitize email input
+            const sanitizedEmail = sanitizeInput(email);
+
             const { error: signInError } = await supabase.auth.signInWithPassword({
-                email,
+                email: sanitizedEmail,
                 password,
             });
 
             if (signInError) {
                 setError(signInError.message);
             } else {
+                setError(null);
                 router.push('/dashboard');
             }
         } catch (err) {
-            setError('An unexpected error occurred');
+            console.error('Login error:', err);
+            setError('An unexpected error occurred. Please try again.');
         } finally {
             setLoading(false);
         }
@@ -53,7 +73,8 @@ export default function LoginPage() {
                 setError(oauthError.message);
             }
         } catch (err) {
-            setError('OAuth login failed');
+            console.error('OAuth login error:', err);
+            setError('OAuth login failed. Please try again.');
         } finally {
             setLoading(false);
         }
@@ -85,6 +106,7 @@ export default function LoginPage() {
                             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             placeholder="you@example.com"
                             disabled={loading}
+                            maxLength={254}
                         />
                     </div>
 
@@ -101,6 +123,7 @@ export default function LoginPage() {
                             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             placeholder="••••••••"
                             disabled={loading}
+                            minLength={1}
                         />
                     </div>
 
