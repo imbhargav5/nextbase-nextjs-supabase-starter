@@ -23,21 +23,20 @@ export async function GET(request: Request) {
     const { q, skills, location, limit, offset } = parsed.data;
     let query = supabase
       .from('profiles')
-      .select('*')
+      .select('id, display_name, username, headline, location, skills, avatar_url, created_at')
       .limit(Number(limit || 20))
       .range(Number(offset || 0), Number(offset || 0) + Number(limit || 20));
 
-    // Search by name
+    // Search by name with proper escaping
     if (q) {
       const escapedQ = q.replace(/[%_]/g, '\\$&');
       query = query.or(`display_name.ilike.%${escapedQ}%,username.ilike.%${escapedQ}%`);
     }
 
     // Filter by skills if provided
-    if (skills && typeof skills === 'string') {
-      const skillArray = skills.split(',').map(s => s.trim());
-      // Note: PostgreSQL array contains - adjust based on actual operator support
-      query = query.filter('skills', 'cs', skillArray);
+    if (skills && Array.isArray(skills)) {
+      // Use contains operator for array columns
+      query = query.contains('skills', skills);
     }
 
     // Filter by location if provided
@@ -46,8 +45,8 @@ export async function GET(request: Request) {
       query = query.ilike('location', `%${escapedLocation}%`);
     }
 
-    // Exclude current user
-    query = query.neq('id', user.id);
+    // Exclude current user and only show public profiles
+    query = query.neq('id', user.id).eq('is_public', true);
 
     const { data, error } = await query;
 
@@ -57,6 +56,7 @@ export async function GET(request: Request) {
 
     return Response.json({ users: data || [] });
   } catch (error) {
+    console.error('User search error:', error);
     return Response.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

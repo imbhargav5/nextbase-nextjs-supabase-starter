@@ -12,7 +12,7 @@ export async function GET(request: Request) {
 
     const { data: profile, error } = await supabase
       .from('profiles')
-      .select('*')
+      .select('id, display_name, username, bio, headline, location, skills, avatar_url, banner_url, is_public, created_at, updated_at')
       .eq('id', user.id)
       .single();
 
@@ -22,6 +22,7 @@ export async function GET(request: Request) {
 
     return Response.json({ user: profile });
   } catch (error) {
+    console.error('Get profile error:', error);
     return Response.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
@@ -45,11 +46,22 @@ export async function PUT(request: Request) {
       );
     }
 
+    // Sanitize inputs
+    const sanitizedData = {
+      ...parsed.data,
+      display_name: parsed.data.display_name.trim(),
+      username: parsed.data.username.toLowerCase().trim(),
+      bio: parsed.data.bio?.trim(),
+      headline: parsed.data.headline?.trim(),
+      location: parsed.data.location?.trim(),
+      updated_at: new Date().toISOString()
+    };
+
     const { data, error } = await supabase
       .from('profiles')
-      .update({ ...parsed.data, updated_at: new Date().toISOString() })
+      .update(sanitizedData)
       .eq('id', user.id)
-      .select()
+      .select('id, display_name, username, bio, headline, location, skills, avatar_url, banner_url, is_public, updated_at')
       .single();
 
     if (error) {
@@ -58,6 +70,7 @@ export async function PUT(request: Request) {
 
     return Response.json({ user: data });
   } catch (error) {
+    console.error('Update profile error:', error);
     return Response.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
