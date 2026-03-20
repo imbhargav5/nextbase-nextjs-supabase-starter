@@ -1,8 +1,17 @@
 import { profileUpdateSchema } from '@/lib/validations/profile.schema';
 import { createServerSupabaseClient } from '@/supabase-clients/server';
+import { sanitizeInput, checkRateLimit } from '@/lib/security';
 
 export async function GET(request: Request) {
   try {
+    // Rate limiting check
+    const clientIp = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown';
+    const isRateLimited = await checkRateLimit(`user-profile:${clientIp}`);
+    
+    if (!isRateLimited) {
+      return Response.json({ error: 'Too many requests. Please try again later.' }, { status: 429 });
+    }
+
     const supabase = await createServerSupabaseClient();
     const { data: { user }, error: authError } = await supabase.auth.getUser();
 
@@ -17,7 +26,8 @@ export async function GET(request: Request) {
       .single();
 
     if (error) {
-      return Response.json({ error: error.message }, { status: 500 });
+      console.error('Database query error:', error);
+      return Response.json({ error: 'Internal server error' }, { status: 500 });
     }
 
     return Response.json({ user: profile });
@@ -29,6 +39,14 @@ export async function GET(request: Request) {
 
 export async function PUT(request: Request) {
   try {
+    // Rate limiting check
+    const clientIp = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown';
+    const isRateLimited = await checkRateLimit(`user-update:${clientIp}`);
+    
+    if (!isRateLimited) {
+      return Response.json({ error: 'Too many requests. Please try again later.' }, { status: 429 });
+    }
+
     const supabase = await createServerSupabaseClient();
     const { data: { user }, error: authError } = await supabase.auth.getUser();
 
@@ -49,13 +67,30 @@ export async function PUT(request: Request) {
     // Sanitize inputs
     const sanitizedData = {
       ...parsed.data,
-      display_name: parsed.data.display_name.trim(),
-      username: parsed.data.username.toLowerCase().trim(),
-      bio: parsed.data.bio?.trim(),
-      headline: parsed.data.headline?.trim(),
-      location: parsed.data.location?.trim(),
+      display_name: sanitizeInput(parsed.data.display_name).trim(),
+      username: sanitizeInput(parsed.data.username).toLowerCase().trim(),
+      bio: parsed.data.bio ? sanitizeInput(parsed.data.bio).trim() : null,
+      headline: parsed.data.headline ? sanitizeInput(parsed.data.headline).trim() : null,
+      location: parsed.data.location ? sanitizeInput(parsed.data.location).trim() : null,
       updated_at: new Date().toISOString()
     };
+
+    // Additional validation
+    if (sanitizedData.display_name.length > 100) {
+      return Response.json({ error: 'Display name too long' }, { status: 400 });
+    }
+    
+    if (sanitizedData.bio && sanitizedData.bio.length > 500) {
+      return Response.json({ error: 'Bio too long' }, { status: 400 });
+    }
+    
+    if (sanitizedData.headline && sanitizedData.headline.length > 100) {
+      return Response.json({ error: 'Headline too long' }, { status: 400 });
+    }
+    
+    if (sanitizedData.location && sanitizedData.location.length > 100) {
+      return Response.json({ error: 'Location too long' }, { status: 400 });
+    }
 
     const { data, error } = await supabase
       .from('profiles')
@@ -65,7 +100,8 @@ export async function PUT(request: Request) {
       .single();
 
     if (error) {
-      return Response.json({ error: error.message }, { status: 500 });
+      console.error('Database update error:', error);
+      return Response.json({ error: 'Internal server error' }, { status: 500 });
     }
 
     return Response.json({ user: data });

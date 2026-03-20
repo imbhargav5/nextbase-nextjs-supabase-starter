@@ -1,8 +1,17 @@
 import { userSearchSchema } from '@/lib/validations/profile.schema';
 import { createServerSupabaseClient } from '@/supabase-clients/server';
+import { sanitizeInput, checkRateLimit } from '@/lib/security';
 
 export async function GET(request: Request) {
   try {
+    // Rate limiting check
+    const clientIp = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown';
+    const isRateLimited = await checkRateLimit(`user-search:${clientIp}`);
+    
+    if (!isRateLimited) {
+      return Response.json({ error: 'Too many requests. Please try again later.' }, { status: 429 });
+    }
+
     const supabase = await createServerSupabaseClient();
     const { data: { user }, error: authError } = await supabase.auth.getUser();
 
@@ -21,27 +30,48 @@ export async function GET(request: Request) {
     }
 
     const { q, skills, location, limit, offset } = parsed.data;
+    
+    // Sanitize inputs
+    const sanitizedQ = q ? sanitizeInput(q) : undefined;
+    const sanitizedLocation = location ? sanitizeInput(location) : undefined;
+    const sanitizedSkills = skills && Array.isArray(skills) 
+      ? skills.map(skill => sanitizeInput(skill)) 
+      : undefined;
+    
+    // Input validation
+    if (sanitizedQ && sanitizedQ.length > 100) {
+      return Response.json({ error: 'Search query too long' }, { status: 400 });
+    }
+    
+    if (sanitizedLocation && sanitizedLocation.length > 100) {
+      return Response.json({ error: 'Location query too long' }, { status: 400 });
+    }
+
+    // Validate and sanitize pagination parameters
+    const safeLimit = Math.min(Math.max(Number(limit || 20), 1), 100);
+    const safeOffset = Math.max(Number(offset || 0), 0);
+
     let query = supabase
       .from('profiles')
       .select('id, display_name, username, headline, location, skills, avatar_url, created_at')
-      .limit(Number(limit || 20))
-      .range(Number(offset || 0), Number(offset || 0) + Number(limit || 20));
+      .limit(safeLimit)
+      .range(safeOffset, safeOffset + safeLimit);
 
     // Search by name with proper escaping
-    if (q) {
-      const escapedQ = q.replace(/[%_]/g, '\\$&');
+    if (sanitizedQ) {
+      const escapedQ = sanitizedQ.replace(/[%_]/g, '\\$&');
       query = query.or(`display_name.ilike.%${escapedQ}%,username.ilike.%${escapedQ}%`);
     }
 
     // Filter by skills if provided
-    if (skills && Array.isArray(skills)) {
+    if (sanitizedSkills && sanitizedSkills.length > 0) {
       // Use contains operator for array columns
-      query = query.contains('skills', skills);
+      query = query.contains('skills', sanitizedSkills);
     }
 
     // Filter by location if provided
-    if (location) {
-      const escapedLocation = location.replace(/[%_]/g, '\\$&');
+    if (sanitizedLocation) {
+      const escapedLocation = sanitizedLocation.replace(/[%_]/g, '\\$&');
       query = query.ilike('location', `%${escapedLocation}%`);
     }
 
@@ -51,7 +81,8 @@ export async function GET(request: Request) {
     const { data, error } = await query;
 
     if (error) {
-      return Response.json({ error: error.message }, { status: 500 });
+      console.error('Database query error:', error);
+      return Response.json({ error: 'Internal server error' }, { status: 500 });
     }
 
     return Response.json({ users: data || [] });

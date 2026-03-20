@@ -1,8 +1,17 @@
 import { teamCreateSchema } from '@/lib/validations/team.schema';
 import { createServerSupabaseClient } from '@/supabase-clients/server';
+import { sanitizeInput, checkRateLimit } from '@/lib/security';
 
 export async function POST(request: Request) {
   try {
+    // Rate limiting check
+    const clientIp = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown';
+    const isRateLimited = await checkRateLimit(`team-create:${clientIp}`);
+    
+    if (!isRateLimited) {
+      return Response.json({ error: 'Too many requests. Please try again later.' }, { status: 429 });
+    }
+
     const supabase = await createServerSupabaseClient();
     const { data: { user }, error: authError } = await supabase.auth.getUser();
 
@@ -23,11 +32,20 @@ export async function POST(request: Request) {
     // Sanitize inputs
     const sanitizedData = {
       ...parsed.data,
-      name: parsed.data.name.trim(),
-      description: parsed.data.description?.trim(),
+      name: sanitizeInput(parsed.data.name).trim(),
+      description: parsed.data.description ? sanitizeInput(parsed.data.description).trim() : null,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString()
     };
+
+    // Additional validation
+    if (sanitizedData.name.length > 100) {
+      return Response.json({ error: 'Team name too long' }, { status: 400 });
+    }
+    
+    if (sanitizedData.description && sanitizedData.description.length > 500) {
+      return Response.json({ error: 'Team description too long' }, { status: 400 });
+    }
 
     const { data, error } = await supabase
       .from('teams')
@@ -36,7 +54,8 @@ export async function POST(request: Request) {
       .single();
 
     if (error) {
-      return Response.json({ error: error.message }, { status: 500 });
+      console.error('Database insert error:', error);
+      return Response.json({ error: 'Internal server error' }, { status: 500 });
     }
 
     // Add creator as team member
@@ -56,6 +75,14 @@ export async function POST(request: Request) {
 
 export async function GET(request: Request) {
   try {
+    // Rate limiting check
+    const clientIp = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown';
+    const isRateLimited = await checkRateLimit(`team-list:${clientIp}`);
+    
+    if (!isRateLimited) {
+      return Response.json({ error: 'Too many requests. Please try again later.' }, { status: 429 });
+    }
+
     const supabase = await createServerSupabaseClient();
     const { data: { user }, error: authError } = await supabase.auth.getUser();
 
@@ -80,7 +107,8 @@ export async function GET(request: Request) {
       .eq('user_id', user.id);
 
     if (error) {
-      return Response.json({ error: error.message }, { status: 500 });
+      console.error('Database query error:', error);
+      return Response.json({ error: 'Internal server error' }, { status: 500 });
     }
 
     const teams = data?.map(tm => (tm as any).teams) || [];
