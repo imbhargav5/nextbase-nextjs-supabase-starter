@@ -6,6 +6,7 @@ import { OrgMemberNode } from './OrgMemberNode';
 import { useAutoLayout } from '@/hooks/useAutoLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { OrgMemberNode as OrgMemberNodeType, OrgMemberEdge } from '@/types';
+import { Node, Edge, Position } from '@xyflow/react';
 
 interface OrgChartProps {
   teamId: string;

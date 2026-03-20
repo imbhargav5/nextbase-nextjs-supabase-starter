@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
 import { OrgMemberNodeData } from '@/types';
 
-export function OrgMemberNode({ data }: NodeProps<OrgMemberNodeData>) {
+export function OrgMemberNode({ data }: NodeProps<{ data: OrgMemberNodeData }>) {
   const { user, role, department, departmentColor } = data;
 
   return (

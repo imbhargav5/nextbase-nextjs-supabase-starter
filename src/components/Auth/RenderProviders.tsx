@@ -8,6 +8,14 @@ import {
 } from '@/components/ui/hover-card';
 import { AuthProvider } from '@/types';
 import { Fragment } from 'react';
+import { Mail } from 'lucide-react';
+
+// Type-safe icon mapping
+const SocialIconMap: Record<AuthProvider, React.ComponentType> = {
+  google: SocialIcons.google,
+  github: SocialIcons.github,
+  email: Mail,
+};
 
 function capitalize(word: string) {
   const lower = word.toLowerCase();
@@ -28,7 +36,7 @@ export const RenderProviders = ({
   return (
     <div className="space-y-2.5 flex flex-col">
       {providers.map((provider) => {
-        const AuthIcon = SocialIcons[provider];
+        const AuthIcon = SocialIconMap[provider];
         const component = (
           <Button
             variant="default"

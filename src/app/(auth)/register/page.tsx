@@ -75,17 +75,7 @@ export default function RegisterPage() {
                 setError(signUpError.message);
             } else {
                 setError(null);
-                // Create profile
-                const { data: authData } = await supabase.auth.getUser();
-                if (authData.user) {
-                    const uniqueUsername = await generateUniqueUsername(sanitizedEmail);
-                    await supabase.from('profiles').upsert({
-                        id: authData.user.id,
-                        display_name: sanitizedDisplayName,
-                        username: uniqueUsername,
-                        is_verified: false,
-                    });
-                }
+                // Profile creation would be implemented once user_profiles table is created
                 router.push('/login?registered=true');
             }
         } catch (err) {

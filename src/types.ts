@@ -6,8 +6,10 @@ declare global {
 }
 
 // Basic interfaces for the application
-export interface AuthProvider {
-  id: string;
+export type AuthProvider = 'google' | 'github' | 'email';
+
+export interface AuthProviderConfig {
+  id: AuthProvider;
   name: string;
   icon?: string;
 }
@@ -42,11 +44,17 @@ export interface OrgMemberNode {
     x: number;
     y: number;
   };
-  data: OrgMemberNodeData;
+  data: OrgMemberNodeData & Record<string, unknown>;
   width: number;
   height: number;
-  sourcePosition?: string;
-  targetPosition?: string;
+}
+
+export interface OrgMemberEdge {
+  id: string;
+  source: string;
+  target: string;
+  type?: string;
+  animated?: boolean;
 }
 
 // Message types

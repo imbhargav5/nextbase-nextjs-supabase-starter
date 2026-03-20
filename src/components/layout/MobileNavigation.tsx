@@ -40,13 +40,17 @@ const navigation = [
 
 export function MobileNavigation() {
   return (
-    <div className="flex items-center justify-between px-4 py-3 border-b">
+    <header className="flex items-center justify-between px-4 py-3 border-b bg-background sticky top-0 z-50">
       {/* Left Side - Menu & Search */}
       <div className="flex items-center gap-2 flex-1">
         <Sheet>
           <SheetTrigger asChild>
-            <Button variant="ghost" size="icon">
-              <Menu className="h-6 w-6" />
+            <Button 
+              variant="ghost" 
+              size="icon"
+              aria-label="Open menu"
+            >
+              <Menu className="h-6 w-6" aria-hidden="true" />
             </Button>
           </SheetTrigger>
           <SheetContent side="left" className="pr-0">
@@ -63,7 +67,7 @@ export function MobileNavigation() {
 
               {/* Navigation */}
               <div className="flex-1 overflow-auto py-4">
-                <nav className="space-y-1 px-2">
+                <nav className="space-y-1 px-2" role="navigation" aria-label="Main menu">
                   {navigation.map((item) => {
                     const Icon = item.icon;
                     
@@ -71,9 +75,9 @@ export function MobileNavigation() {
                       <Link
                         key={item.name}
                         href={item.href}
-                        className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                        className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
                       >
-                        <Icon className="h-5 w-5" />
+                        <Icon className="h-5 w-5" aria-hidden="true" />
                         {item.name}
                       </Link>
                     );
@@ -84,7 +88,7 @@ export function MobileNavigation() {
               {/* User Section */}
               <div className="border-t p-4">
                 <div className="flex items-center gap-3">
-                  <Avatar className="h-10 w-10">
+                  <Avatar className="h-10 w-10" aria-hidden="true">
                     <AvatarImage src="/default-avatar.png" alt="User" />
                     <AvatarFallback>U</AvatarFallback>
                   </Avatar>
@@ -100,24 +104,33 @@ export function MobileNavigation() {
 
         {/* Search Bar */}
         <div className="relative flex-1 max-w-md">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" aria-hidden="true" />
           <Input
             placeholder="Search..."
             className="pl-10"
+            aria-label="Search"
           />
         </div>
       </div>
 
       {/* Right Side - Actions */}
       <div className="flex items-center gap-2">
-        <Button variant="ghost" size="icon">
-          <Bell className="h-5 w-5" />
+        <Button 
+          variant="ghost" 
+          size="icon"
+          aria-label="Notifications"
+        >
+          <Bell className="h-5 w-5" aria-hidden="true" />
         </Button>
         
-        <Button variant="ghost" size="icon">
-          <MessagesSquare className="h-5 w-5" />
+        <Button 
+          variant="ghost" 
+          size="icon"
+          aria-label="Messages"
+        >
+          <MessagesSquare className="h-5 w-5" aria-hidden="true" />
         </Button>
       </div>
-    </div>
+    </header>
   );
 }
