@@ -1,77 +1,59 @@
-import { PlaywrightTestConfig, devices } from '@playwright/test';
+import { devices, type PlaywrightTestConfig } from '@playwright/test';
 import path from 'path';
 
-// Use process.env.PORT by default and fallback to port 3000
 const PORT = process.env.PORT || 3000;
-
-// Set webServer.url and use.baseURL with the location of the WebServer respecting the correct set port
 const baseURL = `http://localhost:${PORT}`;
 
-// Reference: https://playwright.dev/docs/test-configuration
 const config: PlaywrightTestConfig = {
-  // Timeout per test
-  timeout: 30 * 1000,
-  // Test directory
+  workers: 2,
+  timeout: 60 * 1000,
   testDir: path.join(__dirname, 'e2e'),
-  // If a test fails, retry it additional 2 times
   retries: 2,
-  // Artifacts folder where screenshots, videos, and traces are stored.
   outputDir: 'test-results/',
-
-  // Run your local production server before starting the tests:
-  // https://playwright.dev/docs/test-advanced#launching-a-development-web-server-during-the-tests
+  reporter: process.env.CI ? 'github' : 'list',
   webServer: {
     command: 'pnpm build && pnpm start',
     url: baseURL,
-    timeout: 120 * 1000,
+    timeout: 180 * 1000,
     reuseExistingServer: !process.env.CI,
+    stdout: 'pipe',
+    stderr: 'pipe',
   },
-
+  expect: {
+    timeout: 15 * 1000,
+  },
   use: {
-    // Use baseURL so to make navigations relative.
-    // More information: https://playwright.dev/docs/api/class-testoptions#test-options-base-url
     baseURL,
-
-    // Retry a test if its failing with enabled tracing. This allows you to analyse the DOM, console logs, network traffic etc.
-    // More information: https://playwright.dev/docs/trace-viewer
-    trace: 'retry-with-trace',
-
-    // All available context options: https://playwright.dev/docs/api/class-browser#browser-new-context
-    // contextOptions: {
-    //   ignoreHTTPSErrors: true,
-    // },
+    trace: 'retain-on-failure',
+    navigationTimeout: 30 * 1000,
+    actionTimeout: 30 * 1000,
+    video: process.env.CI ? 'retain-on-failure' : 'off',
+    screenshot: process.env.CI ? 'only-on-failure' : 'off',
   },
-
   projects: [
     {
-      name: 'Desktop Chrome',
+      name: 'with-user-setup',
+      testMatch: '_setups/user.setup.ts',
+    },
+    {
+      name: 'logged-in-users',
+      testMatch: 'user/**/*.spec.ts',
+      retries: 0,
+      dependencies: ['with-user-setup'],
+      use: {
+        ...devices['Desktop Chrome'],
+        storageState: 'playwright/.auth/user_1.json',
+      },
+    },
+    {
+      name: 'anon-users',
+      testMatch: 'anon/**/*.spec.ts',
       use: {
         ...devices['Desktop Chrome'],
       },
     },
-    // {
-    //   name: 'Desktop Firefox',
-    //   use: {
-    //     ...devices['Desktop Firefox'],
-    //   },
-    // },
-    // {
-    //   name: 'Desktop Safari',
-    //   use: {
-    //     ...devices['Desktop Safari'],
-    //   },
-    // },
-    // Test against mobile viewports.
-    {
-      name: 'Mobile Chrome',
-      use: {
-        ...devices['Pixel 5'],
-      },
-    },
-    {
-      name: 'Mobile Safari',
-      use: devices['iPhone 12'],
-    },
   ],
+  globalSetup: './playwright/global-setup.ts',
 };
+
 export default config;

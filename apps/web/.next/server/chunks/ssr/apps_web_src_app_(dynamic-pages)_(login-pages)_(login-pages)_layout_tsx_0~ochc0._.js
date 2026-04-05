@@ -1,3 +1,0 @@
-module.exports=[36438,a=>{"use strict";var b=a.i(16931);a.s(["default",0,function({children:a}){return(0,b.jsx)("div",{className:"h-full ",children:(0,b.jsx)("div",{className:"grid",children:(0,b.jsx)("div",{className:"text-center flex flex-col items-center justify-center space-y-8 h-screen",children:(0,b.jsx)("div",{children:a})})})})}])},48468,a=>{a.n(a.i(36438))}];
-
-//# sourceMappingURL=apps_web_src_app_%28dynamic-pages%29_%28login-pages%29_%28login-pages%29_layout_tsx_0~ochc0._.js.map

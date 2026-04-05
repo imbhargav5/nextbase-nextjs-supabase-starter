@@ -1,189 +1,57 @@
 {
   "node": {
-    "7f84887b230552eb4cccb7854425070145f43d2862": {
+    "807c49c2a9e475e75aa14ae4b5646c020a96358b69": {
       "workers": {
-        "app/(dynamic-pages)/(login-pages)/(login-pages)/forgot-password/page": {
-          "moduleId": 1415,
+        "app/(app-pages)/dashboard/new/page": {
+          "moduleId": 35022,
           "async": false,
-          "exportedName": "resetPasswordAction",
-          "filename": "apps/web/src/data/auth/auth.ts"
+          "exportedName": "$$RSC_SERVER_CACHE_0",
+          "filename": "apps/web/src/app/(app-pages)/app-sidebar.tsx"
+        },
+        "app/(app-pages)/dashboard/page": {
+          "moduleId": 16804,
+          "async": false,
+          "exportedName": "$$RSC_SERVER_CACHE_0",
+          "filename": "apps/web/src/app/(app-pages)/app-sidebar.tsx"
+        },
+        "app/(app-pages)/private-item/[privateItemId]/page": {
+          "moduleId": 88761,
+          "async": false,
+          "exportedName": "$$RSC_SERVER_CACHE_0",
+          "filename": "apps/web/src/app/(app-pages)/app-sidebar.tsx"
+        },
+        "app/(app-pages)/private-items/page": {
+          "moduleId": 90951,
+          "async": false,
+          "exportedName": "$$RSC_SERVER_CACHE_0",
+          "filename": "apps/web/src/app/(app-pages)/app-sidebar.tsx"
         }
       },
-      "filename": "apps/web/src/data/auth/auth.ts",
-      "exportedName": "resetPasswordAction"
-    },
-    "7f974ac6e4a9d8f99d10a9ed145efec83153232a48": {
-      "workers": {
-        "app/(dynamic-pages)/(login-pages)/(login-pages)/login/page": {
-          "moduleId": 78379,
-          "async": false,
-          "exportedName": "signInWithMagicLinkAction",
-          "filename": "apps/web/src/data/auth/auth.ts"
-        },
-        "app/(dynamic-pages)/(login-pages)/(login-pages)/sign-up/page": {
-          "moduleId": 46536,
-          "async": false,
-          "exportedName": "signInWithMagicLinkAction",
-          "filename": "apps/web/src/data/auth/auth.ts"
-        }
-      },
-      "filename": "apps/web/src/data/auth/auth.ts",
-      "exportedName": "signInWithMagicLinkAction"
-    },
-    "7f03a04dc647cfc8acc623c86bbaca67402eaf1bc2": {
-      "workers": {
-        "app/(dynamic-pages)/(login-pages)/(login-pages)/login/page": {
-          "moduleId": 78379,
-          "async": false,
-          "exportedName": "signInWithPasswordAction",
-          "filename": "apps/web/src/data/auth/auth.ts"
-        }
-      },
-      "filename": "apps/web/src/data/auth/auth.ts",
-      "exportedName": "signInWithPasswordAction"
-    },
-    "7f71b73fa0214e5abbd35f08c16d1f970945704514": {
-      "workers": {
-        "app/(dynamic-pages)/(login-pages)/(login-pages)/login/page": {
-          "moduleId": 78379,
-          "async": false,
-          "exportedName": "signInWithProviderAction",
-          "filename": "apps/web/src/data/auth/auth.ts"
-        },
-        "app/(dynamic-pages)/(login-pages)/(login-pages)/sign-up/page": {
-          "moduleId": 46536,
-          "async": false,
-          "exportedName": "signInWithProviderAction",
-          "filename": "apps/web/src/data/auth/auth.ts"
-        }
-      },
-      "filename": "apps/web/src/data/auth/auth.ts",
-      "exportedName": "signInWithProviderAction"
-    },
-    "7ffd67c600578585b92d492f8dfd355acabec4a35c": {
-      "workers": {
-        "app/(dynamic-pages)/(login-pages)/(login-pages)/sign-up/page": {
-          "moduleId": 46536,
-          "async": false,
-          "exportedName": "signUpAction",
-          "filename": "apps/web/src/data/auth/auth.ts"
-        }
-      },
-      "filename": "apps/web/src/data/auth/auth.ts",
-      "exportedName": "signUpAction"
-    },
-    "7f4c7d3f6af1684c2b5aadd8a4d8536a840ac8b8f5": {
-      "workers": {
-        "app/(dynamic-pages)/(login-pages)/(login-pages)/update-password/page": {
-          "moduleId": 54497,
-          "async": false,
-          "exportedName": "updatePasswordAction",
-          "filename": "apps/web/src/data/user/security.ts"
-        }
-      },
-      "filename": "apps/web/src/data/user/security.ts",
-      "exportedName": "updatePasswordAction"
-    },
-    "8056efac71f5371add5c0e65c829e70dfe5a9c0eaa": {
-      "workers": {
-        "app/(dynamic-pages)/(main-pages)/(logged-in-pages)/@heading/dashboard/new/page": {
-          "moduleId": 23111,
-          "async": false,
-          "exportedName": "$$RSC_SERVER_CACHE_0",
-          "filename": "apps/web/src/app/(dynamic-pages)/(main-pages)/(logged-in-pages)/app-sidebar.tsx"
-        },
-        "app/(dynamic-pages)/(main-pages)/(logged-in-pages)/@heading/dashboard/page": {
-          "moduleId": 72836,
-          "async": false,
-          "exportedName": "$$RSC_SERVER_CACHE_0",
-          "filename": "apps/web/src/app/(dynamic-pages)/(main-pages)/(logged-in-pages)/app-sidebar.tsx"
-        },
-        "app/(dynamic-pages)/(main-pages)/(logged-in-pages)/@heading/private-item/[privateItemId]/page": {
-          "moduleId": 56210,
-          "async": false,
-          "exportedName": "$$RSC_SERVER_CACHE_0",
-          "filename": "apps/web/src/app/(dynamic-pages)/(main-pages)/(logged-in-pages)/app-sidebar.tsx"
-        },
-        "app/(dynamic-pages)/(main-pages)/(logged-in-pages)/@heading/private-items/page": {
-          "moduleId": 64971,
-          "async": false,
-          "exportedName": "$$RSC_SERVER_CACHE_0",
-          "filename": "apps/web/src/app/(dynamic-pages)/(main-pages)/(logged-in-pages)/app-sidebar.tsx"
-        },
-        "app/(dynamic-pages)/(main-pages)/(logged-in-pages)/dashboard/new/page": {
-          "moduleId": 3388,
-          "async": false,
-          "exportedName": "$$RSC_SERVER_CACHE_0",
-          "filename": "apps/web/src/app/(dynamic-pages)/(main-pages)/(logged-in-pages)/app-sidebar.tsx"
-        },
-        "app/(dynamic-pages)/(main-pages)/(logged-in-pages)/dashboard/page": {
-          "moduleId": 72321,
-          "async": false,
-          "exportedName": "$$RSC_SERVER_CACHE_0",
-          "filename": "apps/web/src/app/(dynamic-pages)/(main-pages)/(logged-in-pages)/app-sidebar.tsx"
-        },
-        "app/(dynamic-pages)/(main-pages)/(logged-in-pages)/private-item/[privateItemId]/page": {
-          "moduleId": 61801,
-          "async": false,
-          "exportedName": "$$RSC_SERVER_CACHE_0",
-          "filename": "apps/web/src/app/(dynamic-pages)/(main-pages)/(logged-in-pages)/app-sidebar.tsx"
-        },
-        "app/(dynamic-pages)/(main-pages)/(logged-in-pages)/private-items/page": {
-          "moduleId": 7824,
-          "async": false,
-          "exportedName": "$$RSC_SERVER_CACHE_0",
-          "filename": "apps/web/src/app/(dynamic-pages)/(main-pages)/(logged-in-pages)/app-sidebar.tsx"
-        }
-      },
-      "filename": "apps/web/src/app/(dynamic-pages)/(main-pages)/(logged-in-pages)/app-sidebar.tsx",
+      "filename": "apps/web/src/app/(app-pages)/app-sidebar.tsx",
       "exportedName": "$$RSC_SERVER_CACHE_0"
     },
     "003700b110d92d3af51bba25b8a9dbca1881558a56": {
       "workers": {
-        "app/(dynamic-pages)/(main-pages)/(logged-in-pages)/@heading/dashboard/new/page": {
-          "moduleId": 23111,
+        "app/(app-pages)/dashboard/new/page": {
+          "moduleId": 35022,
           "async": false,
           "exportedName": "signOutAction",
           "filename": "apps/web/src/data/auth/sign-out.ts"
         },
-        "app/(dynamic-pages)/(main-pages)/(logged-in-pages)/@heading/dashboard/page": {
-          "moduleId": 72836,
+        "app/(app-pages)/dashboard/page": {
+          "moduleId": 16804,
           "async": false,
           "exportedName": "signOutAction",
           "filename": "apps/web/src/data/auth/sign-out.ts"
         },
-        "app/(dynamic-pages)/(main-pages)/(logged-in-pages)/@heading/private-item/[privateItemId]/page": {
-          "moduleId": 56210,
+        "app/(app-pages)/private-item/[privateItemId]/page": {
+          "moduleId": 88761,
           "async": false,
           "exportedName": "signOutAction",
           "filename": "apps/web/src/data/auth/sign-out.ts"
         },
-        "app/(dynamic-pages)/(main-pages)/(logged-in-pages)/@heading/private-items/page": {
-          "moduleId": 64971,
-          "async": false,
-          "exportedName": "signOutAction",
-          "filename": "apps/web/src/data/auth/sign-out.ts"
-        },
-        "app/(dynamic-pages)/(main-pages)/(logged-in-pages)/dashboard/new/page": {
-          "moduleId": 3388,
-          "async": false,
-          "exportedName": "signOutAction",
-          "filename": "apps/web/src/data/auth/sign-out.ts"
-        },
-        "app/(dynamic-pages)/(main-pages)/(logged-in-pages)/dashboard/page": {
-          "moduleId": 72321,
-          "async": false,
-          "exportedName": "signOutAction",
-          "filename": "apps/web/src/data/auth/sign-out.ts"
-        },
-        "app/(dynamic-pages)/(main-pages)/(logged-in-pages)/private-item/[privateItemId]/page": {
-          "moduleId": 61801,
-          "async": false,
-          "exportedName": "signOutAction",
-          "filename": "apps/web/src/data/auth/sign-out.ts"
-        },
-        "app/(dynamic-pages)/(main-pages)/(logged-in-pages)/private-items/page": {
-          "moduleId": 7824,
+        "app/(app-pages)/private-items/page": {
+          "moduleId": 90951,
           "async": false,
           "exportedName": "signOutAction",
           "filename": "apps/web/src/data/auth/sign-out.ts"
@@ -192,58 +60,34 @@
       "filename": "apps/web/src/data/auth/sign-out.ts",
       "exportedName": "signOutAction"
     },
-    "80da88ddf510bde32c292aa6a7fa0f8134582726fe": {
+    "80582c4f5266d624bcddf58aac24cf6d63d7b1a52f": {
       "workers": {
-        "app/(dynamic-pages)/(main-pages)/(logged-in-pages)/@heading/dashboard/page": {
-          "moduleId": 72836,
+        "app/(app-pages)/dashboard/page": {
+          "moduleId": 16804,
           "async": false,
           "exportedName": "$$RSC_SERVER_CACHE_0",
-          "filename": "apps/web/src/app/(dynamic-pages)/(main-pages)/(logged-in-pages)/dashboard/page.tsx"
-        },
-        "app/(dynamic-pages)/(main-pages)/(logged-in-pages)/dashboard/page": {
-          "moduleId": 72321,
-          "async": false,
-          "exportedName": "$$RSC_SERVER_CACHE_0",
-          "filename": "apps/web/src/app/(dynamic-pages)/(main-pages)/(logged-in-pages)/dashboard/page.tsx"
+          "filename": "apps/web/src/app/(app-pages)/dashboard/page.tsx"
         }
       },
-      "filename": "apps/web/src/app/(dynamic-pages)/(main-pages)/(logged-in-pages)/dashboard/page.tsx",
+      "filename": "apps/web/src/app/(app-pages)/dashboard/page.tsx",
       "exportedName": "$$RSC_SERVER_CACHE_0"
     },
     "00ec123841ab386044c23a7696323a117186183b2b": {
       "workers": {
-        "app/(dynamic-pages)/(main-pages)/(logged-in-pages)/@heading/dashboard/page": {
-          "moduleId": 72836,
+        "app/(app-pages)/dashboard/page": {
+          "moduleId": 16804,
           "async": false,
           "exportedName": "getUserPrivateItems",
           "filename": "apps/web/src/data/anon/privateItems.ts"
         },
-        "app/(dynamic-pages)/(main-pages)/(logged-in-pages)/@heading/private-item/[privateItemId]/page": {
-          "moduleId": 56210,
+        "app/(app-pages)/private-item/[privateItemId]/page": {
+          "moduleId": 88761,
           "async": false,
           "exportedName": "getUserPrivateItems",
           "filename": "apps/web/src/data/anon/privateItems.ts"
         },
-        "app/(dynamic-pages)/(main-pages)/(logged-in-pages)/@heading/private-items/page": {
-          "moduleId": 64971,
-          "async": false,
-          "exportedName": "getUserPrivateItems",
-          "filename": "apps/web/src/data/anon/privateItems.ts"
-        },
-        "app/(dynamic-pages)/(main-pages)/(logged-in-pages)/dashboard/page": {
-          "moduleId": 72321,
-          "async": false,
-          "exportedName": "getUserPrivateItems",
-          "filename": "apps/web/src/data/anon/privateItems.ts"
-        },
-        "app/(dynamic-pages)/(main-pages)/(logged-in-pages)/private-item/[privateItemId]/page": {
-          "moduleId": 61801,
-          "async": false,
-          "exportedName": "getUserPrivateItems",
-          "filename": "apps/web/src/data/anon/privateItems.ts"
-        },
-        "app/(dynamic-pages)/(main-pages)/(logged-in-pages)/private-items/page": {
-          "moduleId": 7824,
+        "app/(app-pages)/private-items/page": {
+          "moduleId": 90951,
           "async": false,
           "exportedName": "getUserPrivateItems",
           "filename": "apps/web/src/data/anon/privateItems.ts"
@@ -254,38 +98,20 @@
     },
     "40c38cde252b46ce5340f41c2529dd24840c12f6d6": {
       "workers": {
-        "app/(dynamic-pages)/(main-pages)/(logged-in-pages)/@heading/dashboard/page": {
-          "moduleId": 72836,
+        "app/(app-pages)/dashboard/page": {
+          "moduleId": 16804,
           "async": false,
           "exportedName": "getPrivateItem",
           "filename": "apps/web/src/data/anon/privateItems.ts"
         },
-        "app/(dynamic-pages)/(main-pages)/(logged-in-pages)/@heading/private-item/[privateItemId]/page": {
-          "moduleId": 56210,
+        "app/(app-pages)/private-item/[privateItemId]/page": {
+          "moduleId": 88761,
           "async": false,
           "exportedName": "getPrivateItem",
           "filename": "apps/web/src/data/anon/privateItems.ts"
         },
-        "app/(dynamic-pages)/(main-pages)/(logged-in-pages)/@heading/private-items/page": {
-          "moduleId": 64971,
-          "async": false,
-          "exportedName": "getPrivateItem",
-          "filename": "apps/web/src/data/anon/privateItems.ts"
-        },
-        "app/(dynamic-pages)/(main-pages)/(logged-in-pages)/dashboard/page": {
-          "moduleId": 72321,
-          "async": false,
-          "exportedName": "getPrivateItem",
-          "filename": "apps/web/src/data/anon/privateItems.ts"
-        },
-        "app/(dynamic-pages)/(main-pages)/(logged-in-pages)/private-item/[privateItemId]/page": {
-          "moduleId": 61801,
-          "async": false,
-          "exportedName": "getPrivateItem",
-          "filename": "apps/web/src/data/anon/privateItems.ts"
-        },
-        "app/(dynamic-pages)/(main-pages)/(logged-in-pages)/private-items/page": {
-          "moduleId": 7824,
+        "app/(app-pages)/private-items/page": {
+          "moduleId": 90951,
           "async": false,
           "exportedName": "getPrivateItem",
           "filename": "apps/web/src/data/anon/privateItems.ts"
@@ -294,34 +120,10 @@
       "filename": "apps/web/src/data/anon/privateItems.ts",
       "exportedName": "getPrivateItem"
     },
-    "80e4a02053ee0e2692fe8dbc202f3283c74c84e164": {
-      "workers": {
-        "app/(dynamic-pages)/(main-pages)/(logged-in-pages)/@heading/dashboard/page": {
-          "moduleId": 72836,
-          "async": false,
-          "exportedName": "$$RSC_SERVER_CACHE_0",
-          "filename": "apps/web/src/app/(dynamic-pages)/(main-pages)/(logged-in-pages)/@heading/dashboard/page.tsx"
-        },
-        "app/(dynamic-pages)/(main-pages)/(logged-in-pages)/dashboard/page": {
-          "moduleId": 72321,
-          "async": false,
-          "exportedName": "$$RSC_SERVER_CACHE_0",
-          "filename": "apps/web/src/app/(dynamic-pages)/(main-pages)/(logged-in-pages)/@heading/dashboard/page.tsx"
-        }
-      },
-      "filename": "apps/web/src/app/(dynamic-pages)/(main-pages)/(logged-in-pages)/@heading/dashboard/page.tsx",
-      "exportedName": "$$RSC_SERVER_CACHE_0"
-    },
     "7f1390c6fce08026b4de9d49433749574dea4771e7": {
       "workers": {
-        "app/(dynamic-pages)/(main-pages)/(logged-in-pages)/@heading/dashboard/new/page": {
-          "moduleId": 23111,
-          "async": false,
-          "exportedName": "insertPrivateItemAction",
-          "filename": "apps/web/src/data/user/privateItems.ts"
-        },
-        "app/(dynamic-pages)/(main-pages)/(logged-in-pages)/dashboard/new/page": {
-          "moduleId": 3388,
+        "app/(app-pages)/dashboard/new/page": {
+          "moduleId": 35022,
           "async": false,
           "exportedName": "insertPrivateItemAction",
           "filename": "apps/web/src/data/user/privateItems.ts"
@@ -330,34 +132,10 @@
       "filename": "apps/web/src/data/user/privateItems.ts",
       "exportedName": "insertPrivateItemAction"
     },
-    "80fd3c130b69b5c18b2ff2521e49093c82e2f22d9c": {
-      "workers": {
-        "app/(dynamic-pages)/(main-pages)/(logged-in-pages)/@heading/dashboard/new/page": {
-          "moduleId": 23111,
-          "async": false,
-          "exportedName": "$$RSC_SERVER_CACHE_0",
-          "filename": "apps/web/src/app/(dynamic-pages)/(main-pages)/(logged-in-pages)/@heading/dashboard/new/page.tsx"
-        },
-        "app/(dynamic-pages)/(main-pages)/(logged-in-pages)/dashboard/new/page": {
-          "moduleId": 3388,
-          "async": false,
-          "exportedName": "$$RSC_SERVER_CACHE_0",
-          "filename": "apps/web/src/app/(dynamic-pages)/(main-pages)/(logged-in-pages)/@heading/dashboard/new/page.tsx"
-        }
-      },
-      "filename": "apps/web/src/app/(dynamic-pages)/(main-pages)/(logged-in-pages)/@heading/dashboard/new/page.tsx",
-      "exportedName": "$$RSC_SERVER_CACHE_0"
-    },
     "7f5c2ca789ee304f03d0169c15f16b04c4e6bbcdf3": {
       "workers": {
-        "app/(dynamic-pages)/(main-pages)/(logged-in-pages)/@heading/private-item/[privateItemId]/page": {
-          "moduleId": 56210,
-          "async": false,
-          "exportedName": "deletePrivateItemAction",
-          "filename": "apps/web/src/data/user/privateItems.ts"
-        },
-        "app/(dynamic-pages)/(main-pages)/(logged-in-pages)/private-item/[privateItemId]/page": {
-          "moduleId": 61801,
+        "app/(app-pages)/private-item/[privateItemId]/page": {
+          "moduleId": 88761,
           "async": false,
           "exportedName": "deletePrivateItemAction",
           "filename": "apps/web/src/data/user/privateItems.ts"
@@ -366,23 +144,89 @@
       "filename": "apps/web/src/data/user/privateItems.ts",
       "exportedName": "deletePrivateItemAction"
     },
-    "80479852dcc13fc33fe354a00d459ffd2fe1ec2fcc": {
+    "7f84887b230552eb4cccb7854425070145f43d2862": {
       "workers": {
-        "app/(dynamic-pages)/(main-pages)/(logged-in-pages)/@heading/private-items/page": {
-          "moduleId": 64971,
+        "app/(auth-pages)/forgot-password/page": {
+          "moduleId": 98428,
           "async": false,
-          "exportedName": "$$RSC_SERVER_CACHE_0",
-          "filename": "apps/web/src/app/(dynamic-pages)/(main-pages)/(logged-in-pages)/@heading/private-items/page.tsx"
-        },
-        "app/(dynamic-pages)/(main-pages)/(logged-in-pages)/private-items/page": {
-          "moduleId": 7824,
-          "async": false,
-          "exportedName": "$$RSC_SERVER_CACHE_0",
-          "filename": "apps/web/src/app/(dynamic-pages)/(main-pages)/(logged-in-pages)/@heading/private-items/page.tsx"
+          "exportedName": "resetPasswordAction",
+          "filename": "apps/web/src/data/auth/auth.ts"
         }
       },
-      "filename": "apps/web/src/app/(dynamic-pages)/(main-pages)/(logged-in-pages)/@heading/private-items/page.tsx",
-      "exportedName": "$$RSC_SERVER_CACHE_0"
+      "filename": "apps/web/src/data/auth/auth.ts",
+      "exportedName": "resetPasswordAction"
+    },
+    "7f974ac6e4a9d8f99d10a9ed145efec83153232a48": {
+      "workers": {
+        "app/(auth-pages)/login/page": {
+          "moduleId": 71926,
+          "async": false,
+          "exportedName": "signInWithMagicLinkAction",
+          "filename": "apps/web/src/data/auth/auth.ts"
+        },
+        "app/(auth-pages)/sign-up/page": {
+          "moduleId": 54535,
+          "async": false,
+          "exportedName": "signInWithMagicLinkAction",
+          "filename": "apps/web/src/data/auth/auth.ts"
+        }
+      },
+      "filename": "apps/web/src/data/auth/auth.ts",
+      "exportedName": "signInWithMagicLinkAction"
+    },
+    "7f03a04dc647cfc8acc623c86bbaca67402eaf1bc2": {
+      "workers": {
+        "app/(auth-pages)/login/page": {
+          "moduleId": 71926,
+          "async": false,
+          "exportedName": "signInWithPasswordAction",
+          "filename": "apps/web/src/data/auth/auth.ts"
+        }
+      },
+      "filename": "apps/web/src/data/auth/auth.ts",
+      "exportedName": "signInWithPasswordAction"
+    },
+    "7f71b73fa0214e5abbd35f08c16d1f970945704514": {
+      "workers": {
+        "app/(auth-pages)/login/page": {
+          "moduleId": 71926,
+          "async": false,
+          "exportedName": "signInWithProviderAction",
+          "filename": "apps/web/src/data/auth/auth.ts"
+        },
+        "app/(auth-pages)/sign-up/page": {
+          "moduleId": 54535,
+          "async": false,
+          "exportedName": "signInWithProviderAction",
+          "filename": "apps/web/src/data/auth/auth.ts"
+        }
+      },
+      "filename": "apps/web/src/data/auth/auth.ts",
+      "exportedName": "signInWithProviderAction"
+    },
+    "7ffd67c600578585b92d492f8dfd355acabec4a35c": {
+      "workers": {
+        "app/(auth-pages)/sign-up/page": {
+          "moduleId": 54535,
+          "async": false,
+          "exportedName": "signUpAction",
+          "filename": "apps/web/src/data/auth/auth.ts"
+        }
+      },
+      "filename": "apps/web/src/data/auth/auth.ts",
+      "exportedName": "signUpAction"
+    },
+    "7f4c7d3f6af1684c2b5aadd8a4d8536a840ac8b8f5": {
+      "workers": {
+        "app/(auth-pages)/update-password/page": {
+          "moduleId": 70225,
+          "async": false,
+          "exportedName": "updatePasswordAction",
+          "filename": "apps/web/src/data/user/security.ts"
+        }
+      },
+      "filename": "apps/web/src/data/user/security.ts",
+      "exportedName": "updatePasswordAction"
     }
   },
   "edge": {},

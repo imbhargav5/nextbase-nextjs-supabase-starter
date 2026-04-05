@@ -1,3 +1,0 @@
-{
-  "/(dynamic-pages)/(main-pages)/(logged-in-pages)/private-item/[privateItemId]/page": "app/(dynamic-pages)/(main-pages)/(logged-in-pages)/private-item/[privateItemId]/page.js"
-}

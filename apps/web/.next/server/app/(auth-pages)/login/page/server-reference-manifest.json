@@ -1,0 +1,41 @@
+{
+  "node": {
+    "7f974ac6e4a9d8f99d10a9ed145efec83153232a48": {
+      "workers": {
+        "app/(auth-pages)/login/page": {
+          "moduleId": 71926,
+          "async": false,
+          "exportedName": "signInWithMagicLinkAction",
+          "filename": "apps/web/src/data/auth/auth.ts"
+        }
+      },
+      "exportedName": "signInWithMagicLinkAction",
+      "filename": "apps/web/src/data/auth/auth.ts"
+    },
+    "7f03a04dc647cfc8acc623c86bbaca67402eaf1bc2": {
+      "workers": {
+        "app/(auth-pages)/login/page": {
+          "moduleId": 71926,
+          "async": false,
+          "exportedName": "signInWithPasswordAction",
+          "filename": "apps/web/src/data/auth/auth.ts"
+        }
+      },
+      "exportedName": "signInWithPasswordAction",
+      "filename": "apps/web/src/data/auth/auth.ts"
+    },
+    "7f71b73fa0214e5abbd35f08c16d1f970945704514": {
+      "workers": {
+        "app/(auth-pages)/login/page": {
+          "moduleId": 71926,
+          "async": false,
+          "exportedName": "signInWithProviderAction",
+          "filename": "apps/web/src/data/auth/auth.ts"
+        }
+      },
+      "exportedName": "signInWithProviderAction",
+      "filename": "apps/web/src/data/auth/auth.ts"
+    }
+  },
+  "edge": {}
+}

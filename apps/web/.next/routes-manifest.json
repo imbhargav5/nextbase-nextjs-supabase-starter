@@ -31,8 +31,8 @@
       "namedRegex": "^/private\\-item/(?<nxtPprivateItemId>[^/]+?)(?:/)?$",
       "prefetchSegmentDataRoutes": [
         {
-          "destination": "/private-item/[privateItemId].segments/!KGR5bmFtaWMtcGFnZXMp/!KG1haW4tcGFnZXMp/!KGxvZ2dlZC1pbi1wYWdlcyk/private-item/$d$privateItemId$segment",
-          "source": "^/private\\-item/(?<nxtPprivateItemId>[^/]+?)\\.segments/!KGR5bmFtaWMtcGFnZXMp/!KG1haW4tcGFnZXMp/!KGxvZ2dlZC1pbi1wYWdlcyk/private\\-item/\\$d\\$privateItemId(?<segment>/__PAGE__\\.segment\\.rsc|\\.segment\\.rsc)(?:/)?$",
+          "destination": "/private-item/[privateItemId].segments/!KGFwcC1wYWdlcyk/private-item/$d$privateItemId$segment",
+          "source": "^/private\\-item/(?<nxtPprivateItemId>[^/]+?)\\.segments/!KGFwcC1wYWdlcyk/private\\-item/\\$d\\$privateItemId(?<segment>/__PAGE__\\.segment\\.rsc|\\.segment\\.rsc)(?:/)?$",
           "routeKeys": {
             "nxtPprivateItemId": "nxtPprivateItemId"
           }

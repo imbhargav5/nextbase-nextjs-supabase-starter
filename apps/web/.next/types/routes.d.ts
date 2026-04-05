@@ -30,7 +30,7 @@ interface ParamMap {
 export type ParamsOf<Route extends Routes> = ParamMap[Route]
 
 interface LayoutSlotMap {
-  "/": "heading"
+  "/": never
 }
 
 
