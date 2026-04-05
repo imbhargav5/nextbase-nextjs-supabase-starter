@@ -1,0 +1,21 @@
+{
+  "/(dynamic-pages)/(login-pages)/(login-pages)/auth/auth-code-error/page": "app/(dynamic-pages)/(login-pages)/(login-pages)/auth/auth-code-error/page.js",
+  "/(dynamic-pages)/(login-pages)/(login-pages)/auth/callback/route": "app/(dynamic-pages)/(login-pages)/(login-pages)/auth/callback/route.js",
+  "/(dynamic-pages)/(login-pages)/(login-pages)/auth/confirm/route": "app/(dynamic-pages)/(login-pages)/(login-pages)/auth/confirm/route.js",
+  "/(dynamic-pages)/(login-pages)/(login-pages)/forgot-password/page": "app/(dynamic-pages)/(login-pages)/(login-pages)/forgot-password/page.js",
+  "/(dynamic-pages)/(login-pages)/(login-pages)/login/page": "app/(dynamic-pages)/(login-pages)/(login-pages)/login/page.js",
+  "/(dynamic-pages)/(login-pages)/(login-pages)/sign-up/page": "app/(dynamic-pages)/(login-pages)/(login-pages)/sign-up/page.js",
+  "/(dynamic-pages)/(login-pages)/(login-pages)/update-password/page": "app/(dynamic-pages)/(login-pages)/(login-pages)/update-password/page.js",
+  "/(dynamic-pages)/(main-pages)/(logged-in-pages)/@heading/dashboard/new/page": "app/(dynamic-pages)/(main-pages)/(logged-in-pages)/@heading/dashboard/new/page.js",
+  "/(dynamic-pages)/(main-pages)/(logged-in-pages)/@heading/dashboard/page": "app/(dynamic-pages)/(main-pages)/(logged-in-pages)/@heading/dashboard/page.js",
+  "/(dynamic-pages)/(main-pages)/(logged-in-pages)/@heading/private-item/[privateItemId]/page": "app/(dynamic-pages)/(main-pages)/(logged-in-pages)/@heading/private-item/[privateItemId]/page.js",
+  "/(dynamic-pages)/(main-pages)/(logged-in-pages)/@heading/private-items/page": "app/(dynamic-pages)/(main-pages)/(logged-in-pages)/@heading/private-items/page.js",
+  "/(dynamic-pages)/(main-pages)/(logged-in-pages)/dashboard/new/page": "app/(dynamic-pages)/(main-pages)/(logged-in-pages)/dashboard/new/page.js",
+  "/(dynamic-pages)/(main-pages)/(logged-in-pages)/dashboard/page": "app/(dynamic-pages)/(main-pages)/(logged-in-pages)/dashboard/page.js",
+  "/(dynamic-pages)/(main-pages)/(logged-in-pages)/private-item/[privateItemId]/page": "app/(dynamic-pages)/(main-pages)/(logged-in-pages)/private-item/[privateItemId]/page.js",
+  "/(dynamic-pages)/(main-pages)/(logged-in-pages)/private-items/page": "app/(dynamic-pages)/(main-pages)/(logged-in-pages)/private-items/page.js",
+  "/(dynamic-pages)/(main-pages)/page": "app/(dynamic-pages)/(main-pages)/page.js",
+  "/(external-pages)/about/page": "app/(external-pages)/about/page.js",
+  "/_global-error/page": "app/_global-error/page.js",
+  "/_not-found/page": "app/_not-found/page.js"
+}

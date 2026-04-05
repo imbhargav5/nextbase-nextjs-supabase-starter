@@ -1,0 +1,21 @@
+{
+  "/(dynamic-pages)/(login-pages)/(login-pages)/auth/auth-code-error/page": "/auth/auth-code-error",
+  "/(dynamic-pages)/(login-pages)/(login-pages)/auth/callback/route": "/auth/callback",
+  "/(dynamic-pages)/(login-pages)/(login-pages)/auth/confirm/route": "/auth/confirm",
+  "/(dynamic-pages)/(login-pages)/(login-pages)/forgot-password/page": "/forgot-password",
+  "/(dynamic-pages)/(login-pages)/(login-pages)/login/page": "/login",
+  "/(dynamic-pages)/(login-pages)/(login-pages)/sign-up/page": "/sign-up",
+  "/(dynamic-pages)/(login-pages)/(login-pages)/update-password/page": "/update-password",
+  "/(dynamic-pages)/(main-pages)/(logged-in-pages)/@heading/dashboard/new/page": "/dashboard/new",
+  "/(dynamic-pages)/(main-pages)/(logged-in-pages)/@heading/dashboard/page": "/dashboard",
+  "/(dynamic-pages)/(main-pages)/(logged-in-pages)/@heading/private-item/[privateItemId]/page": "/private-item/[privateItemId]",
+  "/(dynamic-pages)/(main-pages)/(logged-in-pages)/@heading/private-items/page": "/private-items",
+  "/(dynamic-pages)/(main-pages)/(logged-in-pages)/dashboard/new/page": "/dashboard/new",
+  "/(dynamic-pages)/(main-pages)/(logged-in-pages)/dashboard/page": "/dashboard",
+  "/(dynamic-pages)/(main-pages)/(logged-in-pages)/private-item/[privateItemId]/page": "/private-item/[privateItemId]",
+  "/(dynamic-pages)/(main-pages)/(logged-in-pages)/private-items/page": "/private-items",
+  "/(dynamic-pages)/(main-pages)/page": "/",
+  "/(external-pages)/about/page": "/about",
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found"
+}

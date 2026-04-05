@@ -1,0 +1,53 @@
+{
+  "node": {
+    "8056efac71f5371add5c0e65c829e70dfe5a9c0eaa": {
+      "workers": {
+        "app/(dynamic-pages)/(main-pages)/(logged-in-pages)/dashboard/new/page": {
+          "moduleId": 3388,
+          "async": false,
+          "exportedName": "$$RSC_SERVER_CACHE_0",
+          "filename": "apps/web/src/app/(dynamic-pages)/(main-pages)/(logged-in-pages)/app-sidebar.tsx"
+        }
+      },
+      "exportedName": "$$RSC_SERVER_CACHE_0",
+      "filename": "apps/web/src/app/(dynamic-pages)/(main-pages)/(logged-in-pages)/app-sidebar.tsx"
+    },
+    "003700b110d92d3af51bba25b8a9dbca1881558a56": {
+      "workers": {
+        "app/(dynamic-pages)/(main-pages)/(logged-in-pages)/dashboard/new/page": {
+          "moduleId": 3388,
+          "async": false,
+          "exportedName": "signOutAction",
+          "filename": "apps/web/src/data/auth/sign-out.ts"
+        }
+      },
+      "exportedName": "signOutAction",
+      "filename": "apps/web/src/data/auth/sign-out.ts"
+    },
+    "7f1390c6fce08026b4de9d49433749574dea4771e7": {
+      "workers": {
+        "app/(dynamic-pages)/(main-pages)/(logged-in-pages)/dashboard/new/page": {
+          "moduleId": 3388,
+          "async": false,
+          "exportedName": "insertPrivateItemAction",
+          "filename": "apps/web/src/data/user/privateItems.ts"
+        }
+      },
+      "exportedName": "insertPrivateItemAction",
+      "filename": "apps/web/src/data/user/privateItems.ts"
+    },
+    "80fd3c130b69b5c18b2ff2521e49093c82e2f22d9c": {
+      "workers": {
+        "app/(dynamic-pages)/(main-pages)/(logged-in-pages)/dashboard/new/page": {
+          "moduleId": 3388,
+          "async": false,
+          "exportedName": "$$RSC_SERVER_CACHE_0",
+          "filename": "apps/web/src/app/(dynamic-pages)/(main-pages)/(logged-in-pages)/@heading/dashboard/new/page.tsx"
+        }
+      },
+      "exportedName": "$$RSC_SERVER_CACHE_0",
+      "filename": "apps/web/src/app/(dynamic-pages)/(main-pages)/(logged-in-pages)/@heading/dashboard/new/page.tsx"
+    }
+  },
+  "edge": {}
+}
