@@ -16,7 +16,7 @@ Nextbase Lite is a simple Next.js 16 + Supabase boilerplate. It includes a Next.
 - 💚 Eslint, typescript, prettier, postcss configured for dev and test environments
 - 📈 Automatic sitemap generation
 - 🔍 SEO metadata, JSON-LD and Open Graph tags with NEXT SEO
-- ✍️ Semantic release with Automatic changelog generation
+- ✍️ Changesets-based version PRs with automatic changelog generation
 - 🎨 Prettier Code formatter
 - 💎 Minimal styling
 - 📖 Codebase which is easy to read and modify
@@ -50,6 +50,11 @@ This is a simple Next.js project. Deployment is the same as any other Next.js pr
 ### Contributing
 
 Contributions are welcome. Please open an issue or a PR.
+
+If your PR changes the starter in a way that should be released, add a changeset with
+`pnpm changeset`. Merged changesets are rolled into an automated "Version Packages" PR,
+which updates `apps/web`, syncs the repo version metadata, and creates a GitHub release
+when that PR lands on `main`.
 
 ### License
 

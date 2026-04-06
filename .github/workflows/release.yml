@@ -1,22 +1,23 @@
-name: Release
+name: GitHub Release
 
 on:
-  workflow_run:
-    workflows: ['CI']
+  pull_request:
     types:
-      - completed
+      - closed
     branches:
       - main
 
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   release:
-    strategy:
-      matrix:
-        node-version: [22.x]
-
-    name: Create a new release
+    name: Create GitHub release from changelog
     runs-on: ubuntu-latest
-    if: ${{ github.repository == 'imbhargav5/nextbase-nextjs-supabase-starter'}}
+    permissions:
+      contents: write
+    if: ${{ github.repository == 'imbhargav5/nextbase-nextjs-supabase-starter' && github.event.pull_request.merged == true && startsWith(github.event.pull_request.title, 'Version Packages') }}
     steps:
       - name: 'Check if user has write access'
         uses: 'lannonbr/repo-permission-check-action@2.0.0'
@@ -24,20 +25,60 @@ jobs:
           permission: 'write'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - if: github.event_name == 'pull_request'
-        name: ⬇️ Checkout repo
-        uses: actions/checkout@v3
+
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.pull_request.head.ref }}
+          ref: ${{ github.event.pull_request.merge_commit_sha }}
           persist-credentials: false
-      - if: github.event_name != 'pull_request'
-        name: ⬇️ Checkout repo
-        uses: actions/checkout@v3
+
+      - name: Use Node.js 22.x
+        uses: actions/setup-node@v4
         with:
-          persist-credentials: false
-      - name: 🚂 CI Setup
-        uses: ./.github/actions/ci-setup
-      - name: Semantic release
+          node-version: 22.x
+
+      - name: Resolve release metadata
+        id: release
+        run: |
+          version=$(node -p "require('./apps/web/package.json').version")
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "tag=v$version" >> "$GITHUB_OUTPUT"
+
+      - name: Create or update GitHub release
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: pnpm exec semantic-release
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PACKAGE_VERSION: ${{ steps.release.outputs.version }}
+          TAG_NAME: ${{ steps.release.outputs.tag }}
+        run: |
+          release_notes_file="$(mktemp)"
+          node <<'NODE' > "$release_notes_file"
+          const fs = require("node:fs");
+
+          const version = process.env.PACKAGE_VERSION;
+          const changelog = fs.readFileSync("CHANGELOG.md", "utf8");
+          const heading = new RegExp(`^##?\\s+\\[?${version.replace(/[.*+?^${}()|[\\]\\\\]/g, "\\$&")}\\]?[^\\n]*$`, "m");
+          const match = changelog.match(heading);
+
+          if (!match) {
+            process.exit(0);
+          }
+
+          const start = match.index + match[0].length;
+          const rest = changelog.slice(start).replace(/^\n+/, "");
+          const nextHeading = rest.search(/^##?\s+/m);
+          const section = (nextHeading === -1 ? rest : rest.slice(0, nextHeading)).trim();
+
+          if (section) {
+            process.stdout.write(`${section}\n`);
+          }
+          NODE
+
+          if ! grep -q '[^[:space:]]' "$release_notes_file"; then
+            printf 'Release %s\n' "$TAG_NAME" > "$release_notes_file"
+          fi
+
+          if gh release view "$TAG_NAME" >/dev/null 2>&1; then
+            gh release edit "$TAG_NAME" --title "$TAG_NAME" --notes-file "$release_notes_file"
+          else
+            gh release create "$TAG_NAME" --target "$GITHUB_SHA" --title "$TAG_NAME" --notes-file "$release_notes_file"
+          fi

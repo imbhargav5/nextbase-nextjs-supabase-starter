@@ -14,6 +14,10 @@
     "lint": "turbo run lint",
     "test": "turbo run test",
     "typecheck": "turbo run typecheck",
+    "changeset": "changeset",
+    "changeset:status": "changeset status --verbose",
+    "changeset:version": "pnpm run version-packages",
+    "version-packages": "changeset version && node scripts/sync-release-version.mjs",
     "gen-types": "turbo run gen-types --filter=database",
     "gen-types-local": "turbo run gen-types-local --filter=database",
     "database#start": "turbo run database#start",
@@ -23,6 +27,8 @@
     "supabase:sync-env": "tsx scripts/sync-supabase-env.ts"
   },
   "devDependencies": {
+    "@changesets/changelog-github": "^0.6.0",
+    "@changesets/cli": "^2.30.0",
     "oxlint": "^1.58.0",
     "oxfmt": "^0.43.0",
     "turbo": "^2.2.3",
