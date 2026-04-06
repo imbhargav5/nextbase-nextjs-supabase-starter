@@ -1,47 +1,68 @@
-import type { Page } from '@playwright/test';
+import { request, type Page } from '@playwright/test';
 
 const INBUCKET_URL = 'http://localhost:54324';
 
 interface InbucketMessage {
-  id: string;
-  subject: string;
+  ID: string;
+  Created: string;
 }
 
 interface InbucketMessageDetail {
-  body: {
-    text: string;
-    html?: string;
-  };
+  Text: string;
 }
 
 async function getLatestEmailForAddress(emailAddress: string): Promise<InbucketMessageDetail | null> {
   const mailbox = emailAddress.split('@')[0];
-  const messagesUrl = `${INBUCKET_URL}/api/v1/mailbox/${mailbox}`;
+  const requestContext = await request.newContext();
 
-  for (let i = 0; i < 20; i++) {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    const res = await fetch(messagesUrl).catch(() => null);
-    if (!res) continue;
-    const messages: InbucketMessage[] = await res.json().catch(() => []);
-    if (messages.length > 0) {
-      const latest = messages[messages.length - 1];
-      const detailRes = await fetch(`${INBUCKET_URL}/api/v1/mailbox/${mailbox}/${latest.id}`).catch(() => null);
-      if (!detailRes) continue;
-      return detailRes.json().catch(() => null);
+  try {
+    for (let i = 0; i < 20; i++) {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const response = await requestContext
+        .get(`${INBUCKET_URL}/api/v1/search?query=${mailbox}&limit=20`)
+        .catch(() => null);
+      if (!response?.ok()) continue;
+
+      const body = (await response.json().catch(() => null)) as
+        | { messages?: InbucketMessage[] }
+        | null;
+      const messages = body?.messages ?? [];
+      if (!messages.length) continue;
+
+      const latest = [...messages].sort(
+        (a, b) => new Date(b.Created).getTime() - new Date(a.Created).getTime()
+      )[0];
+      const detailResponse = await requestContext
+        .get(`${INBUCKET_URL}/api/v1/message/${latest.ID}`)
+        .catch(() => null);
+      if (!detailResponse?.ok()) continue;
+
+      const detail = (await detailResponse.json().catch(() => null)) as
+        | InbucketMessageDetail
+        | null;
+      if (detail?.Text) {
+        return detail;
+      }
     }
+    return null;
+  } finally {
+    await requestContext.dispose();
   }
-  return null;
 }
 
-function extractConfirmationLink(text: string): string | null {
+function extractConfirmationLink(text: string, siteURL: string): string | null {
   const patterns = [
-    /(https?:\/\/localhost[^\s"<]+confirm[^\s"<]+)/i,
-    /(https?:\/\/localhost[^\s"<]+magic[^\s"<]+)/i,
+    /Log In \( (.+) \)/i,
+    /(https?:\/\/127\.0\.0\.1[^\s"<]+)/i,
     /(https?:\/\/localhost[^\s"<]+)/i,
   ];
   for (const pattern of patterns) {
     const match = text.match(pattern);
-    if (match) return match[1];
+    if (!match) continue;
+
+    const link = new URL(match[1]);
+    link.searchParams.set('redirect_to', new URL('/auth/callback', siteURL).toString());
+    return link.toString();
   }
   return null;
 }
@@ -61,7 +82,7 @@ export async function loginUserHelper({
   const emailDetail = await getLatestEmailForAddress(emailAddress);
   if (!emailDetail) throw new Error('No login email received');
 
-  const link = extractConfirmationLink(emailDetail.body.text);
+  const link = extractConfirmationLink(emailDetail.Text, page.url());
   if (!link) throw new Error('Could not find login link in email');
 
   await page.goto(link);

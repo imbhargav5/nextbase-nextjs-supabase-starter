@@ -1,0 +1,134 @@
+name: Integration Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  integration-tests:
+    strategy:
+      matrix:
+        node-version: [22.x]
+
+    name: Playwright e2e
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    if: ${{ github.repository == 'imbhargav5/nextbase-nextjs-supabase-starter' }}
+    env:
+      PORT: 3000
+      NODE_ENV: test
+      CI: true
+      TURBO_TELEMETRY_DISABLED: 1
+
+    steps:
+      - name: 'Check if user has write access'
+        uses: 'lannonbr/repo-permission-check-action@2.0.0'
+        with:
+          permission: 'write'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - if: github.event_name == 'pull_request'
+        name: ⬇️ Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - if: github.event_name != 'pull_request'
+        name: ⬇️ Checkout repo
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: 🚂 CI Setup
+        uses: ./.github/actions/ci-setup
+
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-browsers-v1-${{ hashFiles('**/pnpm-lock.yaml') }}
+
+      - name: Set up Supabase CLI
+        uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: Start Supabase in background
+        run: |
+          cd apps/database
+          supabase start --exclude realtime,imgproxy,studio,edge-runtime &
+          echo "Supabase starting in background..."
+
+      - name: Install Playwright browsers
+        run: |
+          cd apps/web
+          pnpm exec playwright install chromium
+
+      - name: Wait for Supabase to be ready
+        run: |
+          timeout=180
+          counter=0
+          echo "Waiting for Supabase to be ready..."
+          until curl -s http://localhost:54321/rest/v1/ > /dev/null; do
+            if [ $counter -eq $timeout ]; then
+              echo "Timeout waiting for Supabase"
+              exit 1
+            fi
+            counter=$((counter + 1))
+            echo "Waiting... ($counter/$timeout)"
+            sleep 1
+          done
+          echo "Supabase is ready!"
+
+      - name: Wait for Inbucket to be ready
+        run: |
+          timeout=180
+          counter=0
+          echo "Waiting for Inbucket to be ready..."
+          until curl -s http://localhost:54324 > /dev/null; do
+            if [ $counter -eq $timeout ]; then
+              echo "Timeout waiting for Inbucket"
+              exit 1
+            fi
+            counter=$((counter + 1))
+            echo "Waiting... ($counter/$timeout)"
+            sleep 1
+          done
+          echo "Inbucket is ready!"
+
+      - name: Build
+        run: pnpm run build
+
+      - name: Run integration tests
+        uses: nick-fields/retry@v3
+        with:
+          timeout_minutes: 15
+          max_attempts: 3
+          retry_on: error
+          retry_on_exit_code: 1
+          command: pnpm run test:e2e
+
+      - name: Upload test results on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-failure-report
+          path: |
+            apps/web/playwright-report/
+            apps/web/test-results/
+          retention-days: 30
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: |
+            apps/web/playwright-report/
+            apps/web/test-results/
+          retention-days: 30
