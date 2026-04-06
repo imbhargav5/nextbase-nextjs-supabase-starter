@@ -1,0 +1,8 @@
+{
+  "extends": "../../packages/typescript-config/tsconfig.base.json",
+  "include": [],
+  "exclude": ["node_modules"],
+  "compilerOptions": {
+    "strictNullChecks": true
+  }
+}
