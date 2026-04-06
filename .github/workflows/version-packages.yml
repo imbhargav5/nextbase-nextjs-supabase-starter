@@ -1,0 +1,48 @@
+name: Version Packages
+
+on:
+  workflow_run:
+    workflows: ['CI']
+    types:
+      - completed
+    branches:
+      - main
+
+concurrency:
+  group: version-packages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  version:
+    name: Create or update version PR
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    if: ${{ github.repository == 'imbhargav5/nextbase-nextjs-supabase-starter' && github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main' }}
+    steps:
+      - name: 'Check if user has write access'
+        uses: 'lannonbr/repo-permission-check-action@2.0.0'
+        with:
+          permission: 'write'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: 🚂 CI Setup
+        uses: ./.github/actions/ci-setup
+
+      - name: Create release pull request
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          version: pnpm run version-packages
+          createGithubReleases: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
