@@ -20,12 +20,18 @@
     "database#stop": "turbo run database#stop",
     "database#status": "turbo run database#status",
     "test:e2e": "turbo run test:e2e --filter=web",
-    "supabase:sync-env": "tsx scripts/sync-supabase-env.ts"
+    "supabase:sync-env": "tsx scripts/sync-supabase-env.ts",
+    "changeset": "changeset",
+    "changeset:version": "changeset version",
+    "changeset:status": "changeset status",
+    "release:github": "node scripts/release-github.mjs"
   },
   "devDependencies": {
-    "oxlint": "^1.58.0",
+    "@changesets/changelog-github": "^0.5.2",
+    "@changesets/cli": "^2.30.0",
     "oxfmt": "^0.43.0",
-    "turbo": "^2.2.3",
-    "tsx": "^4.19.2"
+    "oxlint": "^1.58.0",
+    "tsx": "^4.19.2",
+    "turbo": "^2.2.3"
   }
 }

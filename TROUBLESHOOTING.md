@@ -9,4 +9,4 @@ chmod ug+x .git/hooks/*
 
 ## Github Actions
 
-`GH_TOKEN` - Needs to have write access for semantic release action. Generate a personal access token else RELEASE action will fail.
+The release workflow uses `GITHUB_TOKEN` with `contents: write` and `pull-requests: write`. No personal access token or npm token is required for release automation.

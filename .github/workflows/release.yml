@@ -1,12 +1,15 @@
 name: Release
 
 on:
-  workflow_run:
-    workflows: ['CI']
-    types:
-      - completed
+  push:
     branches:
       - main
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+permissions:
+  contents: write
+  pull-requests: write
 
 jobs:
   release:
@@ -14,30 +17,29 @@ jobs:
       matrix:
         node-version: [22.x]
 
-    name: Create a new release
+    name: Create a Changesets release PR or GitHub release
     runs-on: ubuntu-latest
-    if: ${{ github.repository == 'imbhargav5/nextbase-nextjs-supabase-starter'}}
+    if: ${{ github.repository == 'imbhargav5/nextbase-nextjs-supabase-starter' }}
     steps:
-      - name: 'Check if user has write access'
-        uses: 'lannonbr/repo-permission-check-action@2.0.0'
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v4
         with:
-          permission: 'write'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - if: github.event_name == 'pull_request'
-        name: ⬇️ Checkout repo
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
           persist-credentials: false
-      - if: github.event_name != 'pull_request'
-        name: ⬇️ Checkout repo
-        uses: actions/checkout@v3
-        with:
-          persist-credentials: false
+
       - name: 🚂 CI Setup
         uses: ./.github/actions/ci-setup
-      - name: Semantic release
+
+      - name: Create release PR or GitHub release
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          version: pnpm changeset:version
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: pnpm exec semantic-release
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create GitHub release
+        if: steps.changesets.outputs.hasChangesets == 'false'
+        run: pnpm release:github
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
