@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://my-awesome-saas.com
+
+# Sitemaps
+Sitemap: https://my-awesome-saas.com/sitemap.xml

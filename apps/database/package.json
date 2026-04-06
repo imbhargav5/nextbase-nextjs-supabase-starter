@@ -1,0 +1,19 @@
+{
+  "name": "database",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "start": "supabase start",
+    "stop": "supabase stop",
+    "status": "supabase status",
+    "gen-types": "supabase gen types typescript --linked --schema public > ./lib/database.types.ts",
+    "gen-types-local": "supabase gen types typescript --local > ./lib/database.types.ts",
+    "test-db": "supabase test db"
+  },
+  "dependencies": {
+    "supabase": "^2.54.11"
+  },
+  "devDependencies": {
+    "@nextbase/typescript-config": "workspace:*"
+  }
+}

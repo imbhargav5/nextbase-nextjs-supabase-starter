@@ -6,7 +6,7 @@ supabase/.temp/project-ref
 .DS_Store
 
 # next.js
-.next
+/.next
 /out
 
 # next-sitemap
@@ -21,7 +21,3 @@ yarn-debug.log*
 yarn-error.log*
 
 *.tsbuildinfo
-
-# playwright
-test-results/
-playwright/.auth/
