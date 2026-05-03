@@ -2,6 +2,7 @@
 
 import { forwardRef } from "react"
 import { Button as HeroUIButton, buttonVariants as heroUIButtonVariants } from "@heroui/react"
+import { Slot } from "@radix-ui/react-slot"
 
 const variantMap = {
   default: "primary",
@@ -31,19 +32,44 @@ type ButtonProps = Omit<React.ComponentProps<typeof HeroUIButton>, "variant" | "
 }
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ variant = "default", size = "default", onClick, disabled, asChild: _asChild, ...props }, ref) => {
+  ({ variant = "default", size = "default", onClick, disabled, asChild, className, children, ...props }, ref) => {
     const mappedVariant = variantMap[variant] ?? "primary"
     const mappedSize = sizeMap[size as ShadcnSize] ?? "md"
+    const isIconOnly = size === "icon" || size === "icon-xs" || size === "icon-sm" || size === "icon-lg"
+
+    if (asChild) {
+      const buttonClassName = heroUIButtonVariants({
+        variant: mappedVariant as any,
+        size: mappedSize as any,
+        ...(isIconOnly ? {} : {}),
+        className: className as string,
+      } as any) as string
+
+      return (
+        <Slot
+          ref={ref}
+          className={buttonClassName}
+          onClick={onClick}
+          {...(props as any)}
+        >
+          {children}
+        </Slot>
+      )
+    }
+
     return (
       <HeroUIButton
         ref={ref}
         variant={mappedVariant as any}
         size={mappedSize as any}
-        isIconOnly={size === "icon" || size === "icon-xs" || size === "icon-sm" || size === "icon-lg"}
+        isIconOnly={isIconOnly}
         onPress={onClick}
         isDisabled={disabled}
+        className={className}
         {...(props as any)}
-      />
+      >
+        {children}
+      </HeroUIButton>
     )
   }
 )

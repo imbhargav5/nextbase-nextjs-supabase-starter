@@ -1,5 +1,6 @@
 import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
+import { match } from 'path-to-regexp';
 
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
@@ -36,11 +37,20 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
+  const protectedPages = [
+    '/dashboard',
+    '/private-item',
+    '/private-items',
+    '/items',
+    '/item',
+  ];
+
   if (
     !user &&
-    !request.nextUrl.pathname.startsWith('/login') &&
-    !request.nextUrl.pathname.startsWith('/auth') &&
-    !request.nextUrl.pathname.startsWith('/sign-up')
+    protectedPages.some((page) => {
+      const matcher = match(page);
+      return matcher(request.nextUrl.pathname);
+    })
   ) {
     const url = request.nextUrl.clone();
     url.pathname = '/login';
