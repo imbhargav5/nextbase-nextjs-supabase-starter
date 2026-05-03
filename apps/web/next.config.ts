@@ -1,4 +1,16 @@
 import { NextConfig } from "next";
+import { config as dotenvConfig } from "dotenv";
+import path from "path";
+import withPWAInit from "@ducanh2912/next-pwa";
+
+dotenvConfig({ path: path.resolve(__dirname, "../../.env.local") });
+
+const withPWA = withPWAInit({
+  dest: "public",
+  register: true,
+  skipWaiting: true,
+  disable: process.env.NODE_ENV === "development",
+});
 
 const config: NextConfig = {
   cacheComponents: true,
@@ -26,5 +38,4 @@ const config: NextConfig = {
   },
 };
 
-
-export default config;
+export default withPWA(config);

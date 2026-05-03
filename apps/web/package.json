@@ -19,6 +19,7 @@
     "postbuild": "next-sitemap --config next-sitemap.config.cjs"
   },
   "dependencies": {
+    "@ducanh2912/next-pwa": "^10.2.9",
     "@effect/platform": "^0.92.1",
     "@effect/platform-node": "^0.98.4",
     "@fontsource/inter": "^5.2.8",
@@ -71,6 +72,7 @@
     "cmdk": "^1.0.0",
     "concurrently": "^9.0.0",
     "date-fns": "^4.1.0",
+    "dotenv": "^17.4.2",
     "effect": "^3.18.4",
     "embla-carousel-react": "^8.6.0",
     "framer-motion": "^12.0.0",
