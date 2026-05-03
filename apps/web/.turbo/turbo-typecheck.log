@@ -1,0 +1,4 @@
+
+> web@2.2.0 typecheck /Users/mac_air/nextbase-nextjs-supabase-starter/apps/web
+> tsc --noEmit
+

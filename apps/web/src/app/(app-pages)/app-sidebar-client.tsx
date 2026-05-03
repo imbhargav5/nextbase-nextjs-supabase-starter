@@ -76,7 +76,7 @@ export function AppSidebarContent({ user }: { user: User }) {
       <SidebarMenu>
         <SidebarMenuItem>
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
+            <DropdownMenuTrigger>
               <SidebarMenuButton
                 size="lg"
                 className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
@@ -97,9 +97,6 @@ export function AppSidebarContent({ user }: { user: User }) {
             </DropdownMenuTrigger>
             <DropdownMenuContent
               className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
-              side="bottom"
-              align="end"
-              sideOffset={4}
             >
               <DropdownMenuLabel className="p-0 font-normal">
                 <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
@@ -122,7 +119,7 @@ export function AppSidebarContent({ user }: { user: User }) {
                 Settings
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={handleSignOut} disabled={isPending}>
+              <DropdownMenuItem onPress={handleSignOut} isDisabled={isPending}>
                 <LogOut className="mr-2 h-4 w-4" />
                 {isPending ? 'Signing out...' : 'Sign out'}
               </DropdownMenuItem>

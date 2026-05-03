@@ -3,6 +3,7 @@ import localFont from 'next/font/local';
 import type { Metadata, Viewport } from 'next';
 import { DynamicLayoutProviders } from './DynamicLayoutProviders';
 import { ClientLayout } from './ClientLayout';
+import { UIStoreProvider } from '@/providers/store-provider';
 
 const APP_NAME = 'NextBase';
 const APP_DEFAULT_TITLE = 'NextBase';
@@ -78,11 +79,13 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
       </head>
       <body>
-        <DynamicLayoutProviders>
-          <ClientLayout>
-            {children}
-          </ClientLayout>
-        </DynamicLayoutProviders>
+        <UIStoreProvider>
+          <DynamicLayoutProviders>
+            <ClientLayout>
+              {children}
+            </ClientLayout>
+          </DynamicLayoutProviders>
+        </UIStoreProvider>
       </body>
     </html>
   );

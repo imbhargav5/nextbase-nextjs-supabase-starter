@@ -1,36 +1,34 @@
-import * as React from "react"
-import { cva, type VariantProps } from "class-variance-authority"
+"use client"
 
+import * as React from "react"
 import { cn } from "@/lib/utils"
 
-const badgeVariants = cva(
-  "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
-  {
-    variants: {
-      variant: {
-        default:
-          "border-transparent bg-primary text-primary-foreground hover:bg-primary/80",
-        secondary:
-          "border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        destructive:
-          "border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80",
-        outline: "text-foreground",
-      },
-    },
-    defaultVariants: {
-      variant: "default",
-    },
-  }
-)
+type BadgeVariant = "default" | "secondary" | "destructive" | "outline"
 
-export interface BadgeProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof badgeVariants> {}
+const variantStyles: Record<BadgeVariant, string> = {
+  default: "bg-primary text-primary-foreground hover:bg-primary/80",
+  secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+  destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/80",
+  outline: "border border-border text-foreground",
+}
 
-function Badge({ className, variant, ...props }: BadgeProps) {
+function Badge({
+  className,
+  variant = "default",
+  ...props
+}: React.ComponentProps<"span"> & { variant?: BadgeVariant }) {
   return (
-    <div className={cn(badgeVariants({ variant }), className)} {...props} />
+    <span
+      data-slot="badge"
+      data-variant={variant}
+      className={cn(
+        "inline-flex w-fit shrink-0 items-center justify-center gap-1 rounded-md border border-transparent px-2 py-0.5 text-xs font-medium whitespace-nowrap transition-colors",
+        variantStyles[variant],
+        className
+      )}
+      {...props}
+    />
   )
 }
 
-export { Badge, badgeVariants }
+export { Badge }

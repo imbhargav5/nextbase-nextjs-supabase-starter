@@ -46,10 +46,10 @@ export const RenderProviders = ({
         return (
           <Fragment key={provider}>
             {isDemo ? (
-              <HoverCard>
-                <HoverCardTrigger asChild>
-                  <div className="w-full [&>button]:w-full">{component}</div>
-                </HoverCardTrigger>
+<HoverCard>
+                 <HoverCardTrigger>
+                   <div className="w-full [&>button]:w-full">{component}</div>
+                 </HoverCardTrigger>
                 <HoverCardContent className="w-80 dark:bg-black bg-white border border-gray-300 dark:border-gray-700">
                   <T.Small className="text-muted-foreground">
                     ⚠️ As this is a demo, the social media authentication

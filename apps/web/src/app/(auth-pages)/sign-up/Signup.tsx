@@ -126,7 +126,7 @@ export function SignUp({ next }: SignUpProps) {
                   <EmailAndPassword
                     isLoading={signUpStatus === 'executing'}
                     onSubmit={(data) => {
-                      executeSignUp({ ...data, next });
+                      executeSignUp(data);
                     }}
                     view="sign-up"
                   />

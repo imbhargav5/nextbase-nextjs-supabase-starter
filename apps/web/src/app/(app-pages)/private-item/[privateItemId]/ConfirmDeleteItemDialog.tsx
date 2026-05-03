@@ -62,7 +62,7 @@ export const ConfirmDeleteItemDialog = ({ itemId }: Props): JSX.Element => {
         <Trash className="h-4 w-4" /> Delete Item
       </Button>
 
-      <AlertDialog open={showAlert} onOpenChange={setShowAlert}>
+      <AlertDialog isOpen={showAlert} onOpenChange={setShowAlert}>
         <AlertDialogContent className="sm:max-w-[425px]">
           <AlertDialogHeader>
             <AlertDialogTitle className="flex items-center gap-2">
@@ -75,12 +75,12 @@ export const ConfirmDeleteItemDialog = ({ itemId }: Props): JSX.Element => {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel disabled={status === 'executing'}>
+            <AlertDialogCancel isDisabled={status === 'executing'}>
               Cancel
             </AlertDialogCancel>
             <AlertDialogAction
-              onClick={handleDelete}
-              disabled={status === 'executing'}
+              onPress={handleDelete}
+              isDisabled={status === 'executing'}
             >
               {status === 'executing' ? (
                 <>

@@ -1,0 +1,6 @@
+
+> web@2.2.0 lint /Users/mac_air/nextbase-nextjs-supabase-starter/apps/web
+> oxlint src/
+
+Found 0 warnings and 0 errors.
+Finished in 7ms on 144 files with 93 rules using 8 threads.
