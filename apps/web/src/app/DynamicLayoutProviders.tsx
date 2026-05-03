@@ -2,8 +2,9 @@
 import React, { Suspense } from 'react';
 
 import { Toaster as SonnerToaster } from 'sonner';
-import { ThemeProvider, useTheme } from 'next-themes';
+import { useTheme } from 'next-themes';
 import { AppProgressBar as ProgressBar } from 'next-nprogress-bar';
+import { ThemeProvider } from '@/providers/theme-provider';
 
 function CustomerToaster() {
   const theme = useTheme();
@@ -25,7 +26,7 @@ export function DynamicLayoutProviders({
   children: React.ReactNode;
 }) {
   return (
-    <ThemeProvider enableSystem themes={['light', 'dark']} defaultTheme="light">
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
       {children}
       <Suspense>
         <ProgressBar
