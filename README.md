@@ -1,15 +1,15 @@
-# NextBase — Production Next.js + Supabase Boilerplate
+# NextBase Starter — Open Source Next.js + Supabase Boilerplate
 
-> The production-grade Next.js 16 + Supabase foundation your team would have built in three months — shipped to you on day one.
+> A production-grade Next.js 16 + Supabase foundation. Free, MIT-licensed, and ready to clone.
 
-NextBase is a premium, license-protected boilerplate engineered for teams who would rather ship a product than re-derive the same authentication, RLS, monorepo, and caching architecture from scratch. It is the opinionated, tested, and continuously maintained starting point we wish existed when we shipped our last five SaaS products.
+NextBase Starter is the open-source baseline of the [NextBase](https://usenextbase.com) family — an opinionated, tested starting point for SaaS teams building on Next.js 16 and Supabase. It bundles the auth, RLS, monorepo, and caching patterns that you would otherwise spend weeks deriving from scratch.
 
 - **Demo:** _[live demo URL]_
 - **Documentation:** _[docs URL]_
 - **Changelog:** see [`CHANGELOG.md`](./CHANGELOG.md)
-- **License:** Commercial — see [License & Usage](#license--usage)
+- **License:** MIT — see [`LICENSE`](./LICENSE)
 
-> **Ready to skip three months of plumbing?** Purchase a license to get repository access, lifetime updates within your purchased version, and onboarding documentation. **[→ Get Access](#final-cta)**
+> **Need more than the starter?** Stripe billing, teams & orgs, RBAC admin, transactional emails, multi-tenancy, AI starter kits — all built on the same patterns — ship as **premium NextBase kits**. **[→ See the premium kits at usenextbase.com](https://usenextbase.com)**
 
 ---
 
@@ -241,7 +241,7 @@ NextBase deploys to any Node 22+ host. Vercel is the path of least resistance:
 
 ## Production features
 
-NextBase is engineered with the assumption that someone is paying you on the other side of the request.
+NextBase Starter is engineered with the assumption that someone is paying you on the other side of the request.
 
 - **Defense in depth.** RLS at the DB, middleware at the edge, `authActionClient` at the action boundary — three independent checks before any mutation reaches user data.
 - **No client-side service role.** The publishable/anon key is the only Supabase credential the client ever sees. Privileged operations belong in server actions.
@@ -256,133 +256,106 @@ NextBase is engineered with the assumption that someone is paying you on the oth
 
 ## Target audience
 
-**NextBase is for you if:**
-- You're a founder, indie hacker, or small team shipping a SaaS on Next.js + Supabase and you want to compress months of plumbing into a weekend of customization.
+**NextBase Starter is for you if:**
+- You're a founder, indie hacker, or small team shipping a SaaS on Next.js + Supabase and you want to compress weeks of plumbing into a weekend of customization.
 - You're a senior engineer who wants a credible starting point you can audit line-by-line, not a black-box CLI generator.
 - You've already shipped on Supabase and want a reference architecture for RLS, SSR cookies, and Cache Components that you can trust.
-- You bill clients for outcomes, not hours, and reusing a strong foundation across projects is a margin lever.
+- You're prototyping or building an MVP and want the auth + DB layer working in an hour.
 
-**NextBase is _not_ for you if:**
+**NextBase Starter is _not_ for you if:**
+- You need Stripe billing, teams/orgs, RBAC admin, transactional email, or multi-tenancy out of the box — those live in the [premium kits](https://usenextbase.com).
 - You need a no-code or visual builder.
 - You're learning React or TypeScript for the first time — this codebase assumes professional fluency.
 - You want a non-Supabase stack (Firebase, Clerk + Postgres, etc.). Use a starter built for that combination.
-- You expect a fully bespoke implementation of your specific feature set as part of the purchase.
 
 ---
 
 ## Comparison
 
-| | Build from scratch | Free starter | **NextBase** |
+| | Build from scratch | **NextBase Starter (this repo)** | [Premium NextBase kits](https://usenextbase.com) |
 |---|---|---|---|
-| Days to first authenticated route | 5–10 | 1–2 | **< 1 hour** |
-| SSR-correct Supabase auth | Often broken on first try | Sometimes | **Yes** |
-| RLS policies with tests | Rare | No | **Yes** |
-| Typed server actions + Zod | Manual | Inconsistent | **Yes** |
-| Cache Components strategy | DIY | No | **Yes, documented** |
-| Monorepo with Turbo + Changesets | Weeks of setup | No | **Yes** |
-| Local Supabase + remote parity | Manual | Partial | **Yes** |
-| E2E + unit test scaffolding | Manual | Partial | **Yes** |
-| Documented upgrade path | None | None | **Yes** |
-| Ongoing maintenance & updates | You | Community drift | **Maintained** |
+| License | — | MIT, free | Commercial |
+| Days to first authenticated route | 5–10 | **< 1 hour** | < 1 hour |
+| SSR-correct Supabase auth | Often broken on first try | **Yes** | Yes |
+| RLS-by-default migrations | Rare | **Yes** | Yes |
+| Typed server actions + Zod | Manual | **Yes** | Yes |
+| Cache Components strategy | DIY | **Yes, documented** | Yes, documented |
+| Monorepo with Turbo + Changesets | Weeks of setup | **Yes** | Yes |
+| Stripe billing (subscriptions + webhooks) | DIY | No | **Yes** |
+| Teams & organizations | DIY | No | **Yes** |
+| RBAC + admin panel | DIY | No | **Yes** |
+| Transactional emails (React Email) | DIY | No | **Yes** |
+| Multi-tenancy patterns | DIY | No | **Yes** |
+| AI starter kits (chatbot, RAG, agents) | DIY | No | **Yes (select kits)** |
 
 ---
 
-## Included vs not included
+## License
 
-**Included with your license:**
-- Full source code for the monorepo (`apps/web`, `apps/database`, `packages/*`).
-- All future updates within your purchased major version, distributed via the licensed repository.
-- Setup guides, architecture documentation, and the Cache Components playbook under `docs/`.
-- Starter components, route groups, and reference CRUD flow (private items) you can rename and extend.
-- Production-ready Auth, Database, Middleware, and CI scaffolding.
-- Pre-configured shadcn/ui component library on Radix.
+NextBase Starter is released under the **MIT License**. You may use, modify, and distribute it freely — commercial use included — subject to the terms in [`LICENSE`](./LICENSE).
 
-**Not included:**
-- Custom feature development for your specific product.
-- Hosting, Supabase, or any third-party service costs (Vercel, Supabase, email providers, analytics, observability).
-- Done-for-you implementation, customization, or branding.
-- Guaranteed data migration from your existing codebase.
-- Unlimited 1:1 consulting, pair programming, or live debugging sessions.
-- White-glove DevOps, SRE, or production incident response.
+The code is provided **as is**, without warranty of any kind. See the [`LICENSE`](./LICENSE) file for the full text.
 
 ---
 
-## License & usage
+## Contributing
 
-NextBase ships under a **commercial use license**. Purchase grants a per-team license — see your license terms email for the precise seat count.
+Contributions are welcome — bug reports, fixes, docs, and pattern improvements.
 
-**You MAY:**
-- Use NextBase as the foundation for **unlimited commercial end products** owned by your licensed team or organization.
-- Modify, extend, fork, and customize the source freely inside your licensed organization.
-- Use NextBase for **client work**, provided each delivered product is shipped to a single end client and the source is not separately redistributed.
-- Deploy commercially to any infrastructure (Vercel, AWS, your own metal — your call).
-- Build internal tooling, micro-SaaS, agencies' product suites, and SaaS products with it.
+- Open an issue or PR on GitHub.
+- If your change is user-visible, add a changeset with `pnpm changeset`. Merged changesets are rolled into an automated "Version Packages" PR and cut a GitHub release when that PR lands on `main`.
+- Run `pnpm lint`, `pnpm typecheck`, and `pnpm test` before submitting.
 
-**You MAY NOT:**
-- Redistribute the source code, in whole or in part, publicly or privately, to anyone outside your licensed team.
-- Resell, relicense, or sublicense NextBase or a derivative whose primary value is NextBase itself.
-- Publish the source to a public repository, gist, paste service, or training dataset.
-- Create a competing boilerplate, starter, or template product derived from NextBase.
-- Transfer the license, repository access, or seats outside your purchased team/organization without written approval.
-- Share your repository access credentials.
-
-**Ownership & IP.** NextBase is provided **AS IS**, without warranty of any kind, express or implied, including merchantability, fitness for a particular purpose, and noninfringement. You retain full ownership of the products **you build with** NextBase. The NextBase source itself, its architecture, and its documentation remain the intellectual property of the maintainers. No part of this codebase grants you trademark or branding rights.
-
-By using NextBase you accept these terms. The complete legal text lives in [`LICENSE`](./LICENSE).
-
----
-
-## Support policy
-
-Support is **best-effort**, scoped to the boilerplate itself, and offered via the channels listed in your purchase confirmation.
-
-**Support includes:**
-- Installation and initial setup clarification on a stock NextBase checkout.
-- Bug reports against unmodified NextBase code with a reproducible scenario.
-- Questions about documented features and conventions.
-- Environment variable and Supabase configuration guidance.
-- Investigation of reproducible issues with a minimal repro.
-- Guidance on upgrading between NextBase versions within your purchased major version.
-
-**Support does _not_ include:**
-- Building custom features, business logic, or product-specific UI on your behalf.
-- Debugging code that has been heavily modified, refactored, or migrated away from NextBase patterns.
-- DevOps, infrastructure, hosting, DNS, or third-party vendor administration.
-- Teaching React, TypeScript, SQL, or general web development fundamentals.
-- Emergency or SLA-backed response times.
-- Resolving outages caused by Supabase, Vercel, or other third parties.
-- Migrating your existing codebase onto NextBase.
-- Full codebase reviews, audits, or architecture consulting.
-
-**No guaranteed response times.** We respond as fast as we reasonably can, in the order requests arrive, during regular working hours. Excessive, abusive, or extractive requests (free consulting, demand for custom work, mass repeat questions) may be declined. Be specific, be respectful, share a repro — and you'll get help.
+See [`TROUBLESHOOTING.md`](./TROUBLESHOOTING.md) for common setup issues.
 
 ---
 
 ## Roadmap
 
-NextBase is actively maintained. Recent direction and what's next:
+NextBase Starter is actively maintained. Recent direction and what's next:
 
 - ✅ Migrate to Next.js 16 + Cache Components.
 - ✅ Switch to `oxlint` / `oxfmt` for sub-second lint feedback on large repos.
 - ✅ Changesets-driven release automation with automated "Version Packages" PRs.
 - ✅ Playwright + Vitest scaffolding wired into Turbo pipelines.
-- 🔜 Expanded RLS test coverage with pgTAP examples per pattern (ownership, team-scoped, role-based).
-- 🔜 Built-in subscription billing recipe (Stripe Checkout + webhooks + entitlements).
-- 🔜 Teams & invitations reference implementation on top of the current ownership model.
-- 🔜 Email transactional pipeline reference (Resend / Postmark) wired to Supabase Auth events.
-- 🔜 Optional Drizzle adapter for teams that prefer code-first migrations alongside Supabase's SQL.
+- 🔜 Expanded RLS examples and pgTAP test patterns.
+- 🔜 Documentation refresh covering the full Cache Components mental model end-to-end.
 
-Maintenance promise: NextBase tracks Next.js minor releases, Supabase SDK breaking changes, and Node LTS upgrades. You will get a clean upgrade path within your purchased major version.
+Maintenance promise: the starter tracks Next.js minor releases, Supabase SDK breaking changes, and Node LTS upgrades. The richer feature kits (billing, teams, admin, email, AI) are maintained on the same cadence inside the [premium NextBase kits](https://usenextbase.com).
+
+---
+
+## Upgrade to a premium NextBase kit
+
+If you've spent more than a day on this starter and realized you need real auth flows, billing, teams, or admin tooling — that's exactly what the [premium NextBase kits](https://usenextbase.com) exist for. Same architectural DNA, same patterns, dramatically more shipped.
+
+Each premium kit picks up where this starter stops:
+
+- **Stripe billing.** Subscriptions, one-time payments, customer portal, usage-based metering, and webhook handling — already implemented, idempotent, and tested.
+- **Teams & organizations.** Org creation, invitations, role assignment, team-scoped data, and team-aware RLS policies.
+- **RBAC & admin panel.** Per-role permissions, an admin dashboard for managing users / orgs / subscriptions, and audit logging.
+- **Transactional emails.** React Email templates wired to your provider (Resend / Postmark), with auth and billing event triggers.
+- **Multi-tenancy patterns.** Schema- and row-level tenant isolation patterns documented and enforced via RLS.
+- **AI starter kits.** Chatbot UI, RAG pipelines, and agent scaffolding on the same Supabase + Next.js base (in select kits).
+- **Profiles, onboarding & settings UI.** Production-grade user/profile management screens you'd otherwise build twice.
+- **Prisma / Drizzle variants.** For teams that prefer code-first schemas alongside Supabase.
+
+These are not separate codebases you have to context-switch into — they share this starter's conventions for server actions, RLS, Cache Components, and the monorepo layout. The mental model transfers directly.
+
+**[→ Explore the premium NextBase kits at usenextbase.com](https://usenextbase.com)**
 
 ---
 
 ## FAQ
 
-**Q: Can I use NextBase for client projects?**
-A: Yes. Each delivered client project counts as one end product. You may not, however, deliver the raw boilerplate as a redistributable artifact.
+**Q: Is this really free?**
+A: Yes. The starter is MIT-licensed. Use it for personal projects, client work, internal tools, or commercial products. No purchase required.
 
-**Q: Is this open source?**
-A: No. NextBase is source-available under a commercial license. You get the full source; you don't get redistribution rights.
+**Q: What's the difference between this and the premium kits?**
+A: This starter covers the foundation — Supabase auth, RLS, server actions, Cache Components, monorepo, tests. The [premium kits](https://usenextbase.com) add the features SaaS products actually need on top: Stripe billing, teams, RBAC + admin, transactional emails, multi-tenancy, and AI starters.
+
+**Q: Can I use the starter for client work?**
+A: Yes — MIT permits commercial and client use. Attribution is appreciated but not required.
 
 **Q: Why Supabase instead of Clerk + Postgres / Auth.js / Firebase?**
 A: Supabase gives you Auth, Postgres, RLS, and Storage from one vendor with a real SQL surface, real migrations, and real RLS — without the ergonomics tax of stitching three SDKs together. NextBase is opinionated about that choice.
@@ -391,23 +364,18 @@ A: Supabase gives you Auth, Postgres, RLS, and Storage from one vendor with a re
 A: The middleware is edge-compatible. Server actions and RSCs run on the Node runtime by default, which is the right choice for Supabase SSR cookies and most app logic.
 
 **Q: Can I rip out shadcn / Tailwind / TanStack Query?**
-A: Yes, it's your codebase. Support is best-effort once you've replaced significant subsystems.
+A: Yes, it's your codebase. Replace what you don't want — the architecture doesn't depend on any one of them.
 
 **Q: Will it scale?**
 A: The architecture — Postgres + RLS + Next.js + Vercel/Node — runs production SaaS at well into seven-figure ARR. The bottleneck is rarely the boilerplate; it's the schema and query patterns you build on top, which is exactly what NextBase makes explicit.
 
-**Q: Do I get updates?**
-A: Yes — all updates within your purchased major version are included for the lifetime of that major.
-
-**Q: Can I see the code before buying?**
-A: Schedule a walkthrough via the demo link at the top — we'll show you the auth flow, RLS layer, and server-action layer end-to-end.
+**Q: How do I report a bug or ask a question?**
+A: Open a GitHub issue with a reproducible scenario. PRs welcome.
 
 ---
 
 ## Final CTA
 
-You can spend the next three months re-deriving an auth flow that survives a refresh, an RLS policy that survives review, and a monorepo that survives a teammate — or you can start shipping product on Monday.
+Clone the starter, ship your MVP, and come back for the premium kits when you need real billing, teams, or admin tooling.
 
-NextBase is the foundation senior engineers wish they'd started with on the last five projects. The license is one-time. The repo is yours. The roadmap keeps moving forward.
-
-**[→ Get a license](#)** &nbsp;·&nbsp; **[Book a walkthrough](#)** &nbsp;·&nbsp; **[Read the docs](./docs)**
+**[→ Clone the starter](#quick-start)** &nbsp;·&nbsp; **[Explore premium NextBase kits](https://usenextbase.com)** &nbsp;·&nbsp; **[Read the docs](./docs)**
