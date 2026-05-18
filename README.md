@@ -341,6 +341,7 @@ This starter is the open-source foundation. The [premium NextBase kits](https://
 - **Internationalization (i18n) variants.** App Router-native localization with translated routes and content.
 - **Enterprise-grade features.** SSO-friendly auth patterns, role hierarchies, and tooling for teams operating at scale.
 
+
 ### Database & stack variants
 - **Drizzle, Prisma, and PlanetScale variants** — for teams that prefer code-first schemas or MySQL/Vitess infrastructure alongside (or instead of) Supabase.
 
