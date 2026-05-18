@@ -263,10 +263,11 @@ NextBase Starter is engineered with the assumption that someone is paying you on
 - You're prototyping or building an MVP and want the auth + DB layer working in an hour.
 
 **NextBase Starter is _not_ for you if:**
-- You need Stripe billing, teams/orgs, RBAC admin, transactional email, or multi-tenancy out of the box — those live in the [premium kits](https://usenextbase.com).
 - You need a no-code or visual builder.
 - You're learning React or TypeScript for the first time — this codebase assumes professional fluency.
 - You want a non-Supabase stack (Firebase, Clerk + Postgres, etc.). Use a starter built for that combination.
+
+> Looking for Stripe billing, teams/orgs, RBAC admin, transactional email, multi-tenancy, or AI starter kits? Those are first-class in the [premium NextBase kits](https://usenextbase.com) — see [Need more out of the box?](#need-more-out-of-the-box) below.
 
 ---
 
@@ -325,20 +326,34 @@ Maintenance promise: the starter tracks Next.js minor releases, Supabase SDK bre
 
 ---
 
-## Upgrade to a premium NextBase kit
+## Need more out of the box?
 
-If you've spent more than a day on this starter and realized you need real auth flows, billing, teams, or admin tooling — that's exactly what the [premium NextBase kits](https://usenextbase.com) exist for. Same architectural DNA, same patterns, dramatically more shipped.
+This starter is the open-source foundation. The [premium NextBase kits](https://usenextbase.com) ship everything a real SaaS needs on top of it — same architectural DNA, same patterns, dramatically more shipped.
 
-Each premium kit picks up where this starter stops:
-
-- **Stripe billing.** Subscriptions, one-time payments, customer portal, usage-based metering, and webhook handling — already implemented, idempotent, and tested.
+### SaaS essentials
+- **Stripe billing.** Subscriptions, one-time payments, customer portal, usage-based metering, and webhook handling — implemented, idempotent, and tested.
 - **Teams & organizations.** Org creation, invitations, role assignment, team-scoped data, and team-aware RLS policies.
-- **RBAC & admin panel.** Per-role permissions, an admin dashboard for managing users / orgs / subscriptions, and audit logging.
-- **Transactional emails.** React Email templates wired to your provider (Resend / Postmark), with auth and billing event triggers.
-- **Multi-tenancy patterns.** Schema- and row-level tenant isolation patterns documented and enforced via RLS.
-- **AI starter kits.** Chatbot UI, RAG pipelines, and agent scaffolding on the same Supabase + Next.js base (in select kits).
+- **RBAC & admin panel.** Role-based permissions and an admin dashboard for managing users, orgs, and subscriptions.
+- **Transactional emails.** React Email templates for auth, billing, and invitation flows, wired to providers like Resend or Postmark.
+- **Multi-tenancy patterns.** Schema- and row-level tenant isolation documented and enforced via RLS.
+- **Audit logs.** Append-only audit trails for sensitive actions, ready to wire into your admin views.
 - **Profiles, onboarding & settings UI.** Production-grade user/profile management screens you'd otherwise build twice.
-- **Prisma / Drizzle variants.** For teams that prefer code-first schemas alongside Supabase.
+- **Internationalization (i18n) variants.** App Router-native localization with translated routes and content.
+- **Enterprise-grade features.** SSO-friendly auth patterns, role hierarchies, and tooling for teams operating at scale.
+
+### Database & stack variants
+- **Drizzle, Prisma, and PlanetScale variants** — for teams that prefer code-first schemas or MySQL/Vitess infrastructure alongside (or instead of) Supabase.
+
+### AI & specialized kits
+- **AI chatbot kit** — conversation UI, streaming responses, message history.
+- **Vision / image kit** — image understanding and generation flows.
+- **Speech-to-text kit** — transcription pipelines wired to Whisper-class models.
+- **Video generator kit** — pipelines for generative video.
+- **Headshot generator kit** — fine-tune and generate user-personalized images.
+- **Browser agent kit** — agentic web browsing and automation.
+- **Note-taker kit** — capture, structure, and search long-form notes.
+- **Workflow orchestrator kit** — multi-step agent and workflow runner.
+- **Shopify / e-commerce variant** — storefront and product flows on the same architecture.
 
 These are not separate codebases you have to context-switch into — they share this starter's conventions for server actions, RLS, Cache Components, and the monorepo layout. The mental model transfers directly.
 
