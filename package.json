@@ -2,10 +2,10 @@
   "name": "nextbase-nextjs-supabase-starter",
   "private": true,
   "version": "2.2.0",
-  "packageManager": "pnpm@9.0.6+sha512.f6d863130973207cb7a336d6b439a242a26ac8068077df530d6a86069419853dc1ffe64029ec594a9c505a3a410d19643c870aba6776330f5cfddcf10a9c1617",
+  "packageManager": "pnpm@11.1.2+sha512.415a1cc25974731e75455c1468371be74c5aa5fb7621b50d4056d222451609f11412f23fd602e6169f1e060466641f798597e1be961a10688836a67b16569499",
   "engines": {
-    "node": ">=22.0.0",
-    "pnpm": ">=9.0.0"
+    "node": ">=24.0.0",
+    "pnpm": ">=11.0.0"
   },
   "scripts": {
     "dev": "turbo run dev --parallel",
@@ -27,11 +27,11 @@
     "supabase:sync-env": "tsx scripts/sync-supabase-env.ts"
   },
   "devDependencies": {
-    "@changesets/changelog-github": "^0.6.0",
-    "@changesets/cli": "^2.30.0",
-    "oxlint": "^1.58.0",
-    "oxfmt": "^0.43.0",
-    "turbo": "^2.2.3",
-    "tsx": "^4.19.2"
+    "@changesets/changelog-github": "^0.7.0",
+    "@changesets/cli": "^2.31.0",
+    "oxlint": "^1.65.0",
+    "oxfmt": "^0.50.0",
+    "turbo": "^2.9.14",
+    "tsx": "^4.22.1"
   }
 }

@@ -11,7 +11,7 @@ jobs:
   integration-tests:
     strategy:
       matrix:
-        node-version: [22.x]
+        node-version: [24.x]
 
     name: Playwright e2e
     runs-on: ubuntu-latest
