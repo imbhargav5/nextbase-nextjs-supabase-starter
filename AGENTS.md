@@ -6,6 +6,8 @@ Never create a `.oneignore` file. Never `git add` or `git commit` a `.oneignore`
 
 # Setup
 
+For automated setup, run `./setup.sh` from the repo root. The steps below describe what the script does.
+
 Follow these steps to get the repo running locally end-to-end. This is a pnpm + Turborepo monorepo with a Next.js app (`apps/web`) and a Supabase local stack (`apps/database`).
 
 1. From the repo root, install dependencies: `pnpm i`.
