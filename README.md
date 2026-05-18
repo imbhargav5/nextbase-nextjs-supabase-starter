@@ -24,7 +24,8 @@ Nextbase Lite is a simple Next.js 16 + Supabase boilerplate. It includes a Next.
 ### Development
 
 **Prerequisites:**
-- Node.js 22 or higher (recommended to use [nvm](https://github.com/nvm-sh/nvm) for Node version management)
+- Node.js 24 or higher (recommended to use [nvm](https://github.com/nvm-sh/nvm) for Node version management)
+- pnpm 11 or higher
 
 **Steps:**
 
