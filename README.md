@@ -232,10 +232,108 @@ pnpm lint          # oxlint
 ```
 
 ### 6. Deploy
-NextBase deploys to any Node 22+ host. Vercel is the path of least resistance:
-- Set the same env vars as production secrets.
-- Point your custom domain at the deployment.
-- Configure the Supabase project's allowed redirect URLs (`<your-domain>/auth/callback`).
+The recommended production target is **Vercel** (Next.js app) + **Supabase Cloud** (Postgres, Auth, Storage). See the full [**Production deployment**](#production-deployment) section below for env vars, migrations, build settings, domains, and post-deploy checks.
+
+---
+
+## Production deployment
+
+This is a Turborepo monorepo: a Next.js 16 app (`apps/web`) backed by a Supabase project (`apps/database`). The two pieces deploy to two managed platforms.
+
+| Concern | Production choice | Why |
+|---|---|---|
+| Database / Auth / Storage | **Supabase Cloud** | The whole data + auth + RLS + storage model is Supabase-native; managed Postgres, connection pooling, and the Auth GoTrue server come as one project. |
+| Frontend + SSR + Server Actions | **Vercel** | First-class Next.js 16 support (App Router, Cache Components/PPR, Turbopack, Node runtime for Supabase SSR cookies), zero-config Turborepo monorepo detection. |
+
+> The app is a standard Node Next.js server (`next build` + `next start`), so any Node 24+ host works (Netlify, Fly.io, Render, a container). Vercel is the path of least resistance; the steps below note where a generic host differs.
+
+### 1. Provision the database (Supabase Cloud)
+
+1. Create a project at [supabase.com](https://supabase.com/dashboard). Pick a region close to your Vercel deployment region to minimize SSR latency.
+2. Grab the values you'll need from **Project Settings → API**:
+   - Project ref (the `<ref>` in `https://<ref>.supabase.co`)
+   - Project URL → `NEXT_PUBLIC_SUPABASE_URL`
+   - **Publishable / anon key** → `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` (this is the *only* Supabase key the client should ever see)
+3. Link the local CLI to the hosted project and push migrations:
+   ```bash
+   pnpm supabase link --project-ref <ref>
+   pnpm supabase db push          # applies apps/database/supabase/migrations in order
+   pnpm gen-types                 # regenerate database.types.ts against the linked project
+   ```
+   `db push` replays the timestamped SQL migrations under `apps/database/supabase/migrations`, including every RLS policy and the `set_updated_at` trigger. **Do not** hand-edit tables in the dashboard — add a new migration and push, so prod and the repo never drift.
+4. `seed.sql` is local-only sample data. Do **not** seed it into production.
+
+### 2. Configure Supabase Auth for your domain
+
+In **Authentication → URL Configuration**:
+- **Site URL**: `https://<your-domain>`
+- **Redirect URLs** (exact-match allow-list — the OAuth/email callbacks `/auth/callback` and `/auth/confirm` will silently fail if these are missing):
+  ```
+  https://<your-domain>/**
+  https://<preview-branch-domains>/**   # if you use Vercel preview deployments
+  ```
+
+For each OAuth provider you enable (Google, GitHub, Twitter are wired in the UI), create an OAuth app with the provider, set the callback to `https://<ref>.supabase.co/auth/v1/callback`, and paste the client ID/secret into **Authentication → Providers**. Local provider config lives in `apps/database/supabase/config.toml` for reference, but production providers are configured in the dashboard.
+
+### 3. Deploy the web app (Vercel)
+
+Import the repo into Vercel and set:
+
+| Setting | Value |
+|---|---|
+| Framework preset | Next.js |
+| Root directory | `apps/web` (enable **"Include files outside the root directory"** so the workspace + `pnpm-lock.yaml` resolve) |
+| Install command | `pnpm install` (auto-detected from `pnpm-lock.yaml`) |
+| Build command | `next build` (Vercel runs it inside `apps/web`; `postbuild` runs `next-sitemap`). To build through Turbo from the repo root instead, use `turbo run build --filter=web`. |
+| Output | `.next` (default) |
+| Node version | **24.x** (the repo pins `>=24` via `.nvmrc` / `package.json engines`; set it in Project Settings → Node.js Version) |
+
+Vercel respects the pinned `packageManager` (`pnpm@11.x`) and Turbo remote caching automatically.
+
+### 4. Environment variables (Vercel → Settings → Environment Variables)
+
+Set these for **Production** (and Preview, pointing at a staging Supabase project if you have one):
+
+| Variable | Example | Notes |
+|---|---|---|
+| `NEXT_PUBLIC_SUPABASE_URL` | `https://<ref>.supabase.co` | Public; baked into the client bundle at build time. |
+| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | `sb_publishable_…` | Public anon/publishable key. Safe for the browser; RLS is what protects data. |
+| `SUPABASE_PROJECT_REF` | `<ref>` | Used by type-gen / CLI tooling. |
+
+`NEXT_PUBLIC_*` vars are inlined at **build** time — after changing them you must **redeploy**, not just restart. Never put the Supabase **secret** (`service_role`) key in a `NEXT_PUBLIC_*` var or any client-reachable code.
+
+Also update `apps/web/next-sitemap.config.cjs` (`siteUrl`, currently the `my-awesome-saas.com` placeholder) to your production domain so `sitemap.xml` / `robots.txt` are generated correctly by the `postbuild` step.
+
+### 5. Domains & runtime
+
+- Add your custom domain in Vercel and point DNS as instructed; the generated cert is automatic.
+- After the domain is live, go back and update Supabase **Site URL** + **Redirect URLs** (step 2) to the final domain.
+- Runtime: Server Actions and RSCs run on the **Node runtime** (correct for Supabase SSR cookies); the middleware (`apps/web/src/proxy.ts`) is edge-compatible. No extra runtime config is required.
+
+### 6. Webhooks, crons & background jobs
+
+This starter ships **no** cron jobs, queues, webhook handlers, or AI/external API integrations — there is nothing extra to provision. If you add them later: Supabase scheduled tasks (`pg_cron`) and Edge Functions live in the Supabase project; inbound webhooks should be added as Next.js Route Handlers under `apps/web/src/app/api/*` (note `proxy.ts` deliberately skips `/api/*` from auth middleware, so verify signatures inside the handler).
+
+### 7. Post-deploy checklist
+
+- [ ] `https://<your-domain>/` renders (marketing home).
+- [ ] Sign up → confirm email → sign in works; `/dashboard` is reachable only when authenticated (anonymous hits 307-redirect to `/login`).
+- [ ] Each enabled OAuth provider round-trips through `/auth/callback`.
+- [ ] A CRUD action on `/private-items` persists and is row-scoped to the user (RLS enforced).
+- [ ] `https://<your-domain>/sitemap.xml` and `/robots.txt` resolve with the real domain.
+- [ ] No `service_role` key appears in the client bundle (check Network/Sources).
+
+### 8. Common production failures
+
+| Symptom | Cause | Fix |
+|---|---|---|
+| `Your project's URL and Key are required to create a Supabase client!` (every route 500s) | `NEXT_PUBLIC_SUPABASE_*` not set, or set after build without redeploy | Set both vars and **redeploy**. |
+| OAuth / magic-link returns to `/auth/auth-code-error` | Callback domain not in Supabase **Redirect URLs** allow-list | Add `https://<domain>/**` (and preview domains) in Auth → URL Configuration. |
+| Tables/policies missing in prod, queries fail or leak | Migrations never pushed, or schema hand-edited in dashboard | Run `pnpm supabase db push`; manage all schema as migrations. |
+| Build fails on install / lockfile or `engines` error | Wrong Node, or root dir excludes the workspace | Set Node 24.x; root `apps/web` with "include files outside root directory". |
+| `sitemap.xml` points at `my-awesome-saas.com` | `next-sitemap.config.cjs` `siteUrl` placeholder | Set it to the production domain and redeploy. |
+| Stale content after a deploy | Cache Components static segments cached | Invalidate via `revalidatePath()` in the relevant Server Action (see [`docs/NEXTJS_CACHE_COMPONENTS.md`](./docs/NEXTJS_CACHE_COMPONENTS.md)). |
+| DB connection exhaustion under load | Direct Postgres connections | Use Supabase's pooled connection string (port `6543`) for any non-Supabase-SDK Postgres access. |
 
 ---
 
