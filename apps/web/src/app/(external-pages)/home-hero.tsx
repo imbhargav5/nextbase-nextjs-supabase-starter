@@ -1,6 +1,7 @@
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Github } from 'lucide-react';
+import { GithubIcon } from '@/components/SocialIcons';
+import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 
 export function HomeHero() {
@@ -25,7 +26,7 @@ export function HomeHero() {
         </Button>
         <Button asChild size="lg" variant="outline">
           <Link href="https://github.com/imbhargav5/nextbase-nextjs-supabase-starter" target="_blank" rel="noopener noreferrer">
-            <Github className="mr-2 h-4 w-4" /> View on GitHub
+            <GithubIcon className="mr-2 h-4 w-4" /> View on GitHub
           </Link>
         </Button>
       </div>

@@ -2,13 +2,13 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { T } from '@/components/ui/Typography';
 import {
-  Dribbble,
-  Facebook,
-  Github,
-  Instagram,
-  Linkedin,
-  Twitter,
-} from 'lucide-react';
+  DribbbleIcon,
+  FacebookIcon,
+  GithubIcon,
+  InstagramIcon,
+  LinkedinIcon,
+  TwitterIcon,
+} from '@/components/SocialIcons';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -66,7 +66,7 @@ const Footer = () => {
                   rel="noopener noreferrer"
                   aria-label="Twitter"
                 >
-                  <Twitter className="h-4 w-4" />
+                  <TwitterIcon className="h-4 w-4" />
                 </Link>
               </Button>
               <Button variant="ghost" size="icon" asChild>
@@ -76,7 +76,7 @@ const Footer = () => {
                   rel="noopener noreferrer"
                   aria-label="LinkedIn"
                 >
-                  <Linkedin className="h-4 w-4" />
+                  <LinkedinIcon className="h-4 w-4" />
                 </Link>
               </Button>
             </div>
@@ -152,27 +152,27 @@ const Footer = () => {
           <div className="flex items-center gap-2">
             <Button variant="ghost" size="icon" asChild>
               <Link href="/login" aria-label="Facebook">
-                <Facebook className="h-4 w-4" />
+                <FacebookIcon className="h-4 w-4" />
               </Link>
             </Button>
             <Button variant="ghost" size="icon" asChild>
               <Link href="/login" aria-label="Instagram">
-                <Instagram className="h-4 w-4" />
+                <InstagramIcon className="h-4 w-4" />
               </Link>
             </Button>
             <Button variant="ghost" size="icon" asChild>
               <Link href="/login" aria-label="Twitter">
-                <Twitter className="h-4 w-4" />
+                <TwitterIcon className="h-4 w-4" />
               </Link>
             </Button>
             <Button variant="ghost" size="icon" asChild>
               <Link href="/login" aria-label="GitHub">
-                <Github className="h-4 w-4" />
+                <GithubIcon className="h-4 w-4" />
               </Link>
             </Button>
             <Button variant="ghost" size="icon" asChild>
               <Link href="/login" aria-label="Dribbble">
-                <Dribbble className="h-4 w-4" />
+                <DribbbleIcon className="h-4 w-4" />
               </Link>
             </Button>
           </div>

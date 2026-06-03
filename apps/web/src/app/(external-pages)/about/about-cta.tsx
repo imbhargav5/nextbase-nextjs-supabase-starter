@@ -7,7 +7,8 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from '@/components/ui/empty';
-import { Github, Rocket } from 'lucide-react';
+import { GithubIcon } from '@/components/SocialIcons';
+import { Rocket } from 'lucide-react';
 import Link from 'next/link';
 
 export function AboutCTA() {
@@ -33,7 +34,7 @@ export function AboutCTA() {
               href="https://github.com/imbhargav5/nextbase-nextjs-supabase-starter"
               target="_blank"
             >
-              <Github className="mr-2 h-5 w-5" />
+              <GithubIcon className="mr-2 h-5 w-5" />
               Star on GitHub
             </Link>
           </Button>

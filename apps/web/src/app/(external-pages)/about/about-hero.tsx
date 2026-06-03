@@ -1,7 +1,7 @@
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { T } from '@/components/ui/Typography';
-import { Github } from 'lucide-react';
+import { GithubIcon } from '@/components/SocialIcons';
 import Link from 'next/link';
 
 export function AboutHero() {
@@ -29,7 +29,7 @@ export function AboutHero() {
             href="https://github.com/imbhargav5/nextbase-nextjs-supabase-starter"
             target="_blank"
           >
-            <Github className="mr-2 h-5 w-5" />
+            <GithubIcon className="mr-2 h-5 w-5" />
             View on GitHub
           </Link>
         </Button>
