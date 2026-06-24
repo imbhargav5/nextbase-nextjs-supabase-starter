@@ -1,3 +1,7 @@
+-- These helper functions are intentionally left PUBLIC-executable. They are
+-- called inside RLS policy USING clauses, which are evaluated as the querying
+-- role (including anon). Revoking EXECUTE from PUBLIC would turn anon reads
+-- into permission-denied errors instead of returning empty result sets.
 CREATE OR REPLACE FUNCTION public.is_workspace_member(p_workspace_id uuid)
 RETURNS boolean
 LANGUAGE sql
@@ -85,5 +89,10 @@ BEGIN
 END;
 $$;
 
-REVOKE EXECUTE ON FUNCTION public.create_workspace(text, text) FROM anon;
+-- Lock down to authenticated only. We revoke from both PUBLIC and anon:
+-- Postgres grants EXECUTE to PUBLIC by default, and Supabase's default
+-- privileges additionally grant EXECUTE directly to anon (and authenticated,
+-- service_role). Revoking PUBLIC alone leaves anon's explicit grant intact,
+-- so anon must be revoked explicitly to truly lock it out.
+REVOKE ALL ON FUNCTION public.create_workspace(text, text) FROM PUBLIC, anon;
 GRANT EXECUTE ON FUNCTION public.create_workspace(text, text) TO authenticated;

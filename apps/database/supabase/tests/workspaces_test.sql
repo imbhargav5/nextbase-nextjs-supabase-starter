@@ -1,7 +1,7 @@
 BEGIN;
 CREATE EXTENSION IF NOT EXISTS pgtap WITH SCHEMA extensions;
 
-SELECT plan(14);
+SELECT plan(18);
 
 -- Schema
 SELECT has_table('public', 'workspaces', 'workspaces table exists');
@@ -36,6 +36,11 @@ INSERT INTO public.workspaces (id, name, slug, owner_id) VALUES
 INSERT INTO public.workspace_members (workspace_id, user_id, role) VALUES
   ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', '11111111-1111-1111-1111-111111111111', 'owner'),
   ('bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb', '22222222-2222-2222-2222-222222222222', 'owner');
+
+INSERT INTO auth.users (id, email) VALUES
+  ('33333333-3333-3333-3333-333333333333', 'member-a@test.com');
+INSERT INTO public.workspace_members (workspace_id, user_id, role) VALUES
+  ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', '33333333-3333-3333-3333-333333333333', 'member');
 
 -- Act as user A
 SET LOCAL role authenticated;
@@ -77,6 +82,41 @@ SELECT results_eq(
      WHERE user_id = '11111111-1111-1111-1111-111111111111' AND role = 'owner' $$,
   ARRAY[2::bigint],
   'create_workspace inserts an owner membership for the caller'
+);
+
+-- anon cannot call create_workspace
+SET LOCAL role anon;
+SELECT throws_ok(
+  $$ SELECT public.create_workspace('Nope', 'nope-anon') $$,
+  NULL, NULL,
+  'anon cannot create a workspace'
+);
+
+-- authenticated cannot directly INSERT a workspace (no INSERT policy; RPC-only)
+SET LOCAL role authenticated;
+SET LOCAL request.jwt.claim.sub = '11111111-1111-1111-1111-111111111111';
+SELECT throws_ok(
+  $$ INSERT INTO public.workspaces (name, slug, owner_id)
+     VALUES ('Direct', 'direct-insert', '11111111-1111-1111-1111-111111111111') $$,
+  NULL, NULL,
+  'authenticated cannot directly insert a workspace'
+);
+
+-- a plain member cannot update the workspace (only owner/admin can)
+SET LOCAL request.jwt.claim.sub = '33333333-3333-3333-3333-333333333333';
+SELECT results_eq(
+  $$ WITH u AS (UPDATE public.workspaces SET name = 'MemberEdit'
+       WHERE id = 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa' RETURNING 1)
+     SELECT count(*) FROM u $$,
+  ARRAY[0::bigint],
+  'plain member cannot update the workspace'
+);
+
+-- a member sees only the workspace they belong to
+SELECT results_eq(
+  'SELECT count(*) FROM public.workspaces',
+  ARRAY[1::bigint],
+  'member sees only their own workspace'
 );
 
 SELECT * FROM finish();
