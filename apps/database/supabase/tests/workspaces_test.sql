@@ -1,7 +1,7 @@
 BEGIN;
 CREATE EXTENSION IF NOT EXISTS pgtap WITH SCHEMA extensions;
 
-SELECT plan(12);
+SELECT plan(14);
 
 -- Schema
 SELECT has_table('public', 'workspaces', 'workspaces table exists');
@@ -65,6 +65,18 @@ SELECT results_eq(
      SELECT count(*) FROM u $$,
   ARRAY[0::bigint],
   'User A cannot update Workspace B (0 rows affected)'
+);
+
+SELECT lives_ok(
+  $$ SELECT public.create_workspace('Second WS', 'second-ws') $$,
+  'User A can create a workspace via RPC'
+);
+
+SELECT results_eq(
+  $$ SELECT count(*) FROM public.workspace_members
+     WHERE user_id = '11111111-1111-1111-1111-111111111111' AND role = 'owner' $$,
+  ARRAY[2::bigint],
+  'create_workspace inserts an owner membership for the caller'
 );
 
 SELECT * FROM finish();

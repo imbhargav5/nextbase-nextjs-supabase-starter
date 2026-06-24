@@ -59,3 +59,31 @@ CREATE POLICY members_update ON public.workspace_members
   WITH CHECK (public.has_workspace_role(workspace_id, ARRAY['owner', 'admin']));
 CREATE POLICY members_delete ON public.workspace_members
   FOR DELETE USING (public.has_workspace_role(workspace_id, ARRAY['owner', 'admin']));
+
+CREATE OR REPLACE FUNCTION public.create_workspace(p_name text, p_slug text)
+RETURNS uuid
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public, extensions
+AS $$
+DECLARE
+  v_user_id uuid := auth.uid();
+  v_workspace_id uuid;
+BEGIN
+  IF v_user_id IS NULL THEN
+    RAISE EXCEPTION 'Not authenticated';
+  END IF;
+
+  INSERT INTO public.workspaces (name, slug, owner_id)
+  VALUES (p_name, p_slug, v_user_id)
+  RETURNING id INTO v_workspace_id;
+
+  INSERT INTO public.workspace_members (workspace_id, user_id, role)
+  VALUES (v_workspace_id, v_user_id, 'owner');
+
+  RETURN v_workspace_id;
+END;
+$$;
+
+REVOKE EXECUTE ON FUNCTION public.create_workspace(text, text) FROM anon;
+GRANT EXECUTE ON FUNCTION public.create_workspace(text, text) TO authenticated;
