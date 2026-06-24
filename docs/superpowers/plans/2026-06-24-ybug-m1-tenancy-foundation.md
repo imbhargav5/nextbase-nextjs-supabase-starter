@@ -108,7 +108,7 @@ export function createServiceRoleClient() {
 Run: `cd apps/web && pnpm vitest run src/supabase-clients/__tests__/service-role.test.ts`
 Expected: PASS (2 tests).
 
-> Note: `'server-only'` throws if imported into a client bundle. In Vitest (node env) it is a no-op, so the test runs fine.
+> Note: This repo's Vitest uses the jsdom environment, where `server-only` throws on import. A `server-only` alias→stub in `apps/web/vitest.config.ts` is therefore required (already added in this task) for any web unit test that imports a `server-only` module.
 
 - [ ] **Step 5: Add the env var to both example files**
 
