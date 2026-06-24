@@ -29,3 +29,6 @@ playwright/.auth/
 # Legacy ascii/one CLI ignore file
 .oneignore
 .env
+
+# widget build output copied into web app public dir
+apps/web/public/widget.js
