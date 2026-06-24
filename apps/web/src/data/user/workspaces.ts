@@ -1,6 +1,7 @@
 'use server';
 
 import { authActionClient } from '@/lib/safe-action';
+import { getLoggedInUserId } from '@/data/user/user';
 import { createSupabaseClient } from '@/supabase-clients/server';
 import { slugifyWorkspaceName } from '@/utils/workspace-slug';
 import { revalidatePath } from 'next/cache';
@@ -9,9 +10,11 @@ import { z } from 'zod';
 
 export async function getCurrentWorkspace() {
   const supabase = await createSupabaseClient();
+  const userId = await getLoggedInUserId();
   const { data, error } = await supabase
     .from('workspace_members')
     .select('role, workspace:workspaces(*)')
+    .eq('user_id', userId)
     .order('created_at', { ascending: true })
     .limit(1)
     .maybeSingle();
