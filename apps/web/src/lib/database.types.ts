@@ -132,6 +132,47 @@ export type Database = {
         }
         Relationships: []
       }
+      projects: {
+        Row: {
+          allowed_domains: string[]
+          created_at: string
+          id: string
+          is_active: boolean
+          name: string
+          public_key: string
+          updated_at: string
+          workspace_id: string
+        }
+        Insert: {
+          allowed_domains?: string[]
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          name: string
+          public_key: string
+          updated_at?: string
+          workspace_id: string
+        }
+        Update: {
+          allowed_domains?: string[]
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          name?: string
+          public_key?: string
+          updated_at?: string
+          workspace_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "projects_workspace_id_fkey"
+            columns: ["workspace_id"]
+            isOneToOne: false
+            referencedRelation: "workspaces"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       workspace_members: {
         Row: {
           created_at: string
