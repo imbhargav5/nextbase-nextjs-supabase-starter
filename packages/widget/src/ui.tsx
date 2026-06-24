@@ -15,25 +15,37 @@ export function WidgetApp({ origin, projectKey }: { origin: string; projectKey: 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
+  const [imageReady, setImageReady] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const annotatorRef = useRef<Annotator | null>(null);
+  const blobRef = useRef<Blob | null>(null);
 
   const open = async () => {
     setStep('capturing');
+    setImageReady(false);
     try {
       const blob = await captureScreenshot();
+      blobRef.current = blob;
       setStep('editing');
-      requestAnimationFrame(async () => {
-        if (!canvasRef.current) return;
-        const annotator = new Annotator(canvasRef.current);
-        annotatorRef.current = annotator;
-        await annotator.loadImage(blob);
-      });
     } catch {
       setErrorMsg('Could not capture this page. Please try again.');
       setStep('error');
     }
   };
+
+  useEffect(() => {
+    if (step !== 'editing' || !canvasRef.current || annotatorRef.current || !blobRef.current) return;
+    const annotator = new Annotator(canvasRef.current);
+    annotatorRef.current = annotator;
+    annotator.tool = tool;
+    annotator
+      .loadImage(blobRef.current)
+      .then(() => setImageReady(true))
+      .catch(() => {
+        setErrorMsg('Could not prepare the screenshot. Please try again.');
+        setStep('error');
+      });
+  }, [step]);
 
   useEffect(() => {
     if (annotatorRef.current) annotatorRef.current.tool = tool;
@@ -42,6 +54,8 @@ export function WidgetApp({ origin, projectKey }: { origin: string; projectKey: 
   const close = () => {
     annotatorRef.current?.destroy();
     annotatorRef.current = null;
+    blobRef.current = null;
+    setImageReady(false);
     setStep('idle');
     setDescription('');
   };
@@ -102,12 +116,15 @@ export function WidgetApp({ origin, projectKey }: { origin: string; projectKey: 
           <div>
             <div class="toolbar">
               {(['pen', 'rect', 'arrow', 'blackout'] as Tool[]).map((t) => (
-                <button class={tool === t ? 'active' : ''} onClick={() => setTool(t)}>
+                <button key={t} class={tool === t ? 'active' : ''} disabled={!imageReady} onClick={() => setTool(t)}>
                   {t}
                 </button>
               ))}
-              <button onClick={() => annotatorRef.current?.undo()}>undo</button>
+              <button disabled={!imageReady} onClick={() => annotatorRef.current?.undo()}>
+                undo
+              </button>
             </div>
+            {!imageReady && <div class="msg">Preparing screenshot…</div>}
             <div class="canvas-wrap">
               <canvas ref={canvasRef} />
             </div>
@@ -141,7 +158,11 @@ export function WidgetApp({ origin, projectKey }: { origin: string; projectKey: 
             </div>
             <div class="actions">
               <button onClick={close}>Cancel</button>
-              <button class="primary" disabled={description.trim().length === 0} onClick={send}>
+              <button
+                class="primary"
+                disabled={description.trim().length === 0 || !imageReady}
+                onClick={send}
+              >
                 Send feedback
               </button>
             </div>
