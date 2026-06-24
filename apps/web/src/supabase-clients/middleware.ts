@@ -36,6 +36,11 @@ export async function updateSession(request: NextRequest) {
 
   const protectedPages = [
     '/dashboard',
+    '/onboarding',
+    '/projects',
+    '/inbox',
+    '/members',
+    '/settings',
     '/private-item',
     '/private-items',
     '/items',
