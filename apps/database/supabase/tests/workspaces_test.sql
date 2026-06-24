@@ -1,7 +1,7 @@
 BEGIN;
 CREATE EXTENSION IF NOT EXISTS pgtap WITH SCHEMA extensions;
 
-SELECT plan(6);
+SELECT plan(8);
 
 -- Schema
 SELECT has_table('public', 'workspaces', 'workspaces table exists');
@@ -20,6 +20,9 @@ SELECT is(
   true,
   'RLS enabled on workspace_members'
 );
+
+SELECT has_function('public', 'is_workspace_member', ARRAY['uuid'], 'is_workspace_member(uuid) exists');
+SELECT has_function('public', 'has_workspace_role', ARRAY['uuid', 'text[]'], 'has_workspace_role(uuid, text[]) exists');
 
 SELECT * FROM finish();
 ROLLBACK;
