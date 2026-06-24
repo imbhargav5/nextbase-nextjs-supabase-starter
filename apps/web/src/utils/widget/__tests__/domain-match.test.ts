@@ -26,4 +26,20 @@ describe('isOriginAllowed', () => {
   it('supports localhost', () => {
     expect(isOriginAllowed('http://localhost:3000', ['localhost'])).toBe(true);
   });
+  it('wildcard does not allow a lookalike apex (notexample.com)', () => {
+    expect(isOriginAllowed('https://notexample.com', ['*.example.com'])).toBe(false);
+  });
+  it('wildcard does not allow a suffix-spoof (foo.example.com.evil.com)', () => {
+    expect(isOriginAllowed('https://foo.example.com.evil.com', ['*.example.com'])).toBe(false);
+  });
+  it('is case-insensitive for origin and allowlist', () => {
+    expect(isOriginAllowed('https://Example.COM', ['*.EXAMPLE.com'])).toBe(true);
+    expect(isOriginAllowed('https://APP.Example.com', ['*.example.com'])).toBe(true);
+  });
+  it('returns false (does not throw) on a malformed origin', () => {
+    expect(isOriginAllowed('not a valid origin!!!', ['example.com'])).toBe(false);
+  });
+  it('ignores a malformed allowlist entry without throwing', () => {
+    expect(isOriginAllowed('https://example.com', ['://bad', 'example.com'])).toBe(true);
+  });
 });
