@@ -6,6 +6,8 @@
 
 **Architecture:** A `workspace_invitations` table with admin-only RLS. Acceptance and preview go through `SECURITY DEFINER` RPCs (`accept_invitation`, `get_invitation_preview`) so a not-yet-member can join atomically without broad table access. App-level guards prevent removing/demoting the last owner.
 
+> **Security follow-up carried from the M1 review (Tasks 3-5 code review):** the last-owner / role-escalation guards in this milestone are enforced at the **application layer** (`authActionClient`). Because `workspace_members` is also reachable via PostgREST under RLS, an `admin` could in principle bypass these guards by calling the REST API directly (e.g. self-promote to `owner`, or delete the owner's membership). For MVP this is accepted (admins are explicitly promoted, trusted teammates). A hardening follow-up should enforce owner-immutability and "at least one owner" at the **DB layer** — either via a trigger/constraint on `workspace_members`, or by routing all role/removal mutations through `SECURITY DEFINER` RPCs and tightening the `members_update`/`members_delete` policies. Add pgTAP coverage for: admin cannot self-promote to owner, and the last owner cannot be removed/demoted.
+
 **Tech Stack:** Supabase + RLS, pgTAP, Next.js server actions, shadcn/ui, Vitest.
 
 **Prereq:** M5 complete (uses the `get_workspace_members` RPC from M5). **Read:** `2026-06-24-ybug-clone-overview.md`.
