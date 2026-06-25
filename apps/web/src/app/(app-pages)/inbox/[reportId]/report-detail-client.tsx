@@ -10,10 +10,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import {
   addCommentAction,
   assignReportAction,
+  createLabelAction,
   toggleReportLabelAction,
   updateReportStatusAction,
 } from '@/data/user/feedback';
@@ -60,20 +62,35 @@ export function ReportDetailClient({
 }) {
   const router = useRouter();
   const [comment, setComment] = useState('');
+  const [newLabel, setNewLabel] = useState('');
   const attachedIds = new Set(
     report.report_labels.map((rl) => rl.label?.id).filter(Boolean) as string[]
   );
 
   const refresh = () => router.refresh();
-  const status = useAction(updateReportStatusAction, { onSuccess: refresh });
-  const assign = useAction(assignReportAction, { onSuccess: refresh });
+  const status = useAction(updateReportStatusAction, {
+    onSuccess: refresh,
+    onError: ({ error }) => toast.error(error.serverError ?? 'Action failed'),
+  });
+  const assign = useAction(assignReportAction, {
+    onSuccess: refresh,
+    onError: ({ error }) => toast.error(error.serverError ?? 'Action failed'),
+  });
   const toggleLabel = useAction(toggleReportLabelAction, {
     onSuccess: refresh,
+    onError: ({ error }) => toast.error(error.serverError ?? 'Action failed'),
   });
   const addComment = useAction(addCommentAction, {
     onSuccess: () => {
       setComment('');
       refresh();
+    },
+    onError: ({ error }) => toast.error(error.serverError ?? 'Failed'),
+  });
+  const createLabel = useAction(createLabelAction, {
+    onSuccess: () => {
+      setNewLabel('');
+      router.refresh();
     },
     onError: ({ error }) => toast.error(error.serverError ?? 'Failed'),
   });
@@ -104,7 +121,7 @@ export function ReportDetailClient({
             <CardTitle>Comments</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
-            {report.comments
+            {[...report.comments]
               .sort((a, b) => a.created_at.localeCompare(b.created_at))
               .map((c) => (
                 <div key={c.id} className="rounded bg-muted p-2 text-sm">
@@ -194,31 +211,55 @@ export function ReportDetailClient({
           <CardHeader>
             <CardTitle>Labels</CardTitle>
           </CardHeader>
-          <CardContent className="flex flex-wrap gap-2">
-            {labels.length === 0 && (
-              <span className="text-sm text-muted-foreground">
-                No labels yet.
-              </span>
-            )}
-            {labels.map((label) => {
-              const attached = attachedIds.has(label.id);
-              return (
-                <button
-                  key={label.id}
-                  onClick={() =>
-                    toggleLabel.execute({
-                      reportId: report.id,
-                      labelId: label.id,
-                      attach: !attached,
-                    })
-                  }
-                >
-                  <Badge variant={attached ? 'default' : 'outline'}>
-                    {label.name}
-                  </Badge>
-                </button>
-              );
-            })}
+          <CardContent className="space-y-3">
+            <div className="flex flex-wrap gap-2">
+              {labels.length === 0 && (
+                <span className="text-sm text-muted-foreground">
+                  No labels yet.
+                </span>
+              )}
+              {labels.map((label) => {
+                const attached = attachedIds.has(label.id);
+                return (
+                  <button
+                    key={label.id}
+                    type="button"
+                    onClick={() =>
+                      toggleLabel.execute({
+                        reportId: report.id,
+                        labelId: label.id,
+                        attach: !attached,
+                      })
+                    }
+                  >
+                    <Badge variant={attached ? 'default' : 'outline'}>
+                      {label.name}
+                    </Badge>
+                  </button>
+                );
+              })}
+            </div>
+            <div className="flex gap-2">
+              <Input
+                placeholder="New label…"
+                value={newLabel}
+                onChange={(e) => setNewLabel(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && newLabel.trim().length > 0)
+                    createLabel.execute({ name: newLabel.trim() });
+                }}
+              />
+              <Button
+                variant="outline"
+                disabled={
+                  createLabel.status === 'executing' ||
+                  newLabel.trim().length === 0
+                }
+                onClick={() => createLabel.execute({ name: newLabel.trim() })}
+              >
+                Add
+              </Button>
+            </div>
           </CardContent>
         </Card>
 
