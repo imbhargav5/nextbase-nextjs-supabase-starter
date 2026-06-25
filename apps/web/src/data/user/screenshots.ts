@@ -1,5 +1,7 @@
 'use server';
 
+import 'server-only';
+
 import { createServiceRoleClient } from '@/supabase-clients/service-role';
 
 /**
