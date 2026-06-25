@@ -1,8 +1,17 @@
 import { createServiceRoleClient } from '@/supabase-clients/service-role';
 import { corsHeaders } from '@/utils/widget/cors';
 import { isOriginAllowed } from '@/utils/widget/domain-match';
+import { createRateLimiter } from '@/utils/widget/rate-limit';
 import { ingestPayloadSchema } from '@/utils/zod-schemas/ingest';
 import { type NextRequest, NextResponse } from 'next/server';
+
+const MAX_BODY_BYTES = 100 * 1024; // 100 KB JSON cap (image goes via signed URL, not here)
+const ingestLimiter = createRateLimiter({ limit: 20, windowMs: 60_000 });
+
+function clientIp(req: NextRequest): string {
+  const forwarded = req.headers.get('x-forwarded-for');
+  return forwarded?.split(',')[0]?.trim() || 'unknown';
+}
 
 export async function OPTIONS(req: NextRequest) {
   return new NextResponse(null, {
@@ -14,6 +23,14 @@ export async function OPTIONS(req: NextRequest) {
 export async function POST(req: NextRequest) {
   const origin = req.headers.get('origin');
   const headers = corsHeaders(origin);
+
+  const contentLength = Number(req.headers.get('content-length') ?? '0');
+  if (contentLength > MAX_BODY_BYTES) {
+    return NextResponse.json(
+      { error: 'Payload too large', code: 'payload_too_large' },
+      { status: 413, headers }
+    );
+  }
 
   let body: unknown;
   try {
@@ -33,6 +50,14 @@ export async function POST(req: NextRequest) {
     );
   }
   const payload = parsed.data;
+
+  const limit = ingestLimiter.check(`${payload.projectKey}:${clientIp(req)}`);
+  if (!limit.allowed) {
+    return NextResponse.json(
+      { error: 'Too many requests', code: 'rate_limited' },
+      { status: 429, headers }
+    );
+  }
 
   const supabase = createServiceRoleClient();
 
