@@ -11,7 +11,7 @@ import { AppSidebar } from './app-sidebar';
 import { DynamicBreadcrumb } from '@/components/dynamic-breadcrumb';
 
 async function AuthGuard({ children }: { children: ReactNode }) {
-  const isLoggedIn = await getCachedIsUserLoggedIn();
+  const isLoggedIn = await getCachedIsUserLoggedIn().catch(() => false);
   if (!isLoggedIn) {
     redirect('/login');
   }
