@@ -348,6 +348,53 @@ export type Database = {
           },
         ]
       }
+      workspace_invitations: {
+        Row: {
+          created_at: string
+          email: string
+          expires_at: string
+          id: string
+          invited_by: string | null
+          role: string
+          status: string
+          token: string
+          updated_at: string
+          workspace_id: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          expires_at: string
+          id?: string
+          invited_by?: string | null
+          role?: string
+          status?: string
+          token: string
+          updated_at?: string
+          workspace_id: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          expires_at?: string
+          id?: string
+          invited_by?: string | null
+          role?: string
+          status?: string
+          token?: string
+          updated_at?: string
+          workspace_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workspace_invitations_workspace_id_fkey"
+            columns: ["workspace_id"]
+            isOneToOne: false
+            referencedRelation: "workspaces"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       workspace_members: {
         Row: {
           created_at: string
@@ -415,6 +462,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      accept_invitation: { Args: { p_token: string }; Returns: string }
       create_workspace: {
         Args: { p_name: string; p_slug: string }
         Returns: string
@@ -422,6 +470,14 @@ export type Database = {
       current_workspace_role: {
         Args: { p_workspace_id: string }
         Returns: string
+      }
+      get_invitation_preview: {
+        Args: { p_token: string }
+        Returns: {
+          role: string
+          valid: boolean
+          workspace_name: string
+        }[]
       }
       get_workspace_members: {
         Args: { p_workspace_id: string }
