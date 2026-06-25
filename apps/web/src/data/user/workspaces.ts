@@ -53,3 +53,23 @@ export const createWorkspaceAction = authActionClient
     revalidatePath('/', 'layout');
     return { workspaceId: data as string };
   });
+
+const updateWorkspaceSchema = z.object({
+  name: z.string().min(1).max(80),
+});
+
+export const updateWorkspaceAction = authActionClient
+  .schema(updateWorkspaceSchema)
+  .action(async ({ parsedInput }) => {
+    const membership = await requireCurrentWorkspace();
+    const supabase = await createSupabaseClient();
+    const { error } = await supabase
+      .from('workspaces')
+      .update({ name: parsedInput.name })
+      .eq('id', membership.workspace!.id);
+    if (error) {
+      throw new Error(error.message);
+    }
+    revalidatePath('/', 'layout');
+    return { success: true };
+  });

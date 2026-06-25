@@ -38,6 +38,11 @@ const navigationItems: { title: string; url: string; icon: React.ElementType }[]
     icon: Users,
   },
   {
+    title: 'Settings',
+    url: '/settings',
+    icon: Settings,
+  },
+  {
     title: 'Private Items',
     url: '/private-items',
     icon: Lock,
