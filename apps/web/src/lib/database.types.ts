@@ -108,6 +108,74 @@ export type Database = {
         }
         Relationships: []
       }
+      feedback_comments: {
+        Row: {
+          author_id: string
+          body: string
+          created_at: string
+          id: string
+          report_id: string
+          updated_at: string
+        }
+        Insert: {
+          author_id: string
+          body: string
+          created_at?: string
+          id?: string
+          report_id: string
+          updated_at?: string
+        }
+        Update: {
+          author_id?: string
+          body?: string
+          created_at?: string
+          id?: string
+          report_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "feedback_comments_report_id_fkey"
+            columns: ["report_id"]
+            isOneToOne: false
+            referencedRelation: "feedback_reports"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      feedback_report_labels: {
+        Row: {
+          created_at: string
+          label_id: string
+          report_id: string
+        }
+        Insert: {
+          created_at?: string
+          label_id: string
+          report_id: string
+        }
+        Update: {
+          created_at?: string
+          label_id?: string
+          report_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "feedback_report_labels_label_id_fkey"
+            columns: ["label_id"]
+            isOneToOne: false
+            referencedRelation: "labels"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "feedback_report_labels_report_id_fkey"
+            columns: ["report_id"]
+            isOneToOne: false
+            referencedRelation: "feedback_reports"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       feedback_reports: {
         Row: {
           assignee_id: string | null
@@ -173,6 +241,41 @@ export type Database = {
           },
           {
             foreignKeyName: "feedback_reports_workspace_id_fkey"
+            columns: ["workspace_id"]
+            isOneToOne: false
+            referencedRelation: "workspaces"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      labels: {
+        Row: {
+          color: string
+          created_at: string
+          id: string
+          name: string
+          updated_at: string
+          workspace_id: string
+        }
+        Insert: {
+          color?: string
+          created_at?: string
+          id?: string
+          name: string
+          updated_at?: string
+          workspace_id: string
+        }
+        Update: {
+          color?: string
+          created_at?: string
+          id?: string
+          name?: string
+          updated_at?: string
+          workspace_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "labels_workspace_id_fkey"
             columns: ["workspace_id"]
             isOneToOne: false
             referencedRelation: "workspaces"
@@ -319,6 +422,15 @@ export type Database = {
       current_workspace_role: {
         Args: { p_workspace_id: string }
         Returns: string
+      }
+      get_workspace_members: {
+        Args: { p_workspace_id: string }
+        Returns: {
+          created_at: string
+          email: string
+          role: string
+          user_id: string
+        }[]
       }
       has_workspace_role: {
         Args: { p_roles: string[]; p_workspace_id: string }

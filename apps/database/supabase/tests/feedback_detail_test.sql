@@ -32,5 +32,11 @@ SELECT lives_ok(
   'member can create a label'
 );
 
+SELECT results_eq(
+  $$ SELECT count(*) FROM public.get_workspace_members('e2e2e2e2-e2e2-e2e2-e2e2-e2e2e2e2e2e2') $$,
+  ARRAY[1::bigint],
+  'get_workspace_members returns members for a workspace the caller belongs to'
+);
+
 SELECT * FROM finish();
 ROLLBACK;
