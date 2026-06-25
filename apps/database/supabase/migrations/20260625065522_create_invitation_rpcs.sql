@@ -50,4 +50,5 @@ $$;
 
 REVOKE ALL ON FUNCTION public.accept_invitation(text) FROM PUBLIC, anon;
 GRANT EXECUTE ON FUNCTION public.accept_invitation(text) TO authenticated;
+REVOKE ALL ON FUNCTION public.get_invitation_preview(text) FROM PUBLIC, anon;
 GRANT EXECUTE ON FUNCTION public.get_invitation_preview(text) TO authenticated;
