@@ -18,5 +18,5 @@ BEGIN
 END;
 $$;
 
-REVOKE EXECUTE ON FUNCTION public.get_workspace_members(uuid) FROM anon;
+REVOKE ALL ON FUNCTION public.get_workspace_members(uuid) FROM PUBLIC, anon;
 GRANT EXECUTE ON FUNCTION public.get_workspace_members(uuid) TO authenticated;

@@ -56,7 +56,10 @@ CREATE POLICY frl_select ON public.feedback_report_labels
 CREATE POLICY frl_insert ON public.feedback_report_labels
   FOR INSERT WITH CHECK (EXISTS (
     SELECT 1 FROM public.feedback_reports r
-    WHERE r.id = report_id AND public.is_workspace_member(r.workspace_id)
+    JOIN public.labels l ON l.id = label_id
+    WHERE r.id = report_id
+      AND public.is_workspace_member(r.workspace_id)
+      AND l.workspace_id = r.workspace_id
   ));
 CREATE POLICY frl_delete ON public.feedback_report_labels
   FOR DELETE USING (EXISTS (

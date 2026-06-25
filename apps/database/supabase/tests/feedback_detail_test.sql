@@ -1,7 +1,7 @@
 BEGIN;
 CREATE EXTENSION IF NOT EXISTS pgtap WITH SCHEMA extensions;
 
-SELECT plan(6);
+SELECT plan(8);
 
 SELECT has_table('public', 'labels', 'labels table exists');
 SELECT has_table('public', 'feedback_report_labels', 'feedback_report_labels table exists');
@@ -9,6 +9,8 @@ SELECT has_table('public', 'feedback_comments', 'feedback_comments table exists'
 
 INSERT INTO auth.users (id, email) VALUES
   ('77777777-7777-7777-7777-777777777777', 'lead@p.com');
+INSERT INTO auth.users (id, email) VALUES
+  ('88888888-8888-8888-8888-888888888888', 'outsider@p.com');
 INSERT INTO public.workspaces (id, name, slug, owner_id) VALUES
   ('e2e2e2e2-e2e2-e2e2-e2e2-e2e2e2e2e2e2', 'WS L', 'ws-l', '77777777-7777-7777-7777-777777777777');
 INSERT INTO public.workspace_members (workspace_id, user_id, role) VALUES
@@ -36,6 +38,22 @@ SELECT results_eq(
   $$ SELECT count(*) FROM public.get_workspace_members('e2e2e2e2-e2e2-e2e2-e2e2-e2e2e2e2e2e2') $$,
   ARRAY[1::bigint],
   'get_workspace_members returns members for a workspace the caller belongs to'
+);
+
+-- author forgery blocked
+SELECT throws_ok(
+  $$ INSERT INTO public.feedback_comments (report_id, author_id, body)
+     VALUES ('b3b3b3b3-b3b3-b3b3-b3b3-b3b3b3b3b3b3', '88888888-8888-8888-8888-888888888888', 'forged') $$,
+  NULL, NULL,
+  'cannot insert a comment with a forged author_id'
+);
+
+-- outsider sees no labels (a label was created in an earlier test)
+SET LOCAL request.jwt.claim.sub = '88888888-8888-8888-8888-888888888888';
+SELECT results_eq(
+  'SELECT count(*) FROM public.labels',
+  ARRAY[0::bigint],
+  'outsider (non-member) sees no labels'
 );
 
 SELECT * FROM finish();
