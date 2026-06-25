@@ -35,6 +35,10 @@ function getWebServerEnv() {
 
     webServerEnv.NEXT_PUBLIC_SUPABASE_URL = `${parsed.API_URL}/`;
     webServerEnv.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY = parsed.PUBLISHABLE_KEY;
+    const serviceRoleKey = parsed.SERVICE_ROLE_KEY ?? parsed.SECRET_KEY;
+    if (serviceRoleKey) {
+      webServerEnv.SUPABASE_SERVICE_ROLE_KEY = serviceRoleKey;
+    }
     webServerEnv.NEXT_PUBLIC_SITE_URL = `${baseURL}/`;
     return webServerEnv;
   } catch (error) {
