@@ -108,6 +108,78 @@ export type Database = {
         }
         Relationships: []
       }
+      feedback_reports: {
+        Row: {
+          assignee_id: string | null
+          browser: string | null
+          created_at: string
+          description: string
+          id: string
+          os: string | null
+          page_url: string | null
+          project_id: string
+          reporter_email: string | null
+          reporter_name: string | null
+          screen_size: string | null
+          screenshot_path: string | null
+          status: string
+          type: string
+          updated_at: string
+          workspace_id: string
+        }
+        Insert: {
+          assignee_id?: string | null
+          browser?: string | null
+          created_at?: string
+          description?: string
+          id?: string
+          os?: string | null
+          page_url?: string | null
+          project_id: string
+          reporter_email?: string | null
+          reporter_name?: string | null
+          screen_size?: string | null
+          screenshot_path?: string | null
+          status?: string
+          type?: string
+          updated_at?: string
+          workspace_id: string
+        }
+        Update: {
+          assignee_id?: string | null
+          browser?: string | null
+          created_at?: string
+          description?: string
+          id?: string
+          os?: string | null
+          page_url?: string | null
+          project_id?: string
+          reporter_email?: string | null
+          reporter_name?: string | null
+          screen_size?: string | null
+          screenshot_path?: string | null
+          status?: string
+          type?: string
+          updated_at?: string
+          workspace_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "feedback_reports_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "feedback_reports_workspace_id_fkey"
+            columns: ["workspace_id"]
+            isOneToOne: false
+            referencedRelation: "workspaces"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       private_items: {
         Row: {
           created_at: string
