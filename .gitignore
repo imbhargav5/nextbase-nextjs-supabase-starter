@@ -32,3 +32,8 @@ playwright/.auth/
 
 # widget build output copied into web app public dir
 apps/web/public/widget.js
+
+# turbo + build outputs
+.turbo/
+**/.turbo/
+packages/widget/dist/
