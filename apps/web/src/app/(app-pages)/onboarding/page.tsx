@@ -5,7 +5,7 @@ import { OnboardingForm } from './OnboardingForm';
 export default async function OnboardingPage() {
   const membership = await getCurrentWorkspace();
   if (membership?.workspace) {
-    redirect('/dashboard');
+    redirect('/inbox');
   }
   return (
     <div className="flex flex-1 flex-col items-center justify-center p-6">

@@ -45,7 +45,7 @@ export function OnboardingForm() {
     },
     onSuccess: () => {
       toast.success('Workspace created', { id: toastRef.current });
-      router.push('/dashboard');
+      router.push('/inbox');
       router.refresh();
     },
     onError: ({ error }) => {
