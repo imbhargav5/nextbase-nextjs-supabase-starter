@@ -41,10 +41,6 @@ export async function updateSession(request: NextRequest) {
     '/inbox',
     '/members',
     '/settings',
-    '/private-item',
-    '/private-items',
-    '/items',
-    '/item',
   ];
 
   const {

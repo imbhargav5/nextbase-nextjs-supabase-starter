@@ -283,30 +283,6 @@ export type Database = {
           },
         ]
       }
-      private_items: {
-        Row: {
-          created_at: string
-          description: string
-          id: string
-          name: string
-          owner_id: string | null
-        }
-        Insert: {
-          created_at?: string
-          description: string
-          id?: string
-          name: string
-          owner_id?: string | null
-        }
-        Update: {
-          created_at?: string
-          description?: string
-          id?: string
-          name?: string
-          owner_id?: string | null
-        }
-        Relationships: []
-      }
       projects: {
         Row: {
           allowed_domains: string[]

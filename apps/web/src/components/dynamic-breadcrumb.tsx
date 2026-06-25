@@ -14,10 +14,10 @@ import { usePathname } from 'next/navigation';
 
 const routeLabels: Record<string, string> = {
     dashboard: 'Dashboard',
-    'private-items': 'Private Items',
-    'private-item': 'Private Item',
-    item: 'Item',
-    new: 'New',
+    inbox: 'Inbox',
+    projects: 'Projects',
+    members: 'Members',
+    settings: 'Settings',
 };
 
 export function DynamicBreadcrumb() {
