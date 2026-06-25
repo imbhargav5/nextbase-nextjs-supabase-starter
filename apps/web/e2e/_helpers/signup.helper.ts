@@ -88,5 +88,9 @@ export async function signupUserHelper({
   if (!link) throw new Error('Could not find confirmation link in email');
 
   await page.goto(link);
-  await page.waitForURL(/dashboard|app/, { timeout: 30000 });
+  // After confirmation the app sends the user through /dashboard, which now
+  // redirects to /inbox and on to /onboarding for users without a workspace.
+  // Accept any of the authenticated landing routes so signup is considered
+  // complete once the session is established.
+  await page.waitForURL(/dashboard|onboarding|inbox|app/, { timeout: 30000 });
 }
