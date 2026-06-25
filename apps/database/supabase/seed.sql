@@ -168,3 +168,27 @@ VALUES
     NOW() - INTERVAL '1 day'
   )
 ON CONFLICT (id) DO NOTHING;
+
+-- E2E fixture: a workspace + active project keyed for local ingest tests.
+INSERT INTO auth.users (id, email)
+VALUES ('e2e00000-0000-0000-0000-000000000001', 'e2e-owner@test.com')
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO public.workspaces (id, name, slug, owner_id)
+VALUES ('e2e00000-0000-0000-0000-0000000000a1', 'E2E Workspace', 'e2e-workspace', 'e2e00000-0000-0000-0000-000000000001')
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO public.workspace_members (workspace_id, user_id, role)
+VALUES ('e2e00000-0000-0000-0000-0000000000a1', 'e2e00000-0000-0000-0000-000000000001', 'owner')
+ON CONFLICT (workspace_id, user_id) DO NOTHING;
+
+INSERT INTO public.projects (id, workspace_id, name, public_key, allowed_domains, is_active)
+VALUES (
+  'e2e00000-0000-0000-0000-0000000000b1',
+  'e2e00000-0000-0000-0000-0000000000a1',
+  'E2E Project',
+  'pk_e2e',
+  ARRAY['localhost', '127.0.0.1'],
+  true
+)
+ON CONFLICT (id) DO NOTHING;
