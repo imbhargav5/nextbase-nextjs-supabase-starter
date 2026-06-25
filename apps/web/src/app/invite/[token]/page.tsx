@@ -1,13 +1,10 @@
 import { getCachedIsUserLoggedIn } from '@/rsc-data/supabase';
 import { createSupabaseClient } from '@/supabase-clients/server';
 import { redirect } from 'next/navigation';
+import { Suspense } from 'react';
 import { AcceptInviteClient } from './accept-invite-client';
 
-export default async function InvitePage({
-  params,
-}: {
-  params: Promise<{ token: string }>;
-}) {
+async function InviteContent({ params }: { params: Promise<{ token: string }> }) {
   const { token } = await params;
   const isLoggedIn = await getCachedIsUserLoggedIn().catch(() => false);
   if (!isLoggedIn) {
@@ -20,5 +17,13 @@ export default async function InvitePage({
     <div className="flex flex-1 items-center justify-center p-6">
       <AcceptInviteClient token={token} preview={preview} />
     </div>
+  );
+}
+
+export default function InvitePage({ params }: { params: Promise<{ token: string }> }) {
+  return (
+    <Suspense>
+      <InviteContent params={params} />
+    </Suspense>
   );
 }
