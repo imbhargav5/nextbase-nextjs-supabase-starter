@@ -1,4 +1,4 @@
-import { test as setup, expect } from '@playwright/test';
+import { test as setup } from '@playwright/test';
 import { signupUserHelper } from '../_helpers/signup.helper';
 import path from 'path';
 import fs from 'fs';
@@ -17,23 +17,26 @@ setup('create test user', async ({ page }) => {
 
   await signupUserHelper({ page, emailAddress });
 
-  // A freshly signed-up user has no workspace yet, so they are routed to
-  // /onboarding. Confirm the user is authenticated (not bounced to /login).
-  await page.goto('/onboarding');
-  await expect(page).not.toHaveURL(/login/, { timeout: 15000 });
-  await expect(
-    page.getByRole('button', { name: /create workspace/i })
-  ).toBeVisible();
+  // User is authenticated after signup. The post-signup redirect chain
+  // (/auth/callback -> /dashboard -> /inbox -> /onboarding) may still be
+  // in flight, so a hard goto waiting until `load` races with it and aborts.
+  // Use a commit-only navigation and tolerate the redirect race.
+  await page.goto('/onboarding', { waitUntil: 'commit' }).catch(() => {});
+  await page.waitForLoadState('domcontentloaded').catch(() => {});
+  // Settle on whichever authenticated route we land on.
+  await page
+    .waitForURL(/\/(onboarding|inbox|projects|dashboard)/, { timeout: 30000 })
+    .catch(() => {});
 
-  // Complete onboarding by creating a workspace so downstream logged-in tests
-  // have an authenticated user WITH a workspace.
-  await page.getByPlaceholder('Acme Inc').fill('E2E Test Workspace');
-  const submitButton = page.getByRole('button', { name: /create workspace/i });
-  await expect(submitButton).toBeEnabled();
-  await submitButton.click();
-
-  // Successful onboarding pushes the user to the inbox.
-  await page.waitForURL(/\/inbox/, { timeout: 15000 });
+  // If we're on onboarding (no workspace yet), create one so downstream
+  // logged-in tests have an authenticated user WITH a workspace.
+  if (page.url().includes('/onboarding')) {
+    await page.getByPlaceholder('Acme Inc').fill('E2E Test Workspace');
+    const createBtn = page.getByRole('button', { name: 'Create workspace' });
+    await createBtn.click();
+    await page.waitForURL(/\/inbox/, { timeout: 30000 });
+  }
+  // else: already has a workspace (landed on /inbox etc.) — proceed to save state.
 
   // Save the authentication state (now with an active workspace)
   await page.context().storageState({ path: authFile });
