@@ -1,5 +1,9 @@
 import { expect, test } from 'vitest';
 
-test('fake test', () => {
-  expect(true).toBe(true);
+import { classNames } from './utils/classNames';
+
+test('classNames joins truthy class names and omits undefined values', () => {
+  expect(classNames('flex', undefined, 'items-center')).toBe(
+    'flex items-center'
+  );
 });
