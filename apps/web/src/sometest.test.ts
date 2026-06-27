@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest';
 
-test('fake test', () => {
+test('vitest smoke test', () => {
   expect(true).toBe(true);
 });
