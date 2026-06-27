@@ -4,6 +4,17 @@
 
 Never create a `.oneignore` file. Never `git add` or `git commit` a `.oneignore` file. It is a legacy artifact from the deprecated `one` CLI and must stay out of the repo.
 
+## Skills
+
+All agent skills live in `.agents/skills/`. Do not duplicate them in `.cursor`, `.codex`, `.claude`, or other runner-specific directories.
+
+## Database Schema Workflow
+
+- **Never** manually create or edit migration files in `apps/database/supabase/migrations`.
+- Make schema changes in `apps/database/supabase/schemas/*.sql`.
+- Generate migrations with `supabase db diff -f <name>` from `apps/database`.
+- See `.agents/skills/supabase-schema-migrations/SKILL.md` for the full workflow.
+
 # Setup
 
 For automated setup, run `./setup.sh` from the repo root. The steps below describe what the script does.
