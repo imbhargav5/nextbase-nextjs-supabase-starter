@@ -97,8 +97,8 @@ export function NewLoginPage() {
       </div>
       <div className="w-1/2 h-screen">
         <img
-          src="/placeholder.svg"
-          alt="Background Image"
+          src="/mockups/placeholder.jpeg"
+          alt="Login illustration"
           width={1200}
           height={800}
           className="object-cover w-full h-full"
