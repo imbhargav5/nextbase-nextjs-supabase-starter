@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest';
 import { Effect } from 'effect';
-import { runEffectInAction } from './utils/effect-bridge';
+import { getErrorMessage, runEffectInAction } from './utils/effect-bridge';
 import { ValidationError } from './utils/effect-errors';
 
 test('runEffectInAction resolves successful effects', async () => {
@@ -13,4 +13,12 @@ test('runEffectInAction throws app error messages', async () => {
       Effect.fail(new ValidationError({ message: 'Name is required' }))
     )
   ).rejects.toThrow('Name is required');
+});
+
+test('getErrorMessage includes validation field names', () => {
+  expect(
+    getErrorMessage(
+      new ValidationError({ field: 'email', message: 'Email is required' })
+    )
+  ).toBe('email: Email is required');
 });
