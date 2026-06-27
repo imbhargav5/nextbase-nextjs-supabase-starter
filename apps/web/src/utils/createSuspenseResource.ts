@@ -2,8 +2,10 @@ type Resource<T> = {
   read: () => T;
 };
 
+type ResourceStatus = 'pending' | 'success' | 'error';
+
 export function createSuspenseResource<T>(promise: Promise<T>): Resource<T> {
-  let status = 'pending';
+  let status: ResourceStatus = 'pending';
   let result: T | Error;
 
   const suspender = promise.then(
