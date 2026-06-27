@@ -1,4 +1,4 @@
-import { Effect, Exit } from 'effect';
+import { Cause, Effect, Exit, Option } from 'effect';
 import { AppError } from './effect-errors';
 
 /**
@@ -29,13 +29,10 @@ export async function runEffectInAction<A, E extends AppError>(
   const exit = await Effect.runPromiseExit(effect);
 
   if (Exit.isFailure(exit)) {
-    // Extract the error from the Cause
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const failure = exit.cause as any;
-    const appError =
-      failure._tag === 'Fail'
-        ? (failure.error as E)
-        : new Error('Unknown error');
+    const appError = Option.match(Cause.failureOption(exit.cause), {
+      onNone: () => new Error('Unknown error'),
+      onSome: (error) => error,
+    });
 
     // Throw a standard Error for next-safe-action to catch
     throw new Error(
