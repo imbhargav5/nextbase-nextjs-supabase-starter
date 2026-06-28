@@ -7,7 +7,7 @@ const Banner: React.FC = () => {
   return (
     <Alert className="rounded-none border-x-0 border-t-0 bg-primary text-primary-foreground">
       <AlertDescription className="text-center">
-        Checkout premium Nextbase starter templates with integrated
+        Check out premium Nextbase starter templates with integrated
         authentication, payments and admin panel{' '}
         <Link
           href="https://usenextbase.com/demos"
