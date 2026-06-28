@@ -7,11 +7,11 @@ const apiRoutes = ['/api{/*path}'];
 export async function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
-  // API routes are not handled by middleware for this project.
+  // API routes bypass the proxy for this project.
   if (apiRoutes.some((route) => match(route)(pathname))) {
     return null;
   }
-  if (request.nextUrl.pathname) return await updateSession(request);
+  return updateSession(request);
 }
 
 export const config = {
