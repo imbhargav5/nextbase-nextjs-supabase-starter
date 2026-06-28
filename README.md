@@ -63,7 +63,7 @@ NextBase compresses all of that prior art into a maintained, opinionated starter
 - **shadcn/ui pre-installed** with the full Radix primitive set (40+ components: dialogs, command palettes, sidebars, sheets, toasts, hover cards, OTP input, …) — ready to copy, paste, and customize.
 - **Tailwind CSS v4** via `@tailwindcss/postcss`, including `@tailwindcss/forms` and `@tailwindcss/typography`.
 - **Framer Motion**, **Embla Carousel**, **cmdk**, **input-otp**, **Lucide icons**, **date-fns**, **React Hot Toast** — the entire baseline UI toolkit you would have installed in week one.
-- **Strict TypeScript** with shared `packages/typescript-config`, `oxlint` + `oxfmt` (Oxc-based, ~50× faster than ESLint+Prettier), and centralized Zod schemas in `src/utils/zod-schemas`.
+- **TypeScript** with shared `packages/typescript-config`, `oxlint` + `oxfmt` (Oxc-based, ~50× faster than ESLint+Prettier), and centralized Zod schemas in `src/utils/zod-schemas`.
 - **Tested.** Vitest + Testing Library for unit, Playwright for E2E — both already wired into Turbo pipelines.
 
 ### Infrastructure, Observability & Releases
@@ -94,7 +94,7 @@ NextBase compresses all of that prior art into a maintained, opinionated starter
 |---|---|
 | Framework | Next.js 16 (App Router, Cache Components, Turbopack) |
 | UI runtime | React 19 |
-| Language | TypeScript (strict) |
+| Language | TypeScript (`strictNullChecks` enabled) |
 | Database & Auth | Supabase (Postgres, RLS, Auth, Storage) |
 | Auth SSR | `@supabase/ssr` |
 | Server Actions | `next-safe-action` + Zod |
