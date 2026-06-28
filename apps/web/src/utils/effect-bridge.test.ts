@@ -1,7 +1,8 @@
-import { expect, test } from 'vitest';
 import { Effect } from 'effect';
-import { getErrorMessage, runEffectInAction } from './utils/effect-bridge';
-import { ValidationError } from './utils/effect-errors';
+import { expect, test } from 'vitest';
+
+import { getErrorMessage, runEffectInAction } from './effect-bridge';
+import { ValidationError } from './effect-errors';
 
 test('runEffectInAction resolves successful effects', async () => {
   await expect(runEffectInAction(Effect.succeed('ok'))).resolves.toBe('ok');
