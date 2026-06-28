@@ -66,15 +66,15 @@ export function effectToPromise<A, E extends AppError>(
  * Catches an Effect error and maps it to a user-friendly error message.
  *
  * @param effect - The Effect to catch errors from
- * @param defaultMessage - Default message if no specific error message is available
- * @returns An Effect that never fails (errors are mapped to default values)
+ * @param onError - Maps the caught error to a fallback value
+ * @returns An Effect that never fails (errors are mapped to fallback values)
  *
  * @example
  * ```typescript
  * const result = await Effect.runPromise(
  *   catchEffectError(
  *     getItemEffect(supabase, id),
- *     'Failed to fetch item'
+ *     () => null
  *   )
  * );
  * ```
