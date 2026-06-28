@@ -13,7 +13,7 @@ const signUpSchema = z.object({
  * Signs up a new user with email and password.
  * @param {Object} params - The parameters for sign up.
  * @param {string} params.email - The user's email address.
- * @param {string} params.password - The user's password (minimum 8 characters).
+ * @param {string} params.password - The user's password (minimum 3 characters).
  * @returns {Promise<Object>} The data returned from the sign-up process.
  * @throws {Error} If there's an error during sign up.
  */
@@ -108,7 +108,7 @@ const signInWithProviderSchema = z.object({
 /**
  * Initiates OAuth sign in with a specified provider.
  * @param {Object} params - The parameters for OAuth sign in.
- * @param {('google'|'github'|'gitlab'|'bitbucket')} params.provider - The OAuth provider.
+ * @param {('google'|'github'|'twitter')} params.provider - The OAuth provider.
  * @param {string} [params.next] - The URL to redirect to after successful sign in.
  * @returns {Promise<{url: string}>} The URL to redirect the user to for OAuth sign in.
  * @throws {Error} If there's an error initiating OAuth sign in.
