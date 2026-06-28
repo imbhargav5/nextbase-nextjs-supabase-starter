@@ -49,11 +49,7 @@ export async function updateSession(request: NextRequest) {
   // if user doesn't exist and the page is protected, redirect to login
   if (
     !user &&
-    protectedPages.some((page) => {
-      // eslint-disable-next-line no-unexpected-multiline
-      const matcher = match(page);
-      return matcher(request.nextUrl.pathname);
-    })
+    protectedPages.some((page) => match(page)(request.nextUrl.pathname))
   ) {
     // no user, potentially respond by redirecting the user to the login page
     const url = request.nextUrl.clone();
