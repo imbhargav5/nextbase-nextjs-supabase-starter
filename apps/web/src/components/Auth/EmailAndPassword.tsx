@@ -36,7 +36,7 @@ export const EmailAndPassword = ({
     >
       <div className="space-y-4">
         <div>
-          <Label htmlFor="email" className="text-foreground">
+          <Label htmlFor={`${view}-email`} className="text-foreground">
             Email address
           </Label>
           <div className="mt-1">
@@ -60,7 +60,7 @@ export const EmailAndPassword = ({
           </div>
         </div>
         <div className="space-y-1">
-          <Label htmlFor="password" className="text-foreground">
+          <Label htmlFor={`${view}-password`} className="text-foreground">
             Password
           </Label>
           <div className="mt-1">
