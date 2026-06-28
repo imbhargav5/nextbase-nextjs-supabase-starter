@@ -7,7 +7,7 @@ const apiRoutes = ['/api{/*path}'];
 export async function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
-  // api routes are not handled by middleare for this project.
+  // API routes are not handled by middleware for this project.
   if (apiRoutes.some((route) => match(route)(pathname))) {
     return null;
   }
@@ -26,4 +26,3 @@ export const config = {
     '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)',
   ],
 };
-
