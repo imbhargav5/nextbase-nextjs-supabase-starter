@@ -52,7 +52,7 @@ export const Email = ({
     >
       <div className="space-y-2">
         <div className="space-y-2">
-          <Label htmlFor="email" className="text-muted-foreground">
+          <Label htmlFor={`${view}-email`} className="text-muted-foreground">
             {label}
           </Label>
           <div>
