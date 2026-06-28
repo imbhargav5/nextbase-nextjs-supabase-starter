@@ -36,22 +36,6 @@ function CloseIcon(props: ComponentProps<'svg'>) {
 export function MobileNavigation() {
   const [isOpen, setIsOpen] = useState(false);
 
-  // useEffect(() => {
-  //   if (!isOpen) return
-
-  //   function onRouteChange() {
-  //     setIsOpen(false)
-  //   }
-
-  //   router.events.on('routeChangeComplete', onRouteChange)
-  //   router.events.on('routeChangeError', onRouteChange)
-
-  //   return () => {
-  //     router.events.off('routeChangeComplete', onRouteChange)
-  //     router.events.off('routeChangeError', onRouteChange)
-  //   }
-  // }, [router, isOpen])
-
   return (
     <>
       <button
