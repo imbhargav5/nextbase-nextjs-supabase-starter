@@ -30,9 +30,9 @@ export async function updateSession(request: NextRequest) {
     }
   );
 
-  // IMPORTANT: Avoid writing any logic between createServerClient and
-  // supabase.auth.getUser(). A simple mistake could make it very hard to debug
-  // issues with users being randomly logged out.
+  // IMPORTANT: Avoid adding logic between createServerClient and
+  // supabase.auth.getUser(). Extra work here can make session refresh bugs hard
+  // to diagnose.
 
   const protectedPages = [
     '/dashboard',
@@ -40,35 +40,23 @@ export async function updateSession(request: NextRequest) {
     '/private-items',
     '/items',
     '/item',
-  ];
+  ] as const;
 
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  // if user doesn't exist and the page is protected, redirect to login
+  // Redirect anonymous users away from protected pages.
   if (
     !user &&
     protectedPages.some((page) => match(page)(request.nextUrl.pathname))
   ) {
-    // no user, potentially respond by redirecting the user to the login page
     const url = request.nextUrl.clone();
     url.pathname = '/login';
     return NextResponse.redirect(url);
   }
 
-  // IMPORTANT: You *must* return the supabaseResponse object as it is. If you're
-  // creating a new response object with NextResponse.next() make sure to:
-  // 1. Pass the request in it, like so:
-  //    const myNewResponse = NextResponse.next({ request })
-  // 2. Copy over the cookies, like so:
-  //    myNewResponse.cookies.setAll(supabaseResponse.cookies.getAll())
-  // 3. Change the myNewResponse object to fit your needs, but avoid changing
-  //    the cookies!
-  // 4. Finally:
-  //    return myNewResponse
-  // If this is not done, you may be causing the browser and server to go out
-  // of sync and terminate the user's session prematurely!
+  // Return the Supabase response unchanged so cookie updates stay in sync.
 
   return supabaseResponse;
 }
