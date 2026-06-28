@@ -191,8 +191,8 @@ pnpm install
 ### 2. Configure environment
 Copy the examples and fill in your Supabase project details:
 ```bash
-cp .env.local.example apps/web/.env.local
-cp .env.development.local.example apps/web/.env.development.local
+cp .env.local.example .env.local
+cp .env.development.local.example .env.development.local
 ```
 
 Required variables:
