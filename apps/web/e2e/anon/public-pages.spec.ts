@@ -9,7 +9,7 @@ test.describe.parallel('Anonymous user public pages', () => {
       page.getByRole('heading', { name: /build your.+saas product.+faster/i })
     ).toBeVisible();
     await expect(
-      page.getByRole('link', { name: /get started/i }).first()
+      page.getByRole('main').getByRole('link', { name: /get started/i })
     ).toBeVisible();
   });
 
