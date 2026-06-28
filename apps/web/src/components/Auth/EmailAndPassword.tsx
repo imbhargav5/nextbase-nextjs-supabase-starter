@@ -10,16 +10,19 @@ import { Lock, Mail } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
 import type { ComponentProps } from 'react';
+import { cn } from '@/lib/utils';
 
 export const EmailAndPassword = ({
   onSubmit,
   view,
   isLoading,
+  className,
+  ...buttonProps
 }: {
   onSubmit: (data: { email: string; password: string }) => void;
   view: 'sign-in' | 'sign-up';
   isLoading: boolean;
-} & ComponentProps<typeof Button>) => {
+} & Omit<ComponentProps<typeof Button>, 'children' | 'type'>) => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
@@ -98,7 +101,12 @@ export const EmailAndPassword = ({
           ) : null}
         </div>
         <div className="space-y-2">
-          <Button disabled={isLoading} type="submit" className="w-full">
+          <Button
+            {...buttonProps}
+            disabled={isLoading}
+            type="submit"
+            className={cn('w-full', className)}
+          >
             {isLoading ? (
               <>
                 <Spinner className="h-4 w-4 mr-2" />
