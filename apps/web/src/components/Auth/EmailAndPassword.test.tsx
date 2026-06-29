@@ -8,10 +8,11 @@ afterEach(cleanup);
 test('EmailAndPassword forwards button props to the submit button', () => {
   render(
     <EmailAndPassword
-      isLoading
+      isLoading={false}
       onSubmit={() => {}}
       view="sign-in"
       className="max-w-xs"
+      disabled
       data-testid="login-submit"
     />
   );
@@ -23,6 +24,22 @@ test('EmailAndPassword forwards button props to the submit button', () => {
   expect(submitButton).toHaveProperty('disabled', true);
   expect(submitButton.className).toContain('w-full');
   expect(submitButton.className).toContain('max-w-xs');
+});
+
+test('EmailAndPassword still disables the submit button while loading', () => {
+  render(
+    <EmailAndPassword
+      isLoading
+      onSubmit={() => {}}
+      view="sign-in"
+      data-testid="loading-submit"
+    />
+  );
+
+  const submitButton = screen.getByTestId('loading-submit');
+
+  expect(submitButton).toHaveProperty('disabled', true);
+  expect(screen.getByText('Loading...').textContent).toBe('Loading...');
 });
 
 test('EmailAndPassword renders the sign-up variant without the forgot-password link', () => {
