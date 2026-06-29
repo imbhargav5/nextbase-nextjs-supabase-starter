@@ -46,7 +46,6 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  // Redirect anonymous users away from protected pages.
   if (
     !user &&
     protectedPages.some((page) => match(page)(request.nextUrl.pathname))
@@ -55,8 +54,6 @@ export async function updateSession(request: NextRequest) {
     url.pathname = '/login';
     return NextResponse.redirect(url);
   }
-
-  // Return the Supabase response unchanged so cookie updates stay in sync.
 
   return supabaseResponse;
 }
