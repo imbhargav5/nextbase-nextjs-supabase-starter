@@ -103,7 +103,7 @@ export const EmailAndPassword = ({
         <div className="space-y-2">
           <Button
             {...buttonProps}
-            disabled={isLoading}
+            disabled={isLoading || buttonProps.disabled}
             type="submit"
             className={cn('w-full', className)}
           >
