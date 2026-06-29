@@ -16,8 +16,11 @@ async function getLatestEmailForAddress(emailAddress: string): Promise<InbucketM
   const requestContext = await request.newContext();
 
   try {
-    for (let i = 0; i < 20; i++) {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+    for (let attempt = 0; attempt < 20; attempt++) {
+      if (attempt > 0) {
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+      }
+
       const response = await requestContext
         .get(`${INBUCKET_URL}/api/v1/search?query=${mailbox}&limit=20`)
         .catch(() => null);
