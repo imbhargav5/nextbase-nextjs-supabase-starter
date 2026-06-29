@@ -62,8 +62,6 @@ export const signInWithPasswordAction = actionClient
     if (error) {
       throw new Error(error.message);
     }
-
-    // Successful sign-in does not need a return value.
   });
 
 const signInWithMagicLinkSchema = z.object({
@@ -96,8 +94,6 @@ export const signInWithMagicLinkAction = actionClient
     if (error) {
       throw new Error(error.message);
     }
-
-    // Successful magic-link sign-in does not need a return value.
   });
 
 const signInWithProviderSchema = z.object({
@@ -159,6 +155,4 @@ export const resetPasswordAction = actionClient
     if (error) {
       throw new Error(error.message);
     }
-
-    // No need to return anything if the operation is successful
   });
