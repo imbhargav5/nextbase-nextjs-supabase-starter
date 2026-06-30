@@ -1,7 +1,7 @@
 import { DEV_PORT } from '@/constants';
 import urlJoin from 'url-join';
 
-export const getURL = () => {
+export const getURL = (): string => {
   let url =
     process.env.NEXT_PUBLIC_SITE_URL ?? // Set this to your site URL in production env.
     process.env.NEXT_PUBLIC_VERCEL_URL ?? // Automatically set by Vercel.
@@ -13,7 +13,7 @@ export const getURL = () => {
   return url;
 };
 
-export const toSiteURL = (path: string) => {
+export const toSiteURL = (path: string): string => {
   const url = getURL();
   return urlJoin(url, path);
 };
