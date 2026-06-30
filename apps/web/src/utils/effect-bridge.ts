@@ -1,6 +1,19 @@
 import { Cause, Effect, Exit, Option } from 'effect';
 import { AppError } from './effect-errors';
 
+function extractErrorMessage(error: unknown): string {
+  if (
+    typeof error === 'object' &&
+    error !== null &&
+    'message' in error &&
+    typeof error.message === 'string'
+  ) {
+    return error.message;
+  }
+
+  return '';
+}
+
 /**
  * Runs an Effect within a next-safe-action handler, converting it to a Promise
  * and throwing an Error if the Effect fails.
@@ -34,12 +47,8 @@ export async function runEffectInAction<A, E extends AppError>(
     });
 
     // Throw a standard Error for next-safe-action to catch
-    throw new Error(
-      typeof appError === 'object' && appError !== null && 'message' in appError
-        ? (appError.message as string) ||
-        'An error occurred while processing the request'
-        : 'An error occurred while processing the request'
-    );
+    const message = extractErrorMessage(appError);
+    throw new Error(message || 'An error occurred while processing the request');
   }
 
   return exit.value;
