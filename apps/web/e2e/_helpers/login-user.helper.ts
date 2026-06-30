@@ -89,5 +89,5 @@ export async function loginUserHelper({
   if (!link) throw new Error('Could not find login link in email');
 
   await page.goto(link);
-  await page.waitForURL(/dashboard|app/, { timeout: 30000 });
+  await page.waitForURL(/\/dashboard(?:[/?#]|$)/, { timeout: 30000 });
 }
