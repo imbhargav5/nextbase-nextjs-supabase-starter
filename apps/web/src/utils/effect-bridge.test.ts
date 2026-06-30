@@ -16,6 +16,12 @@ test('runEffectInAction throws app error messages', async () => {
   ).rejects.toThrow('Name is required');
 });
 
+test('runEffectInAction falls back when an app error message is empty', async () => {
+  await expect(
+    runEffectInAction(Effect.fail(new ValidationError({ message: '' })))
+  ).rejects.toThrow('An error occurred while processing the request');
+});
+
 test('getErrorMessage includes validation field names', () => {
   expect(
     getErrorMessage(
