@@ -108,9 +108,11 @@ export function getErrorMessage(error: AppError): string {
     case 'NotFoundError':
       return error.message || `${error.resource} not found`;
     case 'ValidationError':
-      return error.field
-        ? `${error.field}: ${error.message}`
-        : error.message || 'Validation failed';
+      if (error.field) {
+        return `${error.field}: ${error.message || 'Validation failed'}`;
+      }
+
+      return error.message || 'Validation failed';
     case 'AuthenticationError':
       return error.message || 'Authentication failed';
     case 'NetworkError':
