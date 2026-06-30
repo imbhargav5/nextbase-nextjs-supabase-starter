@@ -24,10 +24,8 @@ import { toast } from 'sonner';
 
 export function Login({
   next,
-  nextActionType: _nextActionType,
 }: {
   next?: string;
-  nextActionType?: string;
 }) {
   const [emailSentSuccessMessage, setEmailSentSuccessMessage] = useState<
     string | null
