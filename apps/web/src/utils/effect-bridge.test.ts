@@ -29,3 +29,9 @@ test('getErrorMessage includes validation field names', () => {
     )
   ).toBe('email: Email is required');
 });
+
+test('getErrorMessage falls back for fielded validation errors without a message', () => {
+  expect(
+    getErrorMessage(new ValidationError({ field: 'email', message: '' }))
+  ).toBe('email: Validation failed');
+});
