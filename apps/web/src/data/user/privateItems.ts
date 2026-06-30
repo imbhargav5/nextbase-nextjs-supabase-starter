@@ -48,5 +48,4 @@ export const deletePrivateItemAction = authActionClient
     }
     revalidatePath('/');
     redirect('/private-items');
-    return { success: true };
   });
