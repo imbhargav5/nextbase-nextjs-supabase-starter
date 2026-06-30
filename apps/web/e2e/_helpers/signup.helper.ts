@@ -13,6 +13,7 @@ interface InbucketMessageDetail {
 
 async function getLatestEmailForAddress(emailAddress: string): Promise<InbucketMessageDetail | null> {
   const mailbox = emailAddress.split('@')[0];
+  const mailboxQuery = encodeURIComponent(mailbox);
   const requestContext = await request.newContext();
 
   try {
@@ -22,7 +23,7 @@ async function getLatestEmailForAddress(emailAddress: string): Promise<InbucketM
       }
 
       const response = await requestContext
-        .get(`${INBUCKET_URL}/api/v1/search?query=${mailbox}&limit=20`)
+        .get(`${INBUCKET_URL}/api/v1/search?query=${mailboxQuery}&limit=20`)
         .catch(() => null);
       if (!response?.ok()) continue;
 
