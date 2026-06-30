@@ -4,15 +4,17 @@ set -euo pipefail
 # Stop any stale Supabase containers from a previous run to avoid port-bind failures.
 ( cd apps/database && pnpm supabase stop --no-backup 2>/dev/null || true ) || true
 
-# Copy .env*.example files to their .env counterparts if missing.
-# Covers repo root, apps/*, and packages/*.
-while IFS= read -r ex; do
+# Copy root .env*.example files to their .env counterparts if missing.
+for ex in .env.local.example .env.development.local.example; do
+  if [ ! -f "$ex" ]; then
+    continue
+  fi
   target="${ex%.example}"
   if [ ! -f "$target" ]; then
     cp "$ex" "$target"
     echo "Created $target"
   fi
-done < <(find . \( -name ".env.local.example" -o -name ".env.development.local.example" \) -not -path "*/node_modules/*" -not -path "*/.git/*")
+done
 
 # Install dependencies.
 pnpm i
