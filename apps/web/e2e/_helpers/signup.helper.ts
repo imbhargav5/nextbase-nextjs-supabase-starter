@@ -91,5 +91,5 @@ export async function signupUserHelper({
   if (!link) throw new Error('Could not find confirmation link in email');
 
   await page.goto(link);
-  await page.waitForURL(/dashboard|app/, { timeout: 30000 });
+  await page.waitForURL(/\/dashboard(?:[/?#]|$)/, { timeout: 30000 });
 }
