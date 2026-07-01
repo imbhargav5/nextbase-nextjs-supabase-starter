@@ -64,7 +64,7 @@ export const Email = ({
               disabled={isLoading}
               onChange={(event) => setEmail(event.target.value)}
               autoComplete={'email'}
-              placeholder="placeholder@email.com"
+              placeholder="email@example.com"
               required
             />
           </div>
