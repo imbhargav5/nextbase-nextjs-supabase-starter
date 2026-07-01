@@ -36,6 +36,6 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     }
   }
 
-  // return the user to an error page with some instructions
+  // Return the user to the auth code error page when verification fails.
   return NextResponse.redirect(new URL('/auth/auth-code-error', req.url));
 }
