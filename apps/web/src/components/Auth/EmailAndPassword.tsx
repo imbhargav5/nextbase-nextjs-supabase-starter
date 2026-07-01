@@ -54,7 +54,7 @@ export const EmailAndPassword = ({
                 disabled={isLoading}
                 value={email}
                 data-strategy="email-password"
-                placeholder="placeholder@email.com"
+                placeholder="email@example.com"
                 onChange={(event) => setEmail(event.target.value)}
                 autoComplete={'email'}
                 required
