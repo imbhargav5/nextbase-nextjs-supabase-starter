@@ -2,6 +2,7 @@ import { cleanup, render, screen } from '@testing-library/react';
 import { afterEach, expect, test } from 'vitest';
 
 import { EmailAndPassword } from './EmailAndPassword';
+import { Email } from './Email';
 
 afterEach(cleanup);
 
@@ -59,4 +60,34 @@ test('EmailAndPassword renders the sign-up variant without the forgot-password l
     screen.getByRole('link', { name: /already have an account\? log in/i })
       .getAttribute('href')
   ).toBe('/login');
+});
+
+test('auth email fields use a standard example placeholder', () => {
+  const emailForm = render(
+    <Email
+      isLoading={false}
+      onSubmit={() => {}}
+      view="sign-in"
+    />
+  );
+
+  expect(emailForm.getByLabelText('Email address')).toHaveProperty(
+    'placeholder',
+    'email@example.com'
+  );
+
+  emailForm.unmount();
+
+  const passwordForm = render(
+    <EmailAndPassword
+      isLoading={false}
+      onSubmit={() => {}}
+      view="sign-in"
+    />
+  );
+
+  expect(passwordForm.getByLabelText('Email address')).toHaveProperty(
+    'placeholder',
+    'email@example.com'
+  );
 });
