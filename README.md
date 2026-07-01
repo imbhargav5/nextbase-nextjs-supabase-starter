@@ -232,7 +232,7 @@ pnpm lint          # oxlint
 ```
 
 ### 6. Deploy
-NextBase deploys to any Node 22+ host. Vercel is the path of least resistance:
+NextBase deploys to any Node 24+ host. Vercel is the path of least resistance:
 - Set the same env vars as production secrets.
 - Point your custom domain at the deployment.
 - Configure the Supabase project's allowed redirect URLs (`<your-domain>/auth/callback`).
