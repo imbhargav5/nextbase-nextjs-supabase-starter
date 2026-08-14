@@ -28,3 +28,6 @@ playwright/.auth/
 
 # Legacy ascii/one CLI ignore file
 .oneignore
+
+# turbo
+.turbo
