@@ -3,11 +3,10 @@
   "compilerOptions": {
     "plugins": [{ "name": "next" }],
     "jsx": "react-jsx",
-    "baseUrl": ".",
-    "ignoreDeprecations": "6.0",
     "paths": {
       "@/*": ["./src/*"],
       "@public/*": ["./public/*"],
+      "*": ["./*"],
       "react": ["./node_modules/@types/react"]
     },
     "strictNullChecks": true
