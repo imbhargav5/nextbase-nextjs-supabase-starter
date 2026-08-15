@@ -1,3 +1,7 @@
+'use client';
+
+import BlurText from '@/components/BlurText';
+import ShinyText from '@/components/ShinyText';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Github } from 'lucide-react';
@@ -10,13 +14,19 @@ export function HomeHero() {
         Open Source Starter Kit
       </Badge>
       <h1 className="text-4xl font-bold tracking-tight sm:text-6xl max-w-3xl">
-        Build your{' '}
-        <span className="text-primary">SaaS product</span>{' '}
-        faster
+        <ShinyText
+          text="Build your SaaS product faster"
+          className="font-bold"
+          color="var(--foreground)"
+          shineColor="var(--primary)"
+        />
       </h1>
-      <p className="text-muted-foreground text-lg max-w-xl">
-        A production-ready Next.js + Supabase starter with authentication, database, UI components, and everything you need.
-      </p>
+      <BlurText
+        text="A production-ready Next.js + Supabase starter with authentication, database, UI components, and everything you need."
+        className="text-muted-foreground text-lg max-w-xl justify-center"
+        delay={30}
+        animateBy="words"
+      />
       <div className="flex flex-wrap gap-3 justify-center">
         <Button asChild size="lg">
           <Link href="/sign-up">
@@ -24,7 +34,11 @@ export function HomeHero() {
           </Link>
         </Button>
         <Button asChild size="lg" variant="outline">
-          <Link href="https://github.com/imbhargav5/nextbase-nextjs-supabase-starter" target="_blank" rel="noopener noreferrer">
+          <Link
+            href="https://github.com/imbhargav5/nextbase-nextjs-supabase-starter"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <Github className="mr-2 h-4 w-4" /> View on GitHub
           </Link>
         </Button>
