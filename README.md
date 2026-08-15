@@ -63,6 +63,7 @@ NextBase compresses all of that prior art into a maintained, opinionated starter
 - **shadcn/ui pre-installed** with the full Radix primitive set (40+ components: dialogs, command palettes, sidebars, sheets, toasts, hover cards, OTP input, …) — ready to copy, paste, and customize.
 - **Tailwind CSS v4** via `@tailwindcss/postcss`, including `@tailwindcss/forms` and `@tailwindcss/typography`.
 - **Framer Motion**, **Embla Carousel**, **cmdk**, **input-otp**, **Lucide icons**, **date-fns**, **React Hot Toast** — the entire baseline UI toolkit you would have installed in week one.
+- **React Bits** animated components (BlurText, ShinyText, SpotlightCard) installed via the shadcn registry and used on the home page and login screen.
 - **TypeScript** with shared `packages/typescript-config`, `oxlint` + `oxfmt` (Oxc-based, ~50× faster than ESLint+Prettier), and centralized Zod schemas in `src/utils/zod-schemas`.
 - **Tested.** Vitest + Testing Library for unit, Playwright for E2E — both already wired into Turbo pipelines.
 
@@ -236,6 +237,41 @@ NextBase deploys to any Node 24+ host. Vercel is the path of least resistance:
 - Set the same env vars as production secrets.
 - Point your custom domain at the deployment.
 - Configure the Supabase project's allowed redirect URLs (`<your-domain>/auth/callback`).
+
+---
+
+## React Bits
+
+The marketing and auth surfaces use animated components from [React Bits](https://reactbits.dev), installed through the shadcn community registry.
+
+Installed components:
+
+- `BlurText` — blur-to-focus word reveal
+- `ShinyText` — metallic shine sweep
+- `SpotlightCard` — cursor-following radial spotlight
+
+They are used in:
+
+- `apps/web/src/app/(external-pages)/home-hero.tsx`
+- `apps/web/src/app/(external-pages)/home-cta.tsx`
+- `apps/web/src/app/(auth-pages)/login/Login.tsx`
+
+Add more React Bits components with the shadcn CLI:
+
+```bash
+cd apps/web
+pnpm dlx shadcn@latest add @react-bits/<ComponentName>-TS-TW
+```
+
+The registry is already configured in `apps/web/components.json`:
+
+```json
+{
+  "registries": {
+    "@react-bits": "https://reactbits.dev/r/{name}.json"
+  }
+}
+```
 
 ---
 
