@@ -28,15 +28,18 @@ export function MobileNavigation({ items }: MobileNavigationProps) {
         <Button
           variant="ghost"
           size="icon"
-          className="md:hidden"
+          className="h-9 w-9 rounded-full md:hidden"
           aria-label="Open navigation"
         >
           <Menu className="h-5 w-5" />
         </Button>
       </SheetTrigger>
-      <SheetContent side="right" className="w-[280px] sm:w-[320px]">
+      <SheetContent
+        side="right"
+        className="w-[280px] rounded-l-2xl bg-background/95 backdrop-blur-xl sm:w-[320px]"
+      >
         <SheetHeader>
-          <SheetTitle className="text-left">Menu</SheetTitle>
+          <SheetTitle className="text-left text-base">Menu</SheetTitle>
         </SheetHeader>
         <nav className="mt-6 flex flex-col gap-1" aria-label="Mobile">
           {items.map(({ label, href }) => (
@@ -44,22 +47,31 @@ export function MobileNavigation({ items }: MobileNavigationProps) {
               key={href}
               href={href}
               onClick={() => setOpen(false)}
-              className="flex h-10 items-center rounded-md px-4 text-base font-medium hover:bg-accent"
+              className="flex h-10 items-center rounded-lg px-3 text-base font-medium transition-colors hover:bg-muted"
             >
               {label}
             </NavLink>
           ))}
         </nav>
         <Separator className="my-4" />
-        <div className="flex flex-col gap-3 px-4">
-          <div className="flex items-center justify-between">
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center justify-between rounded-lg px-3 py-2 hover:bg-muted">
             <span className="text-sm text-muted-foreground">Theme</span>
-            <ModeToggle />
+            <ModeToggle className="h-8 w-8" />
           </div>
-          <Button asChild variant="ghost" onClick={() => setOpen(false)}>
+          <Button
+            asChild
+            variant="ghost"
+            onClick={() => setOpen(false)}
+            className="justify-start rounded-lg px-3 font-medium"
+          >
             <Link href="/login">Sign in</Link>
           </Button>
-          <Button asChild onClick={() => setOpen(false)}>
+          <Button
+            asChild
+            onClick={() => setOpen(false)}
+            className="rounded-full font-medium"
+          >
             <Link href="/sign-up">Get Started</Link>
           </Button>
         </div>

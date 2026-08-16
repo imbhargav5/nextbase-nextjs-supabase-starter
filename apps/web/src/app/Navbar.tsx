@@ -4,13 +4,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  navigationMenuTriggerStyle,
-} from '@/components/ui/navigation-menu';
 import { ModeToggle } from '@/components/ui/mode-toggle';
 import { cn } from '@/lib/utils';
 import { MobileNavigation } from './MobileNavigation';
@@ -25,59 +18,63 @@ export default function Navbar() {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="fixed top-4 left-0 right-0 z-50 flex justify-center px-4">
       <nav
-        className="container mx-auto flex h-14 items-center justify-between px-4 md:px-6"
+        className="flex h-12 w-full max-w-2xl items-center justify-between rounded-full border border-border/50 bg-background/70 px-2 shadow-sm backdrop-blur-xl dark:bg-background/60"
         aria-label="Global"
       >
-        <Link href="/" className="flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-2 px-2">
           <Image
             src="/logos/nextbase.png"
             alt="Nextbase"
-            width={32}
-            height={32}
-            className="h-8 w-8 rounded-md object-contain"
+            width={28}
+            height={28}
+            className="h-7 w-7 rounded-md object-contain"
           />
-          <span className="text-lg font-bold text-foreground">Nextbase</span>
+          <span className="text-base font-semibold tracking-tight text-foreground">
+            Nextbase
+          </span>
         </Link>
 
-        <NavigationMenu className="hidden md:flex">
-          <NavigationMenuList>
-            {NAV_LINKS.map(({ label, href }) => {
-              const isActive =
-                pathname === href || (href !== '/' && pathname?.startsWith(href));
-              return (
-                <NavigationMenuItem key={href}>
-                  <NavigationMenuLink asChild>
-                    <Link
-                      href={href}
-                      className={cn(
-                        navigationMenuTriggerStyle(),
-                        isActive
-                          ? 'bg-accent text-foreground'
-                          : 'text-muted-foreground'
-                      )}
-                    >
-                      {label}
-                    </Link>
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
-              );
-            })}
-          </NavigationMenuList>
-        </NavigationMenu>
+        <div className="hidden items-center gap-0.5 md:flex">
+          {NAV_LINKS.map(({ label, href }) => {
+            const isActive =
+              pathname === href ||
+              (href !== '/' && pathname?.startsWith(href.split('#')[0]));
+            return (
+              <Button
+                key={href}
+                asChild
+                variant="ghost"
+                size="sm"
+                className={cn(
+                  'rounded-full text-sm font-medium',
+                  isActive
+                    ? 'bg-muted text-foreground'
+                    : 'text-muted-foreground hover:text-foreground'
+                )}
+              >
+                <Link href={href}>{label}</Link>
+              </Button>
+            );
+          })}
+        </div>
 
-        <div className="flex items-center gap-2">
-          <ModeToggle />
+        <div className="flex items-center gap-1">
+          <ModeToggle className="rounded-full" />
           <Button
             asChild
             variant="ghost"
             size="sm"
-            className="hidden md:inline-flex"
+            className="hidden rounded-full text-sm md:inline-flex"
           >
             <Link href="/login">Sign in</Link>
           </Button>
-          <Button asChild size="sm" className="hidden md:inline-flex">
+          <Button
+            asChild
+            size="sm"
+            className="hidden rounded-full text-sm md:inline-flex"
+          >
             <Link href="/sign-up">Get Started</Link>
           </Button>
           <MobileNavigation items={NAV_LINKS} />
