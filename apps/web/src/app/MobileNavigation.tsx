@@ -1,76 +1,69 @@
 'use client';
-import { ComponentProps, useState } from 'react';
+
+import { Menu } from 'lucide-react';
 import Link from 'next/link';
-import { Dialog } from '@headlessui/react';
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { ModeToggle } from '@/components/ui/mode-toggle';
+import { Separator } from '@/components/ui/separator';
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from '@/components/ui/sheet';
+import { NavLink } from './NavLink';
 
-function MenuIcon(props: ComponentProps<'svg'>) {
-  return (
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 24 24"
-      fill="none"
-      strokeWidth="2"
-      strokeLinecap="round"
-      {...props}
-    >
-      <path d="M4 7h16M4 12h16M4 17h16" />
-    </svg>
-  );
-}
+type MobileNavigationProps = {
+  items: { label: string; href: string }[];
+};
 
-function CloseIcon(props: ComponentProps<'svg'>) {
-  return (
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 24 24"
-      fill="none"
-      strokeWidth="2"
-      strokeLinecap="round"
-      {...props}
-    >
-      <path d="M5 5l14 14M19 5l-14 14" />
-    </svg>
-  );
-}
-
-export function MobileNavigation() {
-  const [isOpen, setIsOpen] = useState(false);
+export function MobileNavigation({ items }: MobileNavigationProps) {
+  const [open, setOpen] = useState(false);
 
   return (
-    <>
-      <button
-        type="button"
-        onClick={() => setIsOpen(true)}
-        className="relative"
-        aria-label="Open navigation"
-      >
-        <MenuIcon className="h-6 w-6 stroke-slate-500" />
-      </button>
-      <Dialog
-        open={isOpen}
-        onClose={setIsOpen}
-        className="fixed inset-0 z-50 flex items-start overflow-y-auto bg-slate-900/50 pr-10 backdrop-blur-sm lg:hidden"
-        aria-label="Navigation"
-      >
-        <Dialog.Panel className="min-h-full w-full max-w-xs bg-white px-4 pb-12 pt-5 dark:bg-slate-900 sm:px-6">
-          <div className="flex items-center">
-            <button
-              type="button"
-              onClick={() => setIsOpen(false)}
-              aria-label="Close navigation"
+    <Sheet open={open} onOpenChange={setOpen}>
+      <SheetTrigger asChild>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="md:hidden"
+          aria-label="Open navigation"
+        >
+          <Menu className="h-5 w-5" />
+        </Button>
+      </SheetTrigger>
+      <SheetContent side="right" className="w-[280px] sm:w-[320px]">
+        <SheetHeader>
+          <SheetTitle className="text-left">Menu</SheetTitle>
+        </SheetHeader>
+        <nav className="mt-6 flex flex-col gap-1" aria-label="Mobile">
+          {items.map(({ label, href }) => (
+            <NavLink
+              key={href}
+              href={href}
+              onClick={() => setOpen(false)}
+              className="flex h-10 items-center rounded-md px-4 text-base font-medium hover:bg-accent"
             >
-              <CloseIcon className="h-6 w-6 stroke-slate-500" />
-            </button>
-            <Link href="/" className="block" aria-label="Home page">
-              <img
-                src="https://usenextbase.com/logos/nextbase/Logo%2006.png"
-                className="h-9 block sm:h-9"
-                alt="Nextbase Logo"
-              />
-            </Link>
+              {label}
+            </NavLink>
+          ))}
+        </nav>
+        <Separator className="my-4" />
+        <div className="flex flex-col gap-3 px-4">
+          <div className="flex items-center justify-between">
+            <span className="text-sm text-muted-foreground">Theme</span>
+            <ModeToggle />
           </div>
-        </Dialog.Panel>
-      </Dialog>
-    </>
+          <Button asChild variant="ghost" onClick={() => setOpen(false)}>
+            <Link href="/login">Sign in</Link>
+          </Button>
+          <Button asChild onClick={() => setOpen(false)}>
+            <Link href="/sign-up">Get Started</Link>
+          </Button>
+        </div>
+      </SheetContent>
+    </Sheet>
   );
 }

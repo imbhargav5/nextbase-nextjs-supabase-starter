@@ -13,7 +13,7 @@ interface HomeFeaturesProps {
 
 export function HomeFeatures({ features }: HomeFeaturesProps) {
   return (
-    <section className="py-20 px-4">
+    <section id="features" className="py-20 px-4">
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold tracking-tight">Everything you need</h2>
