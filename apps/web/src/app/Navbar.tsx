@@ -20,7 +20,7 @@ export default function Navbar() {
   return (
     <header className="fixed top-4 left-0 right-0 z-50 flex justify-center px-4">
       <nav
-        className="flex h-12 w-full max-w-2xl items-center justify-between rounded-full border border-border/50 bg-background/70 px-2 shadow-sm backdrop-blur-xl dark:bg-background/60"
+        className="flex h-12 w-full max-w-2xl items-center justify-between rounded-full border border-border/40 bg-muted/70 px-2 shadow-md ring-1 ring-border/10 backdrop-blur-2xl dark:bg-muted/60"
         aria-label="Global"
       >
         <Link href="/" className="flex items-center gap-2 px-2">
