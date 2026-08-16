@@ -50,7 +50,7 @@ export default function Navbar() {
                 className={cn(
                   'rounded-full text-sm font-medium',
                   isActive
-                    ? 'bg-muted text-foreground'
+                    ? 'text-foreground'
                     : 'text-muted-foreground hover:text-foreground'
                 )}
               >
