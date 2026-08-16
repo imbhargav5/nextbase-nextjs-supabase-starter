@@ -44,3 +44,9 @@ Use this skill to run a fast end-to-end smoke test of `apps/web` when upgrading 
 - Home page visibly shows the hero `ShinyText` heading, `BlurText` description, and `SpotlightCard` CTA.
 - Login page visibly shows the `ShinyText` `Login to NextBase` heading and `Password` / `Magic Link` / `Social Login` tabs.
 - `pnpm --filter=web typecheck`, `pnpm --filter=web lint`, and `pnpm --filter=web build` exit 0.
+
+## Navbar / Navigation Smoke Testing
+- Maximize the browser before desktop tests; use `wmctrl -r :ACTIVE: -b remove,maximized_vert,maximized_horz && wmctrl -r :ACTIVE: -e 0,0,0,500,900` for a narrow mobile viewport.
+- Desktop assertions: logo + "Nextbase" text, `Home`, `About`, `Features` links, theme toggle, `Sign in`, `Get Started`; active link uses `bg-accent text-foreground`; `Features` scrolls to `id="features"`.
+- Mobile assertions: hamburger `Menu` button opens a right-side shadcn `Sheet` titled "Menu" with the same links, theme row, and auth buttons; navigating inside the sheet closes it.
+- Theme toggle watch-out: `next-themes` 0.4 defaults to `attribute="data-theme"`, but Tailwind v4 in this repo uses `@custom-variant dark (&:is(.dark *))`. If `ThemeProvider` is not given `attribute="class"`, clicking `ModeToggle` updates `data-theme` and `localStorage` but the UI stays light. Verify by checking the `<html>` class and background color, not just `localStorage`.
