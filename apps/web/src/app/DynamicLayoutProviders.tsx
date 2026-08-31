@@ -1,15 +1,9 @@
 'use client';
 import React, { Suspense } from 'react';
 
-import { Toaster as SonnerToaster } from 'sonner';
-import { ThemeProvider, useTheme } from 'next-themes';
+import { ThemeProvider } from 'next-themes';
 import { AppProgressBar as ProgressBar } from 'next-nprogress-bar';
-
-function CustomerToaster() {
-  const theme = useTheme();
-  const currentTheme = theme.theme === 'light' ? 'light' : 'dark';
-  return <SonnerToaster richColors theme={currentTheme} />;
-}
+import { Toaster } from '@/components/ui/sonner';
 
 export function DynamicLayoutProviders({
   children,
@@ -17,16 +11,22 @@ export function DynamicLayoutProviders({
   children: React.ReactNode;
 }) {
   return (
-    <ThemeProvider enableSystem themes={['light', 'dark']} defaultTheme="light">
+    <ThemeProvider
+      attribute="class"
+      enableSystem
+      themes={['light', 'dark']}
+      defaultTheme="light"
+      disableTransitionOnChange
+    >
       {children}
       <Suspense>
         <ProgressBar
-          height="4px"
-          color="#0047ab"
+          height="3px"
+          color="var(--primary)"
           options={{ showSpinner: false }}
           shallowRouting
         />
-        <CustomerToaster />
+        <Toaster richColors closeButton />
       </Suspense>
     </ThemeProvider>
   );

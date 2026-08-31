@@ -1,70 +1,56 @@
+import { CircleAlert } from 'lucide-react';
+import type { ComponentType } from 'react';
+
 import * as SocialIcons from '@/components/Auth/Icons';
-import { T } from '@/components/ui/Typography';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from '@/components/ui/hover-card';
-import { AuthProvider } from '@/types';
-import { Fragment } from 'react';
+import type { AuthProvider } from '@/types';
 
 function capitalize(word: string) {
-  const lower = word.toLowerCase();
-  return word.charAt(0).toUpperCase() + lower.slice(1);
+  return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
 }
 
 const isDemo = true;
 
-export const RenderProviders = ({
+export const RenderProviders = <TProvider extends AuthProvider,>({
   providers,
   onProviderLoginRequested,
   isLoading,
 }: {
-  providers: AuthProvider[];
-  onProviderLoginRequested: (provider: AuthProvider) => void;
+  providers: TProvider[];
+  onProviderLoginRequested: (provider: TProvider) => void;
   isLoading: boolean;
 }) => {
   return (
-    <div className="space-y-2.5 flex flex-col">
-      {providers.map((provider) => {
-        const AuthIcon = SocialIcons[provider];
-        const component = (
-          <Button
-            variant="default"
-            size="default"
-            disabled={isLoading || isDemo}
-            onClick={() => onProviderLoginRequested(provider)}
-            className="bg-white dark:bg-white text-black dark:text-black border h-10 border-gray-400 dark:border-gray-600 rounded-lg"
-          >
-            <div className="mr-2">
+    <div className="space-y-4">
+      {isDemo ? (
+        <Alert>
+          <CircleAlert aria-hidden="true" />
+          <AlertTitle>Demo providers</AlertTitle>
+          <AlertDescription>
+            Connect OAuth providers in your local Supabase configuration to
+            enable these options.
+          </AlertDescription>
+        </Alert>
+      ) : null}
+      <div className="grid gap-2.5">
+        {providers.map((provider) => {
+          const AuthIcon = SocialIcons[provider] as ComponentType;
+          return (
+            <Button
+              key={provider}
+              type="button"
+              variant="outline"
+              disabled={isLoading || isDemo}
+              onClick={() => onProviderLoginRequested(provider)}
+              className="w-full justify-center"
+            >
               <AuthIcon />
-            </div>
-            <span className="">{capitalize(provider)}</span>
-          </Button>
-        );
-        return (
-          <Fragment key={provider}>
-            {isDemo ? (
-              <HoverCard>
-                <HoverCardTrigger asChild>
-                  <div className="w-full [&>button]:w-full">{component}</div>
-                </HoverCardTrigger>
-                <HoverCardContent className="w-80 dark:bg-black bg-white border border-gray-300 dark:border-gray-700">
-                  <T.Small className="text-muted-foreground">
-                    ⚠️ As this is a demo, the social media authentication
-                    buttons aren't linked. However, you can connect them in your
-                    dev environment using the supabase dashboard for your
-                    project.
-                  </T.Small>
-                </HoverCardContent>
-              </HoverCard>
-            ) : (
-              component
-            )}
-          </Fragment>
-        );
-      })}
+              Continue with {capitalize(provider)}
+            </Button>
+          );
+        })}
+      </div>
     </div>
   );
 };

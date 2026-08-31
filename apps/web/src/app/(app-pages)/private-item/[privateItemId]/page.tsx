@@ -13,7 +13,7 @@ export default async function PrivateItemPage({ params }: {
     const { privateItemId } = await params;
     const itemPromise = getPrivateItem(privateItemId);
     return (
-      <div className="flex flex-1 flex-col gap-4 p-4 md:p-6 max-w-2xl mx-auto w-full">
+      <div className="mx-auto flex w-full max-w-4xl flex-1 flex-col p-4 sm:p-6 lg:p-8">
         <Suspense fallback={<PrivateItemSkeleton />}>
           <PrivateItemCard privateItemId={privateItemId} itemPromise={itemPromise} />
         </Suspense>
