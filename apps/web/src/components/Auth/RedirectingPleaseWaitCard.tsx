@@ -1,7 +1,5 @@
-'use client';
-import { Settings } from 'lucide-react';
-
-import { Card, CardDescription, CardHeader, CardTitle } from '../ui/card';
+import { AuthCard } from '@/components/Auth/AuthCard';
+import { Spinner } from '@/components/ui/spinner';
 
 interface RedirectingPleaseWaitCardProps {
   message: string;
@@ -13,14 +11,14 @@ export function RedirectingPleaseWaitCard({
   heading,
 }: RedirectingPleaseWaitCardProps) {
   return (
-    <div>
-      <Card className="w-full md:min-w-[440px] mx-auto mt-10 items-center">
-        <CardHeader>
-          <Settings className="size-10 mx-auto mb-4" />
-          <CardTitle className="text-center">{heading}</CardTitle>
-          <CardDescription className="text-center">{message}</CardDescription>
-        </CardHeader>
-      </Card>
-    </div>
+    <AuthCard
+      title={heading}
+      description={message}
+      icon={<Spinner className="size-5" aria-hidden="true" />}
+    >
+      <div className="h-1.5 overflow-hidden rounded-full bg-muted">
+        <div className="h-full w-2/3 animate-pulse rounded-full bg-primary" />
+      </div>
+    </AuthCard>
   );
 }

@@ -7,7 +7,7 @@ import { DashboardPrivateItemsSection } from './dashboard-private-items-section'
 export default function DashboardPage() {
   const privateItemsPromise = getUserPrivateItems();
   return (
-    <div className="flex flex-1 flex-col gap-4 p-4 md:p-6">
+    <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-8 p-4 sm:p-6 lg:p-8">
       <DashboardHeading />
       <Suspense fallback={<DashboardListSkeleton />}>
         <DashboardPrivateItemsSection privateItemsPromise={privateItemsPromise} />

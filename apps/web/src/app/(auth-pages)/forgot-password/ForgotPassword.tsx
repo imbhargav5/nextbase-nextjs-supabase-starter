@@ -1,13 +1,15 @@
 'use client';
 
+import { KeyRound } from 'lucide-react';
 import { useAction } from 'next-safe-action/hooks';
+import Link from 'next/link';
 import { useRef, useState, type JSX } from 'react';
 import { toast } from 'sonner';
 
+import { AuthCard } from '@/components/Auth/AuthCard';
 import { Email } from '@/components/Auth/Email';
 import { EmailConfirmationPendingCard } from '@/components/Auth/EmailConfirmationPendingCard';
-import { T } from '@/components/ui/Typography';
-import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import { resetPasswordAction } from '@/data/auth/auth';
 
 export function ForgotPassword(): JSX.Element {
@@ -19,49 +21,45 @@ export function ForgotPassword(): JSX.Element {
       toastRef.current = toast.loading('Sending password reset link...');
     },
     onSuccess: () => {
-      toast.success('Password reset link sent!', {
-        id: toastRef.current,
-      });
+      toast.success('Password reset link sent', { id: toastRef.current });
       toastRef.current = undefined;
-      setSuccessMessage('A password reset link has been sent to your email!');
+      setSuccessMessage('A password reset link has been sent to your email.');
     },
     onError: ({ error }) => {
-      const errorMessage =
-        error.serverError ?? 'Failed to send password reset link';
-      toast.error(errorMessage, {
+      toast.error(error.serverError ?? 'Failed to send password reset link', {
         id: toastRef.current,
       });
       toastRef.current = undefined;
     },
   });
 
-  return (
-    <>
-      {successMessage ? (
-        <EmailConfirmationPendingCard
-          message={successMessage}
-          heading="Reset password link sent"
-          type="reset-password"
-          resetSuccessMessage={setSuccessMessage}
-        />
-      ) : (
-        <Card className="container h-full grid items-center text-left max-w-lg mx-auto overflow-auto">
-          <div className="space-y-4">
-            <T.H4>Forgot Password</T.H4>
-            <T.P className="text-muted-foreground">
-              Enter your email to receive a Magic Link to reset your password.
-            </T.P>
+  if (successMessage) {
+    return (
+      <EmailConfirmationPendingCard
+        message={successMessage}
+        heading="Reset link sent"
+        type="reset-password"
+        resetSuccessMessage={setSuccessMessage}
+      />
+    );
+  }
 
-            <Email
-              onSubmit={(email) => {
-                execute({ email });
-              }}
-              isLoading={status === 'executing'}
-              view="forgot-password"
-            />
-          </div>
-        </Card>
-      )}
-    </>
+  return (
+    <AuthCard
+      title="Forgot your password?"
+      description="Enter your email and we will send you a secure password reset link."
+      icon={<KeyRound aria-hidden="true" />}
+      footer={
+        <Button variant="link" className="mx-auto h-auto" asChild>
+          <Link href="/login">Back to sign in</Link>
+        </Button>
+      }
+    >
+      <Email
+        onSubmit={(email) => execute({ email })}
+        isLoading={status === 'executing'}
+        view="forgot-password"
+      />
+    </AuthCard>
   );
 }

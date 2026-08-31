@@ -39,12 +39,13 @@ const features: HomeFeature[] = [
 
 export default function HomePage() {
   return (
-    <div className="flex flex-col">
+    <div>
       <HomeHero />
       <Separator />
       <HomeFeatures features={features} />
-      <Separator />
-      <HomeCTA />
+      <div className="border-t bg-muted/10">
+        <HomeCTA />
+      </div>
     </div>
   );
 }

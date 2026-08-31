@@ -1,3 +1,6 @@
+import type { LucideIcon } from 'lucide-react';
+import { Database, LockKeyhole, Palette, Rocket, ShieldCheck, Zap } from 'lucide-react';
+
 import {
   Card,
   CardContent,
@@ -5,129 +8,82 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { T } from '@/components/ui/Typography';
-import {
-  Database,
-  Lock,
-  Palette,
-  Rocket,
-  Shield,
-  Zap,
-} from 'lucide-react';
+
+interface Feature {
+  icon: LucideIcon;
+  title: string;
+  description: string;
+}
+
+const features: Feature[] = [
+  {
+    icon: Rocket,
+    title: 'Next.js 16',
+    description:
+      'App Router, Server Components, Server Actions, and modern caching patterns in a production-ready structure.',
+  },
+  {
+    icon: Database,
+    title: 'Supabase',
+    description:
+      'PostgreSQL, authentication, generated types, migrations, and local development are already connected.',
+  },
+  {
+    icon: ShieldCheck,
+    title: 'Type-safe by default',
+    description:
+      'TypeScript, Zod, and generated database types keep contracts clear from forms through data access.',
+  },
+  {
+    icon: Palette,
+    title: 'shadcn/ui system',
+    description:
+      'Accessible components, semantic tokens, responsive layouts, and dark mode form one coherent interface.',
+  },
+  {
+    icon: LockKeyhole,
+    title: 'Complete authentication',
+    description:
+      'Password, magic link, OAuth-ready providers, recovery flows, and protected routes are included.',
+  },
+  {
+    icon: Zap,
+    title: 'Developer experience',
+    description:
+      'Fast local setup, Turborepo tasks, linting, testing, and clear package boundaries keep iteration quick.',
+  },
+];
 
 export function AboutFeaturesGrid() {
   return (
-    <div className="space-y-6">
-      <div className="text-center space-y-2">
-        <T.H2 className="text-3xl">Built for Developers</T.H2>
-        <T.P className="text-muted-foreground">
-          Everything you need to build production-ready applications
-        </T.P>
+    <section className="space-y-10">
+      <div className="mx-auto max-w-2xl text-center">
+        <p className="text-sm font-medium text-muted-foreground">The foundation</p>
+        <h2 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">
+          Built for product teams and independent developers
+        </h2>
+        <p className="mt-4 leading-7 text-muted-foreground">
+          The stack stays intentionally familiar, composable, and easy to own.
+        </p>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        <Card>
-          <CardHeader>
-            <div className="flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
-                <Rocket className="h-6 w-6 text-primary" />
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {features.map((feature) => (
+          <Card key={feature.title} className="border-border/70 shadow-none">
+            <CardHeader className="space-y-4">
+              <div className="flex size-10 items-center justify-center rounded-lg border bg-muted/50">
+                <feature.icon className="size-5" aria-hidden="true" />
               </div>
-              <CardTitle>Next.js 14</CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <CardDescription>
-              Built on the latest Next.js with App Router, Server Components,
-              and Server Actions for optimal performance.
-            </CardDescription>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <div className="flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-chart-2/10">
-                <Database className="h-6 w-6 text-chart-2" />
-              </div>
-              <CardTitle>Supabase</CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <CardDescription>
-              PostgreSQL database, authentication, real-time subscriptions,
-              and storage - all in one platform.
-            </CardDescription>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <div className="flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
-                <Shield className="h-6 w-6 text-primary" />
-              </div>
-              <CardTitle>Type-Safe</CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <CardDescription>
-              Full TypeScript support with type-safe database queries and API
-              routes for confidence in your code.
-            </CardDescription>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <div className="flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-chart-4/10">
-                <Palette className="h-6 w-6 text-chart-4" />
-              </div>
-              <CardTitle>shadcn/ui</CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <CardDescription>
-              Beautiful, accessible components built with Radix UI and
-              Tailwind CSS. Customizable and production-ready.
-            </CardDescription>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <div className="flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-chart-1/10">
-                <Lock className="h-6 w-6 text-chart-1" />
-              </div>
-              <CardTitle>Authentication</CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <CardDescription>
-              Complete auth flows including magic links, OAuth providers,
-              password reset, and protected routes.
-            </CardDescription>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <div className="flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-chart-5/10">
-                <Zap className="h-6 w-6 text-chart-5" />
-              </div>
-              <CardTitle>Developer UX</CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <CardDescription>
-              Hot reload, TypeScript, ESLint, Prettier, and more. Optimized
-              for the best developer experience.
-            </CardDescription>
-          </CardContent>
-        </Card>
+              <CardTitle className="text-base">{feature.title}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <CardDescription className="leading-6">
+                {feature.description}
+              </CardDescription>
+            </CardContent>
+          </Card>
+        ))}
       </div>
-    </div>
+    </section>
   );
 }
