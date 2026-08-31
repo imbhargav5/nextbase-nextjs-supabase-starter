@@ -1,7 +1,16 @@
-import { T } from '@/components/ui/Typography';
+import { CalendarDays, Eye, LockKeyhole, MoreHorizontal, Plus } from 'lucide-react';
+import Link from 'next/link';
+
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import {
   Empty,
   EmptyContent,
@@ -11,6 +20,15 @@ import {
   EmptyTitle,
 } from '@/components/ui/empty';
 import {
+  Item,
+  ItemActions,
+  ItemContent,
+  ItemDescription,
+  ItemGroup,
+  ItemMedia,
+  ItemTitle,
+} from '@/components/ui/item';
+import {
   Table,
   TableBody,
   TableCell,
@@ -18,115 +36,131 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { Table as TableType } from '@/types';
-import {
-  Clock,
-  ExternalLink,
-  Lock,
-  PlusCircle,
-  ShieldCheck,
-} from 'lucide-react';
-import Link from 'next/link';
+import type { Table as TableType } from '@/types';
 
 interface PrivateItemsListProps {
   privateItems: TableType<'private_items'>[];
-  showActions?: boolean;
 }
 
-export const PrivateItemsList = ({
-  privateItems,
-  showActions = true,
-}: PrivateItemsListProps) => {
-  return (
-    <div className="space-y-8">
-      {showActions && (
-        <div className="flex justify-between items-center">
-          <div className="space-y-1">
-            <div className="flex items-center gap-2">
-              <T.H2>Private Items</T.H2>
-              <Badge variant="outline" className="h-6 flex items-center gap-1">
-                <Lock className="h-3 w-3" /> Secure
-              </Badge>
-            </div>
-            <T.Subtle>These items are only visible to logged in users</T.Subtle>
-          </div>
-          <Link href="/dashboard/new">
-            <Button className="flex items-center gap-2">
-              <PlusCircle className="h-4 w-4" /> New Private Item
-            </Button>
-          </Link>
-        </div>
-      )}
+function formatCreatedAt(createdAt: string | null) {
+  if (!createdAt) return 'Date unavailable';
+  return new Intl.DateTimeFormat('en', {
+    dateStyle: 'medium',
+  }).format(new Date(createdAt));
+}
 
-      {privateItems.length ? (
-        <Card className="shadow-sm border-muted/40">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-[300px]">Name</TableHead>
-                <TableHead className="hidden md:table-cell">
-                  Description
-                </TableHead>
-                <TableHead className="text-right">Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {privateItems.map((item) => (
-                <TableRow key={item.id}>
-                  <TableCell className="font-medium">
-                    {item.name}
-                    {item.created_at && (
-                      <div className="flex items-center gap-1 mt-1 text-muted-foreground text-xs">
-                        <Clock className="h-3 w-3" />
-                        <span>
-                          {new Date(item.created_at).toLocaleDateString()}
-                        </span>
-                      </div>
-                    )}
-                  </TableCell>
-                  <TableCell className="hidden md:table-cell text-muted-foreground">
-                    {item.description.length > 100
-                      ? `${item.description.slice(0, 100)}...`
-                      : item.description}
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <Link href={`/private-item/${item.id}`}>
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        className="flex items-center gap-1"
-                      >
-                        <ExternalLink className="h-3.5 w-3.5" /> View
-                      </Button>
-                    </Link>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </Card>
-      ) : (
-        <Empty className="border">
-          <EmptyHeader>
-            <EmptyMedia variant="icon">
-              <ShieldCheck />
-            </EmptyMedia>
-            <EmptyTitle>No Private Items Available</EmptyTitle>
-            <EmptyDescription>
-              You haven't created any private items yet. Create your first one
-              to get started!
-            </EmptyDescription>
-          </EmptyHeader>
-          <EmptyContent>
-            <Link href="/dashboard/new">
-              <Button className="flex items-center gap-2">
-                <PlusCircle className="h-4 w-4" /> Create Your First Private
-                Item
-              </Button>
-            </Link>
-          </EmptyContent>
-        </Empty>
-      )}
-    </div>
+function ItemMenu({ itemId, itemName }: { itemId: string; itemName: string }) {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" size="icon-sm" aria-label={`Actions for ${itemName}`}>
+          <MoreHorizontal aria-hidden="true" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuLabel>Item actions</DropdownMenuLabel>
+        <DropdownMenuItem asChild>
+          <Link href={`/private-item/${itemId}`}>
+            <Eye aria-hidden="true" />
+            View details
+          </Link>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
-};
+}
+
+export function PrivateItemsList({ privateItems }: PrivateItemsListProps) {
+  if (!privateItems.length) {
+    return (
+      <Empty className="min-h-72 border bg-background">
+        <EmptyHeader>
+          <EmptyMedia variant="icon">
+            <LockKeyhole aria-hidden="true" />
+          </EmptyMedia>
+          <EmptyTitle>No private items yet</EmptyTitle>
+          <EmptyDescription>
+            Create your first private item to see the complete protected-data flow.
+          </EmptyDescription>
+        </EmptyHeader>
+        <EmptyContent>
+          <Button asChild>
+            <Link href="/dashboard/new">
+              <Plus aria-hidden="true" />
+              Create private item
+            </Link>
+          </Button>
+        </EmptyContent>
+      </Empty>
+    );
+  }
+
+  return (
+    <>
+      <Card className="hidden overflow-hidden border-border/70 shadow-none md:block">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-[32%]">Name</TableHead>
+              <TableHead>Description</TableHead>
+              <TableHead className="w-40">Created</TableHead>
+              <TableHead className="w-14">
+                <span className="sr-only">Actions</span>
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {privateItems.map((item) => (
+              <TableRow key={item.id}>
+                <TableCell>
+                  <Link
+                    href={`/private-item/${item.id}`}
+                    className="font-medium underline-offset-4 hover:underline"
+                  >
+                    {item.name}
+                  </Link>
+                </TableCell>
+                <TableCell className="max-w-md text-muted-foreground">
+                  <span className="line-clamp-2">{item.description}</span>
+                </TableCell>
+                <TableCell>
+                  <Badge variant="outline" className="font-normal">
+                    {formatCreatedAt(item.created_at)}
+                  </Badge>
+                </TableCell>
+                <TableCell className="text-right">
+                  <ItemMenu itemId={item.id} itemName={item.name} />
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </Card>
+
+      <Card className="border-border/70 p-2 shadow-none md:hidden">
+        <ItemGroup className="gap-1">
+          {privateItems.map((item) => (
+            <Item key={item.id} variant="default" size="sm">
+              <ItemMedia variant="icon">
+                <LockKeyhole aria-hidden="true" />
+              </ItemMedia>
+              <ItemContent>
+                <ItemTitle>
+                  <Link href={`/private-item/${item.id}`}>{item.name}</Link>
+                </ItemTitle>
+                <ItemDescription>{item.description}</ItemDescription>
+                <span className="flex items-center gap-1 text-xs text-muted-foreground">
+                  <CalendarDays className="size-3" aria-hidden="true" />
+                  {formatCreatedAt(item.created_at)}
+                </span>
+              </ItemContent>
+              <ItemActions>
+                <ItemMenu itemId={item.id} itemName={item.name} />
+              </ItemActions>
+            </Item>
+          ))}
+        </ItemGroup>
+      </Card>
+    </>
+  );
+}

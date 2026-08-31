@@ -1,15 +1,17 @@
+'use client';
+
+import { LockKeyhole, Mail } from 'lucide-react';
+import type { ComponentProps } from 'react';
+import { useState } from 'react';
+
 import { Button } from '@/components/ui/button';
+import { Field, FieldGroup, FieldLabel } from '@/components/ui/field';
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupInput,
 } from '@/components/ui/input-group';
-import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
-import { Lock, Mail } from 'lucide-react';
-import Link from 'next/link';
-import { useState } from 'react';
-import type { ComponentProps } from 'react';
 import { cn } from '@/lib/utils';
 
 export const EmailAndPassword = ({
@@ -23,122 +25,78 @@ export const EmailAndPassword = ({
   view: 'sign-in' | 'sign-up';
   isLoading: boolean;
 } & Omit<ComponentProps<typeof Button>, 'children' | 'type'>) => {
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   return (
     <form
       onSubmit={(event) => {
         event.preventDefault();
-        onSubmit({
-          email,
-          password,
-        });
+        onSubmit({ email, password });
       }}
       data-testid="password-form"
     >
-      <div className="space-y-4">
-        <div>
-          <Label htmlFor={`${view}-email`} className="text-foreground">
-            Email address
-          </Label>
-          <div className="mt-1">
-            <InputGroup>
-              <InputGroupAddon>
-                <Mail className="h-4 w-4" />
-              </InputGroupAddon>
-              <InputGroupInput
-                id={`${view}-email`}
-                name="email"
-                type="email"
-                disabled={isLoading}
-                value={email}
-                data-strategy="email-password"
-                placeholder="email@example.com"
-                onChange={(event) => setEmail(event.target.value)}
-                autoComplete={'email'}
-                required
-              />
-            </InputGroup>
-          </div>
-        </div>
-        <div className="space-y-1">
-          <Label htmlFor={`${view}-password`} className="text-foreground">
-            Password
-          </Label>
-          <div className="mt-1">
-            <InputGroup>
-              <InputGroupAddon>
-                <Lock className="h-4 w-4" />
-              </InputGroupAddon>
-              <InputGroupInput
-                id={`${view}-password`}
-                name="password"
-                type="password"
-                disabled={isLoading}
-                value={password}
-                placeholder="Type your password"
-                onChange={(event) => setPassword(event.target.value)}
-                autoComplete={
-                  view === 'sign-in' ? 'current-password' : 'new-password'
-                }
-                required
-              />
-            </InputGroup>
-          </div>
-        </div>
-
-        <div className="flex items-center justify-between">
+      <FieldGroup className="gap-5">
+        <Field>
+          <FieldLabel htmlFor={`${view}-email`}>Email address</FieldLabel>
+          <InputGroup>
+            <InputGroupAddon>
+              <Mail aria-hidden="true" />
+            </InputGroupAddon>
+            <InputGroupInput
+              id={`${view}-email`}
+              name="email"
+              type="email"
+              disabled={isLoading}
+              value={email}
+              data-strategy="email-password"
+              placeholder="email@example.com"
+              onChange={(event) => setEmail(event.target.value)}
+              autoComplete="email"
+              required
+            />
+          </InputGroup>
+        </Field>
+        <Field>
+          <FieldLabel htmlFor={`${view}-password`}>Password</FieldLabel>
+          <InputGroup>
+            <InputGroupAddon>
+              <LockKeyhole aria-hidden="true" />
+            </InputGroupAddon>
+            <InputGroupInput
+              id={`${view}-password`}
+              name="password"
+              type="password"
+              disabled={isLoading}
+              value={password}
+              placeholder={view === 'sign-in' ? 'Enter your password' : 'Create a password'}
+              onChange={(event) => setPassword(event.target.value)}
+              autoComplete={view === 'sign-in' ? 'current-password' : 'new-password'}
+              required
+            />
+          </InputGroup>
           {view === 'sign-in' ? (
-            <div className="text-sm">
-              <Link
-                href="/forgot-password"
-                className="font-medium text-muted-foreground dark:hover:text-gray-600 hover:text-foreground"
-              >
-                Forgot your password?
-              </Link>
+            <div className="flex justify-end">
+              <Button variant="link" className="h-auto px-0 text-xs" asChild>
+                <a href="/forgot-password">Forgot password?</a>
+              </Button>
             </div>
           ) : null}
-        </div>
-        <div className="space-y-2">
-          <Button
-            {...buttonProps}
-            disabled={isLoading || buttonProps.disabled}
-            type="submit"
-            className={cn('w-full', className)}
-          >
-            {isLoading ? (
-              <>
-                <Spinner className="h-4 w-4 mr-2" />
-                <span>Loading...</span>
-              </>
-            ) : (
-              <span>{view === 'sign-in' ? 'Login' : 'Sign up'}</span>
-            )}
-          </Button>
-          <div className="w-full text-center">
-            {view === 'sign-in' ? (
-              <div className="text-sm">
-                <Link
-                  href="/sign-up"
-                  className="font-medium text-muted-foreground hover:text-foreground"
-                >
-                  Don't have an account? Sign up
-                </Link>
-              </div>
-            ) : (
-              <div className="text-sm">
-                <Link
-                  href="/login"
-                  className="font-medium text-muted-foreground hover:text-foreground"
-                >
-                  Already have an account? Log in
-                </Link>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
+        </Field>
+        <Button
+          {...buttonProps}
+          disabled={isLoading || buttonProps.disabled}
+          type="submit"
+          className={cn('w-full', className)}
+        >
+          {isLoading ? <Spinner aria-hidden="true" /> : null}
+          {isLoading
+            ? 'Loading...'
+            : view === 'sign-in'
+              ? 'Sign in'
+              : 'Create account'}
+        </Button>
+      </FieldGroup>
     </form>
   );
 };

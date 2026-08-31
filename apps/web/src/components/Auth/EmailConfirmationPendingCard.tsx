@@ -1,19 +1,13 @@
 'use client';
-import { ArrowLeftIcon, Fingerprint, MailIcon } from 'lucide-react';
 
+import { ArrowLeft, Fingerprint, MailCheck } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import type React from 'react';
 
-import { useRouter } from 'next/navigation';
-import { Button } from '../ui/button';
-import {
-  Card,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '../ui/card';
+import { AuthCard } from '@/components/Auth/AuthCard';
+import { Button } from '@/components/ui/button';
 
-interface IConfirmationPendingCardProps {
+interface ConfirmationPendingCardProps {
   message: string;
   heading: string;
   type: 'login' | 'sign-up' | 'reset-password';
@@ -27,51 +21,44 @@ export function EmailConfirmationPendingCard({
   type,
   resetSuccessMessage,
   resendEmail,
-}: IConfirmationPendingCardProps) {
+}: ConfirmationPendingCardProps) {
   const router = useRouter();
+  const destination = type === 'sign-up' ? '/sign-up' : '/login';
+
   return (
-    <div>
-      <Card className="w-full md:min-w-[440px] mx-auto mt-10 items-center">
-        <CardHeader>
-          {type === 'reset-password' ? (
-            <Fingerprint className="size-10 mx-auto mb-4" />
-          ) : (
-            <MailIcon className="size-10 mx-auto mb-4" />
-          )}
-          <CardTitle className="text-center">{heading}</CardTitle>
-          <CardDescription className="text-center">{message}</CardDescription>
-        </CardHeader>
-        <CardFooter className="flex justify-center">
+    <AuthCard
+      title={heading}
+      description={message}
+      icon={
+        type === 'reset-password' ? (
+          <Fingerprint aria-hidden="true" />
+        ) : (
+          <MailCheck aria-hidden="true" />
+        )
+      }
+      footer={
+        <div className="flex w-full flex-col gap-2">
           <Button
-            variant="secondary"
+            variant="outline"
             onClick={() => {
               resetSuccessMessage(null);
-              router.push(
-                type === 'login'
-                  ? '/login'
-                  : type === 'sign-up'
-                  ? '/sign-up'
-                  : '/login'
-              );
+              router.push(destination);
             }}
           >
-            <ArrowLeftIcon className="w-4 h-4 mr-2" />
+            <ArrowLeft aria-hidden="true" />
             {type === 'sign-up' ? 'Back to sign up' : 'Back to login'}
           </Button>
-        </CardFooter>
-      </Card>
-      {type === 'sign-up' && resendEmail && (
-        <p className="text-center mt-4">
-          Didnt receive the email?{' '}
-          <Button
-            className="font-bold px-0"
-            variant="link"
-            onClick={resendEmail}
-          >
-            Click to resend
-          </Button>
-        </p>
-      )}
-    </div>
+          {type === 'sign-up' && resendEmail ? (
+            <Button variant="link" onClick={resendEmail}>
+              Resend confirmation email
+            </Button>
+          ) : null}
+        </div>
+      }
+    >
+      <div className="rounded-lg border bg-muted/30 p-4 text-sm leading-6 text-muted-foreground">
+        You can close this page after following the secure link in your email.
+      </div>
+    </AuthCard>
   );
 }

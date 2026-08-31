@@ -1,6 +1,6 @@
 'use client';
 
-import { AlertTriangle, Trash } from 'lucide-react';
+import { AlertTriangle, Trash2 } from 'lucide-react';
 import { useAction } from 'next-safe-action/hooks';
 import { useRouter } from 'next/navigation';
 import { useRef, useState, type JSX } from 'react';
@@ -15,18 +15,14 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
+  AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import { deletePrivateItemAction } from '@/data/user/privateItems';
 
-type Props = {
-  itemId: string;
-};
-
-export const ConfirmDeleteItemDialog = ({ itemId }: Props): JSX.Element => {
-  const [_open, setOpen] = useState<boolean>(false);
-  const [showAlert, setShowAlert] = useState<boolean>(false);
+export function ConfirmDeleteItemDialog({ itemId }: { itemId: string }): JSX.Element {
+  const [open, setOpen] = useState(false);
   const toastRef = useRef<string | number | undefined>(undefined);
   const router = useRouter();
 
@@ -37,63 +33,54 @@ export const ConfirmDeleteItemDialog = ({ itemId }: Props): JSX.Element => {
     onSuccess: () => {
       toast.success('Item deleted', { id: toastRef.current });
       toastRef.current = undefined;
-      router.refresh();
-      router.push('/private-items');
       setOpen(false);
+      router.push('/private-items');
+      router.refresh();
     },
     onError: ({ error }) => {
-      const errorMessage = error.serverError ?? 'Failed to delete item';
-      toast.error(errorMessage, { id: toastRef.current });
+      toast.error(error.serverError ?? 'Failed to delete item', {
+        id: toastRef.current,
+      });
       toastRef.current = undefined;
     },
   });
 
-  const handleDelete = () => {
-    execute({ id: itemId });
-  };
-
   return (
-    <>
-      <Button
-        size="sm"
-        className="flex items-center gap-2"
-        onClick={() => setShowAlert(true)}
-      >
-        <Trash className="h-4 w-4" /> Delete Item
-      </Button>
-
-      <AlertDialog open={showAlert} onOpenChange={setShowAlert}>
-        <AlertDialogContent className="sm:max-w-[425px]">
-          <AlertDialogHeader>
-            <AlertDialogTitle className="flex items-center gap-2">
-              <AlertTriangle className="h-5 w-5 text-destructive" />
-              Confirm Deletion
-            </AlertDialogTitle>
-            <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete the
-              item and remove it from our servers.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel disabled={status === 'executing'}>
-              Cancel
-            </AlertDialogCancel>
-            <AlertDialogAction
-              onClick={handleDelete}
-              disabled={status === 'executing'}
-            >
-              {status === 'executing' ? (
-                <>
-                  <Spinner className="h-4 w-4" />
-                  <span>Deleting...</span>
-                </>
-              ) : (
-                'Delete'
-              )}
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
-    </>
+    <AlertDialog open={open} onOpenChange={setOpen}>
+      <AlertDialogTrigger asChild>
+        <Button variant="destructive">
+          <Trash2 aria-hidden="true" />
+          Delete item
+        </Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle className="flex items-center gap-2">
+            <AlertTriangle className="size-5 text-destructive" aria-hidden="true" />
+            Delete this private item?
+          </AlertDialogTitle>
+          <AlertDialogDescription>
+            This action cannot be undone. The record will be permanently removed
+            from your workspace.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel disabled={status === 'executing'}>
+            Cancel
+          </AlertDialogCancel>
+          <AlertDialogAction
+            className={buttonVariants({ variant: 'destructive' })}
+            disabled={status === 'executing'}
+            onClick={(event) => {
+              event.preventDefault();
+              execute({ id: itemId });
+            }}
+          >
+            {status === 'executing' ? <Spinner aria-hidden="true" /> : null}
+            {status === 'executing' ? 'Deleting...' : 'Delete permanently'}
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   );
-};
+}
