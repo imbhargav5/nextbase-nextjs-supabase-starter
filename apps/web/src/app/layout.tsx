@@ -24,8 +24,12 @@ const robotoMono = localFont({
 });
 
 export const metadata = {
-  title: 'Nextbase Open source starter',
-  description: 'Built with Next.js, Supabase, and Tailwind CSS',
+  title: {
+    default: 'Nextbase',
+    template: '%s · Nextbase',
+  },
+  description:
+    'An open-source Next.js and Supabase starter for shipping secure products faster.',
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {

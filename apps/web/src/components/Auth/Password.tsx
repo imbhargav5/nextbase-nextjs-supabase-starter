@@ -1,17 +1,24 @@
 'use client';
+
+import { LockKeyhole } from 'lucide-react';
+import type { CSSProperties } from 'react';
+import { useState } from 'react';
+
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { Field, FieldGroup, FieldLabel } from '@/components/ui/field';
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from '@/components/ui/input-group';
 import { Spinner } from '@/components/ui/spinner';
-import { T } from '@/components/ui/Typography';
-import { Label } from '@/components/ui/label';
-import { CSSProperties, useState } from 'react';
 
 export const Password = ({
   onSubmit,
   isLoading,
   successMessage,
   label = 'Password',
-  buttonLabel = 'Update',
+  buttonLabel = 'Update password',
   className,
   style,
 }: {
@@ -23,7 +30,7 @@ export const Password = ({
   className?: string;
   style?: CSSProperties;
 }) => {
-  const [password, setPassword] = useState<string>('');
+  const [password, setPassword] = useState('');
 
   return (
     <form
@@ -34,44 +41,36 @@ export const Password = ({
       className={className}
       style={style}
     >
-      <div className="space-y-4">
-        <div className="space-y-2">
-          <Label htmlFor="password" className="text-muted-foreground">
-            {label}
-          </Label>
-          <div>
-            <Input
+      <FieldGroup className="gap-5">
+        <Field>
+          <FieldLabel htmlFor="password">{label}</FieldLabel>
+          <InputGroup>
+            <InputGroupAddon>
+              <LockKeyhole aria-hidden="true" />
+            </InputGroupAddon>
+            <InputGroupInput
               id="password"
               name="password"
               type="password"
               value={password}
               disabled={isLoading}
               onChange={(event) => setPassword(event.target.value)}
-              autoComplete="current-password"
+              autoComplete="new-password"
+              placeholder="Create a secure password"
               required
             />
-          </div>
-        </div>
-        <div>
-          <Button disabled={isLoading} type="submit" className="w-full">
-            {isLoading ? (
-              <>
-                <Spinner className="h-4 w-4 mr-2" />
-                <span>Loading...</span>
-              </>
-            ) : (
-              buttonLabel
-            )}
-          </Button>
-        </div>
-        <div>
-          {successMessage ? (
-            <T.P className="text-sm text-green-500 dark:text-green-400 text-center">
-              {successMessage}
-            </T.P>
-          ) : null}
-        </div>
-      </div>
+          </InputGroup>
+        </Field>
+        <Button disabled={isLoading} type="submit" className="w-full">
+          {isLoading ? <Spinner aria-hidden="true" /> : null}
+          {isLoading ? 'Updating...' : buttonLabel}
+        </Button>
+        {successMessage ? (
+          <p className="text-center text-sm text-muted-foreground" role="status">
+            {successMessage}
+          </p>
+        ) : null}
+      </FieldGroup>
     </form>
   );
 };

@@ -4,23 +4,23 @@ import { AboutHero } from './about-hero';
 import { AboutTechStack } from './about-tech-stack';
 
 const technologies = [
-  'Next.js 14',
+  'Next.js 16',
   'TypeScript',
   'Supabase',
-  'Tailwind CSS',
+  'Tailwind CSS 4',
   'shadcn/ui',
   'React Hook Form',
   'Zod',
-  'Framer Motion',
+  'Turborepo',
 ];
 
 export default function About() {
   return (
-    <div className="container mx-auto py-12 space-y-12 max-w-6xl">
+    <div className="mx-auto max-w-7xl space-y-20 px-4 py-10 sm:px-6 sm:py-16 lg:px-8">
       <AboutHero />
       <AboutFeaturesGrid />
-      <AboutCTA />
       <AboutTechStack technologies={technologies} />
+      <AboutCTA />
     </div>
   );
 }

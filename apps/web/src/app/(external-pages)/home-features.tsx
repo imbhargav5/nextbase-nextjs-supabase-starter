@@ -13,25 +13,31 @@ interface HomeFeaturesProps {
 
 export function HomeFeatures({ features }: HomeFeaturesProps) {
   return (
-    <section className="py-20 px-4">
-      <div className="max-w-5xl mx-auto">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold tracking-tight">Everything you need</h2>
-          <p className="text-muted-foreground mt-2">
-            Production-ready features included out of the box
+    <section className="px-4 py-20 sm:px-6 sm:py-24 lg:px-8">
+      <div className="mx-auto max-w-7xl">
+        <div className="mx-auto mb-12 max-w-2xl text-center">
+          <p className="text-sm font-medium text-muted-foreground">Built to ship</p>
+          <h2 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">
+            Everything you need, already connected
+          </h2>
+          <p className="mt-4 text-base leading-7 text-muted-foreground">
+            Spend your time on the product instead of rebuilding the same
+            foundation for every project.
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {features.map((feature) => (
-            <Card key={feature.title} className="border bg-card">
-              <CardHeader className="pb-2">
-                <div className="flex items-center gap-2">
-                  <feature.icon className="h-5 w-5 text-primary" />
-                  <CardTitle className="text-base">{feature.title}</CardTitle>
+            <Card key={feature.title} className="border-border/70 shadow-none">
+              <CardHeader className="space-y-4">
+                <div className="flex size-10 items-center justify-center rounded-lg border bg-muted/50">
+                  <feature.icon className="size-5" aria-hidden="true" />
                 </div>
+                <CardTitle className="text-base">{feature.title}</CardTitle>
               </CardHeader>
-              <CardContent>
-                <CardDescription>{feature.description}</CardDescription>
+              <CardContent className="pt-0">
+                <CardDescription className="leading-6">
+                  {feature.description}
+                </CardDescription>
               </CardContent>
             </Card>
           ))}
