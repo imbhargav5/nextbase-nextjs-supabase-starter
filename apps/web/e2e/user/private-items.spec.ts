@@ -23,7 +23,9 @@ test.describe('Private items management', () => {
     await page.getByRole('button', { name: /create private item/i }).click();
 
     await expect(page).toHaveURL(/private-item\//, { timeout: 15000 });
-    await expect(page.getByText(itemName)).toBeVisible();
+    await expect(
+      page.getByRole('heading', { name: itemName, level: 1 })
+    ).toBeVisible();
     await expect(
       page.locator('p', { hasText: itemDescription })
     ).toBeVisible();
@@ -32,6 +34,8 @@ test.describe('Private items management', () => {
     await expect(
       page.getByRole('heading', { name: 'Private Items', level: 1 })
     ).toBeVisible();
-    await expect(page.getByText(itemName)).toBeVisible();
+    await expect(
+      page.getByRole('table').getByRole('link', { name: itemName })
+    ).toBeVisible();
   });
 });

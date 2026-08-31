@@ -1,47 +1,36 @@
 'use client';
+
+import { useAction } from 'next-safe-action/hooks';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useRef, useState } from 'react';
+import { toast } from 'sonner';
+
+import { AuthCard } from '@/components/Auth/AuthCard';
 import { Email } from '@/components/Auth/Email';
 import { EmailAndPassword } from '@/components/Auth/EmailAndPassword';
 import { EmailConfirmationPendingCard } from '@/components/Auth/EmailConfirmationPendingCard';
 import { RedirectingPleaseWaitCard } from '@/components/Auth/RedirectingPleaseWaitCard';
 import { RenderProviders } from '@/components/Auth/RenderProviders';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
   signInWithMagicLinkAction,
   signInWithPasswordAction,
   signInWithProviderAction,
 } from '@/data/auth/auth';
-import { useAction } from 'next-safe-action/hooks';
-import { useRouter } from 'next/navigation';
-import { useRef, useState } from 'react';
-import { toast } from 'sonner';
-import ShinyText from '@/components/ShinyText';
+import type { AuthProvider } from '@/types';
 
-export function Login({
-  next,
-}: {
-  next?: string;
-}) {
+export function Login({ next }: { next?: string }) {
   const [emailSentSuccessMessage, setEmailSentSuccessMessage] = useState<
     string | null
   >(null);
   const [redirectInProgress, setRedirectInProgress] = useState(false);
   const toastRef = useRef<string | number | undefined>(undefined);
-
   const router = useRouter();
 
   function redirectToDashboard() {
-    if (next) {
-      router.push(`/auth/callback?next=${next}`);
-    } else {
-      router.push('/dashboard');
-    }
+    router.push(next ? `/auth/callback?next=${next}` : '/dashboard');
   }
 
   const { execute: executeMagicLink, status: magicLinkStatus } = useAction(
@@ -55,14 +44,10 @@ export function Login({
           id: toastRef.current,
         });
         toastRef.current = undefined;
-        setEmailSentSuccessMessage('A magic link has been sent to your email!');
+        setEmailSentSuccessMessage('A magic link has been sent to your email.');
       },
-      onError: (error) => {
-        const errorMessage =
-          error instanceof Error
-            ? error.message
-            : `Send magic link failed ${String(error)}`;
-        toast.error(errorMessage, {
+      onError: ({ error }) => {
+        toast.error(error.serverError ?? 'Failed to send magic link', {
           id: toastRef.current,
         });
         toastRef.current = undefined;
@@ -74,22 +59,16 @@ export function Login({
     signInWithPasswordAction,
     {
       onExecute: () => {
-        toastRef.current = toast.loading('Logging in...');
+        toastRef.current = toast.loading('Signing in...');
       },
       onSuccess: () => {
-        toast.success('Logged in!', {
-          id: toastRef.current,
-        });
+        toast.success('Signed in', { id: toastRef.current });
         toastRef.current = undefined;
         redirectToDashboard();
         setRedirectInProgress(true);
       },
-      onError: (error) => {
-        const errorMessage =
-          error instanceof Error
-            ? error.message
-            : `Sign in account failed ${String(error)}`;
-        toast.error(errorMessage, {
+      onError: ({ error }) => {
+        toast.error(error.serverError ?? 'Failed to sign in', {
           id: toastRef.current,
         });
         toastRef.current = undefined;
@@ -101,132 +80,83 @@ export function Login({
     signInWithProviderAction,
     {
       onExecute: () => {
-        toastRef.current = toast.loading('Requesting login...');
+        toastRef.current = toast.loading('Requesting sign in...');
       },
       onSuccess: (payload) => {
-        toast.success('Redirecting...', {
-          id: toastRef.current,
-        });
+        toast.success('Redirecting...', { id: toastRef.current });
         toastRef.current = undefined;
         window.location.href = payload.data?.url || '/';
       },
       onError: () => {
-        toast.error('Failed to login', {
-          id: toastRef.current,
-        });
+        toast.error('Failed to sign in', { id: toastRef.current });
         toastRef.current = undefined;
       },
     }
   );
 
-  return (
-    <div
-      data-success={emailSentSuccessMessage}
-      className="container data-success:flex items-center data-success:justify-center text-left max-w-lg mx-auto overflow-auto data-success:h-full min-h-[470px]"
-    >
-      {emailSentSuccessMessage ? (
-        <EmailConfirmationPendingCard
-          type={'login'}
-          heading={'Confirmation Link Sent'}
-          message={emailSentSuccessMessage}
-          resetSuccessMessage={setEmailSentSuccessMessage}
-        />
-      ) : redirectInProgress ? (
-        <RedirectingPleaseWaitCard
-          message="Please wait while we redirect you to your dashboard."
-          heading="Redirecting to Dashboard"
-        />
-      ) : (
-        <div className="space-y-8 bg-background p-6 rounded-lg shadow-sm dark:border">
-          <Tabs defaultValue="password" className="md:min-w-[400px]">
-            <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="password">Password</TabsTrigger>
-              <TabsTrigger value="magic-link">Magic Link</TabsTrigger>
-              <TabsTrigger value="social-login">Social Login</TabsTrigger>
-            </TabsList>
-            <TabsContent value="password">
-              <Card className="border-none shadow-none">
-                <CardHeader className="py-6 px-0">
-                  <CardTitle>
-                    <ShinyText
-                      text="Login to NextBase"
-                      className="text-xl"
-                      color="var(--foreground)"
-                      shineColor="var(--primary)"
-                    />
-                  </CardTitle>
-                  <CardDescription>
-                    Login with the account you used to signup.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-2 p-0">
-                  <EmailAndPassword
-                    isLoading={passwordStatus === 'executing'}
-                    onSubmit={(data) => {
-                      executePassword({
-                        email: data.email,
-                        password: data.password,
-                      });
-                    }}
-                    view="sign-in"
-                  />
-                </CardContent>
-              </Card>
-            </TabsContent>
+  if (emailSentSuccessMessage) {
+    return (
+      <EmailConfirmationPendingCard
+        type="login"
+        heading="Check your inbox"
+        message={emailSentSuccessMessage}
+        resetSuccessMessage={setEmailSentSuccessMessage}
+      />
+    );
+  }
 
-            <TabsContent value="magic-link">
-              <Card className="border-none shadow-none">
-                <CardHeader className="py-6 px-0">
-                  <CardTitle>
-                    <ShinyText
-                      text="Login to NextBase"
-                      className="text-xl"
-                      color="var(--foreground)"
-                      shineColor="var(--primary)"
-                    />
-                  </CardTitle>
-                  <CardDescription>
-                    Login with magic link we will send to your email.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-2 p-0">
-                  <Email
-                    onSubmit={(email) => executeMagicLink({ email, next })}
-                    isLoading={magicLinkStatus === 'executing'}
-                    view="sign-in"
-                  />
-                </CardContent>
-              </Card>
-            </TabsContent>
-            <TabsContent value="social-login">
-              <Card className="border-none shadow-none">
-                <CardHeader className="py-6 px-0">
-                  <CardTitle>
-                    <ShinyText
-                      text="Login to NextBase"
-                      className="text-xl"
-                      color="var(--foreground)"
-                      shineColor="var(--primary)"
-                    />
-                  </CardTitle>
-                  <CardDescription>
-                    Login with your social account.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-2 p-0">
-                  <RenderProviders
-                    providers={['google', 'github', 'twitter']}
-                    isLoading={providerStatus === 'executing'}
-                    onProviderLoginRequested={(
-                      provider: 'google' | 'github' | 'twitter'
-                    ) => executeProvider({ provider, next })}
-                  />
-                </CardContent>
-              </Card>
-            </TabsContent>
-          </Tabs>
-        </div>
-      )}
-    </div>
+  if (redirectInProgress) {
+    return (
+      <RedirectingPleaseWaitCard
+        message="Please wait while we open your protected workspace."
+        heading="Opening your dashboard"
+      />
+    );
+  }
+
+  return (
+    <AuthCard
+      title="Login to NextBase"
+      description="Choose the sign-in method that works best for you."
+      footer={
+        <p className="w-full text-center text-sm text-muted-foreground">
+          New to Nextbase?{' '}
+          <Button variant="link" className="h-auto px-0" asChild>
+            <Link href="/sign-up">Create an account</Link>
+          </Button>
+        </p>
+      }
+    >
+      <Tabs defaultValue="password">
+        <TabsList className="grid w-full grid-cols-3">
+          <TabsTrigger value="password">Password</TabsTrigger>
+          <TabsTrigger value="magic-link">Magic Link</TabsTrigger>
+          <TabsTrigger value="social-login">Social</TabsTrigger>
+        </TabsList>
+        <TabsContent value="password" className="mt-6">
+          <EmailAndPassword
+            isLoading={passwordStatus === 'executing'}
+            onSubmit={(data) => executePassword(data)}
+            view="sign-in"
+          />
+        </TabsContent>
+        <TabsContent value="magic-link" className="mt-6">
+          <Email
+            onSubmit={(email) => executeMagicLink({ email, next })}
+            isLoading={magicLinkStatus === 'executing'}
+            view="sign-in"
+          />
+        </TabsContent>
+        <TabsContent value="social-login" className="mt-6">
+          <RenderProviders
+            providers={['google', 'github', 'twitter']}
+            isLoading={providerStatus === 'executing'}
+            onProviderLoginRequested={(
+              provider: Extract<AuthProvider, 'google' | 'github' | 'twitter'>
+            ) => executeProvider({ provider, next })}
+          />
+        </TabsContent>
+      </Tabs>
+    </AuthCard>
   );
 }
