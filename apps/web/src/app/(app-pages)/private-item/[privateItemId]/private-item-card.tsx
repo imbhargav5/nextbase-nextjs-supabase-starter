@@ -1,16 +1,25 @@
+import { ArrowLeft, CalendarDays, FileText, LockKeyhole } from 'lucide-react';
+import Link from 'next/link';
+
+import { PageHeader } from '@/components/page-header';
 import { Button } from '@/components/ui/button';
-import { ButtonGroup } from '@/components/ui/button-group';
 import {
   Card,
   CardContent,
+  CardDescription,
   CardFooter,
   CardHeader,
+  CardTitle,
 } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
-import { T } from '@/components/ui/Typography';
+import {
+  Item,
+  ItemContent,
+  ItemDescription,
+  ItemGroup,
+  ItemMedia,
+  ItemTitle,
+} from '@/components/ui/item';
 import type { Table as TableType } from '@/types';
-import { Calendar, Info } from 'lucide-react';
-import Link from 'next/link';
 import { ConfirmDeleteItemDialog } from './ConfirmDeleteItemDialog';
 
 interface PrivateItemCardProps {
@@ -23,44 +32,64 @@ export async function PrivateItemCard({
   itemPromise,
 }: PrivateItemCardProps) {
   const item = await itemPromise;
+  const createdAt = item.created_at
+    ? new Intl.DateTimeFormat('en', { dateStyle: 'long' }).format(
+        new Date(item.created_at)
+      )
+    : 'Date unavailable';
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-8">
+      <PageHeader
+        title={item.name}
+        description="View the information stored in this protected record."
+        badge={
+          <span className="flex items-center gap-1.5">
+            <LockKeyhole className="size-3" aria-hidden="true" />
+            Private
+          </span>
+        }
+      />
 
-
-      <Card className="shadow-md border-t-4 border-t-primary">
-        <CardHeader className="pb-2">
-          <T.H2 className="mb-1">{item.name}</T.H2>
-          <div className="flex items-center gap-1 text-muted-foreground text-sm">
-            <Info className="h-3 w-3" />
-            <span>Private Item</span>
-          </div>
+      <Card className="border-border/70 shadow-none">
+        <CardHeader>
+          <CardTitle className="text-xl">Item information</CardTitle>
+          <CardDescription>
+            This data is available inside the authenticated workspace.
+          </CardDescription>
         </CardHeader>
-        <Separator />
-        <CardContent className="pt-5">
-          <div className="space-y-4">
-            <div>
-              <T.Small className="text-muted-foreground">Description</T.Small>
-              <T.P className="mt-1">{item.description}</T.P>
-            </div>
-
-            {item.created_at && (
-              <div className="flex items-center gap-1 text-muted-foreground text-sm">
-                <Calendar className="h-3 w-3" />
-                <span>
-                  Created on {new Date(item.created_at).toLocaleDateString()}
-                </span>
-              </div>
-            )}
-          </div>
+        <CardContent>
+          <ItemGroup className="gap-3">
+            <Item variant="outline" className="items-start">
+              <ItemMedia variant="icon">
+                <FileText aria-hidden="true" />
+              </ItemMedia>
+              <ItemContent>
+                <ItemTitle>Description</ItemTitle>
+                <ItemDescription className="line-clamp-none text-pretty">
+                  {item.description}
+                </ItemDescription>
+              </ItemContent>
+            </Item>
+            <Item variant="outline">
+              <ItemMedia variant="icon">
+                <CalendarDays aria-hidden="true" />
+              </ItemMedia>
+              <ItemContent>
+                <ItemTitle>Created</ItemTitle>
+                <ItemDescription>{createdAt}</ItemDescription>
+              </ItemContent>
+            </Item>
+          </ItemGroup>
         </CardContent>
-        <CardFooter className="border-t pt-4">
-          <ButtonGroup className="w-full justify-between">
-            <Button variant="outline" asChild>
-              <Link href="/dashboard">Back to Dashboard</Link>
-            </Button>
-            <ConfirmDeleteItemDialog itemId={privateItemId} />
-          </ButtonGroup>
+        <CardFooter className="flex-col-reverse gap-2 border-t bg-muted/20 py-4 sm:flex-row sm:justify-between">
+          <Button variant="outline" asChild>
+            <Link href="/private-items">
+              <ArrowLeft aria-hidden="true" />
+              Back to private items
+            </Link>
+          </Button>
+          <ConfirmDeleteItemDialog itemId={privateItemId} />
         </CardFooter>
       </Card>
     </div>

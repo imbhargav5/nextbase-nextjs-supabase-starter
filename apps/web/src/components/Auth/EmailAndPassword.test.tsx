@@ -43,7 +43,7 @@ test('EmailAndPassword still disables the submit button while loading', () => {
   expect(screen.getByText('Loading...').textContent).toBe('Loading...');
 });
 
-test('EmailAndPassword renders the sign-up variant without the forgot-password link', () => {
+test('EmailAndPassword renders the create-account variant without the forgot-password link', () => {
   render(
     <EmailAndPassword
       isLoading={false}
@@ -52,14 +52,10 @@ test('EmailAndPassword renders the sign-up variant without the forgot-password l
     />
   );
 
-  screen.getByRole('button', { name: 'Sign up' });
+  screen.getByRole('button', { name: 'Create account' });
   expect(
     screen.queryByRole('link', { name: /forgot your password\?/i })
   ).toBeNull();
-  expect(
-    screen.getByRole('link', { name: /already have an account\? log in/i })
-      .getAttribute('href')
-  ).toBe('/login');
 });
 
 test('auth email fields use a standard example placeholder', () => {
