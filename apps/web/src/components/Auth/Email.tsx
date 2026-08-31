@@ -1,10 +1,16 @@
 'use client';
-import { T } from '@/components/ui/Typography';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import Link from 'next/link';
+
+import { Mail } from 'lucide-react';
 import { useMemo, useState } from 'react';
+
+import { Button } from '@/components/ui/button';
+import { Field, FieldGroup, FieldLabel } from '@/components/ui/field';
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from '@/components/ui/input-group';
+import { Spinner } from '@/components/ui/spinner';
 
 export const Email = ({
   onSubmit,
@@ -19,24 +25,24 @@ export const Email = ({
   onSubmit: (email: string) => void;
   view: 'sign-in' | 'sign-up' | 'update-email' | 'forgot-password';
   isLoading: boolean;
-  successMessage?: string | null | undefined;
+  successMessage?: string | null;
   label?: string;
   defaultValue?: string;
   className?: string;
   style?: React.CSSProperties;
 }) => {
-  const [email, setEmail] = useState<string>(defaultValue ?? '');
+  const [email, setEmail] = useState(defaultValue ?? '');
 
   const buttonLabelText = useMemo(() => {
     switch (view) {
       case 'sign-in':
-        return 'Login with Magic Link';
+        return 'Send magic link';
       case 'sign-up':
-        return 'Sign up with Magic Link';
+        return 'Sign up with magic link';
       case 'update-email':
-        return 'Update Email';
+        return 'Update email';
       case 'forgot-password':
-        return 'Reset password';
+        return 'Send reset link';
     }
   }, [view]);
 
@@ -50,50 +56,36 @@ export const Email = ({
       className={className}
       style={style}
     >
-      <div className="space-y-2">
-        <div className="space-y-2">
-          <Label htmlFor={`${view}-email`} className="text-muted-foreground">
-            {label}
-          </Label>
-          <div>
-            <Input
+      <FieldGroup className="gap-5">
+        <Field>
+          <FieldLabel htmlFor={`${view}-email`}>{label}</FieldLabel>
+          <InputGroup>
+            <InputGroupAddon>
+              <Mail aria-hidden="true" />
+            </InputGroupAddon>
+            <InputGroupInput
               id={`${view}-email`}
               name="email"
               type="email"
               value={email}
               disabled={isLoading}
               onChange={(event) => setEmail(event.target.value)}
-              autoComplete={'email'}
+              autoComplete="email"
               placeholder="email@example.com"
               required
             />
-          </div>
-        </div>
-        <div className="flex items-center justify-between">
-          {view === 'forgot-password' ? (
-            <div className="text-sm">
-              <Link
-                href="/login"
-                className="font-medium text-blue-600 dark:text-blue-400 hover:text-blue-500"
-              >
-                Log in instead?
-              </Link>
-            </div>
-          ) : null}
-        </div>
-        <div>
-          <Button className="w-full" type="submit">
-            {buttonLabelText}
-          </Button>
-        </div>
-        <div>
-          {successMessage ? (
-            <T.P className="text-green-500 dark:text-green-400 text-center">
-              {successMessage}
-            </T.P>
-          ) : null}
-        </div>
-      </div>
+          </InputGroup>
+        </Field>
+        <Button className="w-full" type="submit" disabled={isLoading}>
+          {isLoading ? <Spinner aria-hidden="true" /> : null}
+          {isLoading ? 'Sending...' : buttonLabelText}
+        </Button>
+        {successMessage ? (
+          <p className="text-center text-sm text-muted-foreground" role="status">
+            {successMessage}
+          </p>
+        ) : null}
+      </FieldGroup>
     </form>
   );
 };
