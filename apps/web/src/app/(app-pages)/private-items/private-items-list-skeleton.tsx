@@ -3,27 +3,17 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 export function PrivateItemsListSkeleton() {
   return (
-    <div className="space-y-8">
-      <div className="flex justify-between items-center">
-        <div className="space-y-2">
-          <Skeleton className="h-8 w-40" />
-          <Skeleton className="h-4 w-64" />
-        </div>
-        <Skeleton className="h-10 w-32" />
-      </div>
-
-      <Card>
-        <CardHeader>
-          <Skeleton className="h-6 w-full mb-2" />
-        </CardHeader>
-        <CardContent className="space-y-2">
-          {Array(3)
-            .fill(0)
-            .map((_, i) => (
-              <Skeleton key={i} className="h-16 w-full" />
-            ))}
-        </CardContent>
-      </Card>
-    </div>
+    <Card className="shadow-none" aria-label="Loading private items">
+      <CardHeader className="flex-row gap-6 border-b py-4">
+        <Skeleton className="h-4 w-1/4" />
+        <Skeleton className="h-4 w-1/2" />
+        <Skeleton className="h-4 w-1/5" />
+      </CardHeader>
+      <CardContent className="space-y-4 pt-5">
+        {Array.from({ length: 4 }, (_, index) => (
+          <Skeleton key={index} className="h-11 w-full" />
+        ))}
+      </CardContent>
+    </Card>
   );
 }

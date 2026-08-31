@@ -13,21 +13,19 @@ interface AboutTechStackProps {
 
 export function AboutTechStack({ technologies }: AboutTechStackProps) {
   return (
-    <Card>
+    <Card className="border-border/70 bg-muted/20 shadow-none">
       <CardHeader>
-        <CardTitle>Technology Stack</CardTitle>
+        <CardTitle className="text-xl">Technology stack</CardTitle>
         <CardDescription>
-          Built with modern, production-ready technologies
+          Popular, documented tools with a strong open-source ecosystem.
         </CardDescription>
       </CardHeader>
-      <CardContent>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {technologies.map((tech) => (
-            <div key={tech} className="flex items-center gap-2">
-              <Badge>{tech}</Badge>
-            </div>
-          ))}
-        </div>
+      <CardContent className="flex flex-wrap gap-2">
+        {technologies.map((technology) => (
+          <Badge key={technology} variant="outline" className="bg-background px-3 py-1">
+            {technology}
+          </Badge>
+        ))}
       </CardContent>
     </Card>
   );
