@@ -7,7 +7,7 @@ const apiRoutes = ['/api{/*path}'];
 export async function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
-  // API routes bypass the proxy for this project.
+  // API routes bypass session refresh here.
   if (apiRoutes.some((route) => match(route)(pathname))) {
     return null;
   }
