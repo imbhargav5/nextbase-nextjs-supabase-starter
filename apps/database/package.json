@@ -6,8 +6,8 @@
     "start": "supabase start",
     "stop": "supabase stop",
     "status": "supabase status",
-    "gen-types": "supabase gen types typescript --linked --schema public > ./lib/database.types.ts",
-    "gen-types-local": "supabase gen types typescript --local > ./lib/database.types.ts",
+    "gen-types": "supabase gen types typescript --linked --schema public > ../web/src/lib/database.types.ts",
+    "gen-types-local": "supabase gen types typescript --local --schema public > ../web/src/lib/database.types.ts",
     "test-db": "supabase test db"
   },
   "dependencies": {
