@@ -15,7 +15,7 @@
     "lint": "oxlint src/",
     "typecheck": "tsc --noEmit",
     "tsc": "tsc",
-    "generate:types:local": "export $(cat .env.local | xargs) && supabase gen types typescript --project-id ${SUPABASE_PROJECT_REF} --schema public > src/lib/database.types.ts",
+    "generate:types:local": "pnpm --dir ../database run gen-types-local",
     "postbuild": "next-sitemap --config next-sitemap.config.cjs"
   },
   "dependencies": {
