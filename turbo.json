@@ -21,10 +21,10 @@
       "outputs": []
     },
     "gen-types": {
-      "outputs": ["apps/database/lib/database.types.ts"]
+      "outputs": ["$TURBO_ROOT$/apps/web/src/lib/database.types.ts"]
     },
     "gen-types-local": {
-      "outputs": ["apps/database/lib/database.types.ts"]
+      "outputs": ["$TURBO_ROOT$/apps/web/src/lib/database.types.ts"]
     },
     "database#start": {},
     "database#stop": {},
