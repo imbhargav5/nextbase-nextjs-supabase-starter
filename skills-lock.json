@@ -1,0 +1,123 @@
+{
+  "version": 1,
+  "cliVersion": "1.5.23",
+  "skills": {
+    "next-cache-components-optimizer": {
+      "source": "vercel/next.js",
+      "sourceUrl": "https://github.com/vercel/next.js.git",
+      "resolvedCommit": "fb49d8b7547850bc200f63daf56baa71a61928c6",
+      "ref": "fb49d8b7547850bc200f63daf56baa71a61928c6",
+      "sourceType": "github",
+      "skillPath": "skills/next-cache-components-optimizer/SKILL.md",
+      "computedHash": "4b3ec1ad99551a98d2fefdaefdb398f88e1621e06fb250f7c06858d5371cb5aa"
+    },
+    "safe-action-advanced": {
+      "source": "next-safe-action/skills",
+      "sourceUrl": "https://github.com/next-safe-action/skills.git",
+      "resolvedCommit": "a7324b341e415d1e1a242d6e4f10f7ce455a8e5e",
+      "ref": "a7324b341e415d1e1a242d6e4f10f7ce455a8e5e",
+      "sourceType": "github",
+      "skillPath": "skills/safe-action-advanced/SKILL.md",
+      "computedHash": "1f06e451524dcb8f3e239ba6921ce57fcee03949620a07d28d74751ddaabfa88"
+    },
+    "safe-action-client": {
+      "source": "next-safe-action/skills",
+      "sourceUrl": "https://github.com/next-safe-action/skills.git",
+      "resolvedCommit": "a7324b341e415d1e1a242d6e4f10f7ce455a8e5e",
+      "ref": "a7324b341e415d1e1a242d6e4f10f7ce455a8e5e",
+      "sourceType": "github",
+      "skillPath": "skills/safe-action-client/SKILL.md",
+      "computedHash": "261de908cb23dfd8c81bee7d5e1fcbf3acbc1cf47ddec7b63f0c352051abd510"
+    },
+    "safe-action-hooks": {
+      "source": "next-safe-action/skills",
+      "sourceUrl": "https://github.com/next-safe-action/skills.git",
+      "resolvedCommit": "a7324b341e415d1e1a242d6e4f10f7ce455a8e5e",
+      "ref": "a7324b341e415d1e1a242d6e4f10f7ce455a8e5e",
+      "sourceType": "github",
+      "skillPath": "skills/safe-action-hooks/SKILL.md",
+      "computedHash": "eeb4f746b4ba32429e90639d57717f6b8f483a9bbcfcecf78533ef6fd0a2ee9a"
+    },
+    "safe-action-middleware": {
+      "source": "next-safe-action/skills",
+      "sourceUrl": "https://github.com/next-safe-action/skills.git",
+      "resolvedCommit": "a7324b341e415d1e1a242d6e4f10f7ce455a8e5e",
+      "ref": "a7324b341e415d1e1a242d6e4f10f7ce455a8e5e",
+      "sourceType": "github",
+      "skillPath": "skills/safe-action-middleware/SKILL.md",
+      "computedHash": "41aeb838f3887efb9ee231598516c6380abffd112b7e513bca23ed2ef66d6c2c"
+    },
+    "safe-action-testing": {
+      "source": "next-safe-action/skills",
+      "sourceUrl": "https://github.com/next-safe-action/skills.git",
+      "resolvedCommit": "a7324b341e415d1e1a242d6e4f10f7ce455a8e5e",
+      "ref": "a7324b341e415d1e1a242d6e4f10f7ce455a8e5e",
+      "sourceType": "github",
+      "skillPath": "skills/safe-action-testing/SKILL.md",
+      "computedHash": "428e089294974a6f7ca4c1c783f05a26d7524e247b5fa6e508e5b3f55d5aa1c8"
+    },
+    "shadcn": {
+      "source": "shadcn-ui/ui",
+      "sourceUrl": "https://github.com/shadcn-ui/ui.git",
+      "resolvedCommit": "63c1308d112b6b1205d86244a156cca1abef5087",
+      "ref": "63c1308d112b6b1205d86244a156cca1abef5087",
+      "sourceType": "github",
+      "skillPath": "skills/shadcn/SKILL.md",
+      "computedHash": "a86630dd9b32722a4ea6846abc6756d5da8f06bdc2343dbc625923cc5c7a758b"
+    },
+    "supabase": {
+      "source": "supabase/agent-skills",
+      "sourceUrl": "https://github.com/supabase/agent-skills.git",
+      "resolvedCommit": "8331f910845103c08d51f6ca1d86ebb7d1f745e3",
+      "ref": "8331f910845103c08d51f6ca1d86ebb7d1f745e3",
+      "sourceType": "github",
+      "skillPath": "skills/supabase/SKILL.md",
+      "computedHash": "583344c20e90f3654dbb0632f088d89fd9f1dde8ac85e8a644dd12eee59b1380"
+    },
+    "supabase-postgres-best-practices": {
+      "source": "supabase/agent-skills",
+      "sourceUrl": "https://github.com/supabase/agent-skills.git",
+      "resolvedCommit": "8331f910845103c08d51f6ca1d86ebb7d1f745e3",
+      "ref": "8331f910845103c08d51f6ca1d86ebb7d1f745e3",
+      "sourceType": "github",
+      "skillPath": "skills/supabase-postgres-best-practices/SKILL.md",
+      "computedHash": "e14e276241805c97dbcfe40dcbea1a3035269cc7293cac4b1832dda41a835e60"
+    },
+    "turborepo": {
+      "source": "vercel/turborepo",
+      "sourceUrl": "https://github.com/vercel/turborepo.git",
+      "resolvedCommit": "b928ecc4a7d0445a4bead891084672d6ba0471a5",
+      "ref": "b928ecc4a7d0445a4bead891084672d6ba0471a5",
+      "sourceType": "github",
+      "skillPath": "skills/turborepo/SKILL.md",
+      "computedHash": "4289866858fc5314e10ca21584d00c48ddb7e6bc353e262283958f8e4b9bec87"
+    },
+    "vercel-composition-patterns": {
+      "source": "vercel-labs/agent-skills",
+      "sourceUrl": "https://github.com/vercel-labs/agent-skills.git",
+      "resolvedCommit": "063bee94c3f4df8453406c830b0a7df0f2860278",
+      "ref": "063bee94c3f4df8453406c830b0a7df0f2860278",
+      "sourceType": "github",
+      "skillPath": "skills/composition-patterns/SKILL.md",
+      "computedHash": "575757e3e25761c8c562d6e395d29f0b76c98b1273c0bd72d88e6ab1bc9c7d42"
+    },
+    "vercel-react-best-practices": {
+      "source": "vercel-labs/agent-skills",
+      "sourceUrl": "https://github.com/vercel-labs/agent-skills.git",
+      "resolvedCommit": "063bee94c3f4df8453406c830b0a7df0f2860278",
+      "ref": "063bee94c3f4df8453406c830b0a7df0f2860278",
+      "sourceType": "github",
+      "skillPath": "skills/react-best-practices/SKILL.md",
+      "computedHash": "ca7b0c0c6e5f2750043f7f0cd72d16ac4e2abc48f9b5500d047a4b77a2506212"
+    },
+    "web-design-guidelines": {
+      "source": "vercel-labs/agent-skills",
+      "sourceUrl": "https://github.com/vercel-labs/agent-skills.git",
+      "resolvedCommit": "063bee94c3f4df8453406c830b0a7df0f2860278",
+      "ref": "063bee94c3f4df8453406c830b0a7df0f2860278",
+      "sourceType": "github",
+      "skillPath": "skills/web-design-guidelines/SKILL.md",
+      "computedHash": "f3bc47f890f42a44db1007ab390709ec368e4b8c089baee6b0007182236ac474"
+    }
+  }
+}
