@@ -1,85 +1,45 @@
 ---
 name: supabase-schema-migrations
-description: Enforce the Nextbase Supabase schema-first migration workflow. Use when changing database structure, RLS policies, functions, triggers, enums, indexes, extensions, generated database types, or any files under apps/database/supabase; especially when asked to create, update, fix, or review database migrations. Requires editing or creating declarative schema files first, generating migrations with the Supabase CLI, and never manually creating or editing migration SQL files.
+description: Use for any NextBase Supabase schema, RLS, function, trigger, enum, index, extension, generated database type, or migration change and enforce this repository's schema-first generated-migration workflow.
 ---
 
 # Supabase Schema Migrations
 
-Use Supabase declarative schemas as the source of truth for database changes in this repo.
+Load the vendored `supabase` and `supabase-postgres-best-practices` skills. Current Supabase documentation and the installed CLI are authoritative for command flags.
 
-## Non-Negotiables
+## Hard Boundary
 
-- Keep repo-local skills only in `.agents/skills`; do not duplicate them in `.codex`, `.claude`, or other runner-specific skill directories.
 - Never manually create migration files in `apps/database/supabase/migrations`.
 - Never manually edit generated migration files.
 - Never paste hand-written SQL directly into a migration file.
 - Make schema changes first in `apps/database/supabase/schemas/*.sql`.
-- Generate migrations from the schema diff with the Supabase CLI.
-- Read generated migrations for review only. If the generated SQL is wrong, fix the schema file and regenerate.
+- Read generated migrations for review only. If generated SQL is wrong, fix the declarative schema and regenerate.
 
-## Workflow
+## Schema-First Workflow
 
-1. Work from `apps/database` for Supabase CLI commands.
+1. Inspect neighboring files in `apps/database/supabase/schemas` and the existing migration history.
+2. Edit or add the appropriate declarative schema file. Keep stable object ordering to reduce diff churn.
+3. Start the local stack from the root with `pnpm database#start`.
+4. From `apps/database`, generate the migration with `pnpm supabase db diff -f <descriptive_name>`.
+5. Review the generated SQL for accidental drops, policy churn, missing grants, destructive conversions, ordering problems, and unrelated changes.
+6. If it is wrong, fix the declarative schema, discard only the newly generated migration, and generate it again. Do not patch generated SQL.
+7. Apply and validate the local schema as appropriate, then run `pnpm --dir apps/database test-db`.
+8. From the root, run `pnpm gen-types-local`. The only generated TypeScript destination is `apps/web/src/lib/database.types.ts`.
+9. Run the relevant lint, typecheck, test, and build commands for consumers.
 
-2. Ensure the local Supabase stack is running:
+## RLS and Security Review
 
-   ```bash
-   pnpm start
-   ```
+For every exposed table or function, verify:
 
-3. Add or update declarative schema SQL in `supabase/schemas/*.sql`.
+- RLS is enabled and forced where the design requires it.
+- `USING` and `WITH CHECK` cover every intended role and operation.
+- Ownership derives from `auth.uid()` or another trusted server value.
+- Foreign keys used by policies and common joins have appropriate indexes.
+- Functions use deliberate invoker/definer semantics, a safe `search_path`, and explicit execute grants.
+- Grants and schema exposure do not broaden access unintentionally.
 
-   - Keep schema files focused by domain or object.
-   - Preserve dependency order. Schema files run lexicographically unless `supabase/config.toml` declares `[db.migrations].schema_paths`.
-   - When adding table columns, append new columns to the end to avoid noisy diffs for entities that care about order.
+Add behavioral pgTap coverage for authorization changes; policy-name assertions alone are insufficient.
 
-4. Generate a migration from the schema diff:
+## Diff Limitations
 
-   ```bash
-   pnpm supabase db diff -f descriptive_snake_case_name
-   ```
-
-5. Review the generated migration under `supabase/migrations`.
-
-   - Confirm it contains only the intended incremental change.
-   - If it contains unrelated churn, do not hand-edit it. Fix schema/local DB drift, remove the generated migration if needed, and regenerate.
-
-6. Apply the pending migration locally:
-
-   ```bash
-   pnpm supabase migration up
-   ```
-
-7. Run relevant validation:
-
-   ```bash
-   pnpm test-db
-   ```
-
-   From the repo root, regenerate local types when schema shape changes:
-
-   ```bash
-   pnpm gen-types-local
-   ```
-
-## Unsupported or Risky Changes
-
-Supabase schema diff does not reliably capture every database operation, including DML such as `insert`, `update`, or `delete`, and some ownership, grants, comments, partition, publication, policy, or domain edge cases.
-
-If a requested change cannot be represented safely through declarative schema files and generated diffs:
-
-- Stop before writing a manual migration.
-- Explain the limitation.
-- Ask the user for explicit direction.
-
-## Review Checklist
-
-Before finishing database work, verify:
-
-- This repo-local skill exists only under `.agents/skills`.
-- Schema changes are in `supabase/schemas/*.sql`.
-- Migration files were generated by `pnpm supabase db diff`, not written by hand.
-- Generated migration SQL matches the intended schema change.
-- `pnpm supabase migration up` succeeds locally.
-- `pnpm test-db` passes or any failure is reported.
-- `pnpm gen-types-local` was run when generated TypeScript database types should change.
+Some operations are not represented safely by schema diff. If the desired change cannot be expressed by this workflow, stop and explain the limitation. Do not work around it by hand-authoring or editing a migration unless the repository rule itself is explicitly changed.
