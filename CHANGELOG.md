@@ -1,5 +1,17 @@
 # [2.2.0](https://github.com/imbhargav5/nextbase-nextjs-supabase-starter/compare/v2.1.0...v2.2.0) (2023-11-25)
 
+## 2.3.0
+
+### Minor Changes
+
+- [#165](https://github.com/imbhargav5/nextbase-nextjs-supabase-starter/pull/165) [`935dbcc`](https://github.com/imbhargav5/nextbase-nextjs-supabase-starter/commit/935dbcca195b1972d1e76a3acc362e308066dced) Thanks [@imbhargav5](https://github.com/imbhargav5)! - Rebuild the public site, authentication flows, dashboard, and private-item workflows with a consistent responsive shadcn/ui design system, including improved dark mode, loading, empty, error, and mobile states.
+
+- [#162](https://github.com/imbhargav5/nextbase-nextjs-supabase-starter/pull/162) [`d9f0066`](https://github.com/imbhargav5/nextbase-nextjs-supabase-starter/commit/d9f0066fe2975fc4bd048988a4f1f217ad335351) Thanks [@imbhargav5](https://github.com/imbhargav5)! - Upgrade to Next.js 16.3 with `cacheComponents` and `partialPrefetching` enabled, bump Tailwind CSS v4 and shadcn/ui dependencies, upgrade TypeScript to 7, and add React Bits animated components (`BlurText`, `ShinyText`, `SpotlightCard`) to the home and login pages.
+
+### Patch Changes
+
+- [#166](https://github.com/imbhargav5/nextbase-nextjs-supabase-starter/pull/166) [`b05e175`](https://github.com/imbhargav5/nextbase-nextjs-supabase-starter/commit/b05e175dc1191773cd34219b9d3c857aad24162c) Thanks [@imbhargav5](https://github.com/imbhargav5)! - Add a portable, pinned agent coding-skills pack and repair generated database type commands so local and linked generation share the canonical web type file.
+
 ### Bug Fixes
 
 - **build:** fixes ([d50ee82](https://github.com/imbhargav5/nextbase-nextjs-supabase-starter/commit/d50ee82a3d766b584a2fc66ea1a4b9409f83e8fc))
