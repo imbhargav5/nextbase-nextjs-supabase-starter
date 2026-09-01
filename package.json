@@ -14,6 +14,7 @@
     "lint": "turbo run lint",
     "test": "turbo run test",
     "typecheck": "turbo run typecheck",
+    "skills:check": "node scripts/validate-agent-skills.mjs",
     "changeset": "changeset",
     "changeset:status": "changeset status --verbose",
     "changeset:version": "pnpm run version-packages",
