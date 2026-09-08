@@ -28,11 +28,11 @@
     "supabase:sync-env": "tsx scripts/sync-supabase-env.ts"
   },
   "devDependencies": {
-    "@changesets/changelog-github": "^0.7.0",
-    "@changesets/cli": "^2.31.1",
-    "oxfmt": "^0.50.0",
-    "oxlint": "^1.78.0",
-    "tsx": "^4.23.12",
-    "turbo": "^2.10.9"
+    "@changesets/changelog-github": "^1.0.1",
+    "@changesets/cli": "^3.0.2",
+    "oxfmt": "^0.66.0",
+    "oxlint": "^1.81.0",
+    "tsx": "^4.23.13",
+    "turbo": "^2.10.12"
   }
 }
