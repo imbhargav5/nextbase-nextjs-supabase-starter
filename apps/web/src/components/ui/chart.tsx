@@ -104,7 +104,7 @@ const ChartTooltip = RechartsPrimitive.Tooltip
 
 const ChartTooltipContent = React.forwardRef<
   HTMLDivElement,
-  React.ComponentProps<typeof RechartsPrimitive.Tooltip> &
+  Partial<RechartsPrimitive.TooltipContentProps> &
     React.ComponentProps<"div"> & {
       hideLabel?: boolean
       hideIndicator?: boolean
@@ -190,18 +190,21 @@ const ChartTooltipContent = React.forwardRef<
             .map((item, index) => {
               const key = `${nameKey || item.name || item.dataKey || "value"}`
               const itemConfig = getPayloadConfigFromPayload(config, item, key)
-              const indicatorColor = color || item.payload.fill || item.color
+              // recharts types the nested `payload` as `any`; pin it to the
+              // one field we read so the access stays typed and null-safe.
+              const itemPayload: { fill?: string } | undefined = item.payload
+              const indicatorColor = color || itemPayload?.fill || item.color
 
               return (
                 <div
-                  key={item.dataKey}
+                  key={`${key}-${index}`}
                   className={cn(
                     "flex w-full flex-wrap items-stretch gap-2 [&>svg]:h-2.5 [&>svg]:w-2.5 [&>svg]:text-muted-foreground",
                     indicator === "dot" && "items-center"
                   )}
                 >
                   {formatter && item?.value !== undefined && item.name ? (
-                    formatter(item.value, item.name, item, index, item.payload)
+                    formatter(item.value, item.name, item, index, payload)
                   ) : (
                     <>
                       {itemConfig?.icon ? (
@@ -263,7 +266,8 @@ const ChartLegend = RechartsPrimitive.Legend
 const ChartLegendContent = React.forwardRef<
   HTMLDivElement,
   React.ComponentProps<"div"> &
-    Pick<RechartsPrimitive.LegendProps, "payload" | "verticalAlign"> & {
+    Pick<RechartsPrimitive.LegendProps, "verticalAlign"> & {
+      payload?: ReadonlyArray<RechartsPrimitive.LegendPayload>
       hideIcon?: boolean
       nameKey?: string
     }
@@ -289,13 +293,13 @@ const ChartLegendContent = React.forwardRef<
       >
         {payload
           .filter((item) => item.type !== "none")
-          .map((item) => {
+          .map((item, index) => {
             const key = `${nameKey || item.dataKey || "value"}`
             const itemConfig = getPayloadConfigFromPayload(config, item, key)
 
             return (
               <div
-                key={item.value}
+                key={item.value ?? `${key}-${index}`}
                 className={cn(
                   "flex items-center gap-1.5 [&>svg]:h-3 [&>svg]:w-3 [&>svg]:text-muted-foreground"
                 )}
