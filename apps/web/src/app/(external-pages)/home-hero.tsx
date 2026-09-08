@@ -1,12 +1,12 @@
 import {
   ArrowRight,
   Check,
-  Github,
   LockKeyhole,
   MoreHorizontal,
 } from 'lucide-react';
 import Link from 'next/link';
 
+import { Github } from '@/components/icons/github';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
