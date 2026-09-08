@@ -1,7 +1,7 @@
-import { Github } from 'lucide-react';
 import Link from 'next/link';
 
 import { Brand } from '@/components/brand';
+import { Github } from '@/components/icons/github';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 
