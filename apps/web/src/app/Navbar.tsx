@@ -28,6 +28,7 @@ import { cn } from '@/lib/utils';
 const navigation = [
   { href: '/', label: 'Home' },
   { href: '/about', label: 'About' },
+  { href: '/pricing', label: 'Pricing' },
 ];
 
 export default function Navbar() {

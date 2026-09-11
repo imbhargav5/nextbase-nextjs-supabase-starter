@@ -78,3 +78,7 @@
     border-color: var(--color-border);
   }
 }
+
+.fade-bottom {
+  mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+}
