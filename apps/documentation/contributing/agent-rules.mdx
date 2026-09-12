@@ -1,0 +1,26 @@
+---
+title: Agent rules
+description: Skills, setup, and conventions for AI-assisted development
+---
+
+Canonical rules for agents and contributors are in **`AGENTS.md`** at the repository root.
+
+## Highlights
+
+- **Skills** live in `.agents/skills/`; do not copy skill trees into runner-specific folders.
+- **Never commit** a `.oneignore` file.
+- **Setup**: run `./setup.sh` or follow the steps in AGENTS.md (pnpm install, root env files, `pnpm database#start`, `pnpm supabase:sync-env`, `pnpm dev`).
+
+## Skills workflow
+
+After changing vendored skills or compatibility symlinks, run:
+
+```bash
+pnpm skills:check
+```
+
+See `docs/AGENT_SKILLS.md` for how skills are pinned and reviewed.
+
+## Context7 and copy-ready prompts
+
+For library lookups, enable **Context7 MCP** in Cursor and use the prompts in **[Context7 & AI prompts](/context7/overview)** — a full prompt library for Next.js, Supabase, RLS, safe actions, UI, testing, and deployment on this starter.

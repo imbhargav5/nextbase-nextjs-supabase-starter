@@ -7,18 +7,19 @@ import { useRef, useState } from 'react';
 import { toast } from 'sonner';
 
 import { AuthCard } from '@/components/Auth/AuthCard';
+import { AuthMethodTabs } from '@/components/Auth/auth-method-tabs';
 import { Email } from '@/components/Auth/Email';
 import { EmailAndPassword } from '@/components/Auth/EmailAndPassword';
 import { EmailConfirmationPendingCard } from '@/components/Auth/EmailConfirmationPendingCard';
 import { RedirectingPleaseWaitCard } from '@/components/Auth/RedirectingPleaseWaitCard';
 import { RenderProviders } from '@/components/Auth/RenderProviders';
 import { Button } from '@/components/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
   signInWithMagicLinkAction,
   signInWithPasswordAction,
   signInWithProviderAction,
 } from '@/data/auth/auth';
+import { PRODUCT_NAME } from '@/constants';
 import type { AuthProvider } from '@/types';
 
 export function Login({ next }: { next?: string }) {
@@ -116,47 +117,50 @@ export function Login({ next }: { next?: string }) {
 
   return (
     <AuthCard
-      title="Login to NextBase"
+      title={`Sign in to ${PRODUCT_NAME}`}
       description="Choose the sign-in method that works best for you."
       footer={
         <p className="w-full text-center text-sm text-muted-foreground">
-          New to Nextbase?{' '}
+          New to {PRODUCT_NAME}?{' '}
           <Button variant="link" className="h-auto px-0" asChild>
             <Link href="/sign-up">Create an account</Link>
           </Button>
         </p>
       }
     >
-      <Tabs defaultValue="password">
-        <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="password">Password</TabsTrigger>
-          <TabsTrigger value="magic-link">Magic Link</TabsTrigger>
-          <TabsTrigger value="social-login">Social</TabsTrigger>
-        </TabsList>
-        <TabsContent value="password" className="mt-6">
-          <EmailAndPassword
-            isLoading={passwordStatus === 'executing'}
-            onSubmit={(data) => executePassword(data)}
-            view="sign-in"
-          />
-        </TabsContent>
-        <TabsContent value="magic-link" className="mt-6">
-          <Email
-            onSubmit={(email) => executeMagicLink({ email, next })}
-            isLoading={magicLinkStatus === 'executing'}
-            view="sign-in"
-          />
-        </TabsContent>
-        <TabsContent value="social-login" className="mt-6">
-          <RenderProviders
-            providers={['google', 'github', 'twitter']}
-            isLoading={providerStatus === 'executing'}
-            onProviderLoginRequested={(
-              provider: Extract<AuthProvider, 'google' | 'github' | 'twitter'>
-            ) => executeProvider({ provider, next })}
-          />
-        </TabsContent>
-      </Tabs>
+      <AuthMethodTabs layoutId="login-auth-method">
+        {(activeTab) => {
+          if (activeTab === 'password') {
+            return (
+              <EmailAndPassword
+                isLoading={passwordStatus === 'executing'}
+                onSubmit={(data) => executePassword(data)}
+                view="sign-in"
+              />
+            );
+          }
+
+          if (activeTab === 'magic-link') {
+            return (
+              <Email
+                onSubmit={(email) => executeMagicLink({ email, next })}
+                isLoading={magicLinkStatus === 'executing'}
+                view="sign-in"
+              />
+            );
+          }
+
+          return (
+            <RenderProviders
+              providers={['google', 'github', 'twitter']}
+              isLoading={providerStatus === 'executing'}
+              onProviderLoginRequested={(
+                provider: Extract<AuthProvider, 'google' | 'github' | 'twitter'>
+              ) => executeProvider({ provider, next })}
+            />
+          );
+        }}
+      </AuthMethodTabs>
     </AuthCard>
   );
 }

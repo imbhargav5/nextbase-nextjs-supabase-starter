@@ -3,12 +3,23 @@ function getSiteUrl() {
   const siteUrl =
     process.env.NEXT_PUBLIC_SITE_URL ??
     process.env.NEXT_PUBLIC_VERCEL_URL ??
-    'https://my-awesome-saas.com';
+    'https://menacenext.com';
 
   return siteUrl.startsWith('http') ? siteUrl : `https://${siteUrl}`;
 }
 
 module.exports = {
   siteUrl: getSiteUrl(),
-  generateRobotsTxt: true,
+  generateRobotsTxt: false,
+  generateIndexSitemap: false,
+  exclude: [
+    '/dashboard',
+    '/dashboard/*',
+    '/private-item',
+    '/private-items',
+    '/auth/*',
+    '/api/*',
+  ],
+  changefreq: 'weekly',
+  priority: 0.7,
 };

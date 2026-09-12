@@ -48,7 +48,7 @@ export function HomeFeatures() {
           </p>
         </div>
 
-        <div className="overflow-visible py-4">
+        <div className="overflow-x-clip py-4">
           <HoverStack
             cards={featureCards}
             cardWidth={272}

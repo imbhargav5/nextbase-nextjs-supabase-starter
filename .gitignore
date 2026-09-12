@@ -31,3 +31,4 @@ playwright/.auth/
 
 # turbo
 .turbo
+.pnpm-store/

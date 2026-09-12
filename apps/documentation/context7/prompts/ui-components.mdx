@@ -1,0 +1,78 @@
+---
+title: UI & shadcn prompts
+description: Cursor prompts for shadcn/ui, Tailwind CSS v4, forms, and accessible components in NextBase Starter
+seo:
+  keywords:
+    - shadcn ui Cursor prompts
+    - Tailwind v4 Next.js
+    - accessible React components prompts
+---
+
+UI lives in `apps/web/src/components/` and shadcn primitives in `src/components/ui/`. Use Context7 for shadcn/ui and Tailwind when adding new patterns.
+
+## Add a shadcn component
+
+<Prompt description="Copy — install and use a registry component" actions={["copy", "cursor"]}>
+Add shadcn component [NAME] for [USE CASE] on [PAGE/FEATURE].
+
+Steps:
+1. Context7 query-docs for shadcn/ui CLI add command and component API for [NAME].
+2. Use existing apps/web components.json and path aliases (@/components/ui).
+3. Style with Tailwind v4 tokens from src/styles/globals.css; dark-first like the rest of the app.
+4. Prefer Server Component wrapper + small Client island for interactivity.
+
+Do not duplicate components that already exist under src/components/ui/.
+</Prompt>
+
+## Pricing or marketing block
+
+<Prompt description="Copy — match starter marketing quality" actions={["copy", "cursor"]}>
+Create a marketing section for [SECTION NAME] consistent with home-hero, home-features, and home-pricing in (external-pages).
+
+Requirements:
+- Reuse blocks in src/components/blocks/ and ui/ where possible.
+- Responsive mobile-first layout; test at 375px and 1440px.
+- Context7 query-docs only if using a new Radix or motion API.
+- Semantic sections, heading hierarchy, and focus states on interactive elements.
+
+No lorem ipsum — use realistic placeholder copy I can replace.
+</Prompt>
+
+## Template page (Nguyen / Intellune style)
+
+<Prompt description="Copy — extend template-pages route group" actions={["copy", "cursor"]}>
+Extend the template system for [TEMPLATE SLUG or NEW TEMPLATE].
+
+Follow apps/web/src/app/(template-pages)/ and src/components/templates/ patterns:
+- Theme provider and scoped CSS if needed (see nguyen-theme).
+- Register in src/lib/templates/catalog.ts.
+- Keep template layout isolated from main marketing Navbar when appropriate.
+
+Context7 query-docs for Next.js parallel routes or layout groups only if required.
+List public assets to add under apps/web/public/templates/.
+</Prompt>
+
+## Accessible dialog or sheet form
+
+<Prompt description="Copy — modal workflow with a11y" actions={["copy", "cursor"]}>
+Add a [Dialog/Sheet] flow for [TASK] triggered from [PAGE].
+
+Use shadcn Dialog or Sheet from src/components/ui/.
+Ensure focus trap, Esc to close, aria-labelledby, and visible focus rings.
+Wire submit to authActionClient action [or describe new action].
+Context7 query-docs for Radix Dialog accessibility if behavior is unclear.
+
+Keep bundle size in mind — no extra icon libraries unless already in project.
+</Prompt>
+
+## Dark mode and theme toggle
+
+<Prompt description="Copy — theme behavior on a new layout" actions={["copy", "cursor"]}>
+New layout at [PATH] should respect site theme like the rest of NextBase.
+
+Review src/components/ui/mode-toggle.tsx and layout providers in (external-pages) and (app-pages).
+Context7 query-docs for next-themes if integrating differently.
+Avoid hydration flash; match existing pattern rather than inventing localStorage-only theme.
+
+Document any CSS variables added to globals.css.
+</Prompt>

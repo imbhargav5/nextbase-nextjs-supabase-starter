@@ -1,6 +1,16 @@
+import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import { z } from 'zod';
+
+import { createPageMetadata } from '@/lib/seo/metadata';
 import { SignUp } from './Signup';
+
+export const metadata: Metadata = createPageMetadata({
+  title: 'Create account',
+  description:
+    'Create your Menace Next account and explore the protected SaaS workspace in minutes.',
+  path: '/sign-up',
+});
 
 const SearchParamsSchema = z.object({
   next: z.string().optional(),

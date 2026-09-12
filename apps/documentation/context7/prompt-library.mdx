@@ -1,0 +1,90 @@
+---
+title: AI prompt library
+description: Copy-ready Cursor prompts for NextBase Starter — Next.js, Supabase, RLS, safe actions, UI, testing, and integrations
+seo:
+  keywords:
+    - Cursor AI prompts
+    - Next.js Supabase starter
+    - Context7 MCP
+    - AI coding assistant prompts
+    - Supabase RLS prompts
+---
+
+Use these prompts as **starting points**. Replace placeholders such as `[FEATURE]` or `[TABLE]` with your task. Every prompt assumes Context7 is available for library documentation.
+
+## Quick picks
+
+| Goal | Page | Best for |
+| --- | --- | --- |
+| Local setup or env issues | [Integrations](/context7/prompts/integrations) | `./setup.sh`, Supabase keys, Vercel env |
+| New authenticated page | [Supabase auth](/context7/prompts/supabase-auth) | Middleware, `(app-pages)`, session |
+| New table + policies | [Database & RLS](/context7/prompts/database-migrations) | Schema files, `db diff`, types |
+| Form + mutation | [Server actions](/context7/prompts/server-actions) | Zod, `authActionClient` |
+| Marketing or dashboard UI | [UI & shadcn](/context7/prompts/ui-components) | shadcn, Tailwind v4, a11y |
+| Slow page or cache bug | [Next.js & caching](/context7/prompts/nextjs-caching) | Cache Components, Suspense |
+| Regression before PR | [Testing](/context7/prompts/testing) | Vitest, Playwright specs |
+
+## Meta prompts (any task)
+
+<Prompt description="Copy — plan a feature before writing code" actions={["copy", "cursor"]}>
+I want to implement: [DESCRIBE FEATURE].
+
+Before coding in NextBase Starter:
+1. Read AGENTS.md and list which apps/ folders will change (apps/web, apps/database, packages).
+2. Use Context7 for any external API I mention (resolve-library-id, then query-docs per topic).
+3. Propose a short plan: routes, data layer (anon/auth/user in src/data), RLS if Postgres changes, and tests.
+4. Call out risks (auth bypass, missing RLS, cache staleness, hydration).
+
+Wait for my approval on the plan, then implement with minimal diff and match existing conventions.
+</Prompt>
+
+<Prompt description="Copy — debug with docs, not guesses" actions={["copy", "cursor"]}>
+Something is broken: [SYMPTOM]. URL or route: [PATH]. Error message: [PASTE].
+
+Investigate in NextBase Starter:
+1. Reproduce from code paths (middleware, RSC, server action, or Supabase client).
+2. Use Context7 query-docs for the relevant library (Next.js, @supabase/ssr, etc.) for the exact API we use.
+3. Check env (root .env.local, NEXT_PUBLIC_SITE_URL, Supabase URL/keys after pnpm supabase:sync-env).
+4. Propose the smallest fix and add or update a test if the bug is regressable.
+
+Do not change unrelated files.
+</Prompt>
+
+<Prompt description="Copy — review a PR for security on this stack" actions={["copy", "cursor"]}>
+Review my uncommitted changes (or branch diff) for NextBase Starter with a security lens:
+
+- Server actions: authActionClient or explicit session checks; Zod validation on input.
+- Database: RLS on new tables; no trusting client-sent user IDs without auth.uid() checks.
+- Auth: getUser() in middleware; no secrets in client bundles.
+- Context7: if I used a new library, verify APIs against query-docs output.
+
+List findings by severity with file paths and suggested fixes.
+</Prompt>
+
+<Prompt description="Copy — onboard a new teammate with Context7" actions={["copy", "cursor"]}>
+Explain how a new developer should work in NextBase Starter in under 5 minutes:
+
+- Monorepo layout (apps/web, apps/database)
+- Setup: ./setup.sh or manual steps from docs
+- Where auth, data, and safe actions live
+- How to use Context7 in Cursor for Next.js and Supabase questions
+- One example prompt from the docs prompt library for adding a CRUD feature
+
+Link to repo paths, not vague names.
+</Prompt>
+
+## Category pages
+
+Each category page contains **multiple copy-ready prompts** with real paths and stack-specific guardrails:
+
+- [Next.js & caching](/context7/prompts/nextjs-caching)
+- [Supabase authentication](/context7/prompts/supabase-auth)
+- [Database migrations & RLS](/context7/prompts/database-migrations)
+- [Server actions & validation](/context7/prompts/server-actions)
+- [UI & shadcn components](/context7/prompts/ui-components)
+- [Testing (Vitest & Playwright)](/context7/prompts/testing)
+- [Integrations & deployment](/context7/prompts/integrations)
+
+<Note>
+  Default action on each `<Prompt>` is **Copy**. Use **Open in Cursor** when you want the same text in a new agent chat.
+</Note>

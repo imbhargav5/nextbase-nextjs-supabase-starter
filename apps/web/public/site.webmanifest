@@ -1,0 +1,17 @@
+{
+  "name": "Menace Next",
+  "short_name": "Menace Next",
+  "description": "Production-ready SaaS starter kit for Next.js and Supabase.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#0a0a0a",
+  "lang": "en-US",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    }
+  ]
+}

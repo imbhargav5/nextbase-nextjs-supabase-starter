@@ -1,0 +1,82 @@
+---
+title: Next.js & caching prompts
+description: Cursor prompts for Next.js 16 Cache Components, RSC data fetching, and performance in NextBase Starter
+seo:
+  keywords:
+    - Next.js 16 Cache Components
+    - React Server Components prompts
+    - Next.js caching Cursor prompt
+---
+
+Prompts for `apps/web` routing, Cache Components, and Suspense boundaries. Agents should use Context7 with library ID `/vercel/next.js` (or the version-specific ID Context7 returns) for API details.
+
+## Add a public marketing section
+
+<Prompt description="Copy — new external page with SEO metadata" actions={["copy", "cursor"]}>
+Add a new public page under apps/web/src/app/(external-pages)/ for: [PAGE NAME AND PURPOSE].
+
+Requirements:
+- Use Context7 query-docs for Next.js App Router metadata, generateMetadata, and static vs dynamic rendering for this use case.
+- Match existing layout in (external-pages)/layout.tsx and Navbar/Footer patterns.
+- Server Components by default; client components only for interactivity.
+- Include accessible headings, semantic HTML, and Tailwind v4 classes consistent with home and pricing pages.
+- Update sitemap/robots if other marketing pages do; mention e2e in apps/web/e2e/anon/ if we add a new public URL.
+
+Implement with minimal scope; no unrelated refactors.
+</Prompt>
+
+## Cache Components and stale data
+
+<Prompt description="Copy — fix caching or stale UI" actions={["copy", "cursor"]}>
+Users see stale data on [ROUTE/COMPONENT]: [DESCRIBE STALE BEHAVIOR].
+
+In NextBase Starter:
+1. Trace data from RSC (src/rsc-data/) or server actions through Supabase client creation.
+2. Use Context7 query-docs for Next.js 16 Cache Components, "use cache", revalidateTag/revalidatePath, and Suspense boundaries relevant to this flow.
+3. Compare with docs/NEXTJS_CACHE_COMPONENTS.md and architecture/caching in this docs site.
+4. Propose the smallest change that fixes staleness without over-fetching.
+
+Explain which layer should own freshness (DB, RSC cache, or client revalidation).
+</Prompt>
+
+## Parallel data fetching
+
+<Prompt description="Copy — remove server-side waterfalls" actions={["copy", "cursor"]}>
+The page at [ROUTE] loads slowly because data fetching is sequential.
+
+Refactor using Next.js App Router composition:
+- Use Context7 query-docs for parallel fetching with Server Components (split components, no await chain in one parent).
+- Keep Supabase reads in src/rsc-data/ or src/data/anon|user/ following existing patterns.
+- Preserve RLS context (authenticated reads use createSupabaseClient() with user session).
+- Add or adjust Suspense fallbacks for perceived performance.
+
+Show before/after request flow in one short paragraph.
+</Prompt>
+
+## Dynamic import for heavy client UI
+
+<Prompt description="Copy — lazy-load a heavy client bundle" actions={["copy", "cursor"]}>
+I need a client-heavy UI on [ROUTE]: [COMPONENT DESCRIPTION, e.g. chart, carousel, shader].
+
+Use Context7 query-docs for next/dynamic, ssr: false, and loading states.
+Implement in apps/web with:
+- Dynamic import so the heavy library is not in the initial server bundle.
+- A lightweight skeleton fallback matching shadcn patterns in src/components/ui/.
+- No forwardRef unless required; follow React 19 ref-as-prop patterns in this repo.
+
+List estimated bundle impact and how to verify in dev tools.
+</Prompt>
+
+## Middleware and route matchers
+
+<Prompt description="Copy — extend protected or public routing" actions={["copy", "cursor"]}>
+I am adding authenticated routes under prefix: [e.g. /settings].
+
+Update NextBase Starter correctly:
+1. Context7 query-docs for Next.js middleware matcher config and path-to-regexp usage if needed.
+2. Align apps/web middleware with apps/web/src/supabase-clients/middleware.ts protected prefixes and (app-pages) route group.
+3. Ensure unauthenticated users redirect to login with return URL when appropriate.
+4. Document the change in a one-line comment only if non-obvious.
+
+Do not weaken auth checks on existing routes.
+</Prompt>

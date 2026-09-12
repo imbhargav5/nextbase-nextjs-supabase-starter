@@ -1,0 +1,20 @@
+---
+title: Caching
+description: Next.js 16 Cache Components and invalidation
+---
+
+NextBase enables **`cacheComponents: true`** in `apps/web/next.config.ts`. Route segments are static by default; personalized data stays dynamic inside Suspense boundaries.
+
+## Patterns
+
+- Mark stable UI (shells, marketing blocks) with `"use cache"` where appropriate.
+- Leave user-specific fetches uncached and wrap them in Suspense.
+- Invalidate from server actions with `revalidatePath()` after mutations.
+
+## Deep dive
+
+The full mental model and examples live in the in-repo guide:
+
+`docs/NEXTJS_CACHE_COMPONENTS.md`
+
+That file covers when to use `"use cache"`, `cacheLife`, and how this starter applies Cache Components to dashboards and marketing pages.

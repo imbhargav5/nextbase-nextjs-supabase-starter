@@ -15,8 +15,7 @@
     "lint": "oxlint src/",
     "typecheck": "tsc --noEmit",
     "tsc": "tsc",
-    "generate:types:local": "pnpm --dir ../database run gen-types-local",
-    "postbuild": "next-sitemap --config next-sitemap.config.cjs"
+    "generate:types:local": "pnpm --dir ../database run gen-types-local"
   },
   "dependencies": {
     "@effect/platform": "^0.97.1",

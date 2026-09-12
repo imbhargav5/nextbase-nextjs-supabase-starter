@@ -1,6 +1,7 @@
-import { ArrowRight, Rocket } from 'lucide-react';
+import { Rocket } from 'lucide-react';
 import Link from 'next/link';
 
+import { ArrowRightIcon } from '@/components/icons/arrow-right';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 
@@ -19,14 +20,14 @@ export function HomeCTA() {
               </h2>
               <p className="leading-7 text-muted-foreground">
                 Create an account, explore the protected workspace, and make
-                Nextbase your own.
+                make Menace Next your own.
               </p>
             </div>
           </div>
           <Button asChild size="lg" className="shrink-0">
-            <Link href="/sign-up">
+            <Link href="/sign-up" className="group">
               Start building
-              <ArrowRight aria-hidden="true" />
+              <ArrowRightIcon aria-hidden size={16} />
             </Link>
           </Button>
         </CardContent>

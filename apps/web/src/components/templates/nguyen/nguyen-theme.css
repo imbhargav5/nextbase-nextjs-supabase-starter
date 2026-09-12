@@ -1,0 +1,125 @@
+.nguyen-template {
+  --radius: 1rem;
+  --background: oklch(0.99 0.005 260);
+  --foreground: oklch(0.18 0.02 260);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.18 0.02 260);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.18 0.02 260);
+  --primary: oklch(0.52 0.18 250);
+  --primary-foreground: oklch(0.99 0.005 260);
+  --secondary: oklch(0.96 0.01 260);
+  --secondary-foreground: oklch(0.28 0.02 260);
+  --muted: oklch(0.96 0.01 260);
+  --muted-foreground: oklch(0.48 0.02 260);
+  --accent: oklch(0.95 0.02 250);
+  --accent-foreground: oklch(0.18 0.02 260);
+  --destructive: oklch(0.58 0.22 25);
+  --destructive-foreground: oklch(0.99 0.005 260);
+  --border: oklch(0.9 0.01 260);
+  --input: oklch(0.9 0.01 260);
+  --ring: oklch(0.52 0.18 250);
+  --beam-color-1: oklch(0.58 0.18 250);
+  --beam-color-2: oklch(0.54 0.16 280);
+  --beam-color-3: oklch(0.62 0.14 200);
+  --beam-glow: color-mix(in oklch, var(--beam-color-1) 20%, transparent);
+  --hero-gradient: linear-gradient(
+    180deg,
+    color-mix(in oklch, var(--beam-color-1) 28%, var(--background)) 0%,
+    color-mix(in oklch, var(--beam-color-1) 12%, transparent) 40%,
+    transparent 72%
+  );
+  --card-glow: 0 0 0 1px color-mix(in oklch, var(--foreground) 6%, transparent),
+    0 24px 48px -24px color-mix(in oklch, var(--beam-color-1) 12%, transparent);
+}
+
+.nguyen-template.dark {
+  --radius: 1rem;
+  --background: oklch(0.13 0.01 260);
+  --foreground: oklch(0.98 0.005 260);
+  --card: oklch(0.17 0.015 260);
+  --card-foreground: oklch(0.98 0.005 260);
+  --popover: oklch(0.17 0.015 260);
+  --popover-foreground: oklch(0.98 0.005 260);
+  --primary: oklch(0.72 0.14 230);
+  --primary-foreground: oklch(0.13 0.02 260);
+  --secondary: oklch(0.22 0.02 260);
+  --secondary-foreground: oklch(0.92 0.01 260);
+  --muted: oklch(0.22 0.015 260);
+  --muted-foreground: oklch(0.68 0.02 260);
+  --accent: oklch(0.24 0.03 250);
+  --accent-foreground: oklch(0.98 0.005 260);
+  --destructive: oklch(0.62 0.22 25);
+  --destructive-foreground: oklch(0.98 0.005 260);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 12%);
+  --ring: oklch(0.72 0.14 230);
+  --beam-color-1: oklch(0.72 0.16 230);
+  --beam-color-2: oklch(0.68 0.14 280);
+  --beam-color-3: oklch(0.75 0.12 200);
+  --beam-glow: color-mix(in oklch, var(--beam-color-1) 35%, transparent);
+  --hero-gradient: linear-gradient(
+    180deg,
+    color-mix(in oklch, var(--beam-color-1) 32%, var(--background)) 0%,
+    color-mix(in oklch, var(--beam-color-1) 16%, transparent) 40%,
+    transparent 72%
+  );
+  --card-glow: 0 0 0 1px color-mix(in oklch, var(--foreground) 8%, transparent),
+    0 24px 48px -24px color-mix(in oklch, var(--beam-color-1) 25%, transparent);
+}
+
+body.nguyen-template-page {
+  background-color: oklch(0.99 0.005 260);
+}
+
+body.nguyen-template-page:has(.nguyen-template.dark) {
+  background-color: oklch(0.13 0.01 260);
+}
+
+html:has(body.nguyen-template-page) {
+  background-color: oklch(0.99 0.005 260);
+}
+
+html:has(body.nguyen-template-page):has(.nguyen-template.dark) {
+  background-color: oklch(0.13 0.01 260);
+}
+
+.nguyen-template .nguyen-hero-background {
+  background-color: var(--background);
+  background-image: var(--hero-gradient),
+    url('/templates/nguyen/background-blur-mobile.png');
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+}
+
+.nguyen-template:not(.dark) .nguyen-hero-background {
+  background-image: var(--hero-gradient);
+  opacity: 1;
+}
+
+.nguyen-template:not(.dark) nav.fixed {
+  background-color: color-mix(in oklch, var(--background) 96%, transparent);
+  backdrop-filter: blur(12px);
+}
+
+.nguyen-template .nguyen-marquee-fade {
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 10%,
+    black 90%,
+    transparent
+  );
+}
+
+.nguyen-template .nguyen-pricing-card {
+  background: color-mix(in oklch, var(--card) 82%, transparent);
+  box-shadow: var(--card-glow);
+}
+
+.nguyen-template .nguyen-pricing-card--popular {
+  border-color: color-mix(in oklch, var(--primary) 45%, var(--border));
+  box-shadow: var(--card-glow),
+    0 0 0 1px color-mix(in oklch, var(--primary) 20%, transparent);
+}

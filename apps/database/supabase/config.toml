@@ -42,7 +42,10 @@ file_size_limit = "50MiB"
 # in emails.
 site_url = "http://localhost:3000"
 # A list of *exact* URLs that auth providers are permitted to redirect to post authentication.
-additional_redirect_urls = ["https://localhost:3000"]
+additional_redirect_urls = [
+  "http://localhost:3000/**",
+  "https://localhost:3000/**",
+]
 # How long tokens are valid for, in seconds. Defaults to 3600 (1 hour), maximum 604,800 seconds (one
 # week).
 jwt_expiry = 3600
@@ -70,3 +73,12 @@ redirect_uri = ""
 # Overrides the default auth provider URL. Used to support self-hosted gitlab, single-tenant Azure,
 # or any other third-party OIDC providers.
 url = ""
+skip_nonce_check = false
+
+# Google OAuth — credentials in supabase/.env.local (see .env.local.example).
+# Google Cloud Console redirect URI (local): http://localhost:54321/auth/v1/callback
+[auth.external.google]
+enabled = false
+client_id = "env(SUPABASE_AUTH_EXTERNAL_GOOGLE_CLIENT_ID)"
+secret = "env(SUPABASE_AUTH_EXTERNAL_GOOGLE_CLIENT_SECRET)"
+skip_nonce_check = false

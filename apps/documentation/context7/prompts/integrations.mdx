@@ -1,0 +1,90 @@
+---
+title: Integrations & deployment prompts
+description: Cursor prompts for local setup, env sync, Turborepo, Vercel, and third-party services with NextBase Starter
+seo:
+  keywords:
+    - NextBase Starter setup prompts
+    - Supabase env sync
+    - Vercel Next.js Supabase deployment
+---
+
+Covers `./setup.sh`, `pnpm supabase:sync-env`, Turbo pipelines, and production env. Context7 for Vercel and Supabase hosting docs when deploying.
+
+## First-time local setup
+
+<Prompt description="Copy — end-to-end dev environment" actions={["copy", "cursor"]}>
+Help me run NextBase Starter locally from a clean clone on [macOS/Linux/Windows].
+
+Follow AGENTS.md and docs getting-started:
+- pnpm install at repo root
+- Copy .env.local.example and .env.development.local.example only if missing
+- pnpm database#start, wait for Supabase ready, pnpm supabase:sync-env
+- pnpm dev or pnpm web#dev
+
+Context7 query-docs for Supabase CLI start and Docker requirements if errors mention containers.
+When something fails, ask for the exact command output before guessing.
+</Prompt>
+
+## Sync env after Supabase restart
+
+<Prompt description="Copy — keys out of date" actions={["copy", "cursor"]}>
+My app cannot connect to Supabase after restart or new project: [ERROR].
+
+Verify:
+1. pnpm supabase:sync-env from repo root (not apps/web only).
+2. Root .env.local has URL and anon key matching local CLI output.
+3. Context7 query-docs for Supabase local API URL and service role vs anon usage in Next.js.
+
+List which env vars NextBase reads (NEXT_PUBLIC_* and server-only) without printing secret values.
+</Prompt>
+
+## Turborepo task or new package
+
+<Prompt description="Copy — add a script across the monorepo" actions={["copy", "cursor"]}>
+Add Turbo pipeline task [TASK NAME] for [apps/web or apps/database or new package].
+
+Edit turbo.json and package.json scripts consistently with existing pnpm web#dev patterns.
+Context7 query-docs for Turborepo dependsOn and filter flags if needed.
+Ensure CI can run the task with pnpm [script] from root.
+</Prompt>
+
+## Deploy to Vercel with Supabase
+
+<Prompt description="Copy — production checklist" actions={["copy", "cursor"]}>
+Deploy NextBase Starter to Vercel using hosted Supabase project [REF OR DESCRIPTION].
+
+Checklist with Context7 query-docs for Vercel Next.js env vars and Supabase redirect URLs:
+- NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY, NEXT_PUBLIC_SITE_URL
+- Supabase Auth URL configuration for production domain and /auth/callback
+- No service role key in NEXT_PUBLIC_* 
+- Run pnpm build locally first; note Cache Components or middleware edge constraints if any
+
+Output ordered steps for Dashboard + Vercel UI, not generic advice.
+</Prompt>
+
+## Add a third-party API (Stripe, email, etc.)
+
+<Prompt description="Copy — server-only integration" actions={["copy", "cursor"]}>
+Integrate [SERVICE] for [FEATURE] in NextBase Starter.
+
+Architecture:
+- Secrets in server env only; Context7 query-docs for official [SERVICE] Node SDK.
+- Mutations via Server Actions or route handlers with auth checks; webhooks in route handler with signature verification if applicable.
+- No secrets in client components; use Convex only if this repo added Convex (default stack is Supabase).
+
+Propose file locations under apps/web/src/app/api/ or actions before coding.
+</Prompt>
+
+## Skills and agent rules change
+
+<Prompt description="Copy — safe skill or AGENTS.md update" actions={["copy", "cursor"]}>
+I need to update agent behavior: [DESCRIBE CHANGE].
+
+Follow AGENTS.md:
+- Canonical skills in .agents/skills/; .claude/skills stays a symlink.
+- Run pnpm skills:check after skill changes.
+- Never add or commit .oneignore.
+
+Document the change in contributing/agent-rules or docs/AGENT_SKILLS.md if user-facing.
+Do not copy vendored skill trees into .cursor/.
+</Prompt>

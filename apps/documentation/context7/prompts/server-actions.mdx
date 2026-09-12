@@ -1,0 +1,64 @@
+---
+title: Server actions prompts
+description: Cursor prompts for next-safe-action, Zod validation, and authenticated mutations in NextBase Starter
+seo:
+  keywords:
+    - next-safe-action prompts
+    - Zod server actions Next.js
+    - Next.js Server Actions validation
+---
+
+Mutations use `src/lib/safe-action.ts` clients. Context7 libraries: `next-safe-action`, `zod`, and Next.js Server Actions.
+
+## CRUD with authActionClient
+
+<Prompt description="Copy — create update delete for a user-owned resource" actions={["copy", "cursor"]}>
+Implement CRUD for [RESOURCE] owned by auth.users / user_id column [COLUMN].
+
+NextBase patterns:
+- Zod schemas for create/update/delete input; share types with form components where existing code does.
+- authActionClient for all mutations; actionClient only if truly public (rare).
+- Context7 query-docs for next-safe-action auth middleware and useAction/useOptimistic if client hooks are needed.
+- Database enforcement via RLS on [TABLE]; server action must not trust client userId without matching session.
+
+Place read helpers in src/data/user/[resource].ts and actions in src/data/user/ or feature folder matching repo layout.
+</Prompt>
+
+## Public anon action (careful)
+
+<Prompt description="Copy — rate-limited or newsletter-style public action" actions={["copy", "cursor"]}>
+Add a public server action for: [e.g. waitlist signup, contact form].
+
+Security requirements:
+- actionClient with strict Zod limits (length, email format, honeypot field optional).
+- Context7 query-docs for Next.js Server Actions security (treat like public API).
+- No user PII in logs; insert via Supabase with RLS allowing anon insert only on intended table/policy.
+- Consider duplicate submission handling and user-facing error messages.
+
+Explain why this should NOT use authActionClient.
+</Prompt>
+
+## Form with useActionState
+
+<Prompt description="Copy — accessible form wired to safe action" actions={["copy", "cursor"]}>
+Build a form on [PAGE] for [GOAL] using NextBase UI conventions.
+
+Use:
+- shadcn Form components under src/components/ui/
+- Server action with Zod; Context7 query-docs for next-safe-action and React useActionState if applicable
+- Display field errors and toast on success
+- Client component only for the form shell; keep page as RSC when possible
+
+Match naming: handleSubmit, aria labels, keyboard support.
+</Prompt>
+
+## Middleware logging and errors
+
+<Prompt description="Copy — improve action observability" actions={["copy", "cursor"]}>
+Improve error handling for action [NAME] without leaking internals.
+
+Review src/lib/safe-action.ts logging middleware and existing actions.
+Context7 query-docs for next-safe-action error handling and ServerError types.
+Return safe messages to client; log details server-side.
+Add or update Vitest tests if src/data has test patterns for actions.
+</Prompt>

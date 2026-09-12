@@ -34,7 +34,7 @@ export function UpdatePassword() {
   return (
     <AuthCard
       title="Create a new password"
-      description="Choose a secure password for your Nextbase account."
+      description="Choose a secure password for your Menace Next account."
       icon={<ShieldCheck aria-hidden="true" />}
     >
       <Password

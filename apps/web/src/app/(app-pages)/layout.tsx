@@ -1,5 +1,5 @@
-import { Suspense, type ReactNode } from 'react';
 import { redirect } from 'next/navigation';
+import { Suspense, type ReactNode } from 'react';
 
 import { DynamicBreadcrumb } from '@/components/dynamic-breadcrumb';
 import { ModeToggle } from '@/components/ui/mode-toggle';

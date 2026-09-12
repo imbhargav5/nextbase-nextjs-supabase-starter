@@ -2,9 +2,9 @@
 
 'use client';
 
-import { ArrowUpRight } from 'lucide-react';
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 
+import { ArrowUpRightIcon } from '@/components/icons/arrow-up-right';
 import { cn } from '@/lib/utils';
 
 type CSSVars = CSSProperties & Record<string, string | number | undefined>;
@@ -49,7 +49,7 @@ function CardFooter({ index, tag }: { index: number; tag?: string }) {
             className="flex size-8 shrink-0 items-center justify-center rounded-full border border-border/70 bg-background/80 text-foreground shadow-sm backdrop-blur-sm"
             aria-hidden="true"
           >
-            <ArrowUpRight className="size-3.5" />
+            <ArrowUpRightIcon aria-hidden size={14} />
           </span>
           <span className="text-[11px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
             {tag ?? 'Feature'}
@@ -227,10 +227,10 @@ export function HoverStack({
   }
 
   const cardBaseClassName =
-    'relative flex select-none flex-col justify-between overflow-hidden rounded-[1.25rem] border border-border/70 p-6 text-foreground shadow-sm';
+    'group relative flex select-none flex-col justify-between overflow-hidden rounded-[1.25rem] border border-border/70 p-6 text-foreground shadow-sm';
 
   return (
-    <div ref={containerRef} className={cn('relative w-full overflow-visible', className)}>
+    <div ref={containerRef} className={cn('relative w-full min-w-0 overflow-x-clip', className)}>
       {isTouch ? (
         <div className="flex flex-col gap-4">
           {preparedCards.map((card, index) => (
@@ -259,7 +259,7 @@ export function HoverStack({
         </div>
       ) : (
         <div
-          className="relative mx-auto overflow-visible"
+          className="relative mx-auto min-w-0 overflow-x-clip"
           style={{
             width: fanWidth * layoutScale,
             height: stackHeight * layoutScale,

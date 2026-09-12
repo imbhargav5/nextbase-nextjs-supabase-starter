@@ -13,20 +13,11 @@ test.describe.parallel('Anonymous user public pages', () => {
     ).toBeVisible();
   });
 
-  test('can access the about page', async ({ page }) => {
-    await page.goto('/about');
-
-    await expect(page).toHaveURL('/about');
-    await expect(
-      page.getByRole('heading', { name: /modern full-stack starter kit/i })
-    ).toBeVisible();
-  });
-
   test('can access the login page', async ({ page }) => {
     await page.goto('/login');
 
     await expect(page).toHaveURL('/login');
-    await expect(page.getByText('Login to NextBase')).toBeVisible();
+    await expect(page.getByText(/sign in to menace next/i)).toBeVisible();
     await expect(page.getByRole('tab', { name: 'Magic Link' })).toBeVisible();
   });
 
@@ -34,7 +25,40 @@ test.describe.parallel('Anonymous user public pages', () => {
     await page.goto('/sign-up');
 
     await expect(page).toHaveURL('/sign-up');
-    await expect(page.getByText('Register to NextBase')).toBeVisible();
+    await expect(page.getByText(/create your menace next account/i)).toBeVisible();
     await expect(page.getByRole('tab', { name: 'Magic Link' })).toBeVisible();
+  });
+
+  test('can access the template marketplace', async ({ page }) => {
+    await page.goto('/templates');
+
+    await expect(page).toHaveURL('/templates');
+    await expect(
+      page.getByRole('heading', { name: /template marketplace/i }),
+    ).toBeVisible();
+    await expect(page.getByRole('link', { name: /view template/i })).toBeVisible();
+    await expect(page.getByRole('link', { name: /open scaffold/i })).toBeVisible();
+  });
+
+  test('can access the Intellune template scaffold', async ({ page }) => {
+    await page.goto('/templates/intellune');
+
+    await expect(page).toHaveURL('/templates/intellune');
+    await expect(page.locator('[data-template="intellune"]')).toBeVisible();
+    await expect(
+      page.getByRole('heading', { name: /intellune/i }),
+    ).toBeVisible();
+  });
+
+  test('can access the Nguyen template demo', async ({ page }) => {
+    await page.goto('/templates/nguyen');
+
+    await expect(page).toHaveURL('/templates/nguyen');
+    await expect(
+      page.getByRole('heading', {
+        name: /the unified workspace/i,
+      }),
+    ).toBeVisible();
+    await expect(page.locator('[data-template="nguyen"]')).toBeVisible();
   });
 });

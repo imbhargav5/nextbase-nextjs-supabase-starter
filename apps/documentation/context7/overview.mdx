@@ -1,0 +1,80 @@
+---
+title: Context7 in Cursor
+description: Use Context7 MCP for up-to-date Next.js, Supabase, and library docs while building on NextBase Starter
+---
+
+Context7 gives Cursor **current documentation** for libraries and frameworks instead of stale training data. NextBase docs pair Context7 with **copy-ready prompts** so you can ship features faster with fewer hallucinated APIs.
+
+## When to use Context7
+
+Use Context7 when you need accurate, version-aware answers about:
+
+- Next.js App Router, Cache Components, and Server Actions
+- Supabase Auth, SSR clients, RLS, and migrations
+- shadcn/ui, Tailwind CSS v4, Zod, and `next-safe-action`
+- Playwright, Vitest, and Turborepo scripts in this monorepo
+
+Skip Context7 for pure refactors inside this repo when you only need local code search.
+
+## Enable Context7 in Cursor
+
+1. Open **Cursor Settings → MCP** (or install the Context7 plugin from the marketplace).
+2. Add the Context7 server if it is not already listed.
+3. Confirm tools such as `resolve-library-id` and `query-docs` appear in the MCP panel.
+
+<Tip>
+  The repo root includes a Cursor rule that tells agents to prefer Context7 for library and API questions. Keep that rule enabled when working on NextBase.
+</Tip>
+
+## How agents should fetch docs
+
+Agents should resolve a library ID, then query docs for **one concept at a time**:
+
+1. `resolve-library-id` with the library name and your goal.
+2. Pick the best match (official package, high benchmark score, version-specific ID when you care about a release).
+3. `query-docs` with the library ID and a specific question (auth, caching, migrations—not everything in one call).
+
+<Prompt description="Copy — teach Cursor to use Context7 on this stack" actions={["copy", "cursor"]}>
+You are working in the NextBase Starter monorepo (Next.js 16 App Router + Supabase + pnpm Turborepo).
+
+For any question about external libraries, frameworks, SDKs, or CLI tools:
+1. Use Context7 MCP: call resolve-library-id with the library name and what we need to look up.
+2. Choose the best matching library ID (prefer official packages; use version-specific IDs when I mention a version).
+3. Call query-docs with that library ID and a focused query for a single concept.
+4. Answer using the fetched docs and cite behavior that differs from older Next.js or Supabase versions.
+
+Do not guess API names. If Context7 returns nothing useful, say so and ask me to narrow the library or version.
+
+When changing this repo, follow AGENTS.md: schema edits go in apps/database/supabase/schemas/*.sql; never hand-edit migration files except via supabase db diff.
+</Prompt>
+
+## Prompt library
+
+The pages below are a **complete prompt library** for common NextBase workflows. Each block supports **Copy** (clipboard) and **Open in Cursor** (prefilled chat).
+
+<CardGroup cols={2}>
+  <Card title="Prompt index" icon="list" href="/context7/prompt-library">
+    Browse every prompt by category and use case.
+  </Card>
+  <Card title="Next.js & caching" icon="bolt" href="/context7/prompts/nextjs-caching">
+    Cache Components, RSC boundaries, and performance.
+  </Card>
+  <Card title="Supabase auth" icon="key" href="/context7/prompts/supabase-auth">
+    SSR, middleware, OAuth, and protected routes.
+  </Card>
+  <Card title="Database & RLS" icon="database" href="/context7/prompts/database-migrations">
+    Schema, migrations, policies, and pgTAP tests.
+  </Card>
+  <Card title="Server actions" icon="server" href="/context7/prompts/server-actions">
+    next-safe-action, Zod, and authActionClient.
+  </Card>
+  <Card title="UI & shadcn" icon="palette" href="/context7/prompts/ui-components">
+    Components, forms, and accessible patterns.
+  </Card>
+  <Card title="Testing" icon="vial" href="/context7/prompts/testing">
+    Vitest, Playwright, and E2E for public and authed routes.
+  </Card>
+  <Card title="Integrations" icon="plug" href="/context7/prompts/integrations">
+    OAuth providers, env sync, and deployment checks.
+  </Card>
+</CardGroup>

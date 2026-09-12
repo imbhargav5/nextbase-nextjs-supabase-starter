@@ -2,6 +2,12 @@ import '@/styles/globals.css';
 import localFont from 'next/font/local';
 import { DynamicLayoutProviders } from './DynamicLayoutProviders';
 import { ClientLayout } from './ClientLayout';
+import {
+  OrganizationJsonLd,
+  SoftwareApplicationJsonLd,
+  WebSiteJsonLd,
+} from '@/components/seo/structured-data';
+import { createRootMetadata } from '@/lib/seo/metadata';
 
 const inter = localFont({
   src: [
@@ -23,19 +29,16 @@ const robotoMono = localFont({
   display: 'swap',
 });
 
-export const metadata = {
-  title: {
-    default: 'Nextbase',
-    template: '%s · Nextbase',
-  },
-  description:
-    'An open-source Next.js and Supabase starter for shipping secure products faster.',
-};
+export const metadata = createRootMetadata();
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning className={`${inter.variable} ${robotoMono.variable}`}>
-      <head />
+      <head>
+        <OrganizationJsonLd />
+        <WebSiteJsonLd />
+        <SoftwareApplicationJsonLd />
+      </head>
       <body>
         <DynamicLayoutProviders>
           <ClientLayout>

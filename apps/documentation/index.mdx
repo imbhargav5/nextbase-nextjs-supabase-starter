@@ -1,0 +1,38 @@
+---
+title: Introduction
+description: Menace Next — complete SaaS starter kit for Next.js 16 and Supabase
+---
+
+**Menace Next** is a commercial-grade SaaS starter kit built on **Next.js 16** and **Supabase**. It ships SSR-correct auth, Row Level Security, marketing and pricing pages, template demos, SEO primitives, and caching patterns you would otherwise rebuild in the first sprint.
+
+## What you get
+
+- Supabase Auth with `@supabase/ssr` across middleware, server components, and server actions
+- Postgres RLS policies and versioned migrations under `apps/database`
+- `next-safe-action` with Zod validation and separate anon, auth, and user data layers
+- Next.js Cache Components, Suspense data fetching, shadcn/ui, and Tailwind CSS v4
+- Vitest, Playwright, and Changesets wired into Turbo pipelines
+
+## Monorepo layout
+
+| Path | Purpose |
+| --- | --- |
+| `apps/web` | Next.js application |
+| `apps/database` | Local Supabase stack, migrations, pgTAP tests |
+| `packages/typescript-config` | Shared TypeScript presets |
+| `docs/` | In-repo architecture guides (Markdown) |
+| `apps/documentation/` | This Docs7 site (Context7 prompt library) |
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Quick start" icon="rocket" href="/getting-started">
+    Install dependencies, configure env, and run the app locally.
+  </Card>
+  <Card title="Architecture" icon="sitemap" href="/architecture/overview">
+    Auth flow, permissions, and caching boundaries.
+  </Card>
+  <Card title="Context7 prompts" icon="sparkles" href="/context7/prompt-library">
+    Copy-ready Cursor prompts for Next.js, Supabase, RLS, UI, and tests.
+  </Card>
+</CardGroup>

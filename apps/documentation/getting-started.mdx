@@ -1,0 +1,71 @@
+---
+title: Quick start
+description: Run NextBase Starter locally with pnpm and Supabase
+---
+
+## Prerequisites
+
+- Node.js **24+**
+- pnpm **11+**
+- Docker (for local Supabase)
+
+## Automated setup
+
+From the repository root:
+
+```bash
+./setup.sh
+```
+
+The script installs dependencies, copies env examples when missing, starts Supabase, syncs keys into env files, and generates local database types when possible.
+
+## Manual setup
+
+<Steps>
+  <Step title="Install">
+    ```bash
+    pnpm install
+    ```
+  </Step>
+  <Step title="Environment">
+    Copy env examples at the **repo root** (not under `apps/web`):
+
+    ```bash
+    cp .env.local.example .env.local
+    cp .env.development.local.example .env.development.local
+    ```
+
+    Fill in your Supabase project URL and keys, or use the local stack after `pnpm database#start` and `pnpm supabase:sync-env`.
+  </Step>
+  <Step title="Database">
+    ```bash
+    pnpm database#start
+    pnpm supabase:sync-env
+    ```
+  </Step>
+  <Step title="Development">
+    ```bash
+    pnpm dev
+    ```
+
+    Or run only the web app:
+
+    ```bash
+    pnpm web#dev
+    ```
+  </Step>
+</Steps>
+
+## Common scripts
+
+| Command | Description |
+| --- | --- |
+| `pnpm build` | Production build (Turbo) |
+| `pnpm test` | Unit tests |
+| `pnpm test:e2e` | Playwright E2E |
+| `pnpm gen-types-local` | Regenerate Supabase types from local DB |
+| `pnpm lint` | oxlint across the monorepo |
+
+<Tip>
+  See `AGENTS.md` at the repo root for the canonical agent and schema workflow rules.
+</Tip>

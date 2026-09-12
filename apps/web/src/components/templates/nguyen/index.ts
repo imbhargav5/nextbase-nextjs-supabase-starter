@@ -1,0 +1,11 @@
+export * from './data';
+export { NguyenBackground } from './nguyen-background';
+export { NguyenFaq } from './nguyen-faq';
+export { NguyenFeatures } from './nguyen-features';
+export { NguyenFooter } from './nguyen-footer';
+export { NguyenHeader } from './nguyen-header';
+export { NguyenHero } from './nguyen-hero';
+export { NguyenPricing } from './nguyen-pricing';
+export { NguyenSolution } from './nguyen-solution';
+export { NguyenTemplate } from './nguyen-template';
+export { NguyenTestimonials } from './nguyen-testimonials';

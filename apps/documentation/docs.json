@@ -1,0 +1,50 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "name": "Menace Next",
+  "theme": "mint",
+  "colors": {
+    "primary": "#171717",
+    "light": "#404040",
+    "dark": "#0a0a0a"
+  },
+  "filterSidebar": true,
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Guide",
+        "groups": [
+          {
+            "group": "Start here",
+            "pages": ["index", "getting-started"]
+          },
+          {
+            "group": "Architecture",
+            "pages": [
+              "architecture/overview",
+              "architecture/auth",
+              "architecture/caching"
+            ]
+          },
+          {
+            "group": "Contributing",
+            "pages": ["contributing/agent-rules", "contributing/database"]
+          },
+          {
+            "group": "Context7 & AI prompts",
+            "pages": [
+              "context7/overview",
+              "context7/prompt-library",
+              "context7/prompts/nextjs-caching",
+              "context7/prompts/supabase-auth",
+              "context7/prompts/database-migrations",
+              "context7/prompts/server-actions",
+              "context7/prompts/ui-components",
+              "context7/prompts/testing",
+              "context7/prompts/integrations"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

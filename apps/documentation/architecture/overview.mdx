@@ -1,0 +1,36 @@
+---
+title: Overview
+description: Turborepo layout and request flow
+---
+
+NextBase is a **pnpm + Turborepo** monorepo with two apps and shared packages.
+
+```
+apps/web/          Next.js 16 (App Router, Cache Components)
+apps/database/     Supabase CLI project (migrations, tests, seed)
+packages/          Shared TypeScript config
+```
+
+## Route groups in `apps/web`
+
+| Group | Routes |
+| --- | --- |
+| `(external-pages)` | Public marketing (home, pricing, templates) |
+| `(auth-pages)` | Login, sign-up, password flows, OAuth callback |
+| `(app-pages)` | Authenticated shell (dashboard, private items) |
+
+## Data access layers
+
+- `src/data/anon/` — public reads
+- `src/data/auth/` — sign-in, sign-up, sign-out actions
+- `src/data/user/` — authenticated queries (RLS-scoped)
+- `src/rsc-data/` — React Server Component fetchers
+
+Server mutations use **`next-safe-action`** clients in `src/lib/safe-action.ts`:
+
+- `actionClient` — base client with logging middleware
+- `authActionClient` — requires a session and injects `ctx.userId`
+
+## Permissions
+
+Authorization is enforced in **Postgres RLS**, not only in route handlers. User-owned tables compare `auth.uid()` to ownership columns so a missed check in application code cannot bypass the database.

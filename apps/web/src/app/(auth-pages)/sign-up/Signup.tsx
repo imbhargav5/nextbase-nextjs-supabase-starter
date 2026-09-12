@@ -6,17 +6,18 @@ import { useRef, useState } from 'react';
 import { toast } from 'sonner';
 
 import { AuthCard } from '@/components/Auth/AuthCard';
+import { AuthMethodTabs } from '@/components/Auth/auth-method-tabs';
 import { Email } from '@/components/Auth/Email';
 import { EmailAndPassword } from '@/components/Auth/EmailAndPassword';
 import { EmailConfirmationPendingCard } from '@/components/Auth/EmailConfirmationPendingCard';
 import { RenderProviders } from '@/components/Auth/RenderProviders';
 import { Button } from '@/components/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
   signInWithMagicLinkAction,
   signInWithProviderAction,
   signUpAction,
 } from '@/data/auth/auth';
+import { PRODUCT_NAME } from '@/constants';
 import type { AuthProvider } from '@/types';
 
 interface SignUpProps {
@@ -102,7 +103,7 @@ export function SignUp({ next }: SignUpProps) {
 
   return (
     <AuthCard
-      title="Register to NextBase"
+      title={`Create your ${PRODUCT_NAME} account`}
       description="Create your account and start with a secure, working foundation."
       footer={
         <p className="w-full text-center text-sm text-muted-foreground">
@@ -113,36 +114,39 @@ export function SignUp({ next }: SignUpProps) {
         </p>
       }
     >
-      <Tabs defaultValue="password">
-        <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="password">Password</TabsTrigger>
-          <TabsTrigger value="magic-link">Magic Link</TabsTrigger>
-          <TabsTrigger value="social-login">Social</TabsTrigger>
-        </TabsList>
-        <TabsContent value="password" className="mt-6">
-          <EmailAndPassword
-            isLoading={signUpStatus === 'executing'}
-            onSubmit={(data) => executeSignUp({ ...data, next })}
-            view="sign-up"
-          />
-        </TabsContent>
-        <TabsContent value="magic-link" className="mt-6">
-          <Email
-            onSubmit={(email) => executeMagicLink({ email, next })}
-            isLoading={magicLinkStatus === 'executing'}
-            view="sign-up"
-          />
-        </TabsContent>
-        <TabsContent value="social-login" className="mt-6">
-          <RenderProviders
-            providers={['google', 'github', 'twitter']}
-            isLoading={providerStatus === 'executing'}
-            onProviderLoginRequested={(
-              provider: Extract<AuthProvider, 'google' | 'github' | 'twitter'>
-            ) => executeProvider({ provider, next })}
-          />
-        </TabsContent>
-      </Tabs>
+      <AuthMethodTabs layoutId="signup-auth-method">
+        {(activeTab) => {
+          if (activeTab === 'password') {
+            return (
+              <EmailAndPassword
+                isLoading={signUpStatus === 'executing'}
+                onSubmit={(data) => executeSignUp({ ...data, next })}
+                view="sign-up"
+              />
+            );
+          }
+
+          if (activeTab === 'magic-link') {
+            return (
+              <Email
+                onSubmit={(email) => executeMagicLink({ email, next })}
+                isLoading={magicLinkStatus === 'executing'}
+                view="sign-up"
+              />
+            );
+          }
+
+          return (
+            <RenderProviders
+              providers={['google', 'github', 'twitter']}
+              isLoading={providerStatus === 'executing'}
+              onProviderLoginRequested={(
+                provider: Extract<AuthProvider, 'google' | 'github' | 'twitter'>
+              ) => executeProvider({ provider, next })}
+            />
+          );
+        }}
+      </AuthMethodTabs>
     </AuthCard>
   );
 }

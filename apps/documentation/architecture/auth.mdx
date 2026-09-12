@@ -1,0 +1,58 @@
+---
+title: Authentication
+description: Middleware, SSR clients, and protected routes
+---
+
+## Flow
+
+1. **Middleware** (`apps/web/src/supabase-clients/middleware.ts`) creates a server Supabase client, calls `auth.getUser()`, and redirects unauthenticated users away from protected prefixes.
+2. **Server components** use `createSupabaseClient()` so reads run under the user’s RLS context.
+3. **Server actions** use `authActionClient`, which rejects unauthenticated callers and provides `ctx.userId`.
+4. **OAuth and email confirmation** complete at `/auth/callback` and `/auth/confirm`; failures route to `/auth/auth-code-error`.
+
+## Sign-in methods
+
+Email and password, magic link, and OAuth providers (Google, GitHub, Twitter) are included. The login UI calls `signInWithProviderAction`, which uses PKCE and redirects through `/auth/callback`.
+
+### Google OAuth
+
+<Steps>
+  <Step title="Google Cloud Console">
+    1. Open [Google Cloud Console](https://console.cloud.google.com/) and select a project.
+    2. Configure the **OAuth consent screen** (External app for testing).
+    3. Under **APIs & Services → Credentials**, create an **OAuth client ID** of type **Web application**.
+    4. Add **Authorized redirect URIs**:
+       - **Local Supabase:** `http://localhost:54321/auth/v1/callback`
+       - **Hosted Supabase:** `https://<project-ref>.supabase.co/auth/v1/callback` (from Dashboard → Authentication → URL configuration)
+    5. Copy the **Client ID** and **Client secret**.
+  </Step>
+  <Step title="Local Supabase (CLI)">
+    1. Copy `apps/database/supabase/.env.local.example` to `apps/database/supabase/.env.local` and paste your Google credentials.
+    2. Set `enabled = true` under `[auth.external.google]` in `apps/database/supabase/config.toml` (credentials are read via `env(...)`).
+    3. Ensure `site_url` and `additional_redirect_urls` allow your app callback, e.g. `http://localhost:3000/**` for `redirectTo` `http://localhost:3000/auth/callback`.
+    4. Set `NEXT_PUBLIC_SITE_URL=http://localhost:3000/` in the repo root `.env.local` so server actions build the same redirect URL.
+    5. Restart the stack: `pnpm database#stop` then `pnpm database#start`.
+  </Step>
+  <Step title="Hosted Supabase project">
+    1. Dashboard → **Authentication → Providers → Google** — enable and paste Client ID / secret.
+    2. **Authentication → URL configuration** — set **Site URL** to your production origin and add redirect URLs such as `https://your-domain.com/**` and `https://your-domain.com/auth/callback`.
+    3. Set `NEXT_PUBLIC_SITE_URL` (and `NEXT_PUBLIC_VERCEL_URL` on Vercel) in production env.
+  </Step>
+  <Step title="Verify">
+    1. Run the web app and open `/login` → **Social** → **Google**.
+    2. After consent, you should land on `/auth/callback` and then `/dashboard` (or the `next` query param when present).
+    3. On failure, check `/auth/auth-code-error` and Supabase Auth logs.
+  </Step>
+</Steps>
+
+<Warning>
+  The redirect URI registered in Google must be the **Supabase Auth callback** (`.../auth/v1/callback`), not `/auth/callback` on your Next.js app. The app callback is passed as `redirectTo` in `signInWithOAuth` and must appear in Supabase’s redirect allow list.
+</Warning>
+
+## Protected routes
+
+Middleware uses `path-to-regexp` matching for prefixes such as `/dashboard` and `/private-items`. Keep this list aligned with `(app-pages)` routes when you add new authenticated areas.
+
+<Note>
+  Prefer `getUser()` over reading the session alone in middleware so tokens are validated on each request.
+</Note>

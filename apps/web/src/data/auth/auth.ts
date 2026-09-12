@@ -117,11 +117,20 @@ export const signInWithProviderAction = actionClient
     if (next) {
       redirectToURL.searchParams.set('next', next);
     }
+    const oauthOptions: {
+      redirectTo: string;
+      scopes?: string;
+    } = {
+      redirectTo: redirectToURL.toString(),
+    };
+
+    if (provider === 'google') {
+      oauthOptions.scopes = 'https://www.googleapis.com/auth/userinfo.email';
+    }
+
     const { error, data } = await supabase.auth.signInWithOAuth({
       provider,
-      options: {
-        redirectTo: redirectToURL.toString(),
-      },
+      options: oauthOptions,
     });
 
     if (error) {

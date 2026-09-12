@@ -1,12 +1,7 @@
-import {
-  ArrowRight,
-  Check,
-  LockKeyhole,
-  MoreHorizontal,
-} from 'lucide-react';
+import { Check, LockKeyhole, MoreHorizontal } from 'lucide-react';
 import Link from 'next/link';
 
-import { Github } from '@/components/icons/github';
+import { ArrowRightIcon } from '@/components/icons/arrow-right';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -24,18 +19,19 @@ import {
   ItemMedia,
   ItemTitle,
 } from '@/components/ui/item';
+import { HomeHeroBackground } from './home-hero-background';
 
 const previewItems = ['Launch checklist', 'Customer notes', 'Product roadmap'];
 
 export function HomeHero() {
   return (
     <section className="relative overflow-hidden">
-      <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,var(--color-muted),transparent_45%)]" />
+      <HomeHeroBackground />
       <div className="mx-auto grid max-w-7xl items-center gap-14 px-4 py-20 sm:px-6 sm:py-28 lg:grid-cols-[1.05fr_0.95fr] lg:px-8 lg:py-32">
         <div className="max-w-2xl space-y-7">
           <Badge variant="secondary" className="gap-1.5 rounded-full px-3 py-1">
             <Check className="size-3.5" aria-hidden="true" />
-            Open-source starter kit
+            Complete SaaS starter kit
           </Badge>
           <div className="space-y-5">
             <h1 className="text-balance text-4xl font-semibold tracking-tight sm:text-6xl lg:text-7xl">
@@ -49,19 +45,9 @@ export function HomeHero() {
           </div>
           <div className="flex flex-col gap-3 sm:flex-row">
             <Button asChild size="lg">
-              <Link href="/sign-up">
+              <Link href="/sign-up" className="group">
                 Get started
-                <ArrowRight aria-hidden="true" />
-              </Link>
-            </Button>
-            <Button asChild size="lg" variant="outline">
-              <Link
-                href="https://github.com/imbhargav5/nextbase-nextjs-supabase-starter"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <Github aria-hidden="true" />
-                View source
+                <ArrowRightIcon aria-hidden size={16} />
               </Link>
             </Button>
           </div>

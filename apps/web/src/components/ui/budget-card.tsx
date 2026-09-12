@@ -86,12 +86,19 @@ export function BudgetCard() {
 
   const scatteredDots = useMemo(
     () =>
-      Array.from({ length: 35 }, (_, i) => ({
-        x: 40 + (i % 7) * 42 + (Math.random() - 0.5) * 30,
-        y: padding.top + 15 + Math.floor(i / 7) * 15 + (Math.random() - 0.5) * 10,
-        opacity: 0.4 + Math.random() * 0.4,
-        size: 1.2 + Math.random() * 1.8,
-      })),
+      Array.from({ length: 35 }, (_, i) => {
+        const jitter = (seed: number) => {
+          const value = Math.sin(seed * 12.9898 + i * 78.233) * 43758.5453;
+          return value - Math.floor(value);
+        };
+
+        return {
+          x: 40 + (i % 7) * 42 + (jitter(1) - 0.5) * 30,
+          y: padding.top + 15 + Math.floor(i / 7) * 15 + (jitter(2) - 0.5) * 10,
+          opacity: 0.4 + jitter(3) * 0.4,
+          size: 1.2 + jitter(4) * 1.8,
+        };
+      }),
     [],
   );
 

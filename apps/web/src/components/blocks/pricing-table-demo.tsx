@@ -45,7 +45,6 @@ export function PricingTableDemo() {
       defaultPlan="pro"
       defaultInterval="monthly"
       onPlanSelect={(plan) => console.log("Selected plan:", plan)}
-      containerClassName="py-12"
       buttonClassName="bg-primary hover:bg-primary/90"
     />
   )

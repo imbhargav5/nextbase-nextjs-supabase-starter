@@ -3,6 +3,7 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 
 import { Brand } from '@/components/brand';
+import { PRODUCT_NAME } from '@/constants';
 import { Badge } from '@/components/ui/badge';
 import { ModeToggle } from '@/components/ui/mode-toggle';
 import {
@@ -24,16 +25,16 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
     <div className="grid min-h-svh lg:grid-cols-2">
       <div className="flex min-h-svh flex-col">
         <header className="flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
-          <Link href="/" aria-label="Nextbase home">
+          <Link href="/" aria-label={`${PRODUCT_NAME} home`}>
             <Brand />
           </Link>
           <ModeToggle />
         </header>
-        <main className="flex flex-1 items-center justify-center px-4 py-10 sm:px-6">
+        <main className="flex flex-1 items-start justify-center px-4 pb-10 pt-16 sm:px-6 sm:pt-20">
           <div className="w-full max-w-md">{children}</div>
         </main>
         <footer className="px-6 py-5 text-center text-xs text-muted-foreground">
-          Secure local-first development with Nextbase.
+          Secure local-first development with {PRODUCT_NAME}.
         </footer>
       </div>
 

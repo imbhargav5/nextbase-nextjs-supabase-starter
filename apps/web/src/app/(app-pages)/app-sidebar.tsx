@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import Link from 'next/link';
 
 import { Brand } from '@/components/brand';
+import { PRODUCT_NAME } from '@/constants';
 import {
   Sidebar,
   SidebarHeader,
@@ -19,7 +20,7 @@ async function SidebarHeaderContent() {
     <SidebarHeader>
       <SidebarMenu>
         <SidebarMenuItem>
-          <SidebarMenuButton size="lg" asChild tooltip="Nextbase home">
+          <SidebarMenuButton size="lg" asChild tooltip={`${PRODUCT_NAME} home`}>
             <Link href="/">
               <Brand showTagline />
             </Link>

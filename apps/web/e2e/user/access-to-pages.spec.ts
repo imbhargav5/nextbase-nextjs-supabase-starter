@@ -25,11 +25,4 @@ test.describe.parallel('Logged-in user page access', () => {
     ).toBeVisible();
   });
 
-  test('can access about page', async ({ page }) => {
-    await page.goto('/about');
-    await expect(page).toHaveURL('/about');
-    await expect(
-      page.getByRole('heading', { name: /modern full-stack starter kit/i })
-    ).toBeVisible();
-  });
 });

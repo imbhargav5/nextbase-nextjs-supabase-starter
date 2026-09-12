@@ -1,0 +1,41 @@
+---
+title: Database workflow
+description: Schema changes, migrations, and tests
+---
+
+## Schema source of truth
+
+Edit declarative schema under:
+
+```
+apps/database/supabase/schemas/*.sql
+```
+
+<Warning>
+  Do **not** hand-edit files in `apps/database/supabase/migrations/` except through the generated workflow below.
+</Warning>
+
+## Generate a migration
+
+From `apps/database`:
+
+```bash
+supabase db diff -f <migration_name>
+```
+
+Review the generated SQL, then apply locally and regenerate types:
+
+```bash
+pnpm gen-types-local
+```
+
+## RLS and tests
+
+- Policies belong in schema files and ship with migrations.
+- pgTAP-style tests live under `apps/database/supabase/tests/`.
+
+## Authentication claims
+
+JWT claim handling and SSR auth details are documented in:
+
+`docs/SUPABASE_GETCLAIMS_AUTHENTICATION.md`

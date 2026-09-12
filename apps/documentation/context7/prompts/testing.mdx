@@ -1,0 +1,68 @@
+---
+title: Testing prompts
+description: Cursor prompts for Vitest unit tests and Playwright E2E in NextBase Starter
+seo:
+  keywords:
+    - Playwright Next.js prompts
+    - Vitest React testing prompts
+    - E2E Supabase auth testing
+---
+
+Tests: `pnpm test` (Vitest), `pnpm test:e2e` (Playwright in `apps/web/e2e/`). Context7 for Playwright and Vitest APIs.
+
+## E2E public page
+
+<Prompt description="Copy — anon spec for a marketing URL" actions={["copy", "cursor"]}>
+Add Playwright coverage for public route [PATH] in apps/web/e2e/anon/.
+
+Follow public-pages.spec.ts patterns:
+- Assert title, key CTAs, and no auth required.
+- Context7 query-docs for Playwright locators and expect matchers.
+- Stable selectors (role, text) over brittle CSS.
+- Run with pnpm test:e2e from repo root.
+
+Do not depend on production Supabase — use local dev assumptions documented in getting-started.
+</Prompt>
+
+## E2E authenticated flow
+
+<Prompt description="Copy — login and app-pages spec" actions={["copy", "cursor"]}>
+Add E2E test for authenticated flow: [LOGIN METHOD] then [USER ACTION on /dashboard or similar].
+
+Use apps/web/e2e/user/access-to-pages.spec.ts as reference.
+Context7 query-docs for Playwright storage state or setup project if we need reusable auth.
+Prefer test user via local Supabase seed or env documented in AGENTS.md — never commit passwords.
+Handle flakiness with proper waits, not arbitrary sleep.
+</Prompt>
+
+## Unit test for data helper or action schema
+
+<Prompt description="Copy — Vitest for pure logic" actions={["copy", "cursor"]}>
+Add Vitest tests for [MODULE in apps/web/src/...] covering [BEHAVIOR].
+
+Match existing test config in apps/web (vitest, @testing-library if component tests).
+Context7 query-docs for Vitest mocks and describe/test structure.
+For Zod schemas, test valid/invalid edge cases without hitting Supabase.
+Keep tests in __tests__ adjacent to source if that is the repo convention.
+</Prompt>
+
+## Fix failing CI E2E
+
+<Prompt description="Copy — debug Playwright failure" actions={["copy", "cursor"]}>
+Playwright failed on [SPEC NAME]: [ERROR SNIPPET].
+
+Investigate NextBase e2e setup (base URL, webServer, env).
+Context7 query-docs for Playwright trace viewer and retry config.
+Check if failure is route rename (templates, auth) vs real regression.
+Propose minimal fix to spec or app; run pnpm test:e2e locally before concluding.
+</Prompt>
+
+## Snapshot or a11y check (optional)
+
+<Prompt description="Copy — regression on component markup" actions={["copy", "cursor"]}>
+Add a focused component test for [COMPONENT] ensuring [ACCESSIBILITY OR RENDER EXPECTATION].
+
+Use React Testing Library queries by role; avoid snapshot-only tests unless repo already uses them for this component.
+Context7 query-docs for @testing-library/react and jest-dom matchers.
+Only add if meaningful — skip trivial "renders without crash" tests.
+</Prompt>

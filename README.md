@@ -1,15 +1,24 @@
-# NextBase Starter — Open Source Next.js + Supabase Boilerplate
+# Menace Next — Complete SaaS Starter Kit (Next.js + Supabase)
 
-> A production-grade Next.js 16 + Supabase foundation. Free, MIT-licensed, and ready to clone.
+> A production-grade, sellable SaaS foundation: auth, database, marketing, pricing, templates, and SEO — ready to customize and ship.
 
-NextBase Starter is the open-source baseline of the [NextBase](https://usenextbase.com) family — an opinionated, tested starting point for SaaS teams building on Next.js 16 and Supabase. It bundles the auth, RLS, monorepo, and caching patterns that you would otherwise spend weeks deriving from scratch.
+**Menace Next** is a commercial-grade starter kit for teams who want to launch SaaS products without rebuilding the same infrastructure every time. It packages Next.js 16, Supabase, shadcn/ui, server actions, template demos, and search-optimized marketing pages into one cohesive monorepo.
 
-- **Demo:** _[live demo URL]_
-- **Documentation:** _[docs URL]_
-- **Changelog:** see [`CHANGELOG.md`](./CHANGELOG.md)
+- **Product:** Menace Next
+- **Demo:** _[your live demo URL]_
+- **Documentation:** `pnpm docs:dev` (Mintlify in `apps/documentation`)
+- **Changelog:** [`CHANGELOG.md`](./CHANGELOG.md)
 - **License:** MIT — see [`LICENSE`](./LICENSE)
 
-> **Need more than the starter?** Stripe billing, teams & orgs, RBAC admin, transactional emails, multi-tenancy, AI starter kits — all built on the same patterns — ship as **premium NextBase kits**. **[→ See the premium kits at usenextbase.com](https://usenextbase.com)**
+### What you get out of the box
+
+- Marketing home, pricing, FAQ, and template marketplace pages
+- Dynamic `sitemap.xml`, `robots.txt`, Open Graph image, JSON-LD, and web manifest
+- Supabase Auth (password, magic link, OAuth) with SSR-safe cookies
+- Row-level security, migrations, generated types, and E2E coverage
+- Premium landing templates (Nguyen, Intellune) for client work and launches
+
+Set `NEXT_PUBLIC_SITE_URL` in production so canonical URLs, sitemaps, and social previews resolve correctly.
 
 ---
 
@@ -23,7 +32,7 @@ Every SaaS team writes the same code in the first sprint and the same code in th
 - A monorepo that started clean and devolved into a tangle of relative imports and untyped envs.
 - A "we'll add caching later" that turns into a `revalidatePath` archaeology dig six months in.
 
-NextBase compresses all of that prior art into a maintained, opinionated starter. You inherit decisions that have already failed in production somewhere else, so they don't have to fail in yours.
+Menace Next compresses that prior art into a maintained, opinionated starter you can productize. You inherit decisions that have already failed in production somewhere else, so they don't have to fail in yours.
 
 ---
 
@@ -72,7 +81,7 @@ NextBase compresses all of that prior art into a maintained, opinionated starter
 - **Local Supabase stack** lifecycle scripts: `pnpm database#start | stop | status`.
 - **Changesets-based release automation.** Every shippable change ships with a changeset; an automated "Version Packages" PR rolls them into a single bumped release, syncs `apps/web` versions, and cuts a GitHub release.
 - **GitHub Actions starter workflows** (Playwright + coverage) included.
-- **SEO baked in:** `next-seo`, `next-sitemap` postbuild, JSON-LD and Open Graph helpers.
+- **SEO baked in:** App Router metadata helpers, dynamic Open Graph images, JSON-LD (Organization, WebSite, SoftwareApplication, FAQ), `sitemap.ts`, `robots.ts`, and `site.webmanifest`.
 
 ---
 

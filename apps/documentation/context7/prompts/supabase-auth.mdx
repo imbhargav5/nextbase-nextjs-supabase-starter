@@ -1,0 +1,79 @@
+---
+title: Supabase auth prompts
+description: Cursor prompts for Supabase SSR auth, middleware, OAuth, and protected routes in NextBase Starter
+seo:
+  keywords:
+    - Supabase SSR Next.js prompts
+    - Supabase auth Cursor
+    - PKCE OAuth Next.js
+---
+
+Prompts aligned with `apps/web/src/supabase-clients/`, `(auth-pages)`, and `(app-pages)`. Use Context7 for `@supabase/ssr` and Supabase Auth (`/supabase/supabase` or the ID Context7 recommends).
+
+## Add a protected app route
+
+<Prompt description="Copy — new dashboard-style page" actions={["copy", "cursor"]}>
+Add an authenticated page at [PATH] in (app-pages) for: [FEATURE].
+
+Follow NextBase patterns:
+- Context7 query-docs for @supabase/ssr createServerClient and getUser in Server Components.
+- Reads via src/data/user/ or src/rsc-data/ with RLS enforced in Postgres.
+- Mutations via authActionClient in src/lib/safe-action.ts, not unauthenticated actionClient.
+- Extend middleware protected prefixes if [PATH] is not already covered.
+
+Include loading/error UI and redirect behavior for signed-out users.
+</Prompt>
+
+## Email/password or magic link flow
+
+<Prompt description="Copy — extend login or sign-up" actions={["copy", "cursor"]}>
+I need to change auth UX for: [email signup / magic link / password reset].
+
+Use Context7 query-docs for Supabase Auth signInWithPassword, signInWithOtp, and Next.js server actions.
+Edit apps/web/src/app/(auth-pages)/ and src/data/auth/ to match existing Login.tsx and Signup.tsx patterns.
+Validate with Zod on the server; never expose service role keys.
+Confirm redirect URLs use NEXT_PUBLIC_SITE_URL and /auth/callback as documented in architecture/auth.
+</Prompt>
+
+## OAuth provider (Google, GitHub, etc.)
+
+<Prompt description="Copy — wire a social provider end-to-end" actions={["copy", "cursor"]}>
+Enable [PROVIDER] OAuth for local and hosted Supabase in NextBase Starter.
+
+Steps I expect you to execute or document:
+1. Context7 query-docs for Supabase signInWithOAuth, PKCE, and redirectTo.
+2. Google Cloud (or provider) redirect URI must be Supabase .../auth/v1/callback, not Next.js /auth/callback only.
+3. Local: apps/database/supabase/config.toml and .env.local; restart with pnpm database#stop && pnpm database#start.
+4. Hosted: Supabase Dashboard provider + URL configuration.
+5. Web: signInWithProviderAction and /auth/callback handling.
+
+Give me a checklist I can tick off, then implement code changes if I asked for implementation.
+</Prompt>
+
+## Session in Server Actions
+
+<Prompt description="Copy — secure mutation with user context" actions={["copy", "cursor"]}>
+Create a server action that [MUTATION DESCRIPTION] for the logged-in user only.
+
+In NextBase Starter:
+- Use authActionClient from src/lib/safe-action.ts; read ctx.userId.
+- Context7 query-docs for next-safe-action middleware and Supabase server client in actions if needed.
+- Double-check authorization in Postgres RLS on [TABLE], not only in TypeScript.
+- Return typed errors suitable for toast UI; log server-side without leaking secrets.
+
+Add Zod schema next to the action following existing auth actions.
+</Prompt>
+
+## Debug auth redirect loops
+
+<Prompt description="Copy — fix callback or middleware loops" actions={["copy", "cursor"]}>
+After login I get redirected incorrectly: [DESCRIBE LOOP OR WRONG DESTINATION].
+
+Debug NextBase auth flow:
+1. Trace middleware → /auth/callback → dashboard (or next param).
+2. Context7 query-docs for Supabase SSR cookie handling and getUser vs getSession.
+3. Verify NEXT_PUBLIC_SITE_URL, Supabase redirect allow list, and OAuth client redirect URIs.
+4. Check architecture/auth in docs for Google vs app callback distinction.
+
+Propose one root cause and minimal fix.
+</Prompt>
