@@ -21,7 +21,7 @@ const footerLinks = [
 
 export default function Footer() {
   return (
-    <footer className="border-t bg-muted/20">
+    <footer className="border-t border-brand/15 bg-muted/20">
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         <div className="grid gap-8 md:grid-cols-[1fr_auto] md:items-start">
           <div className="max-w-md space-y-3">
@@ -29,9 +29,9 @@ export default function Footer() {
               <Brand showTagline />
             </Link>
             <p className="text-sm leading-6 text-muted-foreground">
-              {PRODUCT_NAME} is a commercial SaaS starter kit with secure auth,
-              typed Supabase data, marketing pages, pricing UI, templates, and
-              SEO primitives built in.
+              {PRODUCT_NAME} sells prompt packs with Next.js templates. Preview
+              demos, copy agent prompts, and ship landing pages from a real
+              monorepo.
             </p>
           </div>
           <SlidingHighlightProvider
@@ -54,7 +54,7 @@ export default function Footer() {
         </div>
         <Separator className="my-8" />
         <div className="flex flex-col gap-2 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
-          <p>{PRODUCT_NAME}. Ship your SaaS with confidence.</p>
+          <p>{PRODUCT_NAME}. Prompts and templates that ship.</p>
           <p>Next.js 16 · Supabase · shadcn/ui</p>
         </div>
       </div>

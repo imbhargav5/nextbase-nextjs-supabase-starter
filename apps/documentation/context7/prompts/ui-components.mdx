@@ -1,9 +1,9 @@
 ---
 title: UI & shadcn prompts
-description: Cursor prompts for shadcn/ui, Tailwind CSS v4, forms, and accessible components in NextBase Starter
+description: Agent prompts for shadcn/ui, Tailwind CSS v4, forms, and accessible components in NextBase Starter
 seo:
   keywords:
-    - shadcn ui Cursor prompts
+    - shadcn ui Agent prompts
     - Tailwind v4 Next.js
     - accessible React components prompts
 ---
@@ -12,7 +12,7 @@ UI lives in `apps/web/src/components/` and shadcn primitives in `src/components/
 
 ## Add a shadcn component
 
-<Prompt description="Copy — install and use a registry component" actions={["copy", "cursor"]}>
+<Prompt description="Copy — install and use a registry component" actions={["copy", "agent"]}>
 Add shadcn component [NAME] for [USE CASE] on [PAGE/FEATURE].
 
 Steps:
@@ -26,7 +26,7 @@ Do not duplicate components that already exist under src/components/ui/.
 
 ## Pricing or marketing block
 
-<Prompt description="Copy — match starter marketing quality" actions={["copy", "cursor"]}>
+<Prompt description="Copy — match starter marketing quality" actions={["copy", "agent"]}>
 Create a marketing section for [SECTION NAME] consistent with home-hero, home-features, and home-pricing in (external-pages).
 
 Requirements:
@@ -40,12 +40,12 @@ No lorem ipsum — use realistic placeholder copy I can replace.
 
 ## Template page (Nguyen / Intellune style)
 
-<Prompt description="Copy — extend template-pages route group" actions={["copy", "cursor"]}>
+<Prompt description="Copy — extend template-pages route group" actions={["copy", "agent"]}>
 Extend the template system for [TEMPLATE SLUG or NEW TEMPLATE].
 
 Follow apps/web/src/app/(template-pages)/ and src/components/templates/ patterns:
 - Theme provider and scoped CSS if needed (see nguyen-theme).
-- Register in src/lib/templates/catalog.ts.
+- Register demo templates in src/lib/kits/demo-catalog.ts and product kits in src/lib/kits/catalog.ts.
 - Keep template layout isolated from main marketing Navbar when appropriate.
 
 Context7 query-docs for Next.js parallel routes or layout groups only if required.
@@ -54,7 +54,7 @@ List public assets to add under apps/web/public/templates/.
 
 ## Accessible dialog or sheet form
 
-<Prompt description="Copy — modal workflow with a11y" actions={["copy", "cursor"]}>
+<Prompt description="Copy — modal workflow with a11y" actions={["copy", "agent"]}>
 Add a [Dialog/Sheet] flow for [TASK] triggered from [PAGE].
 
 Use shadcn Dialog or Sheet from src/components/ui/.
@@ -67,7 +67,7 @@ Keep bundle size in mind — no extra icon libraries unless already in project.
 
 ## Dark mode and theme toggle
 
-<Prompt description="Copy — theme behavior on a new layout" actions={["copy", "cursor"]}>
+<Prompt description="Copy — theme behavior on a new layout" actions={["copy", "agent"]}>
 New layout at [PATH] should respect site theme like the rest of NextBase.
 
 Review src/components/ui/mode-toggle.tsx and layout providers in (external-pages) and (app-pages).

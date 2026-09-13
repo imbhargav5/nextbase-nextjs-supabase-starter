@@ -15,6 +15,7 @@ export interface ArrowUpRightIconHandle {
 
 interface ArrowUpRightIconProps extends HTMLAttributes<HTMLDivElement> {
   size?: number;
+  strokeWidth?: number;
   animateOnGroupHover?: boolean;
 }
 
@@ -47,6 +48,7 @@ const ArrowUpRightIcon = forwardRef<
       onMouseLeave,
       className,
       size = 28,
+      strokeWidth = 2,
       animateOnGroupHover = true,
       ...props
     },
@@ -95,7 +97,7 @@ const ArrowUpRightIcon = forwardRef<
           stroke="currentColor"
           strokeLinecap="round"
           strokeLinejoin="round"
-          strokeWidth="2"
+          strokeWidth={strokeWidth}
           viewBox="0 0 24 24"
           width={size}
           xmlns="http://www.w3.org/2000/svg"

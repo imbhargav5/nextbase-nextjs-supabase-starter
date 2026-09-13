@@ -1,8 +1,8 @@
 import { getUserPrivateItems } from '@/data/anon/privateItems';
 import { Suspense } from 'react';
-import { DashboardHeading } from './dashboard-heading';
-import { DashboardListSkeleton } from './dashboard-list-skeleton';
-import { DashboardPrivateItemsSection } from './dashboard-private-items-section';
+import { DashboardHeading } from './_components/dashboard-heading';
+import { DashboardListSkeleton } from './_components/dashboard-list-skeleton';
+import { DashboardPrivateItemsSection } from './_components/dashboard-private-items-section';
 
 export default function DashboardPage() {
   const privateItemsPromise = getUserPrivateItems();

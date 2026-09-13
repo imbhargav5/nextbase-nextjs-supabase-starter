@@ -65,14 +65,14 @@ function ThemeToggle({ className }: { className?: string }) {
 
 function NavLinks({ className }: { className?: string }) {
   return (
-    <SlidingHighlightProvider layoutId="nguyen-nav-highlight">
+    <SlidingHighlightProvider layoutId="nguyen-nav-highlight" tone="neutral">
       <ul className={cn('flex gap-2 text-sm', className)}>
         {nguyenNavLinks.map((link) => (
           <li key={link.href}>
             <SlidingHighlightTarget id={link.href}>
               <Link
                 href={link.href}
-                className="block rounded-md px-3 py-1.5 text-foreground/70 duration-150 hover:bg-transparent hover:text-foreground dark:text-muted-foreground dark:hover:text-accent-foreground"
+                className="block rounded-md px-3 py-1.5 text-foreground/70 duration-150 hover:bg-transparent hover:text-foreground dark:text-muted-foreground dark:hover:text-foreground"
               >
                 {link.label}
               </Link>
@@ -120,9 +120,20 @@ function NavbarActions({ className }: { className?: string }) {
 
 export function NguyenHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isBelowLg, setIsBelowLg] = useState(false);
   const { isDark } = useNguyenTheme();
   const { scrollY } = useScroll();
   const smoothScrollY = useSpring(scrollY, NAV_SPRING);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 1023px)');
+    function updateViewport() {
+      setIsBelowLg(mediaQuery.matches);
+    }
+    updateViewport();
+    mediaQuery.addEventListener('change', updateViewport);
+    return () => mediaQuery.removeEventListener('change', updateViewport);
+  }, []);
 
   const compactProgress = useTransform(
     smoothScrollY,
@@ -158,6 +169,8 @@ export function NguyenHeader() {
   const boxShadow = useMotionTemplate`0 10px 15px -3px rgb(0 0 0 / ${shadowOpacity}), 0 4px 6px -4px rgb(0 0 0 / ${shadowOpacity})`;
   const backdropFilter = useMotionTemplate`blur(${blurAmount}px)`;
 
+  const mobileIdleNav = isBelowLg && !menuOpen;
+
   useEffect(() => {
     if (!menuOpen) {
       return;
@@ -174,31 +187,65 @@ export function NguyenHeader() {
   }, [menuOpen]);
 
   return (
-    <header>
+    <header className="relative z-20">
+      <div
+        aria-hidden="true"
+        className="max-lg:h-[calc(env(safe-area-inset-top)+7.25rem)] lg:hidden"
+      />
       <nav
         data-state={menuOpen ? 'active' : 'false'}
         className={cn(
-          'fixed left-1/2 top-0 z-20 w-full -translate-x-1/2 px-3 pt-[env(safe-area-inset-top)] lg:px-2',
+          'fixed left-1/2 top-0 z-20 w-full -translate-x-1/2 px-3 pt-[calc(env(safe-area-inset-top)+0.625rem)] max-lg:pt-[calc(env(safe-area-inset-top)+0.875rem)] lg:px-2 lg:pt-[env(safe-area-inset-top)]',
           !isDark &&
-            'bg-background/95 backdrop-blur-[12px] supports-[backdrop-filter]:bg-background/90',
+            'max-lg:bg-transparent lg:bg-background/95 lg:backdrop-blur-[12px] lg:supports-[backdrop-filter]:bg-background/90',
         )}
       >
         <motion.div
           key={isDark ? 'dark' : 'light'}
-          className="mx-auto w-full border border-transparent"
+          className={cn(
+            'mx-auto w-full border border-transparent transition-[background-color,box-shadow,border-color] duration-300',
+            menuOpen && 'max-lg:rounded-2xl',
+            mobileIdleNav && 'max-lg:rounded-2xl',
+          )}
           style={{
-            marginTop,
+            marginTop: isBelowLg ? 20 : marginTop,
             paddingTop: paddingY,
             paddingBottom: paddingY,
             paddingLeft: paddingX,
             paddingRight: paddingX,
-            borderRadius,
+            borderRadius:
+              menuOpen && isBelowLg ? 16 : mobileIdleNav ? 20 : borderRadius,
             maxWidth,
-            backgroundColor,
-            borderColor,
-            boxShadow,
-            backdropFilter,
-            WebkitBackdropFilter: backdropFilter,
+            ...(menuOpen
+              ? {
+                  backgroundColor:
+                    'color-mix(in oklch, var(--background) 94%, transparent)',
+                  borderColor:
+                    'color-mix(in oklch, var(--border) 65%, transparent)',
+                  boxShadow:
+                    '0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.08)',
+                  backdropFilter: 'blur(18px)',
+                  WebkitBackdropFilter: 'blur(18px)',
+                }
+              : mobileIdleNav
+                ? {
+                    backgroundColor: isDark
+                      ? 'color-mix(in oklch, var(--background) 52%, transparent)'
+                      : 'color-mix(in oklch, var(--background) 78%, transparent)',
+                    borderColor: isDark
+                      ? 'color-mix(in oklch, var(--border) 28%, transparent)'
+                      : 'color-mix(in oklch, var(--border) 40%, transparent)',
+                    boxShadow: 'none',
+                    backdropFilter: 'blur(14px)',
+                    WebkitBackdropFilter: 'blur(14px)',
+                  }
+                : {
+                    backgroundColor,
+                    borderColor,
+                    boxShadow,
+                    backdropFilter,
+                    WebkitBackdropFilter: backdropFilter,
+                  }),
           }}
         >
           <div className="grid grid-cols-[1fr_auto] items-center gap-4 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]">
@@ -269,7 +316,7 @@ export function NguyenHeader() {
                   <Link
                     href={link.href}
                     onClick={() => setMenuOpen(false)}
-                    className="block text-foreground/70 duration-150 hover:text-foreground dark:text-muted-foreground dark:hover:text-accent-foreground"
+                    className="block text-foreground duration-150 hover:text-foreground/80 dark:text-foreground dark:hover:text-foreground/90"
                   >
                     {link.label}
                   </Link>

@@ -1,13 +1,19 @@
 {
-  "name": "Menace Next",
-  "short_name": "Menace Next",
-  "description": "Production-ready SaaS starter kit for Next.js and Supabase.",
+  "name": "Prompt Market",
+  "short_name": "Prompt Market",
+  "description": "Premium prompts that ship — bundled with Next.js templates.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0a0a0a",
-  "theme_color": "#0a0a0a",
+  "theme_color": "#12100e",
   "lang": "en-US",
   "icons": [
+    {
+      "src": "/logos/logomain.png",
+      "sizes": "1254x1254",
+      "type": "image/png",
+      "purpose": "any"
+    },
     {
       "src": "/favicon.ico",
       "sizes": "48x48",

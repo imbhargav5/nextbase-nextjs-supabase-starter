@@ -1,6 +1,6 @@
 ---
 title: Server actions prompts
-description: Cursor prompts for next-safe-action, Zod validation, and authenticated mutations in NextBase Starter
+description: Agent prompts for next-safe-action, Zod validation, and authenticated mutations in NextBase Starter
 seo:
   keywords:
     - next-safe-action prompts
@@ -12,7 +12,7 @@ Mutations use `src/lib/safe-action.ts` clients. Context7 libraries: `next-safe-a
 
 ## CRUD with authActionClient
 
-<Prompt description="Copy — create update delete for a user-owned resource" actions={["copy", "cursor"]}>
+<Prompt description="Copy — create update delete for a user-owned resource" actions={["copy", "agent"]}>
 Implement CRUD for [RESOURCE] owned by auth.users / user_id column [COLUMN].
 
 NextBase patterns:
@@ -26,7 +26,7 @@ Place read helpers in src/data/user/[resource].ts and actions in src/data/user/ 
 
 ## Public anon action (careful)
 
-<Prompt description="Copy — rate-limited or newsletter-style public action" actions={["copy", "cursor"]}>
+<Prompt description="Copy — rate-limited or newsletter-style public action" actions={["copy", "agent"]}>
 Add a public server action for: [e.g. waitlist signup, contact form].
 
 Security requirements:
@@ -40,7 +40,7 @@ Explain why this should NOT use authActionClient.
 
 ## Form with useActionState
 
-<Prompt description="Copy — accessible form wired to safe action" actions={["copy", "cursor"]}>
+<Prompt description="Copy — accessible form wired to safe action" actions={["copy", "agent"]}>
 Build a form on [PAGE] for [GOAL] using NextBase UI conventions.
 
 Use:
@@ -54,7 +54,7 @@ Match naming: handleSubmit, aria labels, keyboard support.
 
 ## Middleware logging and errors
 
-<Prompt description="Copy — improve action observability" actions={["copy", "cursor"]}>
+<Prompt description="Copy — improve action observability" actions={["copy", "agent"]}>
 Improve error handling for action [NAME] without leaking internals.
 
 Review src/lib/safe-action.ts logging middleware and existing actions.

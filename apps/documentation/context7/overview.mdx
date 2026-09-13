@@ -1,9 +1,9 @@
 ---
-title: Context7 in Cursor
+title: Context7 for coding agents
 description: Use Context7 MCP for up-to-date Next.js, Supabase, and library docs while building on NextBase Starter
 ---
 
-Context7 gives Cursor **current documentation** for libraries and frameworks instead of stale training data. NextBase docs pair Context7 with **copy-ready prompts** so you can ship features faster with fewer hallucinated APIs.
+Context7 gives coding agents **current documentation** for libraries and frameworks instead of stale training data. NextBase docs pair Context7 with **copy-ready prompts** so you can ship features faster with fewer hallucinated APIs.
 
 ## When to use Context7
 
@@ -16,14 +16,14 @@ Use Context7 when you need accurate, version-aware answers about:
 
 Skip Context7 for pure refactors inside this repo when you only need local code search.
 
-## Enable Context7 in Cursor
+## Enable Context7 for coding agents
 
-1. Open **Cursor Settings → MCP** (or install the Context7 plugin from the marketplace).
+1. Open **MCP settings in your editor or coding agent** (or install the Context7 plugin from the marketplace).
 2. Add the Context7 server if it is not already listed.
 3. Confirm tools such as `resolve-library-id` and `query-docs` appear in the MCP panel.
 
 <Tip>
-  The repo root includes a Cursor rule that tells agents to prefer Context7 for library and API questions. Keep that rule enabled when working on NextBase.
+  The repo root includes an agent rule that tells agents to prefer Context7 for library and API questions. Keep that rule enabled when working on NextBase.
 </Tip>
 
 ## How agents should fetch docs
@@ -34,7 +34,7 @@ Agents should resolve a library ID, then query docs for **one concept at a time*
 2. Pick the best match (official package, high benchmark score, version-specific ID when you care about a release).
 3. `query-docs` with the library ID and a specific question (auth, caching, migrations—not everything in one call).
 
-<Prompt description="Copy — teach Cursor to use Context7 on this stack" actions={["copy", "cursor"]}>
+<Prompt description="Copy — teach your agent to use Context7 on this stack" actions={["copy", "agent"]}>
 You are working in the NextBase Starter monorepo (Next.js 16 App Router + Supabase + pnpm Turborepo).
 
 For any question about external libraries, frameworks, SDKs, or CLI tools:
@@ -50,7 +50,7 @@ When changing this repo, follow AGENTS.md: schema edits go in apps/database/supa
 
 ## Prompt library
 
-The pages below are a **complete prompt library** for common NextBase workflows. Each block supports **Copy** (clipboard) and **Open in Cursor** (prefilled chat).
+The pages below are a **complete prompt library** for common NextBase workflows. Each block supports **Copy** and **Use with agent** (clipboard, ready to paste into your coding agent).
 
 <CardGroup cols={2}>
   <Card title="Prompt index" icon="list" href="/context7/prompt-library">

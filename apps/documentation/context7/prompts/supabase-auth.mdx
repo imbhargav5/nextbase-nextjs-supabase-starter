@@ -1,10 +1,10 @@
 ---
 title: Supabase auth prompts
-description: Cursor prompts for Supabase SSR auth, middleware, OAuth, and protected routes in NextBase Starter
+description: Agent prompts for Supabase SSR auth, middleware, OAuth, and protected routes in NextBase Starter
 seo:
   keywords:
     - Supabase SSR Next.js prompts
-    - Supabase auth Cursor
+    - Supabase auth agent
     - PKCE OAuth Next.js
 ---
 
@@ -12,7 +12,7 @@ Prompts aligned with `apps/web/src/supabase-clients/`, `(auth-pages)`, and `(app
 
 ## Add a protected app route
 
-<Prompt description="Copy — new dashboard-style page" actions={["copy", "cursor"]}>
+<Prompt description="Copy — new dashboard-style page" actions={["copy", "agent"]}>
 Add an authenticated page at [PATH] in (app-pages) for: [FEATURE].
 
 Follow NextBase patterns:
@@ -26,7 +26,7 @@ Include loading/error UI and redirect behavior for signed-out users.
 
 ## Email/password or magic link flow
 
-<Prompt description="Copy — extend login or sign-up" actions={["copy", "cursor"]}>
+<Prompt description="Copy — extend login or sign-up" actions={["copy", "agent"]}>
 I need to change auth UX for: [email signup / magic link / password reset].
 
 Use Context7 query-docs for Supabase Auth signInWithPassword, signInWithOtp, and Next.js server actions.
@@ -37,7 +37,7 @@ Confirm redirect URLs use NEXT_PUBLIC_SITE_URL and /auth/callback as documented 
 
 ## OAuth provider (Google, GitHub, etc.)
 
-<Prompt description="Copy — wire a social provider end-to-end" actions={["copy", "cursor"]}>
+<Prompt description="Copy — wire a social provider end-to-end" actions={["copy", "agent"]}>
 Enable [PROVIDER] OAuth for local and hosted Supabase in NextBase Starter.
 
 Steps I expect you to execute or document:
@@ -52,7 +52,7 @@ Give me a checklist I can tick off, then implement code changes if I asked for i
 
 ## Session in Server Actions
 
-<Prompt description="Copy — secure mutation with user context" actions={["copy", "cursor"]}>
+<Prompt description="Copy — secure mutation with user context" actions={["copy", "agent"]}>
 Create a server action that [MUTATION DESCRIPTION] for the logged-in user only.
 
 In NextBase Starter:
@@ -66,7 +66,7 @@ Add Zod schema next to the action following existing auth actions.
 
 ## Debug auth redirect loops
 
-<Prompt description="Copy — fix callback or middleware loops" actions={["copy", "cursor"]}>
+<Prompt description="Copy — fix callback or middleware loops" actions={["copy", "agent"]}>
 After login I get redirected incorrectly: [DESCRIBE LOOP OR WRONG DESTINATION].
 
 Debug NextBase auth flow:

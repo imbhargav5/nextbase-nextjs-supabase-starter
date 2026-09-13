@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import { getCachedLoggedInVerifiedSupabaseUser } from '@/rsc-data/supabase';
 import { Skeleton } from '@/components/ui/skeleton';
-import { UpdatePassword } from './UpdatePassword';
+import { UpdatePassword } from '@/components/Auth/update-password-form';
 
 async function UpdatePasswordContent() {
   await getCachedLoggedInVerifiedSupabaseUser();

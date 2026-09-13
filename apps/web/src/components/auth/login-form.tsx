@@ -109,8 +109,8 @@ export function Login({ next }: { next?: string }) {
   if (redirectInProgress) {
     return (
       <RedirectingPleaseWaitCard
-        message="Please wait while we open your protected workspace."
-        heading="Opening your dashboard"
+        message="Taking you to the dashboard."
+        heading="Signing you in"
       />
     );
   }
@@ -118,7 +118,7 @@ export function Login({ next }: { next?: string }) {
   return (
     <AuthCard
       title={`Sign in to ${PRODUCT_NAME}`}
-      description="Choose the sign-in method that works best for you."
+      description="Email and password, magic link, or OAuth."
       footer={
         <p className="w-full text-center text-sm text-muted-foreground">
           New to {PRODUCT_NAME}?{' '}

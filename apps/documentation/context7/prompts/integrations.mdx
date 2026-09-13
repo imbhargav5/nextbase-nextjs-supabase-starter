@@ -1,6 +1,6 @@
 ---
 title: Integrations & deployment prompts
-description: Cursor prompts for local setup, env sync, Turborepo, Vercel, and third-party services with NextBase Starter
+description: Agent prompts for local setup, env sync, Turborepo, Vercel, and third-party services with NextBase Starter
 seo:
   keywords:
     - NextBase Starter setup prompts
@@ -12,7 +12,7 @@ Covers `./setup.sh`, `pnpm supabase:sync-env`, Turbo pipelines, and production e
 
 ## First-time local setup
 
-<Prompt description="Copy — end-to-end dev environment" actions={["copy", "cursor"]}>
+<Prompt description="Copy — end-to-end dev environment" actions={["copy", "agent"]}>
 Help me run NextBase Starter locally from a clean clone on [macOS/Linux/Windows].
 
 Follow AGENTS.md and docs getting-started:
@@ -27,7 +27,7 @@ When something fails, ask for the exact command output before guessing.
 
 ## Sync env after Supabase restart
 
-<Prompt description="Copy — keys out of date" actions={["copy", "cursor"]}>
+<Prompt description="Copy — keys out of date" actions={["copy", "agent"]}>
 My app cannot connect to Supabase after restart or new project: [ERROR].
 
 Verify:
@@ -40,7 +40,7 @@ List which env vars NextBase reads (NEXT_PUBLIC_* and server-only) without print
 
 ## Turborepo task or new package
 
-<Prompt description="Copy — add a script across the monorepo" actions={["copy", "cursor"]}>
+<Prompt description="Copy — add a script across the monorepo" actions={["copy", "agent"]}>
 Add Turbo pipeline task [TASK NAME] for [apps/web or apps/database or new package].
 
 Edit turbo.json and package.json scripts consistently with existing pnpm web#dev patterns.
@@ -50,7 +50,7 @@ Ensure CI can run the task with pnpm [script] from root.
 
 ## Deploy to Vercel with Supabase
 
-<Prompt description="Copy — production checklist" actions={["copy", "cursor"]}>
+<Prompt description="Copy — production checklist" actions={["copy", "agent"]}>
 Deploy NextBase Starter to Vercel using hosted Supabase project [REF OR DESCRIPTION].
 
 Checklist with Context7 query-docs for Vercel Next.js env vars and Supabase redirect URLs:
@@ -64,7 +64,7 @@ Output ordered steps for Dashboard + Vercel UI, not generic advice.
 
 ## Add a third-party API (Stripe, email, etc.)
 
-<Prompt description="Copy — server-only integration" actions={["copy", "cursor"]}>
+<Prompt description="Copy — server-only integration" actions={["copy", "agent"]}>
 Integrate [SERVICE] for [FEATURE] in NextBase Starter.
 
 Architecture:
@@ -77,7 +77,7 @@ Propose file locations under apps/web/src/app/api/ or actions before coding.
 
 ## Skills and agent rules change
 
-<Prompt description="Copy — safe skill or AGENTS.md update" actions={["copy", "cursor"]}>
+<Prompt description="Copy — safe skill or AGENTS.md update" actions={["copy", "agent"]}>
 I need to update agent behavior: [DESCRIBE CHANGE].
 
 Follow AGENTS.md:

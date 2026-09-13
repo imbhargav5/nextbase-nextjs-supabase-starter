@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
+    "push": "supabase db push",
     "start": "supabase start",
     "stop": "supabase stop",
     "status": "supabase status",

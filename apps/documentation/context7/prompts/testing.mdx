@@ -1,6 +1,6 @@
 ---
 title: Testing prompts
-description: Cursor prompts for Vitest unit tests and Playwright E2E in NextBase Starter
+description: Agent prompts for Vitest unit tests and Playwright E2E in NextBase Starter
 seo:
   keywords:
     - Playwright Next.js prompts
@@ -12,7 +12,7 @@ Tests: `pnpm test` (Vitest), `pnpm test:e2e` (Playwright in `apps/web/e2e/`). Co
 
 ## E2E public page
 
-<Prompt description="Copy — anon spec for a marketing URL" actions={["copy", "cursor"]}>
+<Prompt description="Copy — anon spec for a marketing URL" actions={["copy", "agent"]}>
 Add Playwright coverage for public route [PATH] in apps/web/e2e/anon/.
 
 Follow public-pages.spec.ts patterns:
@@ -26,7 +26,7 @@ Do not depend on production Supabase — use local dev assumptions documented in
 
 ## E2E authenticated flow
 
-<Prompt description="Copy — login and app-pages spec" actions={["copy", "cursor"]}>
+<Prompt description="Copy — login and app-pages spec" actions={["copy", "agent"]}>
 Add E2E test for authenticated flow: [LOGIN METHOD] then [USER ACTION on /dashboard or similar].
 
 Use apps/web/e2e/user/access-to-pages.spec.ts as reference.
@@ -37,7 +37,7 @@ Handle flakiness with proper waits, not arbitrary sleep.
 
 ## Unit test for data helper or action schema
 
-<Prompt description="Copy — Vitest for pure logic" actions={["copy", "cursor"]}>
+<Prompt description="Copy — Vitest for pure logic" actions={["copy", "agent"]}>
 Add Vitest tests for [MODULE in apps/web/src/...] covering [BEHAVIOR].
 
 Match existing test config in apps/web (vitest, @testing-library if component tests).
@@ -48,7 +48,7 @@ Keep tests in __tests__ adjacent to source if that is the repo convention.
 
 ## Fix failing CI E2E
 
-<Prompt description="Copy — debug Playwright failure" actions={["copy", "cursor"]}>
+<Prompt description="Copy — debug Playwright failure" actions={["copy", "agent"]}>
 Playwright failed on [SPEC NAME]: [ERROR SNIPPET].
 
 Investigate NextBase e2e setup (base URL, webServer, env).
@@ -59,7 +59,7 @@ Propose minimal fix to spec or app; run pnpm test:e2e locally before concluding.
 
 ## Snapshot or a11y check (optional)
 
-<Prompt description="Copy — regression on component markup" actions={["copy", "cursor"]}>
+<Prompt description="Copy — regression on component markup" actions={["copy", "agent"]}>
 Add a focused component test for [COMPONENT] ensuring [ACCESSIBILITY OR RENDER EXPECTATION].
 
 Use React Testing Library queries by role; avoid snapshot-only tests unless repo already uses them for this component.

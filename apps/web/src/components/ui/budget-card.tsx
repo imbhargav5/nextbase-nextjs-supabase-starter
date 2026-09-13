@@ -118,7 +118,7 @@ export function BudgetCard() {
             </h2>
             <div className="mt-2 inline-flex items-center gap-2 rounded-full border border-border bg-background/40 px-3 py-1.5 shadow-[0_1px_3px_rgba(0,0,0,0.04),0_4px_12px_rgba(0,0,0,0.03)] dark:shadow-[0_1px_3px_rgba(0,0,0,0.2),0_1px_3px_rgba(255,255,255,0.05)]">
               <span className="text-xs font-semibold text-foreground sm:text-sm">+ $317</span>
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-foreground" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-brand" aria-hidden="true">
                 <path
                   d="M2 11L6 7L9 10L14 4"
                   stroke="currentColor"
@@ -154,9 +154,9 @@ export function BudgetCard() {
           >
             <defs>
               <linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#5B52E5" stopOpacity="0.35" />
-                <stop offset="50%" stopColor="#5B52E5" stopOpacity="0.15" />
-                <stop offset="100%" stopColor="#5B52E5" stopOpacity="0.02" />
+                <stop offset="0%" stopColor="var(--brand)" stopOpacity="0.4" />
+                <stop offset="50%" stopColor="var(--brand)" stopOpacity="0.16" />
+                <stop offset="100%" stopColor="var(--brand)" stopOpacity="0.02" />
               </linearGradient>
               <filter id="dotGlow" x="-100%" y="-100%" width="300%" height="300%">
                 <feGaussianBlur stdDeviation="2" result="blur" />
@@ -190,7 +190,7 @@ export function BudgetCard() {
             <path
               d={generatePath()}
               fill="none"
-              stroke="#4F46E5"
+              stroke="var(--brand)"
               strokeWidth="2.5"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -210,7 +210,7 @@ export function BudgetCard() {
                   cy={getY(weekData[hoveredIndex].value)}
                   r="8"
                   className="fill-card"
-                  stroke="#4F46E5"
+                  stroke="var(--brand)"
                   strokeWidth="3"
                   filter="url(#dotGlow)"
                 />

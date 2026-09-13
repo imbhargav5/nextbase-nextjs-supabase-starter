@@ -1,7 +1,7 @@
 import '@/styles/globals.css';
 import localFont from 'next/font/local';
-import { DynamicLayoutProviders } from './DynamicLayoutProviders';
-import { ClientLayout } from './ClientLayout';
+import { ClientLayout } from '@/components/providers/client-layout';
+import { DynamicLayoutProviders } from '@/components/providers/dynamic-layout-providers';
 import {
   OrganizationJsonLd,
   SoftwareApplicationJsonLd,

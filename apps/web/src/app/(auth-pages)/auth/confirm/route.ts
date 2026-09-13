@@ -2,10 +2,24 @@ import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 
+function resolveSafeRedirectPath(next: string | null): string {
+  const fallback = '/dashboard';
+  if (!next) {
+    return fallback;
+  }
+
+  const decoded = decodeURIComponent(next);
+  if (!decoded.startsWith('/') || decoded.startsWith('//')) {
+    return fallback;
+  }
+
+  return decoded;
+}
+
 export async function GET(req: NextRequest): Promise<NextResponse> {
   const { searchParams } = new URL(req.url);
   const token_hash = searchParams.get('token_hash');
-  const next = searchParams.get('next') ?? '/dashboard';
+  const next = resolveSafeRedirectPath(searchParams.get('next'));
 
   if (token_hash) {
     const cookieStore = await cookies();
@@ -32,7 +46,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     });
 
     if (!error) {
-      return NextResponse.redirect(new URL(`/${next.slice(1)}`, req.url));
+      return NextResponse.redirect(new URL(next, req.url));
     }
   }
 

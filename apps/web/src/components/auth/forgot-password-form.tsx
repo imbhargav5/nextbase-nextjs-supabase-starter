@@ -47,7 +47,7 @@ export function ForgotPassword(): JSX.Element {
   return (
     <AuthCard
       title="Forgot your password?"
-      description="Enter your email and we will send you a secure password reset link."
+      description="Enter your email and we will send a password reset link."
       icon={<KeyRound aria-hidden="true" />}
       footer={
         <Button variant="link" className="mx-auto h-auto" asChild>

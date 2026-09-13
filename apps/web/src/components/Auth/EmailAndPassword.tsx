@@ -85,6 +85,7 @@ export const EmailAndPassword = ({
         </Field>
         <Button
           {...buttonProps}
+          variant="brand"
           disabled={isLoading || buttonProps.disabled}
           type="submit"
           className={cn('w-full', className)}

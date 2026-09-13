@@ -16,11 +16,15 @@ Use this repository's existing structure as the source of truth. Inspect neighbo
 
 ## Web Placement
 
-- `src/app/(external-pages)`: public marketing and informational routes.
+- `src/app/(marketing)`: public marketing and informational routes (navbar + footer layout).
+- `src/app/(demos)`: full-bleed template demos without marketing chrome.
 - `src/app/(auth-pages)`: sign-in, sign-up, password, and auth callback routes.
 - `src/app/(app-pages)`: authenticated application routes.
 - `src/components/ui`: shadcn primitives owned by this repository.
-- `src/components`: product-level composition around those primitives.
+- `src/components/marketing`: site chrome and landing sections.
+- `src/components/app`: authenticated shell (sidebar, shared app lists).
+- `src/components/providers`: root client providers (theme, query, toasts).
+- `src/components`: other product-level composition around UI primitives.
 - `src/data/anon`: reads that do not require an authenticated action context. The name does not waive RLS.
 - `src/data/auth`: authentication actions.
 - `src/data/user`: authenticated mutations and user-scoped queries.

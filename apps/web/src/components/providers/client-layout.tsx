@@ -1,4 +1,5 @@
 'use client';
+import { SupabaseHashSessionRecovery } from '@/components/Auth/supabase-hash-session-recovery';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { type ReactNode } from 'react';
 
@@ -7,6 +8,7 @@ const queryClient = new QueryClient();
 export const ClientLayout = ({ children }: { children: ReactNode }) => {
   return (
     <QueryClientProvider client={queryClient}>
+      <SupabaseHashSessionRecovery />
       {children}
     </QueryClientProvider>
   );

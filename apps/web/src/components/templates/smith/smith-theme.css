@@ -1,0 +1,87 @@
+.smith-template {
+  --smith-bg: 0 0% 4%;
+  --smith-surface: 0 0% 8%;
+  --smith-text: 0 0% 96%;
+  --smith-muted: 0 0% 53%;
+  --smith-stroke: 0 0% 12%;
+  --smith-accent: 0 0% 96%;
+  background-color: hsl(var(--smith-bg));
+  color: hsl(var(--smith-text));
+}
+
+.smith-template .smith-accent-gradient {
+  background: linear-gradient(90deg, #89aacc 0%, #4e85bf 100%);
+}
+
+.smith-template .smith-gradient-border {
+  position: relative;
+}
+
+.smith-template .smith-gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #89aacc 0%, #4e85bf 100%);
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.smith-template .smith-gradient-border:hover::before {
+  opacity: 1;
+}
+
+.smith-template .smith-nav-cta {
+  transition:
+    background 0.25s ease,
+    color 0.25s ease;
+}
+
+.smith-template .smith-nav-cta:hover {
+  background: linear-gradient(90deg, #89aacc 0%, #4e85bf 100%);
+  color: #000;
+}
+
+@keyframes smith-scroll-down {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(200%);
+  }
+}
+
+@keyframes smith-role-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes smith-gradient-shift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.smith-template .animate-smith-scroll-down {
+  animation: smith-scroll-down 1.5s ease-in-out infinite;
+}
+
+.smith-template .animate-smith-role-fade-in {
+  animation: smith-role-fade-in 0.4s ease-out forwards;
+}
+
+.smith-template .animate-smith-gradient-shift {
+  background-size: 200% 200%;
+  animation: smith-gradient-shift 6s ease infinite;
+}

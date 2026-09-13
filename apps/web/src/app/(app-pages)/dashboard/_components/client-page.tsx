@@ -76,7 +76,7 @@ export function CreatePrivateItemForm() {
           <CardHeader>
             <CardTitle className="text-xl">Item details</CardTitle>
             <CardDescription>
-              This record is assigned to your account and protected by row-level security.
+              Saved to your account. Row-level security limits access to you.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -123,6 +123,7 @@ export function CreatePrivateItemForm() {
             </Button>
             <Button
               type="submit"
+              variant="brand"
               disabled={status === 'executing' || !form.formState.isValid}
             >
               {status === 'executing' ? <Spinner aria-hidden="true" /> : null}

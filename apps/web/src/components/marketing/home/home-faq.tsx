@@ -1,36 +1,31 @@
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion';
 import { FaqPageJsonLd } from '@/components/seo/structured-data';
+import { HomeFaqAccordion } from '@/components/marketing/home/home-faq-accordion';
 
 const faqItems = [
   {
-    question: 'What is Menace Next?',
+    question: 'What is Prompt Market?',
     answer:
-      'Menace Next is a commercial-grade SaaS starter kit built on Next.js 16 and Supabase. It includes authentication, row-level security, server actions, marketing pages, pricing UI, template marketplace demos, and SEO primitives so you can launch faster.',
+      'Prompt Market sells prompt packs with ship-ready Next.js templates. Paste a prompt into your coding agent, run the dev server, and get a marketing page in a real repo, not a static HTML mockup.',
   },
   {
-    question: 'Who is Menace Next for?',
+    question: 'What is in a kit?',
     answer:
-      'Founders, agencies, and product teams who want a maintainable foundation instead of rebuilding auth, database policies, and marketing pages from scratch for every new SaaS.',
+      'Each kit includes section prompts (hero, features, pricing, FAQ, and more), stack guardrails for Next.js and shadcn/ui, a full-page template demo, and ship prompts to wire routes, metadata, and deploy.',
   },
   {
-    question: 'Does Menace Next include billing?',
+    question: 'Who is Prompt Market for?',
     answer:
-      'The starter ships with pricing UI, checkout-ready layouts, and documentation hooks. Wire your payment provider (Stripe, Polar, Lemon Squeezy, etc.) using the same patterns as the rest of the app.',
+      'Founders, freelancers, and agencies who want a landing page that runs in git. You get structure and copy direction without agency fees or endless chat retries.',
   },
   {
-    question: 'Can I customize branding and templates?',
+    question: 'Do kits include live demos?',
     answer:
-      'Yes. Swap logos, themes, and copy in minutes. The template marketplace includes full-page demos you can fork for landing pages, product marketing, or client deliverables.',
+      'Yes. Every kit page links to live demos. Visit /prompts for product ideas (booking SaaS, creator CRM, wedding photography, and more) and prompts to rebrand the template for that business.',
   },
   {
-    question: 'Is Menace Next production-ready?',
+    question: 'How do I get a kit after purchase?',
     answer:
-      'The stack follows SSR-safe Supabase auth, typed migrations, safe server actions, E2E tests, and cache-friendly Next.js patterns used in real SaaS products.',
+      'Checkout and gated delivery are rolling out next. Kits will unlock in your account with copy-ready agent prompts and template access. Sign up now to get notified when checkout goes live.',
   },
 ];
 
@@ -38,7 +33,7 @@ export function HomeFaq() {
   return (
     <section
       id="faq"
-      className="scroll-mt-24 border-t bg-muted/10 px-4 py-20 sm:px-6 lg:px-8"
+      className="scroll-mt-24 border-t border-brand/15 bg-muted/10 px-4 py-20 sm:px-6 lg:px-8"
       aria-labelledby="faq-heading"
     >
       <FaqPageJsonLd items={faqItems} />
@@ -51,22 +46,10 @@ export function HomeFaq() {
             Frequently asked questions
           </h2>
           <p className="text-muted-foreground">
-            Everything buyers and developers ask before adopting a SaaS starter
-            kit.
+            What buyers ask before picking a kit.
           </p>
         </div>
-        <Accordion type="single" collapsible className="mt-10 w-full">
-          {faqItems.map((item, index) => (
-            <AccordionItem key={item.question} value={`faq-${index}`}>
-              <AccordionTrigger className="text-left text-base">
-                {item.question}
-              </AccordionTrigger>
-              <AccordionContent className="text-muted-foreground leading-7">
-                {item.answer}
-              </AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
+        <HomeFaqAccordion items={faqItems} />
       </div>
     </section>
   );

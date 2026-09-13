@@ -21,7 +21,7 @@ export function OrganizationJsonLd() {
         '@type': 'Organization',
         name: SITE_CONFIG.name,
         url: getCanonicalUrl('/'),
-        logo: getCanonicalUrl('/favicon.ico'),
+        logo: getCanonicalUrl(SITE_CONFIG.logoPath),
         description: SITE_CONFIG.description,
         sameAs: [],
       }}

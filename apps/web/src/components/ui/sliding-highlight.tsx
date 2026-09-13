@@ -17,10 +17,18 @@ export const slidingHighlightTransition = {
   damping: 35,
 };
 
+export type SlidingHighlightTone = 'brand' | 'neutral';
+
+const slidingHighlightToneClassName: Record<SlidingHighlightTone, string> = {
+  brand: 'bg-brand-muted/80 dark:bg-brand-muted',
+  neutral: 'bg-foreground/[0.06] dark:bg-white/10',
+};
+
 type SlidingHighlightContextValue = {
   hoveredId: string | null;
   setHoveredId: (id: string | null) => void;
   layoutId: string;
+  tone: SlidingHighlightTone;
 };
 
 const SlidingHighlightContext =
@@ -42,10 +50,12 @@ export function SlidingHighlightProvider({
   layoutId,
   children,
   className,
+  tone = 'brand',
 }: {
   layoutId: string;
   children: ReactNode;
   className?: string;
+  tone?: SlidingHighlightTone;
 }) {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
 
@@ -57,7 +67,7 @@ export function SlidingHighlightProvider({
 
   return (
     <SlidingHighlightContext.Provider
-      value={{ hoveredId, setHoveredId, layoutId }}
+      value={{ hoveredId, setHoveredId, layoutId, tone }}
     >
       <div
         className={className}
@@ -77,7 +87,7 @@ export function SlidingHighlight({
   active: boolean;
   className?: string;
 }) {
-  const { layoutId } = useSlidingHighlight();
+  const { layoutId, tone } = useSlidingHighlight();
 
   if (!active) {
     return null;
@@ -86,7 +96,11 @@ export function SlidingHighlight({
   return (
     <motion.span
       layoutId={layoutId}
-      className={cn('absolute inset-0 rounded-md bg-accent', className)}
+      className={cn(
+        'absolute inset-0 rounded-md',
+        slidingHighlightToneClassName[tone],
+        className,
+      )}
       transition={slidingHighlightTransition}
     />
   );

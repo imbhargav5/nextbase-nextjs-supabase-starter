@@ -12,7 +12,7 @@ export default function AuthErrorPage() {
       icon={<CircleAlert aria-hidden="true" />}
     >
       <div className="grid gap-2">
-        <Button asChild>
+        <Button asChild variant="brand">
           <Link href="/login">Try signing in again</Link>
         </Button>
         <Button variant="ghost" asChild>

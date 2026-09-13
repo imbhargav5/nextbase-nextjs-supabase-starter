@@ -104,7 +104,7 @@ export function SignUp({ next }: SignUpProps) {
   return (
     <AuthCard
       title={`Create your ${PRODUCT_NAME} account`}
-      description="Create your account and start with a secure, working foundation."
+      description="Create an account to save kits and open prompts after purchase."
       footer={
         <p className="w-full text-center text-sm text-muted-foreground">
           Already have an account?{' '}

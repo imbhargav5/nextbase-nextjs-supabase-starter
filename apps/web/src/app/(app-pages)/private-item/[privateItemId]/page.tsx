@@ -1,8 +1,8 @@
 import { getPrivateItem } from '@/data/anon/privateItems';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
-import { PrivateItemCard } from './private-item-card';
-import { PrivateItemSkeleton } from './private-item-skeleton';
+import { PrivateItemCard } from './_components/private-item-card';
+import { PrivateItemSkeleton } from './_components/private-item-skeleton';
 
 export default async function PrivateItemPage({ params }: {
   params: Promise<{

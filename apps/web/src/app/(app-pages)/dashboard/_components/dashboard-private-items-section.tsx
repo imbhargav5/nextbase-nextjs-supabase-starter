@@ -1,4 +1,4 @@
-import { PrivateItemsList } from '@/app/(app-pages)/PrivateItemsList';
+import { PrivateItemsList } from '@/components/app/private-items-list';
 import type { Table as TableType } from '@/types';
 
 interface DashboardPrivateItemsSectionProps {

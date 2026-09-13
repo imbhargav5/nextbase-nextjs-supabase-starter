@@ -8,7 +8,7 @@ export function PrivateItemsHeader() {
   return (
     <PageHeader
       title="Private Items"
-      description="Browse records in the authenticated workspace, protected by row-level security."
+      description="Items tied to your account. Row-level security keeps other users out."
       badge={
         <span className="flex items-center gap-1.5">
           <LockKeyhole className="size-3" aria-hidden="true" />
@@ -16,7 +16,7 @@ export function PrivateItemsHeader() {
         </span>
       }
       actions={
-        <Button asChild>
+        <Button asChild variant="brand">
           <Link href="/dashboard/new">
             <Plus aria-hidden="true" />
             New private item

@@ -1,11 +1,17 @@
+import { Suspense } from 'react';
+
 import { NguyenTemplate } from '@/components/templates/nguyen/nguyen-template';
 
 export const metadata = {
-  title: 'Nguyen — The Unified Workspace for AI-Native Teams',
+  title: 'Nguyen: The unified workspace for AI-native teams',
   description:
-    'Route tasks to the right AI, automate workflows, and keep your entire team in sync — from idea to production.',
+    'Route tasks to the right AI, automate workflows, and keep your team in sync from idea to production.',
 };
 
 export default function NguyenTemplatePage() {
-  return <NguyenTemplate />;
+  return (
+    <Suspense fallback={null}>
+      <NguyenTemplate />
+    </Suspense>
+  );
 }

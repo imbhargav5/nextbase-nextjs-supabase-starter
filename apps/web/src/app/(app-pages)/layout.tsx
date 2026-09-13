@@ -10,7 +10,7 @@ import {
   SidebarTrigger,
 } from '@/components/ui/sidebar';
 import { getCachedIsUserLoggedIn } from '@/rsc-data/supabase';
-import { AppSidebar } from './app-sidebar';
+import { AppSidebar } from '@/components/app/app-sidebar';
 
 async function AuthGuard({ children }: { children: ReactNode }) {
   const isLoggedIn = await getCachedIsUserLoggedIn();
@@ -23,7 +23,7 @@ export default function AppLayout({ children }: { children: ReactNode }) {
     <SidebarProvider>
       <AppSidebar />
       <SidebarInset className="min-w-0 overflow-hidden">
-        <header className="sticky top-0 z-30 flex h-14 shrink-0 items-center gap-2 border-b bg-background/90 px-4 backdrop-blur-md">
+        <header className="sticky top-0 z-30 flex h-14 shrink-0 items-center gap-2 border-b border-brand/15 bg-background/90 px-4 backdrop-blur-md">
           <SidebarTrigger className="-ml-1" />
           <Separator orientation="vertical" className="mr-2 h-4" />
           <Suspense fallback={null}>

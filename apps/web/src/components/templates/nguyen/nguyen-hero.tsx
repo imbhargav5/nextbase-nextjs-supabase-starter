@@ -30,62 +30,83 @@ export function NguyenHero() {
   }, [videoOpen]);
 
   return (
-    <div className="mt-28 flex w-full flex-col items-center gap-6 px-4 sm:mt-48 sm:px-6 lg:px-8">
-      <motion.h1
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-        className="text-center text-4xl leading-[1.1] font-medium tracking-tight sm:text-7xl"
-      >
-        {nguyenHero.title}
-        <span className="text-muted-foreground block">
-          {nguyenHero.titleMuted}
-        </span>
-      </motion.h1>
+    <section className="mx-auto flex w-full max-w-6xl flex-col items-center gap-8 px-5 pt-14 pb-2 max-lg:pt-12 sm:gap-10 sm:px-6 md:gap-12 lg:px-8 lg:pt-40 xl:pt-44">
+      <div className="flex w-full max-w-3xl flex-col items-center gap-5 sm:gap-6 md:gap-7">
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          className="w-full text-center font-medium tracking-[-0.03em] text-balance"
+        >
+          <span
+            className={cn(
+              'block text-foreground',
+              'text-[clamp(1.875rem,5.6vw,4.5rem)] leading-[1.06]',
+              'sm:text-[clamp(2.5rem,4.2vw,4.75rem)] sm:leading-[1.05]',
+              'lg:text-[clamp(3rem,3.6vw,5rem)] lg:leading-[1.02]',
+            )}
+          >
+            {nguyenHero.title}
+          </span>
+          <span
+            className={cn(
+              'mt-2 block text-muted-foreground sm:mt-2.5',
+              'text-[clamp(1.875rem,5.6vw,4.5rem)] leading-[1.06]',
+              'sm:text-[clamp(2.5rem,4.2vw,4.75rem)] sm:leading-[1.05]',
+              'lg:text-[clamp(3rem,3.6vw,5rem)] lg:leading-[1.02]',
+            )}
+          >
+            {nguyenHero.titleMuted}
+          </span>
+        </motion.h1>
 
-      <motion.p
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-        className="max-w-lg text-center leading-6 tracking-tight sm:text-xl"
-      >
-        {nguyenHero.description}
-      </motion.p>
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+          className={cn(
+            'max-w-[34ch] text-center text-pretty text-muted-foreground',
+            'text-[0.9375rem] leading-[1.65] tracking-[-0.01em]',
+            'sm:max-w-[42ch] sm:text-base sm:leading-7',
+            'md:max-w-xl md:text-lg md:leading-8',
+          )}
+        >
+          {nguyenHero.description}
+        </motion.p>
+      </div>
 
       <motion.div
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.16, ease: [0.16, 1, 0.3, 1] }}
-        className="flex flex-col items-center gap-3"
+        className="flex w-full max-w-md flex-col items-stretch gap-3 sm:max-w-none sm:flex-row sm:items-center sm:justify-center"
       >
-        <div className="flex flex-wrap justify-center gap-3">
-          <Button
-            asChild
-            size="lg"
-            className="h-10 w-fit rounded-sm px-6 shadow-lg"
-          >
-            <Link href={nguyenHero.primaryCta.href}>
-              {nguyenHero.primaryCta.label}
-            </Link>
-          </Button>
-          <Button
-            asChild
-            variant="outline"
-            size="lg"
-            className="h-10 w-fit rounded-sm px-6"
-          >
-            <Link href={nguyenHero.secondaryCta.href}>
-              {nguyenHero.secondaryCta.label}
-            </Link>
-          </Button>
-        </div>
+        <Button
+          asChild
+          size="lg"
+          className="h-11 w-full rounded-md px-6 shadow-lg sm:w-auto sm:min-w-[9.5rem]"
+        >
+          <Link href={nguyenHero.primaryCta.href}>
+            {nguyenHero.primaryCta.label}
+          </Link>
+        </Button>
+        <Button
+          asChild
+          variant="outline"
+          size="lg"
+          className="h-11 w-full rounded-md px-6 sm:w-auto sm:min-w-[9.5rem]"
+        >
+          <Link href={nguyenHero.secondaryCta.href}>
+            {nguyenHero.secondaryCta.label}
+          </Link>
+        </Button>
       </motion.div>
 
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.24, ease: [0.16, 1, 0.3, 1] }}
-        className="relative mx-auto w-full max-w-5xl"
+        className="relative mt-2 w-full max-w-5xl sm:mt-4"
       >
         <button
           type="button"
@@ -168,6 +189,6 @@ export function NguyenHero() {
           </motion.div>
         ) : null}
       </AnimatePresence>
-    </div>
+    </section>
   );
 }

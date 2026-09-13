@@ -83,6 +83,39 @@ export type Database = {
         }
         Relationships: []
       }
+      kit_purchases: {
+        Row: {
+          amount_total: number | null
+          currency: string | null
+          id: string
+          kit_slug: string
+          purchased_at: string
+          stripe_checkout_session_id: string
+          stripe_payment_intent_id: string | null
+          user_id: string
+        }
+        Insert: {
+          amount_total?: number | null
+          currency?: string | null
+          id?: string
+          kit_slug: string
+          purchased_at?: string
+          stripe_checkout_session_id: string
+          stripe_payment_intent_id?: string | null
+          user_id: string
+        }
+        Update: {
+          amount_total?: number | null
+          currency?: string | null
+          id?: string
+          kit_slug?: string
+          purchased_at?: string
+          stripe_checkout_session_id?: string
+          stripe_payment_intent_id?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       private_items: {
         Row: {
           created_at: string

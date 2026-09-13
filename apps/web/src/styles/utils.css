@@ -1,3 +1,36 @@
+/* Minimal “Chrome-style” scrollbars (WebKit + Firefox) */
+@layer base {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in oklab, var(--foreground) 22%, transparent)
+      transparent;
+  }
+
+  *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: color-mix(in oklab, var(--foreground) 18%, transparent);
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    border-radius: 9999px;
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background-color: color-mix(in oklab, var(--foreground) 32%, transparent);
+  }
+
+  *::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+}
+
 .hide-dialog-close > .absolute.right-4.top-4 {
   /* Keep this selector aligned with the rendered DialogClose classes. */
   display: none;
@@ -81,4 +114,33 @@
 
 .fade-bottom {
   mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+}
+
+/* Rare brand accent — hero glows, featured surfaces */
+.brand-surface-glow {
+  background-image: radial-gradient(
+    ellipse 80% 60% at 50% -10%,
+    color-mix(in oklch, var(--brand) 14%, transparent),
+    transparent 70%
+  );
+}
+
+.brand-page-eyebrow {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--brand);
+}
+
+.link-brand {
+  font-weight: 500;
+  color: var(--foreground);
+  text-decoration-line: underline;
+  text-underline-offset: 4px;
+  transition: color 0.15s ease;
+}
+
+.link-brand:hover {
+  color: var(--brand);
 }

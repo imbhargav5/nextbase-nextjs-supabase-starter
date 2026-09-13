@@ -61,7 +61,7 @@ export const Password = ({
             />
           </InputGroup>
         </Field>
-        <Button disabled={isLoading} type="submit" className="w-full">
+        <Button disabled={isLoading} type="submit" variant="brand" className="w-full">
           {isLoading ? <Spinner aria-hidden="true" /> : null}
           {isLoading ? 'Updating...' : buttonLabel}
         </Button>

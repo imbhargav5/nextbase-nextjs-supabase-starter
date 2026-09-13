@@ -4,14 +4,13 @@ import { Menu } from 'lucide-react';
 import Link from 'next/link';
 
 import { Brand } from '@/components/brand';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { ModeToggle } from '@/components/ui/mode-toggle';
 import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
 import {
   Sheet,
@@ -33,7 +32,8 @@ import { cn } from '@/lib/utils';
 
 const navigation = [
   { href: '/', label: 'Home' },
-  { href: '/templates', label: 'Templates' },
+  { href: '/kits', label: 'Kits' },
+  { href: '/prompts', label: 'Prompts' },
   { href: '/pricing', label: 'Pricing' },
   { href: '/#faq', label: 'FAQ' },
 ];
@@ -50,8 +50,8 @@ function NavMenuLink({ href, label }: { href: string; label: string }) {
           onMouseEnter={() => setHoveredId(href)}
           onFocus={() => setHoveredId(href)}
           className={cn(
-            navigationMenuTriggerStyle(),
-            'relative bg-transparent text-muted-foreground hover:bg-transparent hover:text-accent-foreground focus:bg-transparent focus:text-accent-foreground',
+            buttonVariants({ variant: 'ghost', size: 'sm' }),
+            'relative w-max bg-transparent text-muted-foreground hover:bg-transparent hover:text-accent-foreground focus-visible:bg-transparent focus-visible:text-accent-foreground',
           )}
         >
           <SlidingHighlight active={isHovered} />
@@ -62,9 +62,9 @@ function NavMenuLink({ href, label }: { href: string; label: string }) {
   );
 }
 
-export default function Navbar() {
+export function SiteNavbar() {
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/90 backdrop-blur-lg supports-[backdrop-filter]:bg-background/75">
+    <header className="sticky top-0 z-50 w-full border-b border-brand/15 bg-background/90 backdrop-blur-lg supports-[backdrop-filter]:bg-background/75">
       <div className="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4 sm:px-6 lg:px-8">
         <Link href="/" aria-label={`${PRODUCT_NAME} home`} className="shrink-0">
           <Brand />
@@ -97,12 +97,7 @@ export default function Navbar() {
               </Button>
             </SlidingHighlightTarget>
             <SlidingHighlightTarget id="get-started" className="hidden sm:inline-flex">
-              <Button
-                asChild
-                variant="ghost"
-                size="sm"
-                className="hover:bg-transparent hover:text-accent-foreground"
-              >
+              <Button asChild variant="brand" size="sm">
                 <Link href="/sign-up">Get started</Link>
               </Button>
             </SlidingHighlightTarget>
@@ -120,7 +115,7 @@ export default function Navbar() {
                     <Brand />
                   </SheetTitle>
                   <SheetDescription>
-                    Everything you need to start and ship your next product.
+                    Browse kits, prompts, and pricing for Prompt Market.
                   </SheetDescription>
                 </SheetHeader>
                 <nav className="mt-6 grid gap-1">
@@ -139,7 +134,7 @@ export default function Navbar() {
                     </Button>
                   </SheetClose>
                   <SheetClose asChild>
-                    <Button asChild>
+                    <Button asChild variant="brand">
                       <Link href="/sign-up">Get started</Link>
                     </Button>
                   </SheetClose>

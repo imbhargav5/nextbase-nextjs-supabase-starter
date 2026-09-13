@@ -55,18 +55,20 @@ export type FeatureCard = {
   minHeight?: string;
 };
 
+const NGUYEN_TEMPLATE_BASE = '/templates/nguyen';
+
 export const nguyenNavLinks: NavLink[] = [
-  { label: 'Features', href: '#features' },
-  { label: 'Solution', href: '#solution' },
-  { label: 'Pricing', href: '#pricing' },
-  { label: 'About', href: '#about' },
+  { label: 'Features', href: `${NGUYEN_TEMPLATE_BASE}#features` },
+  { label: 'Solution', href: `${NGUYEN_TEMPLATE_BASE}#solution` },
+  { label: 'Pricing', href: `${NGUYEN_TEMPLATE_BASE}#pricing` },
+  { label: 'Changelog', href: `${NGUYEN_TEMPLATE_BASE}/changelog` },
 ];
 
 export const nguyenHero = {
   title: 'The Unified Workspace',
   titleMuted: 'for AI-Native Teams.',
   description:
-    'Route tasks to the right AI, automate workflows, and keep your entire team in sync — from idea to production.',
+    'Route tasks to the right AI, automate workflows, and keep your team in sync from idea to production.',
   primaryCta: { label: 'Get Started', href: '/pricing' },
   secondaryCta: { label: 'View Pricing', href: '/pricing' },
   video: {
@@ -80,7 +82,7 @@ export const nguyenHero = {
 export const nguyenFeaturesSection = {
   title: 'Everything your team needs to ship faster with AI',
   description:
-    'Powerful features designed to streamline your workflow and boost productivity across your entire organization.',
+    'Boards, chat, and model routing in one place so work does not sprawl across tabs.',
 };
 
 export const nguyenFeatureCards: FeatureCard[] = [
@@ -96,7 +98,7 @@ export const nguyenFeatureCards: FeatureCard[] = [
     id: 'team-chat',
     title: 'Built-in Team Chat',
     description:
-      'Communicate where the work happens. Share updates, react to messages, and keep conversations linked to projects — no context switching.',
+      'Chat next to the work. Threads stay tied to the project so you are not jumping between apps.',
     colSpan: 'lg:col-span-3',
     minHeight: 'min-h-[420px]',
   },
@@ -118,7 +120,7 @@ export const nguyenFeatureCards: FeatureCard[] = [
     id: 'automated-workflows',
     title: 'Automated Workflows',
     description:
-      'Trigger actions, notify your team, and close the loop — all on autopilot.',
+      'Trigger actions, notify your team, and close the loop without manual follow-up.',
     colSpan: 'lg:col-span-2',
   },
 ];
@@ -140,7 +142,7 @@ export const nguyenSolutionSections = [
     eyebrow: 'AI ASSISTANT',
     title: 'AI That Understands Your Work',
     description:
-      "Summarize long threads, extract action items, and get instant answers — all powered by AI that understands your team's context.",
+      "Summarize threads, pull out action items, and get answers using your team's existing context.",
     seeAlso: [
       'See how AI summaries save hours every week.',
       'Learn about our multi-model AI architecture.',
@@ -151,7 +153,7 @@ export const nguyenSolutionSections = [
     eyebrow: 'AI AGENTS',
     title: 'Autonomous agents that handle the heavy lifting.',
     description:
-      'Deploy intelligent agents that route tasks, coordinate across AI providers, and deliver results — all without manual intervention.',
+      'Agents route tasks across providers and return results without someone babysitting every step.',
     seeAlso: [
       'Explore agent routing and orchestration.',
       'See how teams automate repetitive workflows.',
@@ -163,7 +165,7 @@ export const nguyenTestimonialsSection = {
   title: "Don't Take",
   titleAccent: 'Our Word for It',
   description:
-    'Join thousands of teams who have transformed their workflow and boosted productivity with Nguyen.',
+    'Teams use Nguyen to ship faster with less tool sprawl.',
 };
 
 export const nguyenTestimonials: Testimonial[] = [
@@ -284,17 +286,17 @@ export const nguyenFaqItems: FaqItem[] = [
   {
     question: 'Can I change plans later?',
     answer:
-      'Absolutely. Upgrade or downgrade your plan at any time. Changes take effect immediately and billing is prorated.',
+      'Yes. Upgrade or downgrade anytime. Changes apply immediately and billing is prorated.',
   },
   {
     question: 'What AI models do you support?',
     answer:
-      'Nguyen integrates with Anthropic Claude, OpenAI GPT, Google Gemini, Mistral, and more — all from a single unified workspace.',
+      'Nguyen connects to Anthropic Claude, OpenAI GPT, Google Gemini, Mistral, and more from one workspace.',
   },
   {
     question: 'Is my data secure?',
     answer:
-      'Yes. We use enterprise-grade encryption, SOC 2 compliance, and offer SSO for teams that need advanced security controls.',
+      'Yes. Encryption in transit and at rest, SOC 2, and SSO for teams that need it.',
   },
   {
     question: 'Do you offer refunds?',
@@ -328,7 +330,7 @@ export const nguyenFooterColumns: FooterColumn[] = [
       { label: 'Features', href: '#', title: 'See our features' },
       { label: 'Pricing', href: '#', title: 'View pricing' },
       { label: 'Integrations', href: '#', title: 'View integrations' },
-      { label: 'Changelog', href: '#', title: 'View changelog' },
+      { label: 'Changelog', href: `${NGUYEN_TEMPLATE_BASE}/changelog`, title: 'View changelog' },
       { label: 'Roadmap', href: '#', title: 'View roadmap' },
     ],
   },

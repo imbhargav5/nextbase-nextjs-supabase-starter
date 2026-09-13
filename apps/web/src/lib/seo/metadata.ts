@@ -44,7 +44,7 @@ export function createPageMetadata({
           url: ogImage,
           width: 1200,
           height: 630,
-          alt: `${SITE_CONFIG.name} — ${SITE_CONFIG.tagline}`,
+          alt: `${SITE_CONFIG.name}: ${SITE_CONFIG.tagline}`,
         },
       ],
     },
@@ -84,8 +84,16 @@ export function createRootMetadata(): Metadata {
       template: `%s · ${SITE_CONFIG.shortName}`,
     },
     manifest: '/site.webmanifest',
+    themeColor: [
+      { media: '(prefers-color-scheme: light)', color: '#faf8f6' },
+      { media: '(prefers-color-scheme: dark)', color: '#12100e' },
+    ],
     icons: {
-      icon: [{ url: '/favicon.ico', sizes: 'any' }],
+      icon: [
+        { url: SITE_CONFIG.logoPath, type: 'image/png', sizes: '1254x1254' },
+        { url: '/favicon.ico', sizes: 'any' },
+      ],
+      apple: [{ url: SITE_CONFIG.logoPath, type: 'image/png' }],
     },
     formatDetection: {
       email: false,

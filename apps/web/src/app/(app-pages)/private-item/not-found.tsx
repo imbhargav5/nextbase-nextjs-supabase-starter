@@ -26,7 +26,7 @@ export default function NotFound() {
           </EmptyDescription>
         </EmptyHeader>
         <EmptyContent>
-          <Button asChild>
+          <Button asChild variant="brand">
             <Link href="/private-items">Return to private items</Link>
           </Button>
         </EmptyContent>

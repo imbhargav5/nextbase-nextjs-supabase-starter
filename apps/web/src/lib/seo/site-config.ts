@@ -1,12 +1,12 @@
-import { PRODUCT_NAME, PRODUCT_TAGLINE } from '@/constants';
+import { PRODUCT_NAME, PRODUCT_TAGLINE, SITE_LOGO_PATH } from '@/constants';
 import { getURL } from '@/utils/helpers';
 
 export const SITE_CONFIG = {
   name: PRODUCT_NAME,
-  shortName: 'Menace Next',
+  shortName: 'Prompt Market',
   tagline: PRODUCT_TAGLINE,
   description:
-    'Menace Next is a production-ready SaaS starter kit for Next.js 16 and Supabase — auth, RLS, billing-ready UI, templates, and SEO out of the box.',
+    'Prompt Market sells prompt packs with ship-ready Next.js templates. Copy into your coding agent and launch landing pages that run in a real repo.',
   locale: 'en_US',
   category: 'technology',
   keywords: [
@@ -16,16 +16,17 @@ export const SITE_CONFIG = {
     'Next.js 16 template',
     'shadcn ui starter',
     'production SaaS template',
-    'Menace Next',
+    'Prompt Market',
     'authentication',
     'row level security',
     'server actions',
   ],
-  authors: [{ name: 'Menace Next', url: getURL() }],
-  creator: 'Menace Next',
-  publisher: 'Menace Next',
-  twitterHandle: '@menacenext',
+  authors: [{ name: 'Prompt Market', url: getURL() }],
+  creator: 'Prompt Market',
+  publisher: 'Prompt Market',
+  twitterHandle: '@promptmarket',
   defaultOgImagePath: '/opengraph-image',
+  logoPath: SITE_LOGO_PATH,
 } as const;
 
 export function getCanonicalUrl(path = ''): string {

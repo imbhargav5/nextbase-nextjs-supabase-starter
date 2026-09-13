@@ -76,7 +76,7 @@ export const Email = ({
             />
           </InputGroup>
         </Field>
-        <Button className="w-full" type="submit" disabled={isLoading}>
+        <Button className="w-full" type="submit" variant="brand" disabled={isLoading}>
           {isLoading ? <Spinner aria-hidden="true" /> : null}
           {isLoading ? 'Sending...' : buttonLabelText}
         </Button>

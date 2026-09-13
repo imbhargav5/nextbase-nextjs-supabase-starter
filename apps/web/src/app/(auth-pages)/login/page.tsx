@@ -3,12 +3,12 @@ import { Suspense } from 'react';
 import { z } from 'zod';
 
 import { createPageMetadata } from '@/lib/seo/metadata';
-import { Login } from './Login';
+import { Login } from '@/components/Auth/login-form';
 
 export const metadata: Metadata = createPageMetadata({
   title: 'Sign in',
   description:
-    'Sign in to your Menace Next workspace with email, magic link, or OAuth providers.',
+    'Sign in to your Prompt Market account with email, magic link, or OAuth providers.',
   path: '/login',
 });
 

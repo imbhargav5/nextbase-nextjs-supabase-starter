@@ -24,6 +24,8 @@
     "database#start": "turbo run database#start",
     "database#stop": "turbo run database#stop",
     "database#status": "turbo run database#status",
+    "database#push:remote": "tsx scripts/push-remote-migrations.ts",
+    "supabase:validate-env": "tsx scripts/validate-remote-supabase-env.ts",
     "test:e2e": "turbo run test:e2e --filter=web",
     "supabase:sync-env": "tsx scripts/sync-supabase-env.ts",
     "docs:dev": "npx @upstash/docs7 dev ./apps/documentation"
@@ -31,8 +33,10 @@
   "devDependencies": {
     "@changesets/changelog-github": "^1.0.1",
     "@changesets/cli": "^3.0.2",
+    "@types/pg": "^8.23.1",
     "oxfmt": "^0.66.0",
     "oxlint": "^1.81.0",
+    "pg": "^8.23.0",
     "tsx": "^4.23.13",
     "turbo": "^2.10.12"
   }

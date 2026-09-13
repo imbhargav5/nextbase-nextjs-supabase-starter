@@ -22,7 +22,7 @@ export function PageHeader({
           <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">
             {title}
           </h1>
-          {badge ? <Badge variant="secondary">{badge}</Badge> : null}
+          {badge ? <Badge variant="brand">{badge}</Badge> : null}
         </div>
         {description ? (
           <p className="max-w-2xl text-sm leading-6 text-muted-foreground sm:text-base">

@@ -9,6 +9,7 @@ import {
 } from 'react';
 
 import { cn } from '@/lib/utils';
+import { releaseFramePreviewScrollLock } from '@/lib/kits/frame-preview-scroll-lock';
 
 type NguyenThemeContextValue = {
   isDark: boolean;
@@ -33,6 +34,12 @@ export function NguyenThemeProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     document.body.classList.add('nguyen-template-page');
     document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';
+
+    const isFramePreview =
+      new URLSearchParams(window.location.search).get('frame') === '1';
+    if (!isFramePreview) {
+      releaseFramePreviewScrollLock();
+    }
 
     return () => {
       document.body.classList.remove('nguyen-template-page');

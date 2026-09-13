@@ -1,8 +1,8 @@
 import { getUserPrivateItems } from '@/data/anon/privateItems';
 import { Suspense } from 'react';
-import { PrivateItemsHeader } from './private-items-header';
-import { PrivateItemsListSection } from './private-items-list-section';
-import { PrivateItemsListSkeleton } from './private-items-list-skeleton';
+import { PrivateItemsHeader } from './_components/private-items-header';
+import { PrivateItemsListSection } from './_components/private-items-list-section';
+import { PrivateItemsListSkeleton } from './_components/private-items-list-skeleton';
 
 export default function PrivateItemsPage() {
   const privateItemsPromise = getUserPrivateItems();

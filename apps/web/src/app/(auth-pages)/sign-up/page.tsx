@@ -3,12 +3,12 @@ import { Suspense } from 'react';
 import { z } from 'zod';
 
 import { createPageMetadata } from '@/lib/seo/metadata';
-import { SignUp } from './Signup';
+import { SignUp } from '@/components/Auth/sign-up-form';
 
 export const metadata: Metadata = createPageMetadata({
   title: 'Create account',
   description:
-    'Create your Menace Next account and explore the protected SaaS workspace in minutes.',
+    'Create your Prompt Market account to save kits and get notified when checkout goes live.',
   path: '/sign-up',
 });
 

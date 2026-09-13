@@ -55,5 +55,17 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
+  if (request.nextUrl.searchParams.get('frame') === '1') {
+    const requestHeaders = new Headers(request.headers);
+    requestHeaders.set('x-template-frame-preview', '1');
+    const frameResponse = NextResponse.next({
+      request: { headers: requestHeaders },
+    });
+    for (const cookie of supabaseResponse.cookies.getAll()) {
+      frameResponse.cookies.set(cookie);
+    }
+    return frameResponse;
+  }
+
   return supabaseResponse;
 }

@@ -1,13 +1,13 @@
 import type { MetadataRoute } from 'next';
 
+import { kitProductCatalog } from '@/lib/kits/catalog';
 import { getCanonicalUrl } from '@/lib/seo/site-config';
 
-const publicRoutes = [
+const staticRoutes = [
   { path: '/', changeFrequency: 'weekly' as const, priority: 1 },
   { path: '/pricing', changeFrequency: 'weekly' as const, priority: 0.9 },
-  { path: '/templates', changeFrequency: 'weekly' as const, priority: 0.85 },
-  { path: '/templates/nguyen', changeFrequency: 'monthly' as const, priority: 0.7 },
-  { path: '/templates/intellune', changeFrequency: 'monthly' as const, priority: 0.7 },
+  { path: '/kits', changeFrequency: 'weekly' as const, priority: 0.9 },
+  { path: '/prompts', changeFrequency: 'weekly' as const, priority: 0.85 },
   { path: '/login', changeFrequency: 'monthly' as const, priority: 0.5 },
   { path: '/sign-up', changeFrequency: 'monthly' as const, priority: 0.6 },
 ];
@@ -15,7 +15,24 @@ const publicRoutes = [
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
 
-  return publicRoutes.map((route) => ({
+  const kitRoutes = kitProductCatalog.flatMap((kit) => [
+    {
+      path: `/kit/${kit.slug}`,
+      changeFrequency: 'weekly' as const,
+      priority: 0.88,
+    },
+    ...kit.templatePages
+      .filter((page) => page.status !== 'coming-soon')
+      .map((page) => ({
+        path: page.path,
+        changeFrequency: 'monthly' as const,
+        priority: page.status === 'live' ? 0.72 : 0.55,
+      })),
+  ]);
+
+  const allRoutes = [...staticRoutes, ...kitRoutes];
+
+  return allRoutes.map((route) => ({
     url: getCanonicalUrl(route.path),
     lastModified,
     changeFrequency: route.changeFrequency,

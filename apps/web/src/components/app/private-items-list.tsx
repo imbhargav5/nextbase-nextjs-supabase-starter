@@ -84,7 +84,7 @@ export function PrivateItemsList({ privateItems }: PrivateItemsListProps) {
           </EmptyDescription>
         </EmptyHeader>
         <EmptyContent>
-          <Button asChild>
+          <Button asChild variant="brand">
             <Link href="/dashboard/new">
               <Plus aria-hidden="true" />
               Create private item

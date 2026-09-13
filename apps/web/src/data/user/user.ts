@@ -11,3 +11,12 @@ export async function getLoggedInUserId(): Promise<string> {
   }
   return data.claims.sub;
 }
+
+export async function getOptionalLoggedInUserId(): Promise<string | null> {
+  const supabase = await createSupabaseClient();
+  const { data, error } = await supabase.auth.getClaims();
+  if (error || !data?.claims?.sub) {
+    return null;
+  }
+  return data.claims.sub;
+}

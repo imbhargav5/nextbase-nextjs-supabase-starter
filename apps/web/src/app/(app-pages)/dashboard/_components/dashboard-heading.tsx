@@ -10,9 +10,9 @@ export async function DashboardHeading() {
   return (
     <PageHeader
       title="Dashboard"
-      description="Manage your secure workspace and continue where you left off."
+      description="Your signed-in workspace. Add private items or jump back to kits."
       actions={
-        <Button asChild>
+        <Button asChild variant="brand">
           <Link href="/dashboard/new">
             <Plus aria-hidden="true" />
             New private item

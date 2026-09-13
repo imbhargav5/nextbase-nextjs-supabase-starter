@@ -20,7 +20,7 @@ import {
   ItemTitle,
 } from '@/components/ui/item';
 import type { Table as TableType } from '@/types';
-import { ConfirmDeleteItemDialog } from './ConfirmDeleteItemDialog';
+import { ConfirmDeleteItemDialog } from './confirm-delete-item-dialog';
 
 interface PrivateItemCardProps {
   privateItemId: string;
@@ -42,7 +42,7 @@ export async function PrivateItemCard({
     <div className="space-y-8">
       <PageHeader
         title={item.name}
-        description="View the information stored in this protected record."
+        description="Details for this item. Only your account can read it."
         badge={
           <span className="flex items-center gap-1.5">
             <LockKeyhole className="size-3" aria-hidden="true" />

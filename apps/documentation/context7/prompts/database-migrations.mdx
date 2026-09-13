@@ -1,18 +1,18 @@
 ---
 title: Database & RLS prompts
-description: Cursor prompts for Supabase schema, migrations, Row Level Security, and pgTAP tests in NextBase Starter
+description: Agent prompts for Supabase schema, migrations, Row Level Security, and pgTAP tests in NextBase Starter
 seo:
   keywords:
     - Supabase RLS prompts
     - Supabase migration workflow
-    - Postgres Row Level Security Cursor
+    - Postgres Row Level Security agent
 ---
 
 All schema work lives under `apps/database/supabase/schemas/`. Use Context7 for Supabase CLI and Postgres policy syntax.
 
 ## New table with RLS
 
-<Prompt description="Copy — add a table users can only access their rows on" actions={["copy", "cursor"]}>
+<Prompt description="Copy — add a table users can only access their rows on" actions={["copy", "agent"]}>
 Add a Postgres table `[TABLE_NAME]` with columns: [LIST COLUMNS AND TYPES].
 
 NextBase workflow (mandatory):
@@ -26,7 +26,7 @@ Add a pgTAP test under apps/database/supabase/tests/ if similar tests exist for 
 
 ## Change column or index safely
 
-<Prompt description="Copy — evolve schema without breaking prod" actions={["copy", "cursor"]}>
+<Prompt description="Copy — evolve schema without breaking prod" actions={["copy", "agent"]}>
 I need to change schema: [DESCRIBE CHANGE — add column, index, FK, etc.].
 
 Follow NextBase contributing/database rules:
@@ -40,7 +40,7 @@ Call out breaking changes for existing rows and any app code in apps/web that mu
 
 ## Fix RLS permission denied
 
-<Prompt description="Copy — user cannot read/write expected rows" actions={["copy", "cursor"]}>
+<Prompt description="Copy — user cannot read/write expected rows" actions={["copy", "agent"]}>
 Authenticated user gets permission denied on [TABLE/OPERATION]: [ERROR OR SYMPTOM].
 
 Investigate:
@@ -54,7 +54,7 @@ Suggest policy SQL fix in schemas/*.sql and migration steps — no direct edits 
 
 ## Seed or local test data
 
-<Prompt description="Copy — seed dev data respecting RLS" actions={["copy", "cursor"]}>
+<Prompt description="Copy — seed dev data respecting RLS" actions={["copy", "agent"]}>
 Add seed data for [TABLE/SCENARIO] for local development.
 
 Use apps/database/supabase/ seed patterns if present; Context7 query-docs for supabase seed and SQL auth.users linkage if needed.
@@ -64,7 +64,7 @@ Do not commit secrets; use local-only seed scripts.
 
 ## Generate and review a migration
 
-<Prompt description="Copy — walk through db diff review" actions={["copy", "cursor"]}>
+<Prompt description="Copy — walk through db diff review" actions={["copy", "agent"]}>
 I edited apps/database/supabase/schemas/[FILE].sql. Generate the migration and tell me what to verify.
 
 Run or instruct: cd apps/database && supabase db diff -f [name].

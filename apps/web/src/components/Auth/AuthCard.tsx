@@ -31,7 +31,7 @@ export function AuthCard({
     <Card className={cn('w-full border-border/70 shadow-sm', className)}>
       <CardHeader className="space-y-3">
         {icon ? (
-          <div className="flex size-10 items-center justify-center rounded-lg border bg-muted/50 text-foreground">
+          <div className="flex size-10 items-center justify-center rounded-lg border border-brand/25 bg-brand-muted/60 text-brand">
             {icon}
           </div>
         ) : null}

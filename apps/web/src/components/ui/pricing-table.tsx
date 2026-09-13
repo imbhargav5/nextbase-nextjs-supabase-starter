@@ -27,6 +27,8 @@ export interface PricingPlan {
   popular?: boolean
 }
 
+export type PricingBillingDisplay = "subscription" | "one-time"
+
 export interface PricingTableProps
   extends React.HTMLAttributes<HTMLDivElement> {
   features: PricingFeature[]
@@ -34,6 +36,8 @@ export interface PricingTableProps
   onPlanSelect?: (plan: PlanLevel) => void
   defaultPlan?: PlanLevel
   defaultInterval?: "monthly" | "yearly"
+  /** When `one-time`, hides the billing toggle and shows a single price per plan. */
+  billingDisplay?: PricingBillingDisplay
   containerClassName?: string
   buttonClassName?: string
 }
@@ -44,12 +48,16 @@ export function PricingTable({
   onPlanSelect,
   defaultPlan = "pro",
   defaultInterval = "monthly",
+  billingDisplay = "subscription",
   className,
   containerClassName,
   buttonClassName,
   ...props
 }: PricingTableProps) {
-  const [isYearly, setIsYearly] = React.useState(defaultInterval === "yearly")
+  const isOneTime = billingDisplay === "one-time"
+  const [isYearly, setIsYearly] = React.useState(
+    isOneTime ? false : defaultInterval === "yearly",
+  )
   const [selectedPlan, setSelectedPlan] = React.useState<PlanLevel>(defaultPlan)
 
   function handlePlanSelect(plan: PlanLevel) {
@@ -70,51 +78,53 @@ export function PricingTable({
         className={cn("w-full max-w-3xl mx-auto px-4", containerClassName)}
         {...props}
       >
-        <div className="mt-8 flex justify-end mb-4 sm:mt-10 sm:mb-8">
-          <div
-            role="tablist"
-            aria-label="Billing interval"
-            className="relative inline-flex items-center rounded-full border border-border bg-muted/50 p-1"
-          >
-            {(
-              [
-                { label: "Monthly", value: false },
-                { label: "Yearly", value: true },
-              ] as const
-            ).map(({ label, value }) => {
-              const isActive = isYearly === value
+        {isOneTime ? null : (
+          <div className="mt-8 flex justify-end mb-4 sm:mt-10 sm:mb-8">
+            <div
+              role="tablist"
+              aria-label="Billing interval"
+              className="relative inline-flex items-center rounded-full border border-border bg-muted/50 p-1"
+            >
+              {(
+                [
+                  { label: "Monthly", value: false },
+                  { label: "Yearly", value: true },
+                ] as const
+              ).map(({ label, value }) => {
+                const isActive = isYearly === value
 
-              return (
-                <button
-                  key={label}
-                  type="button"
-                  role="tab"
-                  aria-selected={isActive}
-                  onClick={() => setIsYearly(value)}
-                  className={cn(
-                    "relative z-10 rounded-full px-4 py-1.5 text-xs font-medium transition-colors sm:text-sm",
-                    isActive
-                      ? "text-foreground"
-                      : "text-muted-foreground hover:text-foreground",
-                  )}
-                >
-                  {isActive ? (
-                    <motion.span
-                      layoutId="pricing-billing-interval"
-                      className="absolute inset-0 rounded-full bg-background shadow-sm ring-1 ring-border/60"
-                      transition={{
-                        type: "spring",
-                        stiffness: 500,
-                        damping: 35,
-                      }}
-                    />
-                  ) : null}
-                  <span className="relative z-10">{label}</span>
-                </button>
-              )
-            })}
+                return (
+                  <button
+                    key={label}
+                    type="button"
+                    role="tab"
+                    aria-selected={isActive}
+                    onClick={() => setIsYearly(value)}
+                    className={cn(
+                      "relative z-10 rounded-full px-4 py-1.5 text-xs font-medium transition-colors sm:text-sm",
+                      isActive
+                        ? "text-foreground"
+                        : "text-muted-foreground hover:text-foreground",
+                    )}
+                  >
+                    {isActive ? (
+                      <motion.span
+                        layoutId="pricing-billing-interval"
+                        className="absolute inset-0 rounded-full bg-background shadow-sm ring-1 ring-border/60"
+                        transition={{
+                          type: "spring",
+                          stiffness: 500,
+                          damping: 35,
+                        }}
+                      />
+                    ) : null}
+                    <span className="relative z-10">{label}</span>
+                  </button>
+                )
+              })}
+            </div>
           </div>
-        </div>
+        )}
 
         <div className="mb-8 flex flex-col gap-4 sm:flex-row">
           {plans.map((plan) => {
@@ -125,12 +135,12 @@ export function PricingTable({
                 key={plan.name}
                 type="button"
                 onClick={() => handlePlanSelect(plan.level)}
-                className="relative flex-1 rounded-xl border border-zinc-200 p-4 text-left dark:border-zinc-800"
+                className="relative flex-1 rounded-xl border border-border/80 p-4 text-left transition-colors hover:border-brand/30"
               >
                 {isActive ? (
                   <motion.span
                     layoutId="pricing-plan-select"
-                    className="pointer-events-none absolute inset-0 rounded-xl ring-2 ring-blue-500 dark:ring-blue-400"
+                    className="pointer-events-none absolute inset-0 rounded-xl ring-2 ring-brand"
                     transition={{
                       type: "spring",
                       stiffness: 500,
@@ -142,7 +152,7 @@ export function PricingTable({
                   <div className="mb-2 flex items-center justify-between">
                     <span className="text-sm font-medium">{plan.name}</span>
                     {plan.popular ? (
-                      <span className="rounded-full bg-blue-100 px-2 py-0.5 text-xs text-blue-600 dark:bg-blue-900 dark:text-blue-300">
+                      <span className="rounded-full bg-brand-muted px-2 py-0.5 text-xs font-medium text-brand">
                         Popular
                       </span>
                     ) : null}
@@ -157,8 +167,10 @@ export function PricingTable({
                       value={isYearly ? plan.price.yearly : plan.price.monthly}
                       className="text-2xl font-bold"
                     />
-                    <span className="text-sm font-normal text-zinc-500">
-                      /{isYearly ? "year" : "month"}
+                    <span className="text-sm font-normal text-muted-foreground">
+                      {isOneTime
+                        ? " once"
+                        : `/${isYearly ? "year" : "month"}`}
                     </span>
                   </div>
                 </div>
@@ -167,10 +179,10 @@ export function PricingTable({
           })}
         </div>
 
-        <div className="border border-zinc-200 dark:border-zinc-800 rounded-xl overflow-hidden">
+        <div className="overflow-hidden rounded-xl border border-border/80">
           <div className="overflow-x-auto">
-            <div className="min-w-[640px] divide-y divide-zinc-200 dark:divide-zinc-800">
-              <div className="flex items-center p-4 bg-zinc-50 dark:bg-zinc-900">
+            <div className="min-w-[640px] divide-y divide-border/80">
+              <div className="flex items-center bg-brand-muted/40 p-4">
                 <div className="flex-1 text-sm font-medium">Features</div>
                 <div className="flex items-center gap-8 text-sm">
                   {plans.map((plan) => (
@@ -189,7 +201,7 @@ export function PricingTable({
                   className={cn(
                     "group flex items-center p-4 transition-colors",
                     feature.included === selectedPlan &&
-                    "bg-blue-50/50 dark:bg-blue-900/20",
+                    "bg-brand-muted/35",
                   )}
                 >
                   <div className="flex-1 text-sm">{feature.name}</div>
@@ -206,20 +218,20 @@ export function PricingTable({
                           isEnterprisePlan(plan.level) ? (
                             <CheckCheckIcon
                               size={20}
-                              className="text-blue-500"
+                              className="text-brand"
                               active={plan.level === selectedPlan}
                               activationKey={selectedPlan}
                             />
                           ) : (
                             <CheckIcon
                               size={20}
-                              className="text-blue-500"
+                              className="text-brand"
                               active={plan.level === selectedPlan}
                               activationKey={selectedPlan}
                             />
                           )
                         ) : (
-                          <span className="text-zinc-300 dark:text-zinc-700">
+                          <span className="text-muted-foreground/35">
                             -
                           </span>
                         )}
@@ -234,8 +246,9 @@ export function PricingTable({
 
         <div className="mt-8 text-center">
           <Button
+            variant="brand"
             className={cn(
-              "group w-full sm:w-auto bg-blue-500 hover:bg-blue-600 px-8 py-2 rounded-xl",
+              "group w-full rounded-xl px-8 py-2 sm:w-auto",
               buttonClassName,
             )}
           >

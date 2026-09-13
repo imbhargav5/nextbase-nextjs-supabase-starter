@@ -3,7 +3,7 @@ function getSiteUrl() {
   const siteUrl =
     process.env.NEXT_PUBLIC_SITE_URL ??
     process.env.NEXT_PUBLIC_VERCEL_URL ??
-    'https://menacenext.com';
+    'https://promptmarket.sh';
 
   return siteUrl.startsWith('http') ? siteUrl : `https://${siteUrl}`;
 }

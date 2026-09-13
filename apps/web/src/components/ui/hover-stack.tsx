@@ -4,7 +4,10 @@
 
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 
-import { ArrowUpRightIcon } from '@/components/icons/arrow-up-right';
+import {
+  ArrowUpRightIcon,
+  type ArrowUpRightIconHandle,
+} from '@/components/icons/arrow-up-right';
 import { cn } from '@/lib/utils';
 
 type CSSVars = CSSProperties & Record<string, string | number | undefined>;
@@ -39,17 +42,47 @@ export interface HoverStackProps {
 
 const PRESET_ROTATIONS = [-6, 3, -2, 4, -3, 5, 2, -4, 1, -3];
 
-function CardFooter({ index, tag }: { index: number; tag?: string }) {
+function CardFooter({
+  index,
+  tag,
+  isHighlighted = false,
+}: {
+  index: number;
+  tag?: string;
+  isHighlighted?: boolean;
+}) {
+  const arrowRef = useRef<ArrowUpRightIconHandle>(null);
+
+  useEffect(() => {
+    if (isHighlighted) {
+      void arrowRef.current?.startAnimation();
+      return;
+    }
+    void arrowRef.current?.stopAnimation();
+  }, [isHighlighted]);
+
   return (
     <div className="relative z-[2] flex flex-col gap-4">
       <div className="h-px w-full bg-border/60" />
       <div className="flex items-center justify-between gap-3">
         <div className="flex items-center gap-2.5">
           <span
-            className="flex size-8 shrink-0 items-center justify-center rounded-full border border-border/70 bg-background/80 text-foreground shadow-sm backdrop-blur-sm"
+            className={cn(
+              'flex size-8 shrink-0 items-center justify-center rounded-full border shadow-sm backdrop-blur-sm transition-[color,background-color,border-color,box-shadow] duration-300',
+              isHighlighted
+                ? 'border-brand/60 bg-brand text-brand-foreground shadow-[0_6px_16px_-6px_color-mix(in_oklch,var(--brand)_45%,transparent)]'
+                : 'border-border/70 bg-background/80 text-foreground',
+            )}
             aria-hidden="true"
           >
-            <ArrowUpRightIcon aria-hidden size={14} />
+            <ArrowUpRightIcon
+              ref={arrowRef}
+              aria-hidden
+              size={14}
+              strokeWidth={isHighlighted ? 3 : 2}
+              animateOnGroupHover={false}
+              className="[&_svg]:transition-[stroke-width] [&_svg]:duration-300"
+            />
           </span>
           <span className="text-[11px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
             {tag ?? 'Feature'}
@@ -165,7 +198,8 @@ export function HoverStack({
         rotate = 0;
         zIndex = 999;
         scale = 1.02;
-        boxShadow = `0 0 0 1px ${accentColor}, 0 24px 48px -12px color-mix(in oklch, var(--foreground) 12%, transparent)`;
+        boxShadow =
+          '0 24px 48px -12px color-mix(in oklch, var(--foreground) 12%, transparent)';
       }
     }
 
@@ -253,7 +287,11 @@ export function HoverStack({
                 </p>
               </div>
 
-              <CardFooter index={index} tag={card.tag} />
+              <CardFooter
+                index={index}
+                tag={card.tag}
+                isHighlighted={activeIndex === index}
+              />
             </div>
           ))}
         </div>
@@ -317,7 +355,11 @@ export function HoverStack({
                 </p>
               </div>
 
-              <CardFooter index={index} tag={card.tag} />
+              <CardFooter
+                index={index}
+                tag={card.tag}
+                isHighlighted={activeIndex === index}
+              />
             </div>
           ))}
             </div>

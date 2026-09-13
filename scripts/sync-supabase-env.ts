@@ -14,7 +14,40 @@ const repoRoot = path.resolve(scriptDir, "..");
 const databaseDir = path.join(repoRoot, "apps/database");
 const envFiles = [path.join(repoRoot, ".env.local")];
 
+function isRemoteSupabaseEnv(content: string): boolean {
+  const match = content.match(
+    /^\s*(?:export\s+)?NEXT_PUBLIC_SUPABASE_URL\s*=\s*(\S+)/m,
+  );
+  if (!match?.[1]) {
+    return false;
+  }
+  try {
+    const host = new URL(match[1]).hostname;
+    return host.endsWith(".supabase.co");
+  } catch {
+    return false;
+  }
+}
+
 async function main(): Promise<void> {
+  const envPath = path.join(repoRoot, ".env.local");
+  const envContent = existsSync(envPath)
+    ? await readFile(envPath, "utf8")
+    : "";
+
+  if (isRemoteSupabaseEnv(envContent)) {
+    const { spawnSync } = await import("node:child_process");
+    const result = spawnSync(
+      "pnpm",
+      ["exec", "tsx", "scripts/validate-remote-supabase-env.ts"],
+      { cwd: repoRoot, stdio: "inherit", env: process.env },
+    );
+    if (result.status !== 0) {
+      process.exitCode = result.status ?? 1;
+    }
+    return;
+  }
+
   const statusOutput = await runSupabaseStatus();
   const status = parseSupabaseStatus(statusOutput);
 
