@@ -48,6 +48,22 @@
 
 - **react-no-ssr:** remove react no ssr ([0030eaa](https://github.com/imbhargav5/nextbase-nextjs-supabase-starter/commit/0030eaab147b3f4184c42dca160d8030bb944cfe))
 
+## 2.3.0
+
+### Minor Changes
+
+- [#168](https://github.com/imbhargav5/nextbase-nextjs-supabase-starter/pull/168) [`8a6ef91`](https://github.com/imbhargav5/nextbase-nextjs-supabase-starter/commit/8a6ef916255913ef9b015c001006b231d3f77907) Thanks [@unohq](https://github.com/apps/unohq)! - Update every dependency to the latest release that is at least three days old (matching the workspace `minimumReleaseAge` policy). Notable majors: recharts 3, react-day-picker 10, react-resizable-panels 4, lucide-react 1, vitest 5, jsdom 30, concurrently 10, and changesets 3. The shadcn `chart`, `calendar`, and `resizable` primitives were adapted to the new APIs, and the GitHub mark now ships as a local icon because lucide-react v1 dropped brand icons.
+
+- [#165](https://github.com/imbhargav5/nextbase-nextjs-supabase-starter/pull/165) [`935dbcc`](https://github.com/imbhargav5/nextbase-nextjs-supabase-starter/commit/935dbcca195b1972d1e76a3acc362e308066dced) Thanks [@imbhargav5](https://github.com/imbhargav5)! - Rebuild the public site, authentication flows, dashboard, and private-item workflows with a consistent responsive shadcn/ui design system, including improved dark mode, loading, empty, error, and mobile states.
+
+- [#162](https://github.com/imbhargav5/nextbase-nextjs-supabase-starter/pull/162) [`d9f0066`](https://github.com/imbhargav5/nextbase-nextjs-supabase-starter/commit/d9f0066fe2975fc4bd048988a4f1f217ad335351) Thanks [@imbhargav5](https://github.com/imbhargav5)! - Upgrade to Next.js 16.3 with `cacheComponents` and `partialPrefetching` enabled, bump Tailwind CSS v4 and shadcn/ui dependencies, upgrade TypeScript to 7, and add React Bits animated components (`BlurText`, `ShinyText`, `SpotlightCard`) to the home and login pages.
+
+### Patch Changes
+
+- [#166](https://github.com/imbhargav5/nextbase-nextjs-supabase-starter/pull/166) [`b05e175`](https://github.com/imbhargav5/nextbase-nextjs-supabase-starter/commit/b05e175dc1191773cd34219b9d3c857aad24162c) Thanks [@imbhargav5](https://github.com/imbhargav5)! - Add a portable, pinned agent coding-skills pack and repair generated database type commands so local and linked generation share the canonical web type file.
+
+- [#170](https://github.com/imbhargav5/nextbase-nextjs-supabase-starter/pull/170) [`00ad2da`](https://github.com/imbhargav5/nextbase-nextjs-supabase-starter/commit/00ad2da857b84322ff359db098cbf1cb4f4b7282) Thanks [@imbhargav5](https://github.com/imbhargav5)! - Refresh workspace dependencies, including React 19.3, Next.js 16.3.7, and the Supabase client and CLI, using releases that are at least three days old. Preserve the workspace's 4,320-minute minimum release age for direct and transitive dependencies.
+
 # 1.0.0 (2023-02-08)
 
 ### Features
