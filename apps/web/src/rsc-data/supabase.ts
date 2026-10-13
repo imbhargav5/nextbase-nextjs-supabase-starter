@@ -39,7 +39,6 @@ export const getCachedLoggedInUserClaims = cache(async () => {
   return data.claims;
 });
 
-
 export const getCachedIsUserLoggedIn = cache(async () => {
   const claims = await getCachedLoggedInUserClaims();
   return claims.sub !== null;
