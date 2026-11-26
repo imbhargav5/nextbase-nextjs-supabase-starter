@@ -1,0 +1,21 @@
+name: Review Supabase migrations
+
+on:
+  pull_request:
+    paths:
+      - "apps/database/supabase/migrations/*.sql"
+      - "apps/database/supabase/config.toml"
+      - "rattlecheck.config.json"
+
+permissions:
+  contents: read
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: chaseakub/rattlecheck-action/review-pr@1e433760918c46cf6cfef7f544542e4b8f118a8b
+        with:
+          migrations-directory: apps/database/supabase/migrations
+          supabase-config: apps/database/supabase/config.toml
