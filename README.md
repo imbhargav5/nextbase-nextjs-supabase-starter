@@ -38,6 +38,7 @@ NextBase compresses all of that prior art into a maintained, opinionated starter
 ### Database, Permissions & Multi-Tenancy
 - **Supabase Postgres with Row Level Security from day one.** Every user-owned table ships with `SELECT`/`INSERT`/`UPDATE`/`DELETE` policies keyed off `auth.uid()`.
 - **Versioned migrations.** Real timestamped SQL migrations under `apps/database/supabase/migrations` — not a hand-edited single file.
+- **Migration review on pull requests.** [RattleCheck](./.github/workflows/rattlecheck.yml) compares proposed SQL permissions with the base branch and reports new high or critical findings. It runs `rattlecheck@latest` without database credentials.
 - **Generated database types.** `pnpm gen-types` (remote) and `pnpm gen-types-local` (local) regenerate `database.types.ts` so every query is end-to-end typed.
 - **pgTAP-ready test harness.** A test scaffold under `apps/database/supabase/tests` for asserting RLS policies, triggers, and constraints.
 - **`updated_at` triggers** standardized via a single `public.set_updated_at()` function — applied per-table, not duplicated.
